@@ -34,6 +34,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Helper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Helper.dll</HintPath>
+    </Reference>
+    <Reference Include="Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="PluginInterface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\PluginInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="PluginSystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\PluginSystem.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -78,6 +94,12 @@
     <Content Include="DLL\Logging.dll" />
     <Content Include="DLL\PluginInterface.dll" />
     <Content Include="DLL\PluginSystem.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ToolMangerInterface\ToolMangerInterface.csproj">
+      <Project>{51804EDD-6999-4F6B-B279-0868A9E2505C}</Project>
+      <Name>ToolMangerInterface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
