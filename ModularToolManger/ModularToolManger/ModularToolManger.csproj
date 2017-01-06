@@ -38,9 +38,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Helper.dll</HintPath>
     </Reference>
+    <Reference Include="jsonLanguage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\jsonLanguage.dll</HintPath>
+    </Reference>
     <Reference Include="Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PluginInterface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -52,6 +60,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,14 +71,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Form1.cs">
+    <Compile Include="Core\CentralLanguage.cs" />
+    <Compile Include="Core\FunctionJson.cs" />
+    <Compile Include="Core\FunctionsManager.cs" />
+    <Compile Include="Forms\F_NewFunction.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\F_NewFunction.Designer.cs">
+      <DependentUpon>F_NewFunction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\F_ToolManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\F_ToolManager.Designer.cs">
+      <DependentUpon>F_ToolManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LanguageSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LanguageSelect.Designer.cs">
+      <DependentUpon>LanguageSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\F_NewFunction.resx">
+      <DependentUpon>F_NewFunction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\F_ToolManager.resx">
+      <DependentUpon>F_ToolManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LanguageSelect.resx">
+      <DependentUpon>LanguageSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -79,6 +112,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Language\German.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Language\Englisch.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -91,9 +130,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DLL\Helper.dll" />
+    <Content Include="DLL\jsonLanguage.dll" />
     <Content Include="DLL\Logging.dll" />
+    <Content Include="DLL\Newtonsoft.Json.dll" />
     <Content Include="DLL\PluginInterface.dll" />
     <Content Include="DLL\PluginSystem.dll" />
+    <Content Include="Modules\DefaultTools.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToolMangerInterface\ToolMangerInterface.csproj">
@@ -101,6 +145,7 @@
       <Name>ToolMangerInterface</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

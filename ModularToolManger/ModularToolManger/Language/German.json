@@ -1,0 +1,64 @@
+﻿{
+  "Language": "Deutsch",
+  "CountryCode":  "de-DE",
+  "Jsoninterpret": 
+  [
+    {
+      "key": "F_ToolManager",
+      "value": "Tool Manager"
+    },
+    {
+      "key": "F_ToolManager_File",
+      "value": "Datei"
+    },
+    {
+      "key": "F_ToolManager_NI_Taskliste",
+      "value": "Tool Manager"
+    },
+    {
+      "key": "F_ToolManager_Langauge",
+      "value": "Sprache"
+    },    
+    {
+      "key": "F_ToolManager_Close",
+      "value": "Beenden"
+    },
+    {
+      "key": "F_LanguageSelect",
+      "value": "Sprachauswahl"
+    },      
+    {
+      "key": "F_ToolManager_NewFunction",
+      "value": "Neue Funktion"
+    },
+    {
+      "key": "F_LanguageSelect_Language",
+      "value": "Sprache:"
+    },
+    {
+      "key": "F_NewFunction",
+      "value": "Neue Funktion"
+    },
+    {
+      "key": "F_NewFunction_L_Name",
+      "value": "Name:"
+    },    
+    {
+      "key": "F_NewFunction_L_Type",
+      "value": "Typ:"
+    },
+    {
+      "key": "Default_OK",
+      "value": "Ok"
+    },    
+    {
+      "key": "Default_Abort",
+      "value": "Abbrechen"
+    },    
+    {
+      "key": "Default_Open",
+      "value": "Öffnen"
+    }
+    
+  ]
+}

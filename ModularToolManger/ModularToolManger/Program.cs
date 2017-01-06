@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ModularToolManger.Core;
+using ModularToolManger.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,7 +17,8 @@ namespace ModularToolManger
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            CentralLanguage.Initalize();
+            Application.Run(new F_ToolManager());
         }
     }
 }
