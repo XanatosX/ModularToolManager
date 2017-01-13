@@ -35,7 +35,8 @@ namespace ModularToolManger.Core
                     if (item.HasDropDownItems)
                         ForAllSubItems(item);
                 }
-            }else
+            }
+            else
                 current.Text = LanguageManager.GetText(current.Name);
             return true;
         }

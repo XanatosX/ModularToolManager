@@ -24,8 +24,16 @@
       "value": "New function"
     },
     {
-      "key": "F_ToolManager_Close",
+      "key": "F_ToolManager_Close", 
       "value": "Close"
+    },       
+    {
+      "key": "F_ToolManager_ButtonContext_Edit",
+      "value": "Edit"
+    },       
+    {
+      "key": "F_ToolManager_ButtonContext_Delete",
+      "value": "Delete"
     },    
     {
       "key": "F_LanguageSelect",

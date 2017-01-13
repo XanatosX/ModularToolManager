@@ -22,6 +22,14 @@
     {
       "key": "F_ToolManager_Close",
       "value": "Beenden"
+    },       
+    {
+      "key": "F_ToolManager_ButtonContext_Edit",
+      "value": "Bearbeiten"
+    },       
+    {
+      "key": "F_ToolManager_ButtonContext_Delete",
+      "value": "Löschen"
     },
     {
       "key": "F_LanguageSelect",

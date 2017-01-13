@@ -3,3 +3,9 @@ F:\VisualStudio 2013 Projects\modulartoolmanager\ModularToolManger\ToolMangerInt
 F:\VisualStudio 2013 Projects\modulartoolmanager\ModularToolManger\ToolMangerInterface\bin\Debug\PluginInterface.dll
 F:\VisualStudio 2013 Projects\modulartoolmanager\ModularToolManger\ToolMangerInterface\obj\Debug\ToolMangerInterface.dll
 F:\VisualStudio 2013 Projects\modulartoolmanager\ModularToolManger\ToolMangerInterface\obj\Debug\ToolMangerInterface.pdb
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ToolMangerInterface\bin\Debug\ToolMangerInterface.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ToolMangerInterface\bin\Debug\ToolMangerInterface.pdb
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ToolMangerInterface\bin\Debug\PluginInterface.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ToolMangerInterface\obj\Debug\ToolMangerInterface.csprojResolveAssemblyReference.cache
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ToolMangerInterface\obj\Debug\ToolMangerInterface.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ToolMangerInterface\obj\Debug\ToolMangerInterface.pdb

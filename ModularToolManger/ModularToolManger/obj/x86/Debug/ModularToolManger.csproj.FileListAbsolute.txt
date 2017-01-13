@@ -19,3 +19,24 @@ F:\VisualStudio 2013 Projects\modulartoolmanager\ModularToolManger\ModularToolMa
 F:\VisualStudio 2013 Projects\modulartoolmanager\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.Forms.F_ToolManager.resources
 F:\VisualStudio 2013 Projects\modulartoolmanager\ModularToolManger\ModularToolManger\bin\Debug\Modules\DefaultTools.dll
 F:\VisualStudio 2013 Projects\modulartoolmanager\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.Forms.F_NewFunction.resources
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.exe
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.pdb
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\Modules\DefaultTools.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\Language\German.json
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\Language\Englisch.json
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\ModularToolManger.exe
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\ModularToolManger.pdb
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\Helper.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\jsonLanguage.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\Logging.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\Newtonsoft.Json.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\PluginInterface.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\PluginSystem.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\ToolMangerInterface.dll
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\bin\Debug\ToolMangerInterface.pdb
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.csprojResolveAssemblyReference.cache
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.Forms.F_NewFunction.resources
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.Forms.F_ToolManager.resources
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.Forms.F_LanguageSelect.resources
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.Properties.Resources.resources
+C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.csproj.GenerateResource.Cache

@@ -68,6 +68,12 @@ namespace ModularToolManger.Core
             _availablefunctions.Add(F);
             _allFunctions.Add(F);
         }
+
+        public void DeleteFunction(Function F)
+        {
+            _availablefunctions.Remove(F);
+            _allFunctions.Remove(F);
+        }
     }
 
 
