@@ -23,6 +23,8 @@ namespace ModularToolManger.Forms
         private int _startOffset = 25;
         private int _maxHeight;
         private int _minWidth;
+        private Point _location;
+        private bool _forceClose;
 
         private int _newValue;
 
@@ -31,6 +33,8 @@ namespace ModularToolManger.Forms
         public F_ToolManager()
         {
             InitializeComponent();
+            _forceClose = false;
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             _minWidth = this.Size.Width;
             _maxHeight = Screen.FromControl(this).Bounds.Height / 6;
             
@@ -54,10 +58,20 @@ namespace ModularToolManger.Forms
             _functionManager.Load();
         }
 
+        private void MoveToPosition()
+        {
+            int LocX, LocY;
+            Rectangle ScreenSize = Screen.FromControl(this).WorkingArea;
+            LocX = ScreenSize.Width - Size.Width;
+            LocY = ScreenSize.Height - Size.Height;
+            _location = new Point(LocX, LocY);
+            Location = _location;
+        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.SetupLanguage();
+            SetLanguage();
             SetupButtons();
         }
 
@@ -123,6 +137,8 @@ namespace ModularToolManger.Forms
 
 
             this.DoForEveryControl(typeof(Button), CenterButton);
+
+            MoveToPosition();
         }
 
         private bool CenterButton(Control B)
@@ -171,7 +187,8 @@ namespace ModularToolManger.Forms
             Hide();
             LanguageSelector.ShowDialog();
             Show();
-            this.SetupLanguage();
+            SetLanguage();
+            SetupButtons();
         }
 
         private void F_ToolManager_NewFunction_Click(object sender, EventArgs e)
@@ -236,6 +253,35 @@ namespace ModularToolManger.Forms
             if (currentButton.Tag.GetType() == typeof(Function))
                 return (Function)currentButton.Tag;
             return null;
+        }
+
+        private void SetLanguage()
+        {
+            this.SetupLanguage();
+            F_ToolManager_ButtonContext_Delete.Text = CentralLanguage.LanguageManager.GetText(F_ToolManager_ButtonContext_Delete.Name);
+            F_ToolManager_ButtonContext_Edit.Text = CentralLanguage.LanguageManager.GetText(F_ToolManager_ButtonContext_Edit.Name);
+        }
+
+        private void F_ToolManager_Move(object sender, EventArgs e)
+        {
+            Location = _location;
+        }
+
+        private void F_ToolManager_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!_forceClose)
+            {
+                e.Cancel = true;
+                Hide();
+                return;
+            }
+            F_ToolManager_NI_Taskliste.Visible = false;
+        }
+
+        private void defaultCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _forceClose = true;
+            this.Close();
         }
     }
 }

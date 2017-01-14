@@ -71,6 +71,7 @@
             this.Default_Abort.TabIndex = 3;
             this.Default_Abort.Text = "Default_Abort";
             this.Default_Abort.UseVisualStyleBackColor = true;
+            this.Default_Abort.Click += new System.EventHandler(this.Default_Abort_Click);
             // 
             // F_NewFunction_L_Type
             // 

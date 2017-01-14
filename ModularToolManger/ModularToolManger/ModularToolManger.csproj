@@ -118,6 +118,9 @@
     <None Include="Language\Englisch.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Language\Polish.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -135,6 +138,7 @@
     <Content Include="DLL\Newtonsoft.Json.dll" />
     <Content Include="DLL\PluginInterface.dll" />
     <Content Include="DLL\PluginSystem.dll" />
+    <Content Include="Images\Tool.ico" />
     <Content Include="Modules\DefaultTools.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

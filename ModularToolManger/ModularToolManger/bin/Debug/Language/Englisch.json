@@ -22,11 +22,7 @@
     {
       "key": "F_ToolManager_NewFunction",
       "value": "New function"
-    },
-    {
-      "key": "F_ToolManager_Close", 
-      "value": "Close"
-    },       
+    },    
     {
       "key": "F_ToolManager_ButtonContext_Edit",
       "value": "Edit"
@@ -66,6 +62,10 @@
     {
       "key": "Default_Open",
       "value": "Open"
+    },    
+    {
+      "key": "Default_Close",
+      "value": "Close"
     }
   ]
 }

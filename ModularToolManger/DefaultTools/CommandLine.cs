@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PluginInterface;
 using ToolMangerInterface;
+using System.Diagnostics;
+using System.IO;
 
 namespace DefaultTools
 {
@@ -101,6 +103,16 @@ namespace DefaultTools
 
         public bool PerformeAction(PluginContext context)
         {
+            if (context.GetType() != typeof(FunctionContext))
+                return false;
+
+            FunctionContext CurrentContext = (FunctionContext)context;
+            Process process = new Process(); ;
+            process.StartInfo.FileName = CurrentContext.FilePath;
+            process.StartInfo.WorkingDirectory = (new FileInfo(CurrentContext.FilePath)).DirectoryName;
+            process.Start();
+
+
             return true;
         }
 

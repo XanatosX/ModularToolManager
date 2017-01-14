@@ -18,11 +18,7 @@
     {
       "key": "F_ToolManager_Langauge",
       "value": "Sprache"
-    },    
-    {
-      "key": "F_ToolManager_Close",
-      "value": "Beenden"
-    },       
+    },      
     {
       "key": "F_ToolManager_ButtonContext_Edit",
       "value": "Bearbeiten"
@@ -66,6 +62,10 @@
     {
       "key": "Default_Open",
       "value": "Öffnen"
+    },    
+    {
+      "key": "Default_Close",
+      "value": "Schließen"
     }
     
   ]

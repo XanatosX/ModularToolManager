@@ -141,5 +141,10 @@ namespace ModularToolManger.Forms
             }
             Close();           
         }
+
+        private void Default_Abort_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

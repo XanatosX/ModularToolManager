@@ -23,7 +23,7 @@ namespace ToolMangerInterface
         {
             get
             {
-                return FilePath;
+                return _filePath;
             }
             set
             {

@@ -1,6 +1,6 @@
 ﻿{
-  "Language": "Englisch",
-  "CountryCode":  "en-EN",
+  "Language": "Polish",
+  "CountryCode":  "pl-PL",
   "Jsoninterpret": 
   [
     {
@@ -9,7 +9,7 @@
     },
     {
       "key": "F_ToolManager_File",
-      "value": "File"
+      "value": "Plik"
     },
     {
       "key": "F_ToolManager_NI_Taskliste",
@@ -17,39 +17,39 @@
     },
     {
       "key": "F_ToolManager_Langauge",
-      "value": "Language"
+      "value": "Wybierz język"
     },       
     {
       "key": "F_ToolManager_NewFunction",
-      "value": "New function"
-    },    
+      "value": "Nowa funkcja"
+    },       
     {
       "key": "F_ToolManager_ButtonContext_Edit",
-      "value": "Edit"
+      "value": "Edytować"
     },       
     {
       "key": "F_ToolManager_ButtonContext_Delete",
-      "value": "Delete"
+      "value": "Kasować"
     },    
     {
       "key": "F_LanguageSelect",
-      "value": "Langauge selection"
+      "value": "wybór języka"
     },    
     {
       "key": "F_LanguageSelect_Language",
-      "value": "Language:"
+      "value": "Język:"
     },
     {
       "key": "F_NewFunction",
-      "value": "New function"
+      "value": "Nowa funkcja"
     },
     {
       "key": "F_NewFunction_L_Name",
-      "value": "Name:"
+      "value": "Nazwa:"
     },    
     {
       "key": "F_NewFunction_L_Type",
-      "value": "Type:"
+      "value": "Rodzaj:"
     },
     {
       "key": "Default_OK",
@@ -57,15 +57,15 @@
     },    
     {
       "key": "Default_Abort",
-      "value": "Abort"
+      "value": "Anulować"
     },    
     {
       "key": "Default_Open",
-      "value": "Open"
+      "value": "otwarty"
     },    
     {
       "key": "Default_Close",
-      "value": "Close"
+      "value": "Blisko"
     }
   ]
 }

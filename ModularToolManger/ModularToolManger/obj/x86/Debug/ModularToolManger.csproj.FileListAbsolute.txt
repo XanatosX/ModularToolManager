@@ -40,3 +40,4 @@ C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger
 C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.Forms.F_LanguageSelect.resources
 C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.Properties.Resources.resources
 C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ModularToolManger\obj\x86\Debug\ModularToolManger.csproj.GenerateResource.Cache
+F:\VisualStudio 2013 Projects\modulartoolmanager\ModularToolManger\ModularToolManger\bin\Debug\Language\Polish.json
