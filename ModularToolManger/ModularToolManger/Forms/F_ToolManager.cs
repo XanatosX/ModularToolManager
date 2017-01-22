@@ -25,6 +25,7 @@ namespace ModularToolManger.Forms
         private int _minWidth;
         private Point _location;
         private bool _forceClose;
+        private bool _hidden;
 
         private int _newValue;
 
@@ -33,11 +34,14 @@ namespace ModularToolManger.Forms
         public F_ToolManager()
         {
             InitializeComponent();
+            _hidden = false;
             _forceClose = false;
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             _minWidth = this.Size.Width;
-            _maxHeight = Screen.FromControl(this).Bounds.Height / 6;
-            
+            _maxHeight = Screen.FromControl(this).Bounds.Height / 4;
+
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            F_ToolManager_NI_Taskliste.ContextMenuStrip = F_ToolManager_TasklisteContext;
+
 
             _pluginManager = new Manager();
             _pluginManager.Initialize(new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + @"\Modules");
@@ -258,8 +262,10 @@ namespace ModularToolManger.Forms
         private void SetLanguage()
         {
             this.SetupLanguage();
-            F_ToolManager_ButtonContext_Delete.Text = CentralLanguage.LanguageManager.GetText(F_ToolManager_ButtonContext_Delete.Name);
-            F_ToolManager_ButtonContext_Edit.Text = CentralLanguage.LanguageManager.GetText(F_ToolManager_ButtonContext_Edit.Name);
+            SetLanguageForContextStrip(F_ToolManager_ButtonContext);
+            SetLanguageForContextStrip(F_ToolManager_TasklisteContext);
+            //F_ToolManager_ButtonContext_Delete.Text = CentralLanguage.LanguageManager.GetText(F_ToolManager_ButtonContext_Delete.Name);
+            //F_ToolManager_ButtonContext_Edit.Text = CentralLanguage.LanguageManager.GetText(F_ToolManager_ButtonContext_Edit.Name);
         }
 
         private void F_ToolManager_Move(object sender, EventArgs e)
@@ -273,12 +279,38 @@ namespace ModularToolManger.Forms
             {
                 e.Cancel = true;
                 Hide();
+                _hidden = true;
                 return;
             }
             F_ToolManager_NI_Taskliste.Visible = false;
         }
 
         private void defaultCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _forceClose = true;
+            this.Close();
+        }
+
+        private void F_ToolManager_NI_Taskliste_Click(object sender, EventArgs e)
+        {
+            if (_hidden)
+            {
+                _hidden = false;
+                this.MoveToPosition();
+                this.Show();
+            }
+        }
+
+        private void SetLanguageForContextStrip(ContextMenuStrip CMS)
+        {
+            for (int i = 0; i < CMS.Items.Count; i++)
+            {
+                ToolStripItem CurrentTSI = CMS.Items[i];
+                CurrentTSI.Text = CentralLanguage.LanguageManager.GetText(CurrentTSI.Name);
+            }
+        }
+
+        private void F_ToolManager_NI_Taskliste_Close_Click(object sender, EventArgs e)
         {
             _forceClose = true;
             this.Close();

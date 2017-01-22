@@ -16,6 +16,10 @@
       "value": "Tool Manager"
     },
     {
+      "key": "F_ToolManager_NI_Taskliste_Close",
+      "value": "Beenden"
+    },
+    {
       "key": "F_ToolManager_Langauge",
       "value": "Sprache"
     },      

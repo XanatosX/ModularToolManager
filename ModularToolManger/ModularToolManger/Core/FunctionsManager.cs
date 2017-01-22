@@ -73,6 +73,7 @@ namespace ModularToolManger.Core
         {
             _availablefunctions.Remove(F);
             _allFunctions.Remove(F);
+            Save();
         }
     }
 

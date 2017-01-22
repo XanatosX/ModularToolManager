@@ -34,14 +34,17 @@
             this.F_ToolManager_File = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_Langauge = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_NewFunction = new System.Windows.Forms.ToolStripMenuItem();
+            this.Default_Close = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_NI_Taskliste = new System.Windows.Forms.NotifyIcon(this.components);
             this.F_ToolManager_ScrollBar = new System.Windows.Forms.VScrollBar();
             this.F_ToolManager_ButtonContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.F_ToolManager_ButtonContext_Edit = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_ButtonContext_Delete = new System.Windows.Forms.ToolStripMenuItem();
-            this.Default_Close = new System.Windows.Forms.ToolStripMenuItem();
+            this.F_ToolManager_TasklisteContext = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.F_ToolManager_NI_Taskliste_Close = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.F_ToolManager_ButtonContext.SuspendLayout();
+            this.F_ToolManager_TasklisteContext.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -78,11 +81,19 @@
             this.F_ToolManager_NewFunction.Text = "F_ToolManager_NewFunction";
             this.F_ToolManager_NewFunction.Click += new System.EventHandler(this.F_ToolManager_NewFunction_Click);
             // 
+            // Default_Close
+            // 
+            this.Default_Close.Name = "Default_Close";
+            this.Default_Close.Size = new System.Drawing.Size(232, 22);
+            this.Default_Close.Text = "Default_Close";
+            this.Default_Close.Click += new System.EventHandler(this.defaultCloseToolStripMenuItem_Click);
+            // 
             // F_ToolManager_NI_Taskliste
             // 
             this.F_ToolManager_NI_Taskliste.Icon = ((System.Drawing.Icon)(resources.GetObject("F_ToolManager_NI_Taskliste.Icon")));
             this.F_ToolManager_NI_Taskliste.Text = "F_ToolManager_NI_Taskliste";
             this.F_ToolManager_NI_Taskliste.Visible = true;
+            this.F_ToolManager_NI_Taskliste.Click += new System.EventHandler(this.F_ToolManager_NI_Taskliste_Click);
             // 
             // F_ToolManager_ScrollBar
             // 
@@ -115,12 +126,20 @@
             this.F_ToolManager_ButtonContext_Delete.Text = "F_ToolManager_ButtonContext_Delete";
             this.F_ToolManager_ButtonContext_Delete.Click += new System.EventHandler(this.F_ToolManager_ButtonContext_Delete_Click);
             // 
-            // Default_Close
+            // F_ToolManager_TasklisteContext
             // 
-            this.Default_Close.Name = "Default_Close";
-            this.Default_Close.Size = new System.Drawing.Size(232, 22);
-            this.Default_Close.Text = "Default_Close";
-            this.Default_Close.Click += new System.EventHandler(this.defaultCloseToolStripMenuItem_Click);
+            this.F_ToolManager_TasklisteContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.F_ToolManager_NI_Taskliste_Close});
+            this.F_ToolManager_TasklisteContext.Name = "F_ToolManager_TasklisteContext";
+            this.F_ToolManager_TasklisteContext.Size = new System.Drawing.Size(258, 48);
+            this.F_ToolManager_TasklisteContext.Text = "F_ToolManager_TasklisteContext";
+            // 
+            // F_ToolManager_NI_Taskliste_Close
+            // 
+            this.F_ToolManager_NI_Taskliste_Close.Name = "F_ToolManager_NI_Taskliste_Close";
+            this.F_ToolManager_NI_Taskliste_Close.Size = new System.Drawing.Size(257, 22);
+            this.F_ToolManager_NI_Taskliste_Close.Text = "F_ToolManager_NI_Taskliste_Close";
+            this.F_ToolManager_NI_Taskliste_Close.Click += new System.EventHandler(this.F_ToolManager_NI_Taskliste_Close_Click);
             // 
             // F_ToolManager
             // 
@@ -140,6 +159,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.F_ToolManager_ButtonContext.ResumeLayout(false);
+            this.F_ToolManager_TasklisteContext.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,6 +177,8 @@
         private System.Windows.Forms.ToolStripMenuItem F_ToolManager_ButtonContext_Edit;
         private System.Windows.Forms.ToolStripMenuItem F_ToolManager_ButtonContext_Delete;
         private System.Windows.Forms.ToolStripMenuItem Default_Close;
+        private System.Windows.Forms.ContextMenuStrip F_ToolManager_TasklisteContext;
+        private System.Windows.Forms.ToolStripMenuItem F_ToolManager_NI_Taskliste_Close;
     }
 }
 
