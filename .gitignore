@@ -1,5 +1,1 @@
-ModularToolManger/ModularToolManger/bin/Debug/
-ModularToolManger/ModularToolManger/obj/x86/Debug/
-ModularToolManger/ToolMangerInterface/obj/Debug/CoreCompileInputs.cache
-ModularToolManger/DefaultTools/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-ModularToolManger/DefaultTools/obj/Debug/CoreCompileInputs.cache
+ModularToolManger/**/Debug/

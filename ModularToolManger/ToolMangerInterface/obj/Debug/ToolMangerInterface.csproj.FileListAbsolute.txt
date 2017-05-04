@@ -9,3 +9,4 @@ C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ToolMangerInterfa
 C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ToolMangerInterface\obj\Debug\ToolMangerInterface.csprojResolveAssemblyReference.cache
 C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ToolMangerInterface\obj\Debug\ToolMangerInterface.dll
 C:\Users\DP0U8MN\Documents\ModularToolManger\ModularToolManger\ToolMangerInterface\obj\Debug\ToolMangerInterface.pdb
+F:\VisualStudio 2013 Projects\modulartoolmanager\ModularToolManger\ToolMangerInterface\obj\Debug\ToolMangerInterface.csprojResolveAssemblyReference.cache
