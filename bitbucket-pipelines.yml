@@ -1,0 +1,12 @@
+image: mono
+
+pipelines:
+  default:
+    - step:
+        script:
+          #- apt-get update && apt-get install -y zip
+          - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
+          
+          #- zip -r /opt/atlassian/pipelines/agent/build/TestApp/obj/Debug/TestApp.zip /opt/atlassian/pipelines/agent/build/TestApp/bin/Debug/
+          #- curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/jsonLanguage/bin/Debug/jsonLanguage.dll"
+          #- curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/TestApp/obj/Debug/TestApp.zip"
