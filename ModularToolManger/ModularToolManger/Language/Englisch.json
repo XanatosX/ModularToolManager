@@ -70,6 +70,10 @@
     {
       "key": "Default_Close",
       "value": "Close"
+    },    
+    {
+      "key": "Default_Show",
+      "value": "Show"
     }
   ]
 }

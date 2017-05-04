@@ -31,16 +31,23 @@ namespace ModularToolManger.Forms
 
         private string _functionsPath;
 
+        private int _lastContextListButton;
+
         public F_ToolManager()
         {
             InitializeComponent();
             _hidden = false;
+
+            Default_Show.Visible = _hidden;
+
             _forceClose = false;
             _minWidth = this.Size.Width;
             _maxHeight = Screen.FromControl(this).Bounds.Height / 4;
 
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            FormBorderStyle = FormBorderStyle.Fixed3D;
+            MinimizeBox = false;
             F_ToolManager_NI_Taskliste.ContextMenuStrip = F_ToolManager_TasklisteContext;
+            _lastContextListButton = 0;
 
 
             _pluginManager = new Manager();
@@ -90,6 +97,13 @@ namespace ModularToolManger.Forms
                 for (int i = 0; i < _functionManager.Functions.Count; i++)
                 {
                     Function currentFunction = _functionManager.Functions[i];
+                    MenuItem newMenuItem = new MenuItem()
+                    {
+                        Name = currentFunction.ID + "_MenuItem",
+                        Text = currentFunction.Name,
+                        Visible = true,
+                        Tag = currentFunction,
+                    };
                     Button newButton = new Button()
                     {
                         Name = currentFunction.ID,
@@ -264,6 +278,9 @@ namespace ModularToolManger.Forms
             this.SetupLanguage();
             SetLanguageForContextStrip(F_ToolManager_ButtonContext);
             SetLanguageForContextStrip(F_ToolManager_TasklisteContext);
+
+
+
             //F_ToolManager_ButtonContext_Delete.Text = CentralLanguage.LanguageManager.GetText(F_ToolManager_ButtonContext_Delete.Name);
             //F_ToolManager_ButtonContext_Edit.Text = CentralLanguage.LanguageManager.GetText(F_ToolManager_ButtonContext_Edit.Name);
         }
@@ -280,6 +297,7 @@ namespace ModularToolManger.Forms
                 e.Cancel = true;
                 Hide();
                 _hidden = true;
+                Default_Show.Visible = _hidden;
                 return;
             }
             F_ToolManager_NI_Taskliste.Visible = false;
@@ -293,11 +311,18 @@ namespace ModularToolManger.Forms
 
         private void F_ToolManager_NI_Taskliste_Click(object sender, EventArgs e)
         {
+            if (e.GetType() == typeof(MouseEventArgs))
+            {
+                MouseEventArgs NewE = (MouseEventArgs)e;
+                if (NewE.Button == MouseButtons.Right)
+                    return;
+            }
             if (_hidden)
             {
                 _hidden = false;
                 this.MoveToPosition();
                 this.Show();
+                Default_Show.Visible = _hidden;
             }
         }
 
@@ -314,6 +339,11 @@ namespace ModularToolManger.Forms
         {
             _forceClose = true;
             this.Close();
+        }
+
+        private void defaultShowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            F_ToolManager_NI_Taskliste_Click(sender, e);
         }
     }
 }
