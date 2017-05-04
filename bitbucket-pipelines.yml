@@ -4,7 +4,7 @@ pipelines:
   default:
     - step:
         script:
-          #- apt-get update && apt-get install -y zip
+          - apt-get update && apt-get install -y zip
           - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
           
           #- zip -r /opt/atlassian/pipelines/agent/build/TestApp/obj/Debug/TestApp.zip /opt/atlassian/pipelines/agent/build/TestApp/bin/Debug/
