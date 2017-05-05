@@ -127,7 +127,11 @@ namespace ModularToolManger.Forms
 
             List<Control> buttons = this.GetAllControls(typeof(Button));
             if (buttons.Count == 0)
+            {
+                MoveToPosition();
                 return;
+            }
+                
 
             int BiggestValue = 0;
             int newWidth = 0;

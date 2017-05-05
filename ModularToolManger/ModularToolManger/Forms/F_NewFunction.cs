@@ -45,6 +45,8 @@ namespace ModularToolManger.Forms
             this.DoForEveryControl(F_NewFunction_TB_Name, ClearTextBox);
             MinimizeBox = false;
             MaximizeBox = false;
+            Default_Open.Enabled = false;
+            Default_OK.Enabled = false;
             FormBorderStyle = FormBorderStyle.Fixed3D;
 
             GUIHelper.SetWidthByTextLenght(Default_OK, Default_Abort);
@@ -52,6 +54,8 @@ namespace ModularToolManger.Forms
 
             F_NewFunction_CB_Type.Text = "";
             F_NewFunction_CB_Type.Items.Clear();
+
+
 
             for (int i = 0; i < _pluginManager.LoadetPlugins.Count; i++)
             {
@@ -63,6 +67,8 @@ namespace ModularToolManger.Forms
             }
             if (F_NewFunction_CB_Type.Items.Count > 0)
             {
+                Default_Open.Enabled = true;
+                Default_OK.Enabled = true;
                 F_NewFunction_CB_Type.SelectedIndex = 0;
                 Default_Open.Tag = _pluginManager.LoadetPlugins[0];
             }
@@ -104,6 +110,8 @@ namespace ModularToolManger.Forms
         private void Default_Open_Click(object sender, EventArgs e)
         {
             OpenFileDialog OFD = new OpenFileDialog();
+            if (Default_Open.Tag == null)
+                return;
             OFD.Filter = SetupFilter(((IFunction)Default_Open.Tag).FileEndings);
             if (OFD.ShowDialog() == DialogResult.OK)
             {
