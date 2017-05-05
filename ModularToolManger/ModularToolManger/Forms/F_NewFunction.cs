@@ -11,6 +11,7 @@ using ModularToolManger.Core;
 using PluginManager;
 using PluginInterface;
 using ToolMangerInterface;
+using System.IO;
 
 namespace ModularToolManger.Forms
 {
@@ -28,6 +29,7 @@ namespace ModularToolManger.Forms
                 return _returnFunction;
             }
         }
+        private bool _editMode;
 
         //private Dictionary<string, IFunction> _functions;
 
@@ -37,6 +39,16 @@ namespace ModularToolManger.Forms
             _pluginManager = pluginManager;
             _startPos = 0;
             _returnFunction = null;
+            _editMode = false;
+        }
+
+        public F_NewFunction(ref Manager pluginManager, Function _functionToEdit)
+        {
+            InitializeComponent();
+            _pluginManager = pluginManager;
+            _startPos = 0;
+            _returnFunction = _functionToEdit;
+            _editMode = true;
         }
 
         private void F_NewFunction_Load(object sender, EventArgs e)
@@ -48,6 +60,7 @@ namespace ModularToolManger.Forms
             Default_Open.Enabled = false;
             Default_OK.Enabled = false;
             FormBorderStyle = FormBorderStyle.Fixed3D;
+
 
             GUIHelper.SetWidthByTextLenght(Default_OK, Default_Abort);
             this.AlignMultipleControls(Default_OK, Default_Abort);
@@ -93,6 +106,32 @@ namespace ModularToolManger.Forms
 
             F_NewFunction_CB_Type.SelectedIndexChanged += F_NewFunction_CB_Type_SelectedIndexChanged;
 
+
+            if (_editMode)
+                FillFields();
+        }
+
+        private void FillFields()
+        {
+            F_NewFunction_TB_Name.Text = _returnFunction.Name;
+            int _selectIndex = 0;
+
+            if (_pluginManager.LoadetPlugins.Count < F_NewFunction_CB_Type.Items.Count)
+                return;
+            for (int i = 0; i < F_NewFunction_CB_Type.Items.Count; i++)
+            {
+                IPlugin plugin = _pluginManager.LoadetPlugins[i];
+                object CBI = F_NewFunction_CB_Type.Items[i];
+                if (plugin.UniqueName == _returnFunction.Type)
+                {
+                    _selectIndex = i;
+                    Default_Open.Tag = plugin;
+                    break;
+                }
+                    
+            }
+            F_NewFunction_CB_Type.SelectedIndex = _selectIndex;
+            this.Tag = _returnFunction.FilePath;
         }
 
         private void F_NewFunction_CB_Type_SelectedIndexChanged(object sender, EventArgs e)
@@ -113,6 +152,23 @@ namespace ModularToolManger.Forms
             if (Default_Open.Tag == null)
                 return;
             OFD.Filter = SetupFilter(((IFunction)Default_Open.Tag).FileEndings);
+            if (_returnFunction != null && _returnFunction.FilePath != string.Empty)
+            {
+                FileInfo currentFile = new FileInfo(_returnFunction.FilePath);
+                if (!OFD.Filter.Contains(currentFile.Extension))
+                    return;
+                OFD.InitialDirectory = currentFile.DirectoryName;
+                OFD.FileName = currentFile.Name;
+                string[] split = OFD.Filter.Split('|');
+                for (int i = 0; i < split.Length; i += 2)
+                {
+                    if (split[i].Contains(currentFile.Extension) || split[i + 1].Contains(currentFile.Extension))
+                    {
+                        OFD.FilterIndex = i;
+                        break;
+                    }
+                }
+            }
             if (OFD.ShowDialog() == DialogResult.OK)
             {
                 this.Tag = OFD.FileName;

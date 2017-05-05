@@ -193,9 +193,6 @@ namespace ModularToolManger.Forms
             MoveToPosition();
         } //Needs cleanup!
 
-
-
-
         private bool CenterButton(Control B)
         {
             B.SetWidthByTextLenght();
@@ -255,20 +252,29 @@ namespace ModularToolManger.Forms
             }
             Show();
         }
-        private void F_ToolManager_ScrollBar_Scroll(object sender, ScrollEventArgs e)
-        {
-            _newValue = e.NewValue;
-            this.DoForEveryControl(typeof(Button), OffsetButton);
-        }
         private void F_ToolManager_ButtonContext_Edit_Click(object sender, EventArgs e)
         {
             if (sender.GetType() != typeof(ToolStripMenuItem))
                 return;
 
-                Button B = GetButtonFromTSMI((ToolStripMenuItem)sender);
-                
-
+            Button B = GetButtonFromTSMI((ToolStripMenuItem)sender);
+            Function currentFunction = GetFunctionFromButton(B);
+            F_NewFunction EditFunction = new F_NewFunction(ref _pluginManager, currentFunction);
+            this.Hide();
+            EditFunction.ShowDialog();
+            if (EditFunction.NewFunction != null)
+            {
+                _functionManager.DeleteFunction(currentFunction);
+                _functionManager.AddNewFunction(EditFunction.NewFunction);
+                _functionManager.Save();
+            }
+            this.Show();
             SetupButtons();
+        }
+        private void F_ToolManager_ScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            _newValue = e.NewValue;
+            this.DoForEveryControl(typeof(Button), OffsetButton);
         }
         private void F_ToolManager_ButtonContext_Delete_Click(object sender, EventArgs e)
         {
@@ -354,20 +360,5 @@ namespace ModularToolManger.Forms
                 CurrentTSI.Text = CentralLanguage.LanguageManager.GetText(CurrentTSI.Name);
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
