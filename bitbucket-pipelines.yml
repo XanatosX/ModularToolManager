@@ -6,16 +6,16 @@ pipelines:
         script:
           - echo "Build default branch"
           - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
-branches:
-  master:
-    - step:
-        script:
-          - BUILD_NUMBER=`git log --oneline | wc -l`
-          - echo "Build master branch ${BUILD_NUMBER}"
-          
-          - apt-get update && apt-get install -y zip
-          - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
-          
-          - zip -r /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/AlphaDebug_ModularToolManager_${BUILD_NUMBER}.zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/
-          - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/ToolMangerInterface.dll"
-          - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/AlphaDebug_ModularToolManager_${BUILD_NUMBER}.zip"
+  branches:
+    master:
+      - step:
+          script:
+            - BUILD_NUMBER=`git log --oneline | wc -l`
+            - echo "Build master branch ${BUILD_NUMBER}"
+            
+            - apt-get update && apt-get install -y zip
+            - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
+            
+            - zip -r /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/AlphaDebug_ModularToolManager_${BUILD_NUMBER}.zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/ToolMangerInterface.dll"
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/AlphaDebug_ModularToolManager_${BUILD_NUMBER}.zip"
