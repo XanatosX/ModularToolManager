@@ -8,7 +8,7 @@ pipelines:
           - echo "Build default branch ${BUILD_NUMBER}"
 
           - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
-   tags:
+  tags:
     release-*:
       - step:
           script:
