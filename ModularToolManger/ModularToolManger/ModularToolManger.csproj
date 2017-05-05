@@ -137,7 +137,9 @@
     <Content Include="DLL\PluginInterface.dll" />
     <Content Include="DLL\PluginSystem.dll" />
     <Content Include="Images\Tool.ico" />
-    <Content Include="Modules\DefaultTools.dll" />
+    <Content Include="Modules\DefaultTools.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToolMangerInterface\ToolMangerInterface.csproj">
