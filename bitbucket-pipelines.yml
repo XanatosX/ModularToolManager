@@ -4,6 +4,12 @@ pipelines:
   default:
     - step:
         script:
+          - echo "Build default branch"
+          - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
+  master:
+    - step:
+        script:
+          - echo "Build master branch"
           - apt-get update && apt-get install -y zip
           - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
           
