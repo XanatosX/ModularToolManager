@@ -16,8 +16,8 @@ pipelines:
             - apt-get update && apt-get install -y zip
             - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
             
-            - cp /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/ToolMangerInterface.dll /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/ToolMangerInterface_${BUILD_NUMBER}.dll
-            - zip -r /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_Build_${BUILD_NUMBER}.zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/ToolMangerInterface_${BUILD_NUMBER}.dll /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/
+            #- cp /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/ToolMangerInterface.dll /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/ToolMangerInterface_${BUILD_NUMBER}.dll
+            - zip -r /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_Build_${BUILD_NUMBER}.zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/ToolMangerInterface.dll /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/
             
             #- curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/ToolMangerInterface_${BUILD_NUMBER}.dll"
             - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_Build_${BUILD_NUMBER}.zip"
