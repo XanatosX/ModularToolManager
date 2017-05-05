@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\CentralLanguage.cs" />
+    <Compile Include="Core\CentralLogging.cs" />
     <Compile Include="Core\FunctionJson.cs" />
     <Compile Include="Core\FunctionsManager.cs" />
     <Compile Include="Forms\F_NewFunction.cs">
@@ -136,9 +137,7 @@
     <Content Include="DLL\PluginInterface.dll" />
     <Content Include="DLL\PluginSystem.dll" />
     <Content Include="Images\Tool.ico" />
-    <Content Include="Modules\DefaultTools.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Modules\DefaultTools.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToolMangerInterface\ToolMangerInterface.csproj">
