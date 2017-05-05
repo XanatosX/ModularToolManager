@@ -113,6 +113,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="app.config" />
     <None Include="Language\German.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -134,12 +135,17 @@
     <Content Include="DLL\jsonLanguage.dll" />
     <Content Include="DLL\Logging.dll" />
     <Content Include="DLL\Newtonsoft.Json.dll" />
-    <Content Include="DLL\PluginInterface.dll" />
-    <Content Include="DLL\PluginSystem.dll" />
+    <Content Include="DLL\PluginInterface.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLL\PluginSystem.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Tool.ico" />
     <Content Include="Modules\DefaultTools.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Modules\DefaultTools_old.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ToolMangerInterface\ToolMangerInterface.csproj">

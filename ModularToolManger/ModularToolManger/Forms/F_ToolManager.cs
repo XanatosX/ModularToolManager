@@ -11,8 +11,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Configuration;
 using System.Windows.Forms;
 using ToolMangerInterface;
+using static System.Collections.Specialized.NameObjectCollectionBase;
 
 namespace ModularToolManger.Forms
 {
@@ -54,6 +56,7 @@ namespace ModularToolManger.Forms
 
             _pluginManager = new Manager();
             _pluginManager.Initialize(new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + @"\Modules");
+            _pluginManager.Error += _pluginManager_Error;
             _pluginManager.LoadPlugins();
 
             List<string> allowedTypes = new List<string>();
@@ -71,6 +74,12 @@ namespace ModularToolManger.Forms
 
             _functionManager = new FunctionsManager(_functionsPath + "functions.json", allowedTypes);
             _functionManager.Load();
+        }
+
+        private void _pluginManager_Error(object sender, ErrorData e)
+        {
+            CentralLogging.AppDebugLogger.Log(e.Message, Logging.LogLevel.Error);
+            CentralLogging.AppDebugLogger.Log(e.ErrorException.Message, Logging.LogLevel.Error);
         }
 
         private void MoveToPosition()
