@@ -49,6 +49,8 @@ namespace ModularToolManger.Forms
             F_ToolManager_NI_Taskliste.ContextMenuStrip = F_ToolManager_TasklisteContext;
             _lastContextListButton = 0;
 
+            File.Delete(CentralLogging.AppDebugLogger.LogFile);
+            CentralLogging.AppDebugLogger.WriteLine("Searching modules at: " + new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + @"\Modules", Logging.LogLevel.Information);
 
             _pluginManager = new Manager();
             _pluginManager.Initialize(new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + @"\Modules");
@@ -64,6 +66,8 @@ namespace ModularToolManger.Forms
             }
 
             _functionsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ToolManager\";
+ 
+            CentralLogging.AppDebugLogger.WriteLine("Searching functions at: " + _functionsPath, Logging.LogLevel.Information);
 
             _functionManager = new FunctionsManager(_functionsPath + "functions.json", allowedTypes);
             _functionManager.Load();
