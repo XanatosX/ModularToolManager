@@ -24,7 +24,7 @@ pipelines:
       - step:
           script:
             - BUILD_NUMBER="${BITBUCKET_COMMIT}"
-            - echo "Build release ${BUILD_NUMBER}"
+            - echo "Build release candidate ${BUILD_NUMBER}"
             - apt-get update && apt-get install -y zip
 
             - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
