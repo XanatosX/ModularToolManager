@@ -57,6 +57,7 @@ namespace ModularToolManger.Forms
             this.DoForEveryControl(F_NewFunction_TB_Name, ClearTextBox);
             MinimizeBox = false;
             MaximizeBox = false;
+            TB_filePath.ReadOnly = true;
             Default_Open.Enabled = false;
             Default_OK.Enabled = false;
             FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -126,6 +127,7 @@ namespace ModularToolManger.Forms
                 {
                     _selectIndex = i;
                     Default_Open.Tag = plugin;
+                    TB_filePath.Text = _returnFunction.FilePath;
                     break;
                 }
                     
@@ -165,6 +167,7 @@ namespace ModularToolManger.Forms
                     if (split[i].Contains(currentFile.Extension) || split[i + 1].Contains(currentFile.Extension))
                     {
                         OFD.FilterIndex = i;
+                        
                         break;
                     }
                 }
@@ -172,6 +175,7 @@ namespace ModularToolManger.Forms
             if (OFD.ShowDialog() == DialogResult.OK)
             {
                 this.Tag = OFD.FileName;
+                TB_filePath.Text = OFD.FileName;
             }
         }
 
@@ -208,6 +212,7 @@ namespace ModularToolManger.Forms
 
         private void Default_Abort_Click(object sender, EventArgs e)
         {
+            _returnFunction = null;
             this.Close();
         }
     }

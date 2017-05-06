@@ -35,6 +35,7 @@
             this.F_NewFunction_L_Type = new System.Windows.Forms.Label();
             this.F_NewFunction_CB_Type = new System.Windows.Forms.ComboBox();
             this.Default_Open = new System.Windows.Forms.Button();
+            this.TB_filePath = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // F_NewFunction_L_Name
@@ -100,11 +101,19 @@
             this.Default_Open.UseVisualStyleBackColor = true;
             this.Default_Open.Click += new System.EventHandler(this.Default_Open_Click);
             // 
+            // TB_filePath
+            // 
+            this.TB_filePath.Location = new System.Drawing.Point(12, 66);
+            this.TB_filePath.Name = "TB_filePath";
+            this.TB_filePath.Size = new System.Drawing.Size(179, 20);
+            this.TB_filePath.TabIndex = 7;
+            // 
             // F_NewFunction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 127);
+            this.Controls.Add(this.TB_filePath);
             this.Controls.Add(this.Default_Open);
             this.Controls.Add(this.F_NewFunction_CB_Type);
             this.Controls.Add(this.F_NewFunction_L_Type);
@@ -129,5 +138,6 @@
         private System.Windows.Forms.Label F_NewFunction_L_Type;
         private System.Windows.Forms.ComboBox F_NewFunction_CB_Type;
         private System.Windows.Forms.Button Default_Open;
+        private System.Windows.Forms.TextBox TB_filePath;
     }
 }
