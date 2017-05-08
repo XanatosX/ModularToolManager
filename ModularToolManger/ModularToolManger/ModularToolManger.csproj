@@ -81,6 +81,12 @@
     <Compile Include="Forms\F_NewFunction.Designer.cs">
       <DependentUpon>F_NewFunction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\F_ReportBug.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\F_ReportBug.Designer.cs">
+      <DependentUpon>F_ReportBug.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\F_ToolManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +103,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\F_NewFunction.resx">
       <DependentUpon>F_NewFunction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\F_ReportBug.resx">
+      <DependentUpon>F_ReportBug.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\F_ToolManager.resx">
       <DependentUpon>F_ToolManager.cs</DependentUpon>
@@ -131,6 +140,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DLL\BitbucketAPI.dll" />
     <Content Include="DLL\Helper.dll" />
     <Content Include="DLL\jsonLanguage.dll" />
     <Content Include="DLL\Logging.dll" />

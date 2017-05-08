@@ -11,6 +11,14 @@
       "key": "F_ToolManager_File",
       "value": "File"
     },
+	{
+      "key": "F_ToolManager_ReportBug",
+      "value": "Report bug"
+    },
+	{
+      "key": "F_ReportBug",
+      "value": "Report bug"
+    },
     {
       "key": "F_ToolManager_NI_Taskliste",
       "value": "Tool Manager"
@@ -74,6 +82,10 @@
     {
       "key": "Default_Show",
       "value": "Show"
+    },    
+    {
+      "key": "Default_Send",
+      "value": "Send"
     }
   ]
 }

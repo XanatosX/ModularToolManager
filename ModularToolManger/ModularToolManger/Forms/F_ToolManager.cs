@@ -360,5 +360,13 @@ namespace ModularToolManger.Forms
                 CurrentTSI.Text = CentralLanguage.LanguageManager.GetText(CurrentTSI.Name);
             }
         }
+
+        private void F_ToolManager_ReportBug_Click(object sender, EventArgs e)
+        {
+            Hide();
+            F_ReportBug BugReporter = new F_ReportBug();
+            BugReporter.Show();
+            Show();
+        }
     }
 }
