@@ -18,7 +18,11 @@ pipelines:
 
             - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Release" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
 
-            - zip -r --junk-paths /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Release/ToolMangerInterface.dll /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/
+            - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Release/
+            - zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./ToolMangerInterface.dll
+
+            - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Release/
+            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./*
             - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip"
     rc-*:
       - step:
@@ -41,5 +45,9 @@ pipelines:
 
             - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Debug" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
 
-            - zip -r --junk-paths /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip /opt/atlassian/pipelines/agent/build/ModularToolManger/DefaultTools/bin/Debug/DefaultTools.dll /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/ToolMangerInterface.dll /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/
+            - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Debug/
+            - zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip ./DefaultTools.dll ./ToolMangerInterface.dll 
+
+            - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/
+            - zip -ur ./*
             - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip"
