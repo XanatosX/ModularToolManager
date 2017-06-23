@@ -152,10 +152,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Tool.ico" />
-    <Content Include="Modules\DefaultTools.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Modules\DefaultTools_old.dll" />
+    <Content Include="Modules\DefaultTools.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JSONSettings\JSONSettings.csproj">
