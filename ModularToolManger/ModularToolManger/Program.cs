@@ -16,11 +16,11 @@ namespace ModularToolManger
         [STAThread]
         static void Main()
         {
-            Settings s = new Settings();
-            s.AddNewField("ToolManager");
-            s.AddKeyValue("ToolManager", "Test", "Hey");
-            s.AddKeyValue("ToolManager", "Test2", false);
-            s.Save();
+            //Settings s = new Settings();
+            //s.AddNewField("ToolManager");
+            //s.AddKeyValue("ToolManager", "Test", "Hey");
+            //s.AddKeyValue("ToolManager", "Test2", false);
+            //s.Save();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             CentralLanguage.Initalize();
