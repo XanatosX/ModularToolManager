@@ -1,5 +1,4 @@
-﻿using BitbucketAPI;
-using ModularToolManger.Core;
+﻿using ModularToolManger.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
