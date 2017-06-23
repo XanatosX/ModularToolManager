@@ -100,6 +100,7 @@ namespace ModularToolManger.Forms
         {
             SetLanguage();
             SetupButtons();
+            F_ToolManager_ReportBug.Visible = false;
         }
         private void MoveToPosition()
         {
