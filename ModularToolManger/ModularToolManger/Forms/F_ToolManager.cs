@@ -268,17 +268,20 @@ namespace ModularToolManger.Forms
         {
             F_LanguageSelect LanguageSelector = new F_LanguageSelect(_settingsContainer);
             Hide();
+            F_ToolManager_NI_Taskliste_Close.Enabled = false;
             LanguageSelector.ShowDialog();
             _settingsContainer = LanguageSelector.Settings;
             _settingsContainer.Save();
             Show();
             SetLanguage();
             SetupButtons();
+            F_ToolManager_NI_Taskliste_Close.Enabled = true;
         }
         private void F_ToolManager_NewFunction_Click(object sender, EventArgs e)
         {
             F_NewFunction NewFunction = new F_NewFunction(ref _pluginManager);
             Hide();
+            F_ToolManager_NI_Taskliste_Close.Enabled = false;
             NewFunction.ShowDialog();
             if (NewFunction.NewFunction != null)
             {
@@ -288,6 +291,7 @@ namespace ModularToolManger.Forms
                 SetupButtons();
             }
             Show();
+            F_ToolManager_NI_Taskliste_Close.Enabled = true;
         }
         private void F_ToolManager_ButtonContext_Edit_Click(object sender, EventArgs e)
         {
@@ -411,15 +415,18 @@ namespace ModularToolManger.Forms
         private void F_ToolManager_ReportBug_Click(object sender, EventArgs e)
         {
             Hide();
+            F_ToolManager_NI_Taskliste_Close.Enabled = false;
             F_ReportBug BugReporter = new F_ReportBug();
             BugReporter.Show();
             Show();
+            F_ToolManager_NI_Taskliste_Close.Enabled = true;
         }
 
         private void F_ToolManager_Settings_Click(object sender, EventArgs e)
         {
             F_Settings settingsForm = new F_Settings(_settingsContainer, _pluginManager.LoadetPlugins);
             Hide();
+            F_ToolManager_NI_Taskliste_Close.Enabled = false;
             settingsForm.ShowDialog();
             if (settingsForm.Save)
                 _settingsContainer = settingsForm.Settings;
@@ -432,6 +439,7 @@ namespace ModularToolManger.Forms
                 TopMost = false;
 
             ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
+            F_ToolManager_NI_Taskliste_Close.Enabled = true;
         }
 
         private void F_ToolManager_Shown(object sender, EventArgs e)

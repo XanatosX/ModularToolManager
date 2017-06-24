@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -20,6 +21,7 @@ namespace ModularToolManger.Forms
         private List<IPlugin> _availablePlugins;
         public Settings Settings => _settings;
         public bool Save;
+        private bool _starting;
 
         public F_Settings(Settings settings, List<IPlugin> plugins = null)
         {
@@ -27,6 +29,7 @@ namespace ModularToolManger.Forms
             _availablePlugins = plugins;
             InitializeComponent();
             Save = false;
+            _starting = true;
         }
 
         private void F_Settings_Load(object sender, EventArgs e)
@@ -37,6 +40,7 @@ namespace ModularToolManger.Forms
             this.MaximizeBox = false;
             SetupTabs();
             SetupEntries();
+            _starting = false;
         }
 
         private void SetupTabs()
@@ -118,16 +122,50 @@ namespace ModularToolManger.Forms
 
         private void F_Settings_CB_AutoStart_CheckedChanged(object sender, EventArgs e)
         {
-            RegistryKey AutostartKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            //Disabled to prevent virus warning
+            //RegistryKey AutostartKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            //if (F_Settings_CB_AutoStart.Checked)
+            //{
+            //    AutostartKey.SetValue("ToolManagerAutoStart", Application.ExecutablePath.ToString());
+            //    AutostartKey.Close();
+            //}
+            //else
+            //{
+            //    AutostartKey.DeleteValue("ToolManagerAutoStart");
+            //}
+
+            //compromise solution
+            if (_starting)
+                return;
+            string TargetFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            string Name = "Tool Manager.url";
+            string ShortcutFile = $"{TargetFolder}\\{Name}";
             if (F_Settings_CB_AutoStart.Checked)
-            {
-                AutostartKey.SetValue("ToolManagerAutoStart", Application.ExecutablePath.ToString());
-                AutostartKey.Close();
-            }
+                CreateShortcut(ShortcutFile);
             else
+                DeleteShortcut(ShortcutFile);
+
+        }
+
+        private void CreateShortcut(string ShortcutFile)
+        {
+
+            string app = Application.ExecutablePath.ToString();
+
+            using (StreamWriter writer = new StreamWriter(ShortcutFile))
             {
-                AutostartKey.DeleteValue("ToolManagerAutoStart");
+                writer.WriteLine("[InternetShortcut]");
+                writer.WriteLine("URL=file:///" + app);
+                writer.WriteLine("IconIndex=0");
+                string icon = app.Replace('\\', '/');
+                writer.WriteLine("IconFile=" + icon);
             }
+        }
+
+        private void DeleteShortcut(string ShortcutFile)
+        {
+            if (File.Exists(ShortcutFile))
+            File.Delete(ShortcutFile);
         }
 
         private void Default_Abort_Click(object sender, EventArgs e)
