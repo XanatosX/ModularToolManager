@@ -44,7 +44,8 @@
             this.F_ToolManager_ButtonContext_Delete = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_TasklisteContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Default_Show = new System.Windows.Forms.ToolStripMenuItem();
-            this.F_ToolManager_NI_Taskliste_Close = new System.Windows.Forms.ToolStripMenuItem();
+            this.F_ToolManager_NI_Taskbar_Close = new System.Windows.Forms.ToolStripMenuItem();
+            this.F_ToolManager_NI_Taskbar_Buttons = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.F_ToolManager_ButtonContext.SuspendLayout();
             this.F_ToolManager_TasklisteContext.SuspendLayout();
@@ -150,24 +151,31 @@
             // 
             this.F_ToolManager_TasklisteContext.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Default_Show,
-            this.F_ToolManager_NI_Taskliste_Close});
+            this.F_ToolManager_NI_Taskbar_Buttons,
+            this.F_ToolManager_NI_Taskbar_Close});
             this.F_ToolManager_TasklisteContext.Name = "F_ToolManager_TasklisteContext";
-            this.F_ToolManager_TasklisteContext.Size = new System.Drawing.Size(258, 48);
+            this.F_ToolManager_TasklisteContext.Size = new System.Drawing.Size(266, 92);
             this.F_ToolManager_TasklisteContext.Text = "F_ToolManager_TasklisteContext";
             // 
             // Default_Show
             // 
             this.Default_Show.Name = "Default_Show";
-            this.Default_Show.Size = new System.Drawing.Size(257, 22);
+            this.Default_Show.Size = new System.Drawing.Size(265, 22);
             this.Default_Show.Text = "Default_Show";
             this.Default_Show.Click += new System.EventHandler(this.defaultShowToolStripMenuItem_Click);
             // 
-            // F_ToolManager_NI_Taskliste_Close
+            // F_ToolManager_NI_Taskbar_Close
             // 
-            this.F_ToolManager_NI_Taskliste_Close.Name = "F_ToolManager_NI_Taskliste_Close";
-            this.F_ToolManager_NI_Taskliste_Close.Size = new System.Drawing.Size(257, 22);
-            this.F_ToolManager_NI_Taskliste_Close.Text = "F_ToolManager_NI_Taskliste_Close";
-            this.F_ToolManager_NI_Taskliste_Close.Click += new System.EventHandler(this.F_ToolManager_NI_Taskliste_Close_Click);
+            this.F_ToolManager_NI_Taskbar_Close.Name = "F_ToolManager_NI_Taskbar_Close";
+            this.F_ToolManager_NI_Taskbar_Close.Size = new System.Drawing.Size(265, 22);
+            this.F_ToolManager_NI_Taskbar_Close.Text = "F_ToolManager_NI_Taskbar_Close";
+            this.F_ToolManager_NI_Taskbar_Close.Click += new System.EventHandler(this.F_ToolManager_NI_Taskliste_Close_Click);
+            // 
+            // F_ToolManager_NI_Taskbar_Buttons
+            // 
+            this.F_ToolManager_NI_Taskbar_Buttons.Name = "F_ToolManager_NI_Taskbar_Buttons";
+            this.F_ToolManager_NI_Taskbar_Buttons.Size = new System.Drawing.Size(265, 22);
+            this.F_ToolManager_NI_Taskbar_Buttons.Text = "F_ToolManager_NI_Taskbar_Buttons";
             // 
             // F_ToolManager
             // 
@@ -206,10 +214,11 @@
         private System.Windows.Forms.ToolStripMenuItem F_ToolManager_ButtonContext_Delete;
         private System.Windows.Forms.ToolStripMenuItem Default_Close;
         private System.Windows.Forms.ContextMenuStrip F_ToolManager_TasklisteContext;
-        private System.Windows.Forms.ToolStripMenuItem F_ToolManager_NI_Taskliste_Close;
+        private System.Windows.Forms.ToolStripMenuItem F_ToolManager_NI_Taskbar_Close;
         private System.Windows.Forms.ToolStripMenuItem Default_Show;
         private System.Windows.Forms.ToolStripMenuItem F_ToolManager_ReportBug;
         private System.Windows.Forms.ToolStripMenuItem F_ToolManager_Settings;
+        private System.Windows.Forms.ToolStripMenuItem F_ToolManager_NI_Taskbar_Buttons;
     }
 }
 

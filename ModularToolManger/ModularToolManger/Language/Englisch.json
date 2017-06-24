@@ -27,8 +27,12 @@
       "key": "F_ToolManager_NI_Taskliste",
       "value": "Tool Manager"
     },
+	{
+      "key": "F_ToolManager_NI_Taskbar_Buttons",
+      "value": "Functions"
+    },
     {
-      "key": "F_ToolManager_NI_Taskliste_Close",
+      "key": "F_ToolManager_NI_Taskbar_Close",
       "value": "Close"
     },
     {
