@@ -18,11 +18,15 @@ pipelines:
 
             - MONO_IOMAP=case xbuild /t:Build /p:Configuration="Release" /p:Platform="Any CPU" ModularToolManger/ModularToolManger.sln
 
+            - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/DefaultTools/bin/Release/
+            - zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./DefaultTools.dll
+
             - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/Release/
             - zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./ToolMangerInterface.dll
 
-            - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ToolMangerInterface/bin/
+            - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/
             - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./Release
+
             - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip"
     rc-*:
       - step:
