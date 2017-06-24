@@ -126,6 +126,8 @@ namespace JSONSettings
 
         private void Load()
         {
+            if (!File.Exists(_saveFile))
+                return;
             using (StreamReader reader = new StreamReader(_saveFile))
             {
                 string data = reader.ReadToEnd();
