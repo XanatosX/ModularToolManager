@@ -159,6 +159,7 @@ namespace ModularToolManger.Forms
 
             if (_functionManager.Functions.Count > 0)
             {
+                _functionManager.Functions.Sort((function1, function2) => (function1.sortingSequence.CompareTo(function2.sortingSequence)));
                 for (int i = 0; i < _functionManager.Functions.Count; i++)
                 {
                     Function currentFunction = _functionManager.Functions[i];
