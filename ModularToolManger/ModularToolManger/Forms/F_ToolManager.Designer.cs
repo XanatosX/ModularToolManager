@@ -33,7 +33,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.F_ToolManager_File = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_Langauge = new System.Windows.Forms.ToolStripMenuItem();
+            this.F_ToolManager_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_NewFunction = new System.Windows.Forms.ToolStripMenuItem();
+            this.F_ToolManager_ReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.Default_Close = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_NI_Taskliste = new System.Windows.Forms.NotifyIcon(this.components);
             this.F_ToolManager_ScrollBar = new System.Windows.Forms.VScrollBar();
@@ -43,7 +45,6 @@
             this.F_ToolManager_TasklisteContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Default_Show = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_NI_Taskliste_Close = new System.Windows.Forms.ToolStripMenuItem();
-            this.F_ToolManager_ReportBug = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.F_ToolManager_ButtonContext.SuspendLayout();
             this.F_ToolManager_TasklisteContext.SuspendLayout();
@@ -63,6 +64,7 @@
             // 
             this.F_ToolManager_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.F_ToolManager_Langauge,
+            this.F_ToolManager_Settings,
             this.F_ToolManager_NewFunction,
             this.F_ToolManager_ReportBug,
             this.Default_Close});
@@ -77,12 +79,26 @@
             this.F_ToolManager_Langauge.Text = "F_ToolManager_Langauge";
             this.F_ToolManager_Langauge.Click += new System.EventHandler(this.F_ToolManager_Langauge_Click);
             // 
+            // F_ToolManager_Settings
+            // 
+            this.F_ToolManager_Settings.Name = "F_ToolManager_Settings";
+            this.F_ToolManager_Settings.Size = new System.Drawing.Size(232, 22);
+            this.F_ToolManager_Settings.Text = "F_ToolManager_Settings";
+            this.F_ToolManager_Settings.Click += new System.EventHandler(this.F_ToolManager_Settings_Click);
+            // 
             // F_ToolManager_NewFunction
             // 
             this.F_ToolManager_NewFunction.Name = "F_ToolManager_NewFunction";
             this.F_ToolManager_NewFunction.Size = new System.Drawing.Size(232, 22);
             this.F_ToolManager_NewFunction.Text = "F_ToolManager_NewFunction";
             this.F_ToolManager_NewFunction.Click += new System.EventHandler(this.F_ToolManager_NewFunction_Click);
+            // 
+            // F_ToolManager_ReportBug
+            // 
+            this.F_ToolManager_ReportBug.Name = "F_ToolManager_ReportBug";
+            this.F_ToolManager_ReportBug.Size = new System.Drawing.Size(232, 22);
+            this.F_ToolManager_ReportBug.Text = "F_ToolManager_ReportBug";
+            this.F_ToolManager_ReportBug.Click += new System.EventHandler(this.F_ToolManager_ReportBug_Click);
             // 
             // Default_Close
             // 
@@ -94,6 +110,7 @@
             // F_ToolManager_NI_Taskliste
             // 
             this.F_ToolManager_NI_Taskliste.Icon = ((System.Drawing.Icon)(resources.GetObject("F_ToolManager_NI_Taskliste.Icon")));
+            this.F_ToolManager_NI_Taskliste.Tag = "F_ToolManager_NI_Taskliste";
             this.F_ToolManager_NI_Taskliste.Text = "F_ToolManager_NI_Taskliste";
             this.F_ToolManager_NI_Taskliste.Visible = true;
             this.F_ToolManager_NI_Taskliste.Click += new System.EventHandler(this.F_ToolManager_NI_Taskliste_Click);
@@ -152,13 +169,6 @@
             this.F_ToolManager_NI_Taskliste_Close.Text = "F_ToolManager_NI_Taskliste_Close";
             this.F_ToolManager_NI_Taskliste_Close.Click += new System.EventHandler(this.F_ToolManager_NI_Taskliste_Close_Click);
             // 
-            // F_ToolManager_ReportBug
-            // 
-            this.F_ToolManager_ReportBug.Name = "F_ToolManager_ReportBug";
-            this.F_ToolManager_ReportBug.Size = new System.Drawing.Size(232, 22);
-            this.F_ToolManager_ReportBug.Text = "F_ToolManager_ReportBug";
-            this.F_ToolManager_ReportBug.Click += new System.EventHandler(this.F_ToolManager_ReportBug_Click);
-            // 
             // F_ToolManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -173,7 +183,7 @@
             this.Text = "F_ToolManager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.F_ToolManager_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.Move += new System.EventHandler(this.F_ToolManager_Move);
+            this.Shown += new System.EventHandler(this.F_ToolManager_Shown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.F_ToolManager_ButtonContext.ResumeLayout(false);
@@ -199,6 +209,7 @@
         private System.Windows.Forms.ToolStripMenuItem F_ToolManager_NI_Taskliste_Close;
         private System.Windows.Forms.ToolStripMenuItem Default_Show;
         private System.Windows.Forms.ToolStripMenuItem F_ToolManager_ReportBug;
+        private System.Windows.Forms.ToolStripMenuItem F_ToolManager_Settings;
     }
 }
 

@@ -12,6 +12,10 @@
       "value": "Datei"
     },
 	{
+      "key": "F_ToolManager_Settings",
+      "value": "Einstellungen"
+    },
+	{
       "key": "F_ToolManager_ReportBug",
       "value": "Bug melden"
     },
@@ -30,7 +34,27 @@
     {
       "key": "F_ToolManager_Langauge",
       "value": "Sprache"
-    },      
+    },  
+	{
+      "key": "TP_Common",
+      "value": "Allgemein"
+    },
+	{
+	  "key": "F_Settings_CB_KeepOnTop",
+	  "value": "Im Vordergrund halten"
+	},
+	{
+	  "key": "F_Settings_CB_StartMinimized",
+	  "value": "Minimiert starten"
+	},
+	{
+	  "key": "F_Settings_CB_HideInTaskbar",
+	  "value": "In Taskleiste verstecken"
+	},
+	{
+	  "key": "F_Settings_CB_AutoStart",
+	  "value": "Mit Windows starten"
+	},
     {
       "key": "F_ToolManager_ButtonContext_Edit",
       "value": "Bearbeiten"
@@ -38,7 +62,11 @@
     {
       "key": "F_ToolManager_ButtonContext_Delete",
       "value": "Löschen"
-    },
+    },    
+	{
+	  "key": "F_Settings",
+	  "value": "Einstellungen"
+	},
     {
       "key": "F_LanguageSelect",
       "value": "Sprachauswahl"

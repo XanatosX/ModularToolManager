@@ -12,6 +12,10 @@
       "value": "File"
     },
 	{
+      "key": "F_ToolManager_Settings",
+      "value": "Settings"
+    },
+	{
       "key": "F_ToolManager_ReportBug",
       "value": "Report bug"
     },
@@ -43,6 +47,30 @@
       "key": "F_ToolManager_ButtonContext_Delete",
       "value": "Delete"
     },    
+	{
+	  "key": "F_Settings",
+	  "value": "Settings"
+	},
+	{
+      "key": "TP_Common",
+      "value": "Common"
+    },
+	{
+	  "key": "F_Settings_CB_KeepOnTop",
+	  "value": "KeepOnTop"
+	},
+	{
+	  "key": "F_Settings_CB_StartMinimized",
+	  "value": "Start minimized"
+	},
+	{
+	  "key": "F_Settings_CB_HideInTaskbar",
+	  "value": "Hide in taskbar"
+	},
+	{
+	  "key": "F_Settings_CB_AutoStart",
+	  "value": "Start with windows"
+	},
     {
       "key": "F_LanguageSelect",
       "value": "Langauge selection"

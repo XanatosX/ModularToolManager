@@ -28,7 +28,7 @@ namespace JSONSettings
             SettingsNode node = getNode(Name);
             if (node == null)
                 return false;
-            node.AddKeyValue(Key, Value);
+            node.AddOrChangeKeyValue(Key, Value);
             return true;
         }
 
@@ -40,10 +40,9 @@ namespace JSONSettings
                 type = SettingsType.Error;
                 return String.Empty;
             }
+            string Value = node.GetKeyValue(Key, out type);
 
-            type = SettingsType.Float;
-
-            return "";
+            return Value;
         }
 
         private SettingsNode getNode(string Name)

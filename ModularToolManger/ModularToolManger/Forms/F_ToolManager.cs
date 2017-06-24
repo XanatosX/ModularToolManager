@@ -14,7 +14,7 @@ using System.Text;
 using System.Configuration;
 using System.Windows.Forms;
 using ToolMangerInterface;
-using static System.Collections.Specialized.NameObjectCollectionBase;
+using JSONSettings;
 
 namespace ModularToolManger.Forms
 {
@@ -34,6 +34,7 @@ namespace ModularToolManger.Forms
         private string _functionsPath;
 
         private int _lastContextListButton;
+        private Settings _settingsContainer;
 
         public F_ToolManager()
         {
@@ -58,8 +59,24 @@ namespace ModularToolManger.Forms
             CentralLogging.AppDebugLogger.WriteLine("Searching modules at: " + new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + @"\Modules", Logging.LogLevel.Information);
 
             SetupPlugins();
-
         }
+
+        protected override void WndProc(ref Message message)
+        {
+            const int WM_SYSCOMMAND = 0x0112;
+            const int SC_MOVE = 0xF010;
+
+            switch (message.Msg)
+            {
+                case WM_SYSCOMMAND:
+                    int command = message.WParam.ToInt32() & 0xfff0;
+                    if (command == SC_MOVE)
+                        return;
+                    break;
+            }
+            base.WndProc(ref message);
+        }
+
         private void SetupPlugins()
         {
             List<string> allowedTypes = LoadPlugins();
@@ -98,6 +115,7 @@ namespace ModularToolManger.Forms
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            SetupSettingsFile();
             SetLanguage();
             SetupButtons();
             F_ToolManager_ReportBug.Visible = false;
@@ -111,9 +129,25 @@ namespace ModularToolManger.Forms
             _location = new Point(LocX, LocY);
             Location = _location;
         }
+        private void SetupSettingsFile()
+        {
+            _settingsContainer = new Settings(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\ToolManager\settings.json");
+            _settingsContainer.AddNewField("ToolManager");
+            SetupSettingsForPlugins();
+        }
+        private void SetupSettingsForPlugins()
+        {
+            for (int i = 0; i < _pluginManager.PluginCount; i++)
+            {
+                _settingsContainer.AddNewField(_pluginManager.LoadetPlugins[i].UniqueName);
+            }
+        }
         private void SetLanguage()
         {
+            string Language = _settingsContainer.GetValue("Language");
+            CentralLanguage.LanguageManager.SetLanguageByCountyCode(Language);
             this.SetupLanguage();
+            F_ToolManager_NI_Taskliste.Text = CentralLanguage.LanguageManager.GetText(F_ToolManager_NI_Taskliste.Tag.ToString());
             SetLanguageForContextStrip(F_ToolManager_ButtonContext);
             SetLanguageForContextStrip(F_ToolManager_TasklisteContext);
         }
@@ -232,9 +266,11 @@ namespace ModularToolManger.Forms
         }
         private void F_ToolManager_Langauge_Click(object sender, EventArgs e)
         {
-            F_LanguageSelect LanguageSelector = new F_LanguageSelect();
+            F_LanguageSelect LanguageSelector = new F_LanguageSelect(_settingsContainer);
             Hide();
             LanguageSelector.ShowDialog();
+            _settingsContainer = LanguageSelector.Settings;
+            _settingsContainer.Save();
             Show();
             SetLanguage();
             SetupButtons();
@@ -286,10 +322,6 @@ namespace ModularToolManger.Forms
             _functionManager.DeleteFunction(GetFunctionFromButton(B));
             SetupButtons();
         }
-        private void F_ToolManager_Move(object sender, EventArgs e)
-        {
-            Location = _location;
-        }
         private void F_ToolManager_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!_forceClose)
@@ -301,6 +333,8 @@ namespace ModularToolManger.Forms
                 return;
             }
             F_ToolManager_NI_Taskliste.Visible = false;
+
+            _settingsContainer.Save();
         }
         private void defaultCloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -321,7 +355,19 @@ namespace ModularToolManger.Forms
                 this.MoveToPosition();
                 this.Show();
                 Default_Show.Visible = _hidden;
+
+                if (_settingsContainer.GetBoolValue("KeepOnTop"))
+                    TopMost = true;
+                else
+                    TopMost = false;
             }
+            else
+            {
+                TopMost = true;
+                TopMost = false;
+            }
+
+
         }
         private void F_ToolManager_NI_Taskliste_Close_Click(object sender, EventArgs e)
         {
@@ -368,6 +414,35 @@ namespace ModularToolManger.Forms
             F_ReportBug BugReporter = new F_ReportBug();
             BugReporter.Show();
             Show();
+        }
+
+        private void F_ToolManager_Settings_Click(object sender, EventArgs e)
+        {
+            F_Settings settingsForm = new F_Settings(_settingsContainer, _pluginManager.LoadetPlugins);
+            Hide();
+            settingsForm.ShowDialog();
+            if (settingsForm.Save)
+                _settingsContainer = settingsForm.Settings;
+            Show();
+            _settingsContainer.Save();
+
+            if (_settingsContainer.GetBoolValue("KeepOnTop"))
+                TopMost = true;
+            else
+                TopMost = false;
+
+            ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
+        }
+
+        private void F_ToolManager_Shown(object sender, EventArgs e)
+        {
+            if (_settingsContainer.GetBoolValue("StartMinimized"))
+            {
+                Hide();
+                _hidden = true;
+                Default_Show.Visible = _hidden;
+            }
+            ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
         }
     }
 }

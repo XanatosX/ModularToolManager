@@ -9,7 +9,7 @@ namespace JSONSettings
     public class SettingsNode
     {
         public string Name;
-        public List<KeyValue> _settings;
+        public List<KeyValue> Settings;
 
         public SettingsNode()
         {
@@ -24,26 +24,39 @@ namespace JSONSettings
 
         private void init()
         {
-            _settings = new List<KeyValue>();
+            Settings = new List<KeyValue>();
         }
 
         private bool AddKeyValue(string key, object Value, SettingsType valueType = SettingsType.String)
         {
             if (KeyContained(key))
-                return false;
-            _settings.Add(new KeyValue()
             {
-                Key = key,
-                Value = Value.ToString(),
-                ValueType = valueType,
-            });
+                foreach (KeyValue pair in Settings)
+                {
+                    if (pair.Key == key)
+                    {
+                        pair.Value = Value.ToString();
+                        pair.ValueType = valueType;
+                    }
+                }
+            }
+            else
+            {
+                Settings.Add(new KeyValue()
+                {
+                    Key = key,
+                    Value = Value.ToString(),
+                    ValueType = valueType,
+                });
+            }
 
             return true;
         }
-        public bool AddKeyValue(string key, object Value)
+        public bool AddOrChangeKeyValue(string key, object Value)
         {
             SettingsType type = SettingsType.String;
-            switch (Type.GetTypeCode(Value.GetType()))
+            TypeCode code = Type.GetTypeCode(Value.GetType());
+            switch (code)
             {
                 case TypeCode.Boolean:
                     type = SettingsType.Bool;
@@ -51,6 +64,7 @@ namespace JSONSettings
                 case TypeCode.Int32:
                     type = SettingsType.Int;
                     break;
+                case TypeCode.Single:
                 case TypeCode.Decimal:
                     type = SettingsType.Float;
                     break;
@@ -71,7 +85,7 @@ namespace JSONSettings
         {
             if (KeyContained(key))
             {
-                foreach (KeyValue pair in _settings)
+                foreach (KeyValue pair in Settings)
                 {
                     if (pair.Key == key)
                     {
@@ -88,7 +102,7 @@ namespace JSONSettings
         private bool KeyContained(string key)
         {
 
-            foreach (KeyValue pair in _settings)
+            foreach (KeyValue pair in Settings)
             {
                 if (pair.Key == key)
                     return true;

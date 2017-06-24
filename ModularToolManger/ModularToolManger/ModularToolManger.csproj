@@ -87,6 +87,12 @@
     <Compile Include="Forms\F_ReportBug.Designer.cs">
       <DependentUpon>F_ReportBug.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\F_Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\F_Settings.Designer.cs">
+      <DependentUpon>F_Settings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\F_ToolManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\F_ReportBug.resx">
       <DependentUpon>F_ReportBug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\F_Settings.resx">
+      <DependentUpon>F_Settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\F_ToolManager.resx">
       <DependentUpon>F_ToolManager.cs</DependentUpon>

@@ -31,16 +31,6 @@ namespace ToolMangerInterface
             }
         }
 
-        //private bool _ready;
-        //public bool Ready
-        //{
-        //    get
-        //
-        //    {
-        //        return _ready;
-        //    }
-        //}
-
         public string SaveFile
         {
             get

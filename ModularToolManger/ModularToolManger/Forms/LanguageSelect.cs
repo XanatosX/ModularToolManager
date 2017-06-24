@@ -1,4 +1,5 @@
 ﻿using Helper.GUI;
+using JSONSettings;
 using ModularToolManger.Core;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,12 @@ namespace ModularToolManger.Forms
         private int _endPos;
         private bool _settingUp;
         private string _oldLanguage;
-        public F_LanguageSelect()
+
+        private Settings _settings;
+        public Settings Settings => _settings;
+        public F_LanguageSelect(Settings settings)
         {
+            _settings = settings;
             InitializeComponent();
         }
 
@@ -77,6 +82,7 @@ namespace ModularToolManger.Forms
 
         private void Default_OK_Click(object sender, EventArgs e)
         {
+            _settings.AddOrChangeKeyValue("Language", CentralLanguage.LanguageManager.CountryCode);
             this.Close();
         }
     }

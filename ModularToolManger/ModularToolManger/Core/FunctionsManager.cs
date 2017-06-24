@@ -58,7 +58,7 @@ namespace ModularToolManger.Core
 
             using (StreamWriter writer = new StreamWriter(_saveFile))
             {
-                string sData = JsonConvert.SerializeObject(root);
+                string sData = JsonConvert.SerializeObject(root, Formatting.Indented);
                 writer.Write(sData);
             }
         }
