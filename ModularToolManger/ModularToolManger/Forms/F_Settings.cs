@@ -149,7 +149,6 @@ namespace ModularToolManger.Forms
 
         private void CreateShortcut(string ShortcutFile)
         {
-
             string app = Application.ExecutablePath.ToString();
 
             using (StreamWriter writer = new StreamWriter(ShortcutFile))
