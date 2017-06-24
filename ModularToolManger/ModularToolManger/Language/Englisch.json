@@ -46,7 +46,11 @@
     {
       "key": "F_ToolManager_ButtonContext_Delete",
       "value": "Delete"
-    },    
+    },
+	{
+      "key": "F_New_Function_CB_ShowInTaskList",
+      "value": "Show in notification icon"
+    },
 	{
 	  "key": "F_Settings",
 	  "value": "Settings"

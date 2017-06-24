@@ -105,6 +105,8 @@ namespace ModularToolManger.Forms
             F_NewFunction_CB_Type.Location = new Point(_startPos, F_NewFunction_CB_Type.Location.Y);
             F_NewFunction_CB_Type.Size = new Size(_endPos - F_NewFunction_CB_Type.Location.X, F_NewFunction_CB_Type.Height);
 
+            F_New_Function_CB_ShowInTaskList.Location = new Point(_startPos, F_New_Function_CB_ShowInTaskList.Location.Y);
+
             F_NewFunction_CB_Type.SelectedIndexChanged += F_NewFunction_CB_Type_SelectedIndexChanged;
 
 
@@ -127,6 +129,7 @@ namespace ModularToolManger.Forms
                 {
                     _selectIndex = i;
                     Default_Open.Tag = plugin;
+                    F_New_Function_CB_ShowInTaskList.Checked = _returnFunction.ShowInNotification;
                     TB_filePath.Text = _returnFunction.FilePath;
                     break;
                 }
@@ -203,6 +206,7 @@ namespace ModularToolManger.Forms
                 {
                     ID = Guid.NewGuid().ToString(),
                     Name = F_NewFunction_TB_Name.Text,
+                    ShowInNotification = F_New_Function_CB_ShowInTaskList.Checked,
                     Type = _pluginManager.LoadetPlugins[F_NewFunction_CB_Type.SelectedIndex].UniqueName,
                     FilePath = (string)Tag
                 };

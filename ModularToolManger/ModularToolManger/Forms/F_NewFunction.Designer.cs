@@ -36,6 +36,7 @@
             this.F_NewFunction_CB_Type = new System.Windows.Forms.ComboBox();
             this.Default_Open = new System.Windows.Forms.Button();
             this.TB_filePath = new System.Windows.Forms.TextBox();
+            this.F_New_Function_CB_ShowInTaskList = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // F_NewFunction_L_Name
@@ -56,7 +57,7 @@
             // 
             // Default_OK
             // 
-            this.Default_OK.Location = new System.Drawing.Point(16, 93);
+            this.Default_OK.Location = new System.Drawing.Point(12, 116);
             this.Default_OK.Name = "Default_OK";
             this.Default_OK.Size = new System.Drawing.Size(75, 23);
             this.Default_OK.TabIndex = 2;
@@ -66,7 +67,7 @@
             // 
             // Default_Abort
             // 
-            this.Default_Abort.Location = new System.Drawing.Point(197, 93);
+            this.Default_Abort.Location = new System.Drawing.Point(197, 116);
             this.Default_Abort.Name = "Default_Abort";
             this.Default_Abort.Size = new System.Drawing.Size(75, 23);
             this.Default_Abort.TabIndex = 3;
@@ -93,7 +94,7 @@
             // 
             // Default_Open
             // 
-            this.Default_Open.Location = new System.Drawing.Point(197, 64);
+            this.Default_Open.Location = new System.Drawing.Point(197, 87);
             this.Default_Open.Name = "Default_Open";
             this.Default_Open.Size = new System.Drawing.Size(75, 23);
             this.Default_Open.TabIndex = 6;
@@ -103,16 +104,27 @@
             // 
             // TB_filePath
             // 
-            this.TB_filePath.Location = new System.Drawing.Point(12, 66);
+            this.TB_filePath.Location = new System.Drawing.Point(12, 90);
             this.TB_filePath.Name = "TB_filePath";
             this.TB_filePath.Size = new System.Drawing.Size(179, 20);
             this.TB_filePath.TabIndex = 7;
+            // 
+            // F_New_Function_CB_ShowInTaskList
+            // 
+            this.F_New_Function_CB_ShowInTaskList.AutoSize = true;
+            this.F_New_Function_CB_ShowInTaskList.Location = new System.Drawing.Point(63, 64);
+            this.F_New_Function_CB_ShowInTaskList.Name = "F_New_Function_CB_ShowInTaskList";
+            this.F_New_Function_CB_ShowInTaskList.Size = new System.Drawing.Size(209, 17);
+            this.F_New_Function_CB_ShowInTaskList.TabIndex = 8;
+            this.F_New_Function_CB_ShowInTaskList.Text = "F_New_Function_CB_ShowInTaskList";
+            this.F_New_Function_CB_ShowInTaskList.UseVisualStyleBackColor = true;
             // 
             // F_NewFunction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 127);
+            this.ClientSize = new System.Drawing.Size(284, 160);
+            this.Controls.Add(this.F_New_Function_CB_ShowInTaskList);
             this.Controls.Add(this.TB_filePath);
             this.Controls.Add(this.Default_Open);
             this.Controls.Add(this.F_NewFunction_CB_Type);
@@ -139,5 +151,6 @@
         private System.Windows.Forms.ComboBox F_NewFunction_CB_Type;
         private System.Windows.Forms.Button Default_Open;
         private System.Windows.Forms.TextBox TB_filePath;
+        private System.Windows.Forms.CheckBox F_New_Function_CB_ShowInTaskList;
     }
 }

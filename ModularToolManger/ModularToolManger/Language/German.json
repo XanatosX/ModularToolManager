@@ -62,7 +62,11 @@
     {
       "key": "F_ToolManager_ButtonContext_Delete",
       "value": "Löschen"
-    },    
+    },
+	{
+      "key": "F_New_Function_CB_ShowInTaskList",
+      "value": "Zeige in Benachrichtigungs Icon"
+    }
 	{
 	  "key": "F_Settings",
 	  "value": "Einstellungen"

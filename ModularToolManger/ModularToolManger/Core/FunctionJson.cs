@@ -13,6 +13,8 @@ namespace ModularToolManger.Core
         public string Name { get; set; }
         public string Type { get; set; }
         public string FilePath { get; set; }
+        public int sortingSequence { get; set; }
+        public bool ShowInNotification { get; set; }
 
 
         public bool PerformeAction(IFunction plugin)

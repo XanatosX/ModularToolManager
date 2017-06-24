@@ -21,6 +21,8 @@ namespace ModularToolManger.Core
         }
 
         private string _saveFile;
+        private int _nextSortingSequence;
+        public int NextSortingSequence => _nextSortingSequence;
 
         public FunctionsManager(string SaveFile, List<string> allowedTypes)
         {
@@ -28,6 +30,7 @@ namespace ModularToolManger.Core
             _allowedTypes = allowedTypes;
             _allFunctions = new List<Function>();
             _availablefunctions = new List<Function>();
+            _nextSortingSequence = 0;
         }
 
         public void Load()
