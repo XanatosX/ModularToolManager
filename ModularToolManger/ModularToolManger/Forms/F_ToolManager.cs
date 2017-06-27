@@ -401,6 +401,7 @@ namespace ModularToolManger.Forms
             else
             {
                 TopMost = true;
+                if(!_settingsContainer.GetBoolValue("KeepOnTop"))
                 TopMost = false;
             }
 
