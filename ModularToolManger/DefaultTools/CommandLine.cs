@@ -110,7 +110,14 @@ namespace DefaultTools
             Process process = new Process(); ;
             process.StartInfo.FileName = CurrentContext.FilePath;
             process.StartInfo.WorkingDirectory = (new FileInfo(CurrentContext.FilePath)).DirectoryName;
-            process.Start();
+            try
+            {
+                process.Start();
+            }
+            catch (Exception ex)
+            {
+            }
+            
 
 
             return true;
