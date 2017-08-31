@@ -117,6 +117,9 @@ namespace JSONSettings
             Formatting format = Formatting.Indented;
             if (compressed)
                 format = Formatting.None;
+            FileInfo FI = new FileInfo(_saveFile);
+            if (!Directory.Exists(FI.DirectoryName))
+                Directory.CreateDirectory(FI.DirectoryName);
             string settings = JsonConvert.SerializeObject(_settings, format);
             using (StreamWriter writer = new StreamWriter(_saveFile))
             {
