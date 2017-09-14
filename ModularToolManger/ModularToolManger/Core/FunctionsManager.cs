@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using JSONSettings;
 
 namespace ModularToolManger.Core
 {
@@ -44,7 +45,10 @@ namespace ModularToolManger.Core
                 foreach (Function currentFunction in data.Functions)
                 {
                     if (_allowedTypes.Contains(currentFunction.Type))
+                    {
                         _availablefunctions.Add(currentFunction);
+                    }
+                       
                 }
             }
 

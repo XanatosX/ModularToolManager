@@ -88,8 +88,9 @@ namespace DefaultTools
             get => _comModule;
         }
 
-        private HashSet<FunctionSetting> _settings;
-        public HashSet<FunctionSetting> Settings => _settings;
+
+        PluginSettings _settings;
+        PluginSettings ISettingPlugin.Settings => _settings;
 
         public event EventHandler<ErrorData> Error;
 
@@ -101,9 +102,11 @@ namespace DefaultTools
         public bool initialize()
         {
             _fileEndings = new Dictionary<string, string>();
-            _settings = new HashSet<FunctionSetting>();
+            _settings = new PluginSettings();
 
             _fileEndings.Add("Linkfile", ".lnk");
+            _fileEndings.Add("Executable", ".exe");
+
             _comModule = new Module();
             _initialized = true;
             return true;

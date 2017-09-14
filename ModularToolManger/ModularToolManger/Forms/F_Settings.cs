@@ -92,7 +92,7 @@ namespace ModularToolManger.Forms
 
         private void setupTabPage(Control Tab, IFunction curFunction)
         {
-            foreach (FunctionSetting curSettings in curFunction.Settings)
+            foreach (IPluginSetting curSettings in curFunction.Settings.AllSettings)
             {
                 if (curSettings.objectType == typeof(bool))
                 {
@@ -130,16 +130,43 @@ namespace ModularToolManger.Forms
                             return true;
                         if (TP.Tag.ToString() == "Added")
                             Name = TP.Name;
-                        string SettingsKey = c.Tag.ToString();
+                        IPlugin curPlugin = GetPluginByName(Name);
+                        IFunction curFunction = null;
+                        if (curPlugin != null)
+                        {
+                            
+                            try
+                            {
+                                curFunction = (IFunction)curPlugin;
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+
+                            string SettingsKey = c.Tag.ToString();
                         if (c.GetType() == typeof(CheckBox))
                         {
                             CheckBox cb = (CheckBox)c;
                             cb.Checked = _settings.GetBoolValue(Name, SettingsKey);
+
+                            if (curFunction != null)
+                                curFunction.Settings.UpdateValue(SettingsKey, cb.Checked);
                         }
                         return true;
                     });
                 return true;
             });
+        }
+
+        private IPlugin GetPluginByName(string uniqueName)
+        {
+            foreach (IPlugin plugin in _availablePlugins)
+            {
+                if (plugin.UniqueName == uniqueName)
+                    return plugin;
+            }
+            return null;
         }
 
         private void F_Settings_CB_KeepOnTop_CheckedChanged(object sender, EventArgs e)

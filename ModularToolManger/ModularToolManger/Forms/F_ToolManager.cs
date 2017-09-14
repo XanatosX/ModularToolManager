@@ -163,6 +163,46 @@ namespace ModularToolManger.Forms
             for (int i = 0; i < _pluginManager.PluginCount; i++)
             {
                 _settingsContainer.AddNewField(_pluginManager.LoadetPlugins[i].UniqueName);
+                try
+                {
+                    IFunction function = (IFunction)_pluginManager.LoadetPlugins[i];
+                    
+                    foreach (IPluginSetting setting in function.Settings.AllSettings)
+                    {
+                        SettingsType type = SettingsType.Error;
+                        string curSettings = _settingsContainer.GetValue(function.UniqueName, setting.Key, out type);
+                        switch (type)
+                        {
+                            case SettingsType.String:
+                                function.Settings.UpdateValue(setting.Key, curSettings);
+                                break;
+                            case SettingsType.Bool:
+                                bool Bvalue = false;
+                                if (bool.TryParse(curSettings, out Bvalue))
+                                    function.Settings.UpdateValue(setting.Key, Bvalue);
+                                break;
+                            case SettingsType.Int:
+                                int Ivalue = 0;
+                                if (int.TryParse(curSettings, out Ivalue))
+                                    function.Settings.UpdateValue(setting.Key, Ivalue);
+                                break;
+                            case SettingsType.Float:
+                                float Fvalue = 0;
+                                if (float.TryParse(curSettings, out Fvalue))
+                                    function.Settings.UpdateValue(setting.Key, Fvalue);
+                                break;
+                            case SettingsType.Error:
+                                break;
+                            default:
+                                break;
+                        }
+                        //
+                    }
+
+                }
+                catch (Exception)
+                {
+                }
             }
         }
         private void SetLanguage()

@@ -88,8 +88,8 @@ namespace DefaultTools
             get => _comModule;
         }
 
-        private HashSet<FunctionSetting> _settings;
-        public HashSet<FunctionSetting> Settings => _settings;
+        PluginSettings _settings;
+        PluginSettings ISettingPlugin.Settings => _settings;
 
         public event EventHandler<ErrorData> Error;
 
@@ -101,12 +101,12 @@ namespace DefaultTools
         public bool initialize()
         {
             _fileEndings = new Dictionary<string, string>();
-            _settings = new HashSet<FunctionSetting>();
+            _settings = new PluginSettings();
 
             _fileEndings.Add("Commandline", ".cmd");
             _fileEndings.Add("Batch-File", ".bat");
 
-            _settings.Add(new FunctionSetting("Hide CMD", "Hide the cmd window", false));
+            _settings.AddValue(new PluginSetting("Hidecmd", "Hide cmd", false));
 
             _comModule = new Module();
             _initialized = true;
@@ -124,7 +124,12 @@ namespace DefaultTools
                 return false;
 
             FunctionContext CurrentContext = (FunctionContext)context;
-            Process process = new Process(); ;
+            Process process = new Process();
+
+            process.StartInfo.CreateNoWindow = _settings.GetBoolValue("Hidecmd");
+            process.StartInfo.UseShellExecute = !_settings.GetBoolValue("Hidecmd");
+
+
             process.StartInfo.FileName = CurrentContext.FilePath;
             process.StartInfo.WorkingDirectory = (new FileInfo(CurrentContext.FilePath)).DirectoryName;
             try

@@ -92,6 +92,7 @@ namespace JSONSettings
                 return "";
             return returnString;
         }
+
         public string GetValue(string key, out SettingsType type)
         {
             return GetValue(_defaultApp, key, out type);

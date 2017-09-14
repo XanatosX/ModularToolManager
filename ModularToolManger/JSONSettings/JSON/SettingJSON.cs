@@ -44,7 +44,6 @@ namespace JSONSettings
 
             return Value;
         }
-
         private SettingsNode getNode(string Name)
         {
             foreach (SettingsNode node in nodes)
