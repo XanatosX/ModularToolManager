@@ -144,7 +144,7 @@ namespace ModularToolManger.Forms
                             }
                         }
 
-                            string SettingsKey = c.Tag.ToString();
+                        string SettingsKey = c.Tag.ToString();
                         if (c.GetType() == typeof(CheckBox))
                         {
                             CheckBox cb = (CheckBox)c;
@@ -182,7 +182,11 @@ namespace ModularToolManger.Forms
                     {
                         string Name = _settings.DefaultApp;
                         if (TP.Tag.ToString() == "Added")
+                        {
                             Name = TP.Name;
+                            updatePlugins(Name, (TabPage)TP);
+                        }
+                            
                         string SettingsName = c.Tag.ToString();
                         if (SettingsName == "")
                             return false;
@@ -197,7 +201,41 @@ namespace ModularToolManger.Forms
                 return true;
             });
             Save = true;
+
+
+
             this.Close();
+        }
+
+        private void updatePlugins(string pluginName, TabPage page)
+        {
+            page.DoForEveryControl((Control c) =>
+            {
+                if (c.GetType() == typeof(Label))
+                    return true;
+                IPlugin curPlugin = GetPluginByName(pluginName);
+                IFunction curFunction = null;
+                if (curPlugin != null)
+                {
+                    try
+                    {
+                        curFunction = (IFunction)curPlugin;
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                string SettingsKey = c.Tag.ToString();
+                if (c.GetType() == typeof(CheckBox))
+                {
+                    CheckBox cb = (CheckBox)c;
+
+                    if (curFunction != null)
+                        curFunction.Settings.UpdateValue(SettingsKey, cb.Checked);
+                }
+
+                return true;
+            });
         }
 
         private void F_Settings_CB_AutoStart_CheckedChanged(object sender, EventArgs e)
