@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ToolMangerInterface;
 
 namespace ModularToolManger.Forms
 {
@@ -22,6 +23,12 @@ namespace ModularToolManger.Forms
         public Settings Settings => _settings;
         public bool Save;
         private bool _starting;
+
+        private int yStart;
+        private int xStart;
+        private int nextOffset;
+        private int curY;
+
 
         public F_Settings(Settings settings, List<IPlugin> plugins = null)
         {
@@ -34,6 +41,12 @@ namespace ModularToolManger.Forms
 
         private void F_Settings_Load(object sender, EventArgs e)
         {
+            xStart = 8;
+            yStart = 6;
+            
+            nextOffset = 5;
+            curY = yStart;
+
             this.SetupLanguage();
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
             this.MinimizeBox = false;
@@ -62,8 +75,46 @@ namespace ModularToolManger.Forms
                 newPage.Text = plugin.DisplayName;
                 newPage.Name = plugin.UniqueName;
                 newPage.Tag = "Added";
+
+                try
+                {
+                    setupTabPage(newPage, (IFunction)plugin);
+                }
+                catch (Exception)
+                {
+                }
+                  
+
                 if (newPage.Controls.Count > 0)
                     tabControl1.TabPages.Add(newPage);
+            }
+        }
+
+        private void setupTabPage(Control Tab, IFunction curFunction)
+        {
+            foreach (FunctionSetting curSettings in curFunction.Settings)
+            {
+                if (curSettings.objectType == typeof(bool))
+                {
+                    CheckBox CB = new CheckBox()
+                    {
+                        Text = curSettings.DisplayName,
+                        Tag = curSettings.Key,
+                        Checked = (bool)curSettings.Value,
+                        Location = new Point(xStart, curY),
+                    };
+                    Tab.Controls.Add(CB);
+                    curY += CB.Size.Height + nextOffset;
+                }
+                else
+                {
+                    Tab.Controls.Add(new Label()
+                    {
+                        Text = curSettings.Key,
+                    });
+                }
+            
+
             }
         }
 
@@ -75,6 +126,8 @@ namespace ModularToolManger.Forms
                     TP.DoForEveryControl((Control c) =>
                     {
                         string Name = _settings.DefaultApp;
+                        if (c.GetType() == typeof(Label))
+                            return true;
                         if (TP.Tag.ToString() == "Added")
                             Name = TP.Name;
                         string SettingsKey = c.Tag.ToString();

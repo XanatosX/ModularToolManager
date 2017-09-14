@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PluginInterface">
-      <HintPath>..\ModularToolManger\DLL\PluginInterface.dll</HintPath>
+    <Reference Include="PluginSystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ModularToolManger\DLL\PluginSystem.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

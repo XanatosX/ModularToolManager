@@ -31,6 +31,8 @@ namespace ModularToolManger.Forms
         }
         private bool _editMode;
 
+        private bool _firstOpen;
+
         //private Dictionary<string, IFunction> _functions;
 
         public F_NewFunction(ref Manager pluginManager)
@@ -40,6 +42,7 @@ namespace ModularToolManger.Forms
             _startPos = 0;
             _returnFunction = null;
             _editMode = false;
+            _firstOpen = true;
         }
 
         public F_NewFunction(ref Manager pluginManager, Function _functionToEdit)
@@ -49,7 +52,9 @@ namespace ModularToolManger.Forms
             _startPos = 0;
             _returnFunction = _functionToEdit;
             _editMode = true;
+            _firstOpen = true;
         }
+
 
         private void F_NewFunction_Load(object sender, EventArgs e)
         {
@@ -86,8 +91,6 @@ namespace ModularToolManger.Forms
                 F_NewFunction_CB_Type.SelectedIndex = 0;
                 Default_Open.Tag = _pluginManager.LoadetPlugins[0];
             }
-
-
 
             List<Control> Labels = this.GetAllControls(typeof(Label));
             for (int i = 0; i < Labels.Count; i++)
@@ -141,8 +144,13 @@ namespace ModularToolManger.Forms
 
         private void F_NewFunction_CB_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_editMode && !_firstOpen)
+                TB_filePath.Text = string.Empty;
+
             if (_pluginManager.PluginCount >= F_NewFunction_CB_Type.SelectedIndex)
                 Default_Open.Tag = _pluginManager.LoadetPlugins[F_NewFunction_CB_Type.SelectedIndex];
+
+            _firstOpen = false;
         }
 
         private bool ClearTextBox(Control TB_current)

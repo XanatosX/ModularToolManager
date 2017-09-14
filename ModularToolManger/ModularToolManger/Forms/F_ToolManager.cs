@@ -15,6 +15,7 @@ using System.Configuration;
 using System.Windows.Forms;
 using ToolMangerInterface;
 using JSONSettings;
+using ModularToolManger.Core.Modules;
 
 namespace ModularToolManger.Forms
 {
@@ -23,6 +24,7 @@ namespace ModularToolManger.Forms
         private Manager _pluginManager;
         private FunctionsManager _functionManager;
         private int _startOffset = 25;
+        private int _baseScrollValue = 3;
         private int _maxHeight;
         private int _minWidth;
         private Point _location;
@@ -35,6 +37,9 @@ namespace ModularToolManger.Forms
 
         private int _lastContextListButton;
         private Settings _settingsContainer;
+
+        private LanguageCom _languageConnector;
+        private LoggerBridge _loggingBridge;
 
         public F_ToolManager()
         {
@@ -52,13 +57,26 @@ namespace ModularToolManger.Forms
 
             F_ToolManager_NI_Taskliste.ContextMenuStrip = F_ToolManager_TasklisteContext;
 
-            _pluginManager = new Manager();
-
+            SetupPluginManager();
 
             File.Delete(CentralLogging.AppDebugLogger.LogFile);
             CentralLogging.AppDebugLogger.WriteLine("Searching modules at: " + new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + @"\Modules", Logging.LogLevel.Information);
 
             SetupPlugins();
+        }
+
+        private void SetupPluginManager()
+        {
+            _pluginManager = new Manager();
+            SetupModules();
+            _pluginManager.Messenger.Register(_languageConnector);
+            _pluginManager.Messenger.Register(_loggingBridge);
+        }
+
+        private void SetupModules()
+        {
+            _languageConnector = new LanguageCom();
+            _loggingBridge = new LoggerBridge();
         }
 
         protected override void WndProc(ref Message message)
@@ -116,10 +134,15 @@ namespace ModularToolManger.Forms
         private void Form1_Load(object sender, EventArgs e)
         {
             SetupSettingsFile();
+            MouseWheel += F_ToolManager_MouseWheel;
             SetLanguage();
             SetupButtons();
             F_ToolManager_ReportBug.Visible = false;
+       
         }
+
+  
+
         private void MoveToPosition()
         {
             int LocX, LocY;
@@ -308,6 +331,7 @@ namespace ModularToolManger.Forms
             Show();
             SetLanguage();
             SetupButtons();
+            _languageConnector.LanguageChanged();
             F_ToolManager_NI_Taskbar_Close.Enabled = true;
         }
         private void F_ToolManager_NewFunction_Click(object sender, EventArgs e)
@@ -486,5 +510,25 @@ namespace ModularToolManger.Forms
             }
             ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
         }
+
+        private void F_ToolManager_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (!F_ToolManager_ScrollBar.Visible)
+                return;
+
+
+
+            int Test = e.Delta < 0 ? _baseScrollValue : -_baseScrollValue;
+            Test = F_ToolManager_ScrollBar.Value + Test;
+            if (Test < 0)
+                return;
+            if (Test > F_ToolManager_ScrollBar.Maximum)
+                return;
+
+            _newValue = Test;
+            this.DoForEveryControl(typeof(Button), OffsetButton);
+            F_ToolManager_ScrollBar.Value = Test;
+        }
+
     }
 }

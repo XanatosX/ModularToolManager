@@ -17,6 +17,7 @@ namespace JSONSettings
         private string _saveFile;
 
 
+
         public Settings(string SettingsFile)
         {
             _settings = new SettingJSON();

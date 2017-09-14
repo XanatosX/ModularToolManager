@@ -53,10 +53,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PluginInterface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\PluginInterface.dll</HintPath>
-    </Reference>
     <Reference Include="PluginSystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\PluginSystem.dll</HintPath>
@@ -78,6 +74,8 @@
     <Compile Include="Core\CentralLogging.cs" />
     <Compile Include="Core\FunctionJson.cs" />
     <Compile Include="Core\FunctionsManager.cs" />
+    <Compile Include="Core\Modules\LanguageCom.cs" />
+    <Compile Include="Core\Modules\LoggerBridge.cs" />
     <Compile Include="Forms\F_NewFunction.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,12 +156,7 @@
     <Content Include="DLL\jsonLanguage.dll" />
     <Content Include="DLL\Logging.dll" />
     <Content Include="DLL\Newtonsoft.Json.dll" />
-    <Content Include="DLL\PluginInterface.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DLL\PluginSystem.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="DLL\PluginSystem.dll" />
     <Content Include="Images\Tool.ico" />
     <Content Include="Modules\DefaultTools.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -180,6 +173,7 @@
       <Name>ToolMangerInterface</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

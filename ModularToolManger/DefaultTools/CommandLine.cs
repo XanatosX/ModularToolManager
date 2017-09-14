@@ -7,6 +7,7 @@ using PluginInterface;
 using ToolMangerInterface;
 using System.Diagnostics;
 using System.IO;
+using PluginCommunication;
 
 namespace DefaultTools
 {
@@ -81,6 +82,15 @@ namespace DefaultTools
             }
         }
 
+        private Module _comModule;
+        public Module ComModule
+        {
+            get => _comModule;
+        }
+
+        private HashSet<FunctionSetting> _settings;
+        public HashSet<FunctionSetting> Settings => _settings;
+
         public event EventHandler<ErrorData> Error;
 
         public bool destroy()
@@ -91,8 +101,15 @@ namespace DefaultTools
         public bool initialize()
         {
             _fileEndings = new Dictionary<string, string>();
+            _settings = new HashSet<FunctionSetting>();
+
             _fileEndings.Add("Commandline", ".cmd");
             _fileEndings.Add("Batch-File", ".bat");
+
+            _settings.Add(new FunctionSetting("Hide CMD", "Hide the cmd window", false));
+
+            _comModule = new Module();
+            _initialized = true;
             return true;
         }
 
@@ -116,6 +133,7 @@ namespace DefaultTools
             }
             catch (Exception ex)
             {
+                _comModule.SendMessage("log", ex.Message);
             }
             
 
