@@ -20,12 +20,12 @@ namespace ModularToolManger.Forms
 
         private Settings _settings;
         public Settings Settings => _settings;
+
         public F_LanguageSelect(Settings settings)
         {
             _settings = settings;
             InitializeComponent();
         }
-
         private void F_LanguageSelect_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -37,7 +37,6 @@ namespace ModularToolManger.Forms
             _settingUp = false;
             SetupDesign();
         }
-
         private void SetupDesign()
         {
             _settingUp = true;
@@ -73,13 +72,11 @@ namespace ModularToolManger.Forms
             if (CentralLanguage.LanguageManager.SetLanguageByName(C_Languages.SelectedItem.ToString()))
                 SetupDesign();
         }
-
         private void Default_Abort_Click(object sender, EventArgs e)
         {
             CentralLanguage.LanguageManager.SetLanguageByName(_oldLanguage);
             this.Close();
         }
-
         private void Default_OK_Click(object sender, EventArgs e)
         {
             _settings.AddOrChangeKeyValue("Language", CentralLanguage.LanguageManager.CountryCode);

@@ -79,22 +79,6 @@ namespace ModularToolManger.Forms
             _loggingBridge = new LoggerBridge();
         }
 
-        protected override void WndProc(ref Message message)
-        {
-            const int WM_SYSCOMMAND = 0x0112;
-            const int SC_MOVE = 0xF010;
-
-            switch (message.Msg)
-            {
-                case WM_SYSCOMMAND:
-                    int command = message.WParam.ToInt32() & 0xfff0;
-                    if (command == SC_MOVE)
-                        return;
-                    break;
-            }
-            base.WndProc(ref message);
-        }
-
         private void SetupPlugins()
         {
             List<string> allowedTypes = LoadPlugins();
@@ -140,8 +124,6 @@ namespace ModularToolManger.Forms
             F_ToolManager_ReportBug.Visible = false;
        
         }
-
-  
 
         private void MoveToPosition()
         {
@@ -228,45 +210,20 @@ namespace ModularToolManger.Forms
                 for (int i = 0; i < _functionManager.Functions.Count; i++)
                 {
                     Function currentFunction = _functionManager.Functions[i];
-                    MenuItem newMenuItem = new MenuItem()
-                    {
-                        Name = currentFunction.ID + "_MenuItem",
-                        Text = currentFunction.Name,
-                        Visible = true,
-                        Tag = currentFunction,
-                    };
-                    Button newButton = new Button()
-                    {
-                        Name = currentFunction.ID,
-                        Text = currentFunction.Name,
-                        Visible = true,
-                        Tag = currentFunction,
-                        Size = new Size(10, 23),
-                        Location = new Point(10, 10),
-                    };
-                    if (currentFunction.ShowInNotification)
-                    {
-                        F_ToolManager_NI_Taskbar_Buttons.Visible = true;
-                        ToolStripMenuItem newItem = new ToolStripMenuItem(currentFunction.Name)
-                        {
-                            Name = currentFunction.ID,
-                            Text = currentFunction.Name,
-                            Tag = currentFunction,
-                        };
-                        newItem.Click += NewItem_Click;
-                        F_ToolManager_NI_Taskbar_Buttons.DropDownItems.Add(newItem);
-                    }
-                    newButton.Click += F_ToolManager_Click;
-                    newButton.ContextMenuStrip = F_ToolManager_ButtonContext;
+                    Button newButton = createButton(currentFunction);
                     newButton.Location = new Point(0, _startOffset + i * 25 + newButton.Size.Height);
                     this.Controls.Add(newButton);
-                    newButton.SetWidthByTextLenght();
+
+                    if (currentFunction.ShowInNotification)
+                        addNewToolStripMenuItem(currentFunction);
+                    
                     if (i == _functionManager.Functions.Count - 1)
                         lastButton = newButton;
                 }
+
+                if (F_ToolManager_NI_Taskbar_Buttons.DropDownItems.Count > 0)
+                    F_ToolManager_NI_Taskbar_Buttons.Visible = true;
             }
-
-
 
             List<Control> buttons = this.GetAllControls(typeof(Button));
             if (buttons.Count == 0)
@@ -274,8 +231,41 @@ namespace ModularToolManger.Forms
                 MoveToPosition();
                 return;
             }
+            CalculateFormSize(lastButton, buttons);
 
+        } 
 
+        private void addNewToolStripMenuItem(Function currentFunction)
+        {
+            ToolStripMenuItem newItem = new ToolStripMenuItem(currentFunction.Name)
+            {
+                Name = currentFunction.ID,
+                Text = currentFunction.Name,
+                Tag = currentFunction,
+            };
+            newItem.Click += NewItem_Click;
+            F_ToolManager_NI_Taskbar_Buttons.DropDownItems.Add(newItem);
+
+        }
+        private Button createButton(Function currentFunction)
+        {
+            Button newButton = new Button()
+            {
+                Name = currentFunction.ID,
+                Text = currentFunction.Name,
+                Visible = true,
+                Tag = currentFunction,
+                Size = new Size(10, 23),
+                Location = new Point(10, 10),
+            };
+            newButton.Click += F_ToolManager_Click;
+            newButton.ContextMenuStrip = F_ToolManager_ButtonContext;
+            newButton.SetWidthByTextLenght();
+
+            return newButton;
+        }
+        private void CalculateFormSize(Button lastButton, List<Control> buttons)
+        {
             int BiggestValue = 0;
             int newWidth = 0;
             int newHeight = 0;
@@ -287,7 +277,6 @@ namespace ModularToolManger.Forms
                 F_ToolManager_ScrollBar.Value = 0;
                 newHeight = _maxHeight;
                 F_ToolManager_ScrollBar.Visible = true;
-
             }
             for (int i = 0; i < buttons.Count; i++)
             {
@@ -299,14 +288,10 @@ namespace ModularToolManger.Forms
                 newWidth = _minWidth;
             this.Size = new Size(newWidth, newHeight);
 
-
-
             this.DoForEveryControl(typeof(Button), CenterButton);
 
             MoveToPosition();
-        } //Needs cleanup!
-
-       
+        }
 
         private bool CenterButton(Control B)
         {
@@ -326,6 +311,35 @@ namespace ModularToolManger.Forms
             int Offset = _newValue - F_ToolManager_ScrollBar.Value;
             B.Location = new Point(B.Location.X, B.Location.Y - Offset);
             return true;
+        }        
+
+        private Button GetButtonFromTSMI(ToolStripMenuItem tsmi)
+        {
+            if (tsmi != null)
+            {
+                ToolStrip owner = tsmi.GetCurrentParent();
+                if (owner.GetType() == typeof(ContextMenuStrip))
+                {
+                    Control Source = ((ContextMenuStrip)owner).SourceControl;
+                    if (Source != null && Source.GetType() == typeof(Button))
+                        return (Button)Source;
+                }
+            }
+            return null;
+        }
+        private Function GetFunctionFromButton(Button currentButton)
+        {
+            if (currentButton.Tag.GetType() == typeof(Function))
+                return (Function)currentButton.Tag;
+            return null;
+        }
+        private void SetLanguageForContextStrip(ContextMenuStrip CMS)
+        {
+            for (int i = 0; i < CMS.Items.Count; i++)
+            {
+                ToolStripItem CurrentTSI = CMS.Items[i];
+                CurrentTSI.Text = CentralLanguage.LanguageManager.GetText(CurrentTSI.Name);
+            }
         }
 
         private void NewItem_Click(object sender, EventArgs e)
@@ -343,6 +357,67 @@ namespace ModularToolManger.Forms
                         func.PerformeAction((IFunction)currentPlugin);
                 }
             }
+        }
+        private void F_ToolManager_ReportBug_Click(object sender, EventArgs e)
+        {
+            Hide();
+            F_ToolManager_NI_Taskbar_Close.Enabled = false;
+            F_ReportBug BugReporter = new F_ReportBug();
+            BugReporter.Show();
+            Show();
+            F_ToolManager_NI_Taskbar_Close.Enabled = true;
+        }
+        private void F_ToolManager_Settings_Click(object sender, EventArgs e)
+        {
+            F_Settings settingsForm = new F_Settings(_settingsContainer, _pluginManager.LoadetPlugins);
+            Hide();
+            F_ToolManager_NI_Taskbar_Close.Enabled = false;
+            settingsForm.ShowDialog();
+            if (settingsForm.Save)
+                _settingsContainer = settingsForm.Settings;
+            Show();
+            _settingsContainer.Save();
+
+            if (_settingsContainer.GetBoolValue("KeepOnTop"))
+                TopMost = true;
+            else
+                TopMost = false;
+
+            ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
+            F_ToolManager_NI_Taskbar_Close.Enabled = true;
+        }
+        private void F_ToolManager_Shown(object sender, EventArgs e)
+        {
+            if (_settingsContainer.GetBoolValue("StartMinimized"))
+            {
+                Hide();
+                _hidden = true;
+                Default_Show.Visible = _hidden;
+            }
+            ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
+        }
+        private void F_ToolManager_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (!F_ToolManager_ScrollBar.Visible)
+                return;
+
+
+
+            int Test = e.Delta < 0 ? _baseScrollValue : -_baseScrollValue;
+            Test = F_ToolManager_ScrollBar.Value + Test;
+            if (Test < 0)
+                return;
+            if (Test > F_ToolManager_ScrollBar.Maximum)
+                return;
+
+            _newValue = Test;
+            this.DoForEveryControl(typeof(Button), OffsetButton);
+            F_ToolManager_ScrollBar.Value = Test;
+        }
+        private void defaultCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _forceClose = true;
+            this.Close();
         }
         private void F_ToolManager_Click(object sender, EventArgs e)
         {
@@ -437,11 +512,7 @@ namespace ModularToolManger.Forms
 
             _settingsContainer.Save();
         }
-        private void defaultCloseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _forceClose = true;
-            this.Close();
-        }
+
         private void F_ToolManager_NI_Taskliste_Click(object sender, EventArgs e)
         {
             if (e.GetType() == typeof(MouseEventArgs))
@@ -465,8 +536,8 @@ namespace ModularToolManger.Forms
             else
             {
                 TopMost = true;
-                if(!_settingsContainer.GetBoolValue("KeepOnTop"))
-                TopMost = false;
+                if (!_settingsContainer.GetBoolValue("KeepOnTop"))
+                    TopMost = false;
             }
 
 
@@ -481,94 +552,20 @@ namespace ModularToolManger.Forms
             F_ToolManager_NI_Taskliste_Click(sender, e);
         }
 
-        private Button GetButtonFromTSMI(ToolStripMenuItem tsmi)
+        protected override void WndProc(ref Message message)
         {
-            if (tsmi != null)
+            const int WM_SYSCOMMAND = 0x0112;
+            const int SC_MOVE = 0xF010;
+
+            switch (message.Msg)
             {
-                ToolStrip owner = tsmi.GetCurrentParent();
-                if (owner.GetType() == typeof(ContextMenuStrip))
-                {
-                    Control Source = ((ContextMenuStrip)owner).SourceControl;
-                    if (Source != null && Source.GetType() == typeof(Button))
-                        return (Button)Source;
-                }
+                case WM_SYSCOMMAND:
+                    int command = message.WParam.ToInt32() & 0xfff0;
+                    if (command == SC_MOVE)
+                        return;
+                    break;
             }
-            return null;
+            base.WndProc(ref message);
         }
-        private Function GetFunctionFromButton(Button currentButton)
-        {
-            if (currentButton.Tag.GetType() == typeof(Function))
-                return (Function)currentButton.Tag;
-            return null;
-        }
-        private void SetLanguageForContextStrip(ContextMenuStrip CMS)
-        {
-            for (int i = 0; i < CMS.Items.Count; i++)
-            {
-                ToolStripItem CurrentTSI = CMS.Items[i];
-                CurrentTSI.Text = CentralLanguage.LanguageManager.GetText(CurrentTSI.Name);
-            }
-        }
-
-        private void F_ToolManager_ReportBug_Click(object sender, EventArgs e)
-        {
-            Hide();
-            F_ToolManager_NI_Taskbar_Close.Enabled = false;
-            F_ReportBug BugReporter = new F_ReportBug();
-            BugReporter.Show();
-            Show();
-            F_ToolManager_NI_Taskbar_Close.Enabled = true;
-        }
-
-        private void F_ToolManager_Settings_Click(object sender, EventArgs e)
-        {
-            F_Settings settingsForm = new F_Settings(_settingsContainer, _pluginManager.LoadetPlugins);
-            Hide();
-            F_ToolManager_NI_Taskbar_Close.Enabled = false;
-            settingsForm.ShowDialog();
-            if (settingsForm.Save)
-                _settingsContainer = settingsForm.Settings;
-            Show();
-            _settingsContainer.Save();
-
-            if (_settingsContainer.GetBoolValue("KeepOnTop"))
-                TopMost = true;
-            else
-                TopMost = false;
-
-            ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
-            F_ToolManager_NI_Taskbar_Close.Enabled = true;
-        }
-
-        private void F_ToolManager_Shown(object sender, EventArgs e)
-        {
-            if (_settingsContainer.GetBoolValue("StartMinimized"))
-            {
-                Hide();
-                _hidden = true;
-                Default_Show.Visible = _hidden;
-            }
-            ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
-        }
-
-        private void F_ToolManager_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (!F_ToolManager_ScrollBar.Visible)
-                return;
-
-
-
-            int Test = e.Delta < 0 ? _baseScrollValue : -_baseScrollValue;
-            Test = F_ToolManager_ScrollBar.Value + Test;
-            if (Test < 0)
-                return;
-            if (Test > F_ToolManager_ScrollBar.Maximum)
-                return;
-
-            _newValue = Test;
-            this.DoForEveryControl(typeof(Button), OffsetButton);
-            F_ToolManager_ScrollBar.Value = Test;
-        }
-
     }
 }
