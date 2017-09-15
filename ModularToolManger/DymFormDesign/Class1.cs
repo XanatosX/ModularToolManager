@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace DymFormDesign
 {
-    public class Class1
-    {
-    }
+
 }
