@@ -44,7 +44,6 @@ namespace ModularToolManger.Forms
             _editMode = false;
             _firstOpen = true;
         }
-
         public F_NewFunction(ref Manager pluginManager, Function _functionToEdit)
         {
             InitializeComponent();
@@ -54,8 +53,6 @@ namespace ModularToolManger.Forms
             _editMode = true;
             _firstOpen = true;
         }
-
-
         private void F_NewFunction_Load(object sender, EventArgs e)
         {
             this.SetupLanguage();
@@ -141,6 +138,35 @@ namespace ModularToolManger.Forms
             F_NewFunction_CB_Type.SelectedIndex = _selectIndex;
             this.Tag = _returnFunction.FilePath;
         }
+        private bool ClearTextBox(Control TB_current)
+        {
+            TB_current.Text = "";
+            return true;
+        }
+
+        private string SetupFilter(Dictionary<string, string> extensions)
+        {
+            string ReturnString = String.Empty;
+            HashSet<string> entries = new HashSet<string>();
+            string LastEntry = CentralLanguage.LanguageManager.GetText("Default_All") + " ";
+            foreach (string key in extensions.Keys)
+            {
+                ReturnString += String.Format("{0} (*{1})|*{1}|", key, extensions[key]);
+                entries.Add(extensions[key]);
+            }
+
+            string front = String.Empty;
+            string selections = " ";
+            foreach (string type in entries)
+            {
+                front += $"*{type} ";
+                selections += $"*{type}; ";
+            }
+            front = front.Remove(front.Length - 1);
+            selections = selections.Remove(selections.Length - 1);
+            LastEntry += $"({front})|{selections}";
+            return ReturnString + LastEntry;
+        }
 
         private void F_NewFunction_CB_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -152,13 +178,6 @@ namespace ModularToolManger.Forms
 
             _firstOpen = false;
         }
-
-        private bool ClearTextBox(Control TB_current)
-        {
-            TB_current.Text = "";
-            return true;
-        }
-
         private void Default_Open_Click(object sender, EventArgs e)
         {
             OpenFileDialog OFD = new OpenFileDialog();
@@ -178,7 +197,7 @@ namespace ModularToolManger.Forms
                     if (split[i].Contains(currentFile.Extension) || split[i + 1].Contains(currentFile.Extension))
                     {
                         OFD.FilterIndex = i;
-                        
+
                         break;
                     }
                 }
@@ -189,19 +208,6 @@ namespace ModularToolManger.Forms
                 TB_filePath.Text = OFD.FileName;
             }
         }
-
-        private string SetupFilter(Dictionary<string, string> extensions)
-        {
-            string ReturnString = String.Empty;
-            foreach (string key in extensions.Keys)
-            {
-                ReturnString += String.Format("{0} (*{1})|*{1}|", key, extensions[key]);
-            }
-            ReturnString = ReturnString.Remove(ReturnString.Length - 1);
-
-            return ReturnString;
-        }
-
         private void Default_OK_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(F_NewFunction_TB_Name.Text))
@@ -219,9 +225,8 @@ namespace ModularToolManger.Forms
                     FilePath = (string)Tag
                 };
             }
-            Close();           
+            Close();
         }
-
         private void Default_Abort_Click(object sender, EventArgs e)
         {
             _returnFunction = null;

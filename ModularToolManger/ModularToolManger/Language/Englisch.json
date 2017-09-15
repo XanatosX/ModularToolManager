@@ -1,8 +1,7 @@
 ﻿{
   "Language": "Englisch",
   "CountryCode":  "en-EN",
-  "Jsoninterpret": 
-  [
+  "Jsoninterpret": [
     {
       "key": "F_ToolManager",
       "value": "Tool Manager"
@@ -11,15 +10,15 @@
       "key": "F_ToolManager_File",
       "value": "File"
     },
-	{
+    {
       "key": "F_ToolManager_Settings",
       "value": "Settings"
     },
-	{
+    {
       "key": "F_ToolManager_ReportBug",
       "value": "Report bug"
     },
-	{
+    {
       "key": "F_ReportBug",
       "value": "Report bug"
     },
@@ -27,7 +26,7 @@
       "key": "F_ToolManager_NI_Taskliste",
       "value": "Tool Manager"
     },
-	{
+    {
       "key": "F_ToolManager_NI_Taskbar_Buttons",
       "value": "Functions"
     },
@@ -38,51 +37,51 @@
     {
       "key": "F_ToolManager_Langauge",
       "value": "Language"
-    },       
+    },
     {
       "key": "F_ToolManager_NewFunction",
       "value": "New function"
-    },    
+    },
     {
       "key": "F_ToolManager_ButtonContext_Edit",
       "value": "Edit"
-    },       
+    },
     {
       "key": "F_ToolManager_ButtonContext_Delete",
       "value": "Delete"
     },
-	{
+    {
       "key": "F_New_Function_CB_ShowInTaskList",
       "value": "Show in notification icon"
     },
-	{
-	  "key": "F_Settings",
-	  "value": "Settings"
-	},
-	{
+    {
+      "key": "F_Settings",
+      "value": "Settings"
+    },
+    {
       "key": "TP_Common",
       "value": "Common"
     },
-	{
-	  "key": "F_Settings_CB_KeepOnTop",
-	  "value": "KeepOnTop"
-	},
-	{
-	  "key": "F_Settings_CB_StartMinimized",
-	  "value": "Start minimized"
-	},
-	{
-	  "key": "F_Settings_CB_HideInTaskbar",
-	  "value": "Hide in taskbar"
-	},
-	{
-	  "key": "F_Settings_CB_AutoStart",
-	  "value": "Start with windows"
-	},
+    {
+      "key": "F_Settings_CB_KeepOnTop",
+      "value": "KeepOnTop"
+    },
+    {
+      "key": "F_Settings_CB_StartMinimized",
+      "value": "Start minimized"
+    },
+    {
+      "key": "F_Settings_CB_HideInTaskbar",
+      "value": "Hide in taskbar"
+    },
+    {
+      "key": "F_Settings_CB_AutoStart",
+      "value": "Start with windows"
+    },
     {
       "key": "F_LanguageSelect",
       "value": "Langauge selection"
-    },    
+    },
     {
       "key": "F_LanguageSelect_Language",
       "value": "Language:"
@@ -94,7 +93,7 @@
     {
       "key": "F_NewFunction_L_Name",
       "value": "Name:"
-    },    
+    },
     {
       "key": "F_NewFunction_L_Type",
       "value": "Type:"
@@ -102,26 +101,30 @@
     {
       "key": "Default_OK",
       "value": "Ok"
-    },    
+    },
     {
       "key": "Default_Abort",
       "value": "Abort"
-    },    
+    },
     {
       "key": "Default_Open",
       "value": "Open"
-    },    
+    },
     {
       "key": "Default_Close",
       "value": "Close"
-    },    
+    },
     {
       "key": "Default_Show",
       "value": "Show"
-    },    
+    },
     {
       "key": "Default_Send",
       "value": "Send"
+    },
+    {
+      "key": "Default_All",
+      "value": "All plugin filetypes"
     }
   ]
 }

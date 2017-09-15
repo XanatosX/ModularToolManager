@@ -1,8 +1,7 @@
 ﻿{
   "Language": "Deutsch",
   "CountryCode":  "de-DE",
-  "Jsoninterpret": 
-  [
+  "Jsoninterpret": [
     {
       "key": "F_ToolManager",
       "value": "Tool Manager"
@@ -11,15 +10,15 @@
       "key": "F_ToolManager_File",
       "value": "Datei"
     },
-	{
+    {
       "key": "F_ToolManager_Settings",
       "value": "Einstellungen"
     },
-	{
+    {
       "key": "F_ToolManager_ReportBug",
       "value": "Bug melden"
     },
-	{
+    {
       "key": "F_ReportBug",
       "value": "Bug melden"
     },
@@ -27,7 +26,7 @@
       "key": "F_ToolManager_NI_Taskliste",
       "value": "Tool Manager"
     },
-	{
+    {
       "key": "F_ToolManager_NI_Taskbar_Buttons",
       "value": "Funktionen"
     },
@@ -38,47 +37,47 @@
     {
       "key": "F_ToolManager_Langauge",
       "value": "Sprache"
-    },  
-	{
+    },
+    {
       "key": "TP_Common",
       "value": "Allgemein"
     },
-	{
-	  "key": "F_Settings_CB_KeepOnTop",
-	  "value": "Im Vordergrund halten"
-	},
-	{
-	  "key": "F_Settings_CB_StartMinimized",
-	  "value": "Minimiert starten"
-	},
-	{
-	  "key": "F_Settings_CB_HideInTaskbar",
-	  "value": "In Taskleiste verstecken"
-	},
-	{
-	  "key": "F_Settings_CB_AutoStart",
-	  "value": "Mit Windows starten"
-	},
+    {
+      "key": "F_Settings_CB_KeepOnTop",
+      "value": "Im Vordergrund halten"
+    },
+    {
+      "key": "F_Settings_CB_StartMinimized",
+      "value": "Minimiert starten"
+    },
+    {
+      "key": "F_Settings_CB_HideInTaskbar",
+      "value": "In Taskleiste verstecken"
+    },
+    {
+      "key": "F_Settings_CB_AutoStart",
+      "value": "Mit Windows starten"
+    },
     {
       "key": "F_ToolManager_ButtonContext_Edit",
       "value": "Bearbeiten"
-    },       
+    },
     {
       "key": "F_ToolManager_ButtonContext_Delete",
       "value": "Löschen"
     },
-	{
+    {
       "key": "F_New_Function_CB_ShowInTaskList",
       "value": "Zeige in Benachrichtigungs Icon"
     },
-	{
-	  "key": "F_Settings",
-	  "value": "Einstellungen"
-	},
+    {
+      "key": "F_Settings",
+      "value": "Einstellungen"
+    },
     {
       "key": "F_LanguageSelect",
       "value": "Sprachauswahl"
-    },      
+    },
     {
       "key": "F_ToolManager_NewFunction",
       "value": "Neue Funktion"
@@ -94,7 +93,7 @@
     {
       "key": "F_NewFunction_L_Name",
       "value": "Name:"
-    },    
+    },
     {
       "key": "F_NewFunction_L_Type",
       "value": "Typ:"
@@ -102,27 +101,31 @@
     {
       "key": "Default_OK",
       "value": "Ok"
-    },    
+    },
     {
       "key": "Default_Abort",
       "value": "Abbrechen"
-    },    
+    },
     {
       "key": "Default_Open",
       "value": "Öffnen"
-    },    
+    },
     {
       "key": "Default_Close",
       "value": "Schließen"
-    },    
+    },
     {
       "key": "Default_Show",
       "value": "Anzeigen"
-    },    
+    },
     {
       "key": "Default_Send",
       "value": "Versenden"
+    },
+    {
+      "key": "Default_All",
+      "value": "Alle plugin Dateitypen"
     }
-    
+
   ]
 }
