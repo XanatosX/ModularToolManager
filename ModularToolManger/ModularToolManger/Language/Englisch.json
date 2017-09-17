@@ -19,6 +19,54 @@
       "value": "Report bug"
     },
     {
+      "key": "F_ReportBug_L_bug",
+      "value": "Bug"
+    },
+    {
+      "key": "F_ReportBug_L_enhancement",
+      "value": "Enhancement"
+    },
+    {
+      "key": "F_ReportBug_L_Priority",
+      "value": "Priority:"
+    },
+    {
+      "key": "F_ReportBug_L_Priority_Trivial",
+      "value": "Trivial"
+    },
+    {
+      "key": "F_ReportBug_L_Priority_Minor",
+      "value": "Minor"
+    },
+    {
+      "key": "F_ReportBug_L_Priority_Major",
+      "value": "Major"
+    },
+    {
+      "key": "F_ReportBug_L_Priority_Critical",
+      "value": "Critical"
+    },
+    {
+      "key": "F_ReportBug_L_Content",
+      "value": "Content:"
+    },
+    {
+      "key": "F_ReportBug_L_Kind",
+      "value": "Kind:"
+    },
+    {
+      "key": "F_ReportBug_L_Title",
+      "value": "Title:"
+    },
+    {
+      "key": "F_ReportBug_L_LV_Files",
+      "value": "Files for upload"
+    },
+    {
+      "key": "F_ReportBug_LV_Delete",
+      "value": "Delete entry"
+    },
+    {
       "key": "F_ReportBug",
       "value": "Report bug"
     },
@@ -105,6 +153,38 @@
     {
       "key": "F_NewFunction_L_Type",
       "value": "Type:"
+    },
+    {
+      "key": "F_Password",
+      "value": "Enter password"
+    },
+    {
+      "key": "F_OAuth",
+      "value": "OAuth key entry"
+    },
+    {
+      "key": "F_OAuth_L_Key",
+      "value": "OAuth Key:"
+    },
+    {
+      "key": "F_OAuth_L_Secret",
+      "value": "OAuth Secret:"
+    },
+    {
+      "key": "F_OAuth_L_Password",
+      "value": "Password:"
+    },
+    {
+      "key": "F_OAuth_L_Password2",
+      "value": "Repeat password:"
+    },
+    {
+      "key": "F_Password_L_Password",
+      "value": "Passwort:"
+    },
+    {
+      "key": "B_OAuth",
+      "value": "OAuth Manager"
     },
     {
       "key": "Default_OK",

@@ -117,12 +117,12 @@ namespace ModularToolManger.Forms
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             _baseScrollValue = 3;
             SetupSettingsFile();
             MouseWheel += F_ToolManager_MouseWheel;
             SetLanguage();
             SetupButtons();
-            F_ToolManager_ReportBug.Visible = false;
 
             _baseScrollValue = _settingsContainer.GetIntValue("ScrollSpeed");
 
@@ -374,7 +374,7 @@ namespace ModularToolManger.Forms
         {
             Hide();
             F_ToolManager_NI_Taskbar_Close.Enabled = false;
-            F_ReportBug BugReporter = new F_ReportBug();
+            F_ReportBug BugReporter = new F_ReportBug(_settingsContainer);
             BugReporter.Show();
             Show();
             F_ToolManager_NI_Taskbar_Close.Enabled = true;

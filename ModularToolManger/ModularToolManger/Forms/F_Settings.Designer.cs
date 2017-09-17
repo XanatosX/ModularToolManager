@@ -39,6 +39,7 @@
             this.F_Settings_CB_KeepOnTop = new System.Windows.Forms.CheckBox();
             this.Default_OK = new System.Windows.Forms.Button();
             this.Default_Abort = new System.Windows.Forms.Button();
+            this.B_OAuth = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.TP_Common.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.F_Settings_TB_ScrollSpeed)).BeginInit();
@@ -158,6 +159,7 @@
             // 
             // Default_Abort
             // 
+            this.Default_Abort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Default_Abort.Location = new System.Drawing.Point(276, 338);
             this.Default_Abort.Name = "Default_Abort";
             this.Default_Abort.Size = new System.Drawing.Size(75, 23);
@@ -166,11 +168,22 @@
             this.Default_Abort.UseVisualStyleBackColor = true;
             this.Default_Abort.Click += new System.EventHandler(this.Default_Abort_Click);
             // 
+            // B_OAuth
+            // 
+            this.B_OAuth.Location = new System.Drawing.Point(137, 338);
+            this.B_OAuth.Name = "B_OAuth";
+            this.B_OAuth.Size = new System.Drawing.Size(75, 23);
+            this.B_OAuth.TabIndex = 7;
+            this.B_OAuth.Text = "B_OAuth";
+            this.B_OAuth.UseVisualStyleBackColor = true;
+            this.B_OAuth.Click += new System.EventHandler(this.B_OAuth_Click);
+            // 
             // F_Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(363, 373);
+            this.Controls.Add(this.B_OAuth);
             this.Controls.Add(this.Default_Abort);
             this.Controls.Add(this.Default_OK);
             this.Controls.Add(this.tabControl1);
@@ -198,5 +211,6 @@
         private System.Windows.Forms.CheckBox F_Settings_CB_BorderLess;
         private System.Windows.Forms.Label F_Settings_L_ScrollSpeed;
         private System.Windows.Forms.TrackBar F_Settings_TB_ScrollSpeed;
+        private System.Windows.Forms.Button B_OAuth;
     }
 }

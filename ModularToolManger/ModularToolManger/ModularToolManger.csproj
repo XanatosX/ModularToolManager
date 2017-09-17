@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ModularToolManger</RootNamespace>
     <AssemblyName>ModularToolManger</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,11 +34,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Tool.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BitbucketAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLL\BitbucketAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Helper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Helper.dll</HintPath>
@@ -49,9 +56,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PluginSystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -76,11 +82,24 @@
     <Compile Include="Core\FunctionsManager.cs" />
     <Compile Include="Core\Modules\LanguageCom.cs" />
     <Compile Include="Core\Modules\LoggerBridge.cs" />
+    <Compile Include="Core\PasswordCrypt.cs" />
     <Compile Include="Forms\F_NewFunction.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\F_NewFunction.Designer.cs">
       <DependentUpon>F_NewFunction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\F_OAuth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\F_OAuth.Designer.cs">
+      <DependentUpon>F_OAuth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\F_Password.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\F_Password.Designer.cs">
+      <DependentUpon>F_Password.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\F_ReportBug.cs">
       <SubType>Form</SubType>
@@ -111,6 +130,12 @@
     <EmbeddedResource Include="Forms\F_NewFunction.resx">
       <DependentUpon>F_NewFunction.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\F_OAuth.resx">
+      <DependentUpon>F_OAuth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\F_Password.resx">
+      <DependentUpon>F_Password.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\F_ReportBug.resx">
       <DependentUpon>F_ReportBug.cs</DependentUpon>
     </EmbeddedResource>
@@ -131,6 +156,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="Language\German.json">
@@ -139,6 +165,7 @@
     <None Include="Language\Englisch.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -155,7 +182,6 @@
     <Content Include="DLL\Helper.dll" />
     <Content Include="DLL\jsonLanguage.dll" />
     <Content Include="DLL\Logging.dll" />
-    <Content Include="DLL\Newtonsoft.Json.dll" />
     <Content Include="DLL\PluginSystem.dll" />
     <Content Include="Images\Tool.ico" />
     <Content Include="Modules\DefaultTools.dll">

@@ -48,12 +48,22 @@ namespace ModularToolManger.Forms
             curY = yStart;
 
             this.SetupLanguage();
+            this.DoForEveryControl(typeof(Button), SizeButtons);
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
             this.MinimizeBox = false;
             this.MaximizeBox = false;
             SetupTabs();
             SetupEntries();
             _starting = false;
+
+
+            this.AlignMultipleControls(Default_OK, B_OAuth, Default_Abort);
+        }
+
+        private bool SizeButtons(Control C)
+        {
+            C.SetWidthByTextLenght();
+            return true;
         }
 
         private void SetupTabs()
@@ -300,6 +310,12 @@ namespace ModularToolManger.Forms
         private void Default_Abort_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void B_OAuth_Click(object sender, EventArgs e)
+        {
+            F_OAuth oauthManager = new F_OAuth(_settings);
+            oauthManager.ShowDialog();
         }
     }
 }

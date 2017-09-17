@@ -23,6 +23,54 @@
       "value": "Bug melden"
     },
     {
+      "key": "F_ReportBug_L_Content",
+      "value": "Inhalt:"
+    },
+    {
+      "key": "F_ReportBug_L_Kind",
+      "value": "Typ:"
+    },
+    {
+      "key": "F_ReportBug_L_bug",
+      "value": "Bug"
+    },
+    {
+      "key": "F_ReportBug_L_enhancement",
+      "value": "Verbesserung"
+    },
+    {
+      "key": "F_ReportBug_L_Priority",
+      "value": "Priorität:"
+    },
+    {
+      "key": "F_ReportBug_L_Priority_Trivial",
+      "value": "Niedrig"
+    },
+    {
+      "key": "F_ReportBug_L_Priority_Minor",
+      "value": "Normal"
+    },
+    {
+      "key": "F_ReportBug_L_Priority_Major",
+      "value": "Hoch"
+    },
+    {
+      "key": "F_ReportBug_L_Priority_Critical",
+      "value": "Kritisch"
+    },
+    {
+      "key": "F_ReportBug_L_Title",
+      "value": "Titel:"
+    },
+    {
+      "key": "F_ReportBug_L_LV_Files",
+      "value": "Dateien für Upload"
+    },
+    {
+      "key": "F_ReportBug_LV_Delete",
+      "value": "Eintrag löschen"
+    },
+    {
       "key": "F_ToolManager_NI_Taskliste",
       "value": "Tool Manager"
     },
@@ -105,6 +153,38 @@
     {
       "key": "F_NewFunction_L_Type",
       "value": "Typ:"
+    },
+    {
+      "key": "F_Password",
+      "value": "Passwort eingeben"
+    },
+    {
+      "key": "F_OAuth",
+      "value": "OAuth Schlüssel eingabe"
+    },
+    {
+      "key": "F_OAuth_L_Key",
+      "value": "OAuth Key:"
+    },
+    {
+      "key": "F_OAuth_L_Secret",
+      "value": "OAuth Secret:"
+    },
+    {
+      "key": "F_OAuth_L_Password",
+      "value": "Passwort:"
+    },
+    {
+      "key": "F_OAuth_L_Password2",
+      "value": "Passwort wiederholen:"
+    },
+    {
+      "key": "F_Password_L_Password",
+      "value": "Passwort:"
+    },
+    {
+      "key": "B_OAuth",
+      "value": "OAuth Manager"
     },
     {
       "key": "Default_OK",

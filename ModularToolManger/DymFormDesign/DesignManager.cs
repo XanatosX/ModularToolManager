@@ -8,6 +8,8 @@ namespace DymFormDesign
 {
     public class DesignManager
     {
+        private BaseDesign _buttonDesign;
+
 
     }
 }
