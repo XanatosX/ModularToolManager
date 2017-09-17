@@ -30,6 +30,9 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TP_Common = new System.Windows.Forms.TabPage();
+            this.F_Settings_L_ScrollSpeed = new System.Windows.Forms.Label();
+            this.F_Settings_TB_ScrollSpeed = new System.Windows.Forms.TrackBar();
+            this.F_Settings_CB_BorderLess = new System.Windows.Forms.CheckBox();
             this.F_Settings_CB_AutoStart = new System.Windows.Forms.CheckBox();
             this.F_Settings_CB_HideInTaskbar = new System.Windows.Forms.CheckBox();
             this.F_Settings_CB_StartMinimized = new System.Windows.Forms.CheckBox();
@@ -38,6 +41,7 @@
             this.Default_Abort = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.TP_Common.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.F_Settings_TB_ScrollSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -52,6 +56,9 @@
             // 
             // TP_Common
             // 
+            this.TP_Common.Controls.Add(this.F_Settings_L_ScrollSpeed);
+            this.TP_Common.Controls.Add(this.F_Settings_TB_ScrollSpeed);
+            this.TP_Common.Controls.Add(this.F_Settings_CB_BorderLess);
             this.TP_Common.Controls.Add(this.F_Settings_CB_AutoStart);
             this.TP_Common.Controls.Add(this.F_Settings_CB_HideInTaskbar);
             this.TP_Common.Controls.Add(this.F_Settings_CB_StartMinimized);
@@ -64,6 +71,34 @@
             this.TP_Common.Tag = "";
             this.TP_Common.Text = "TP_Common";
             this.TP_Common.UseVisualStyleBackColor = true;
+            // 
+            // F_Settings_L_ScrollSpeed
+            // 
+            this.F_Settings_L_ScrollSpeed.AutoSize = true;
+            this.F_Settings_L_ScrollSpeed.Location = new System.Drawing.Point(5, 118);
+            this.F_Settings_L_ScrollSpeed.Name = "F_Settings_L_ScrollSpeed";
+            this.F_Settings_L_ScrollSpeed.Size = new System.Drawing.Size(132, 13);
+            this.F_Settings_L_ScrollSpeed.TabIndex = 6;
+            this.F_Settings_L_ScrollSpeed.Text = "F_Settings_L_ScrollSpeed";
+            // 
+            // F_Settings_TB_ScrollSpeed
+            // 
+            this.F_Settings_TB_ScrollSpeed.Location = new System.Drawing.Point(8, 144);
+            this.F_Settings_TB_ScrollSpeed.Name = "F_Settings_TB_ScrollSpeed";
+            this.F_Settings_TB_ScrollSpeed.Size = new System.Drawing.Size(339, 45);
+            this.F_Settings_TB_ScrollSpeed.TabIndex = 5;
+            this.F_Settings_TB_ScrollSpeed.Tag = "ScrollSpeed";
+            // 
+            // F_Settings_CB_BorderLess
+            // 
+            this.F_Settings_CB_BorderLess.AutoSize = true;
+            this.F_Settings_CB_BorderLess.Location = new System.Drawing.Point(8, 98);
+            this.F_Settings_CB_BorderLess.Name = "F_Settings_CB_BorderLess";
+            this.F_Settings_CB_BorderLess.Size = new System.Drawing.Size(155, 17);
+            this.F_Settings_CB_BorderLess.TabIndex = 4;
+            this.F_Settings_CB_BorderLess.Tag = "Borderless";
+            this.F_Settings_CB_BorderLess.Text = "F_Settings_CB_BorderLess";
+            this.F_Settings_CB_BorderLess.UseVisualStyleBackColor = true;
             // 
             // F_Settings_CB_AutoStart
             // 
@@ -145,6 +180,7 @@
             this.tabControl1.ResumeLayout(false);
             this.TP_Common.ResumeLayout(false);
             this.TP_Common.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.F_Settings_TB_ScrollSpeed)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -159,5 +195,8 @@
         private System.Windows.Forms.CheckBox F_Settings_CB_HideInTaskbar;
         private System.Windows.Forms.CheckBox F_Settings_CB_AutoStart;
         private System.Windows.Forms.Button Default_Abort;
+        private System.Windows.Forms.CheckBox F_Settings_CB_BorderLess;
+        private System.Windows.Forms.Label F_Settings_L_ScrollSpeed;
+        private System.Windows.Forms.TrackBar F_Settings_TB_ScrollSpeed;
     }
 }

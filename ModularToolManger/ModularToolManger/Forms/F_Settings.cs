@@ -153,6 +153,11 @@ namespace ModularToolManger.Forms
                             if (curFunction != null)
                                 curFunction.Settings.UpdateValue(SettingsKey, cb.Checked);
                         }
+                        if (c.GetType() == typeof(TrackBar))
+                        {
+                            TrackBar tbar = (TrackBar)c;
+                            tbar.Value = Settings.GetIntValue(Name, SettingsKey);
+                        }
                         return true;
                     });
                 return true;
@@ -180,6 +185,8 @@ namespace ModularToolManger.Forms
                 if (TP.GetType() == typeof(TabPage))
                     TP.DoForEveryControl((Control c) =>
                     {
+                        if (c.GetType() == typeof(Label))
+                            return true;
                         string Name = _settings.DefaultApp;
                         if (TP.Tag.ToString() == "Added")
                         {
@@ -195,6 +202,11 @@ namespace ModularToolManger.Forms
                         {
                             CheckBox box = (CheckBox)c;
                             Settings.AddOrChangeKeyValue(Name, SettingsName, box.Checked);
+                        }
+                        if (c.GetType() == typeof(TrackBar))
+                        {
+                            TrackBar tbar = (TrackBar)c;
+                            Settings.AddOrChangeKeyValue(Name, SettingsName, tbar.Value);
                         }
                         return true;
                     });

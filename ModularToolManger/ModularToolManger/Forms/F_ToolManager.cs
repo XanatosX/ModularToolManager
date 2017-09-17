@@ -24,7 +24,7 @@ namespace ModularToolManger.Forms
         private Manager _pluginManager;
         private FunctionsManager _functionManager;
         private int _startOffset = 25;
-        private int _baseScrollValue = 3;
+        private int _baseScrollValue;
         private int _maxHeight;
         private int _minWidth;
         private Point _location;
@@ -35,7 +35,7 @@ namespace ModularToolManger.Forms
 
         private string _functionsPath;
 
-        private int _lastContextListButton;
+        //private int _lastContextListButton;
         private Settings _settingsContainer;
 
         private LanguageCom _languageConnector;
@@ -46,7 +46,7 @@ namespace ModularToolManger.Forms
             InitializeComponent();
             _hidden = false;
             _forceClose = false;
-            _lastContextListButton = 0;
+            //_lastContextListButton = 0;
 
             Default_Show.Visible = _hidden;
 
@@ -117,12 +117,24 @@ namespace ModularToolManger.Forms
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            _baseScrollValue = 3;
             SetupSettingsFile();
             MouseWheel += F_ToolManager_MouseWheel;
             SetLanguage();
             SetupButtons();
             F_ToolManager_ReportBug.Visible = false;
-       
+
+            _baseScrollValue = _settingsContainer.GetIntValue("ScrollSpeed");
+
+            if (_baseScrollValue < 0)
+                _baseScrollValue = 1;
+            if (_baseScrollValue > 10)
+                _baseScrollValue = 10;
+
+            if (_settingsContainer.GetBoolValue("Borderless"))
+                FormBorderStyle = FormBorderStyle.None;
+
+
         }
 
         private void MoveToPosition()
@@ -385,6 +397,13 @@ namespace ModularToolManger.Forms
 
             ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
             F_ToolManager_NI_Taskbar_Close.Enabled = true;
+
+            if (_settingsContainer.GetBoolValue("Borderless"))
+                FormBorderStyle = FormBorderStyle.None;
+            else
+                FormBorderStyle = FormBorderStyle.Sizable;
+
+            _baseScrollValue = _settingsContainer.GetIntValue("Scrollspeed");
         }
         private void F_ToolManager_Shown(object sender, EventArgs e)
         {

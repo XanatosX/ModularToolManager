@@ -75,6 +75,14 @@
       "value": "Einstellungen"
     },
     {
+      "key": "F_Settings_CB_BorderLess",
+      "value": "Randloses Fenster"
+    },
+    {
+      "key": "F_Settings_L_ScrollSpeed",
+      "value": "Scrollgeschwindigkeit"
+    },
+    {
       "key": "F_LanguageSelect",
       "value": "Sprachauswahl"
     },

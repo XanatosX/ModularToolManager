@@ -59,6 +59,14 @@
       "value": "Settings"
     },
     {
+      "key": "F_Settings_CB_BorderLess",
+      "value": "Borderless window"
+    },
+    {
+      "key": "F_Settings_L_ScrollSpeed",
+      "value": "Scrollspeed"
+    },
+    {
       "key": "TP_Common",
       "value": "Common"
     },
