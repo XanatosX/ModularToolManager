@@ -18,6 +18,11 @@
       "key": "F_ToolManager_ReportBug",
       "value": "Bug melden"
     },
+
+    {
+      "key": "F_ToolManager_Hide",
+      "value": "Verstecken"
+    },
     {
       "key": "F_ReportBug",
       "value": "Bug melden"

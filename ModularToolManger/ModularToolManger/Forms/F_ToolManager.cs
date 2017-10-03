@@ -131,6 +131,7 @@ namespace ModularToolManger.Forms
             if (_baseScrollValue > 10)
                 _baseScrollValue = 10;
 
+            F_ToolManager_Hide.Visible = _settingsContainer.GetBoolValue("Borderless");
             if (_settingsContainer.GetBoolValue("Borderless"))
                 FormBorderStyle = FormBorderStyle.None;
 
@@ -370,15 +371,6 @@ namespace ModularToolManger.Forms
                 }
             }
         }
-        private void F_ToolManager_ReportBug_Click(object sender, EventArgs e)
-        {
-            Hide();
-            F_ToolManager_NI_Taskbar_Close.Enabled = false;
-            F_ReportBug BugReporter = new F_ReportBug(_settingsContainer);
-            BugReporter.Show();
-            Show();
-            F_ToolManager_NI_Taskbar_Close.Enabled = true;
-        }
         private void F_ToolManager_Settings_Click(object sender, EventArgs e)
         {
             F_Settings settingsForm = new F_Settings(_settingsContainer, _pluginManager.LoadetPlugins);
@@ -398,8 +390,9 @@ namespace ModularToolManger.Forms
             ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
             F_ToolManager_NI_Taskbar_Close.Enabled = true;
 
+            F_ToolManager_Hide.Visible = _settingsContainer.GetBoolValue("Borderless");
             if (_settingsContainer.GetBoolValue("Borderless"))
-                FormBorderStyle = FormBorderStyle.None;
+                FormBorderStyle = FormBorderStyle.None;   
             else
                 FormBorderStyle = FormBorderStyle.Sizable;
 
@@ -585,6 +578,22 @@ namespace ModularToolManger.Forms
                     break;
             }
             base.WndProc(ref message);
+        }
+
+        private void F_ToolManager_Hide_Click(object sender, EventArgs e)
+        {
+            
+            this.Close();
+        }
+
+        private void F_ToolManager_ReportBug_Click(object sender, EventArgs e)
+        {
+            Hide();
+            F_ToolManager_NI_Taskbar_Close.Enabled = false;
+            F_ReportBug BugReporter = new F_ReportBug(_settingsContainer);
+            BugReporter.Show();
+            Show();
+            F_ToolManager_NI_Taskbar_Close.Enabled = true;
         }
     }
 }
