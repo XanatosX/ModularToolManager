@@ -166,7 +166,9 @@ namespace ModularToolManger.Forms
                         if (c.GetType() == typeof(TrackBar))
                         {
                             TrackBar tbar = (TrackBar)c;
-                            tbar.Value = Settings.GetIntValue(Name, SettingsKey);
+                            int loadetValue = Settings.GetIntValue(Name, SettingsKey) < tbar.Minimum ? tbar.Minimum : Settings.GetIntValue(Name, SettingsKey);
+                            loadetValue = loadetValue > tbar.Maximum ? tbar.Maximum : loadetValue;
+                            tbar.Value = loadetValue;
                         }
                         return true;
                     });
