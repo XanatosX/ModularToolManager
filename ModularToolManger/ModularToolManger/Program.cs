@@ -16,6 +16,10 @@ namespace ModularToolManger
         [STAThread]
         static void Main()
         {
+            //Test code for Password Decryption
+            //PasswordManager PM = new PasswordManager();
+            //PM.DecryptPassword(PM.EncryptPassword("Test", "Test"), "Keks");
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             CentralLanguage.Initalize();

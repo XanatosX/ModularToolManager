@@ -13,12 +13,14 @@ namespace ModularToolManger.Core
     public class PasswordManager
     {
         private int _keysize;
+        private int _blocksize;
         private int _derivationIterations;
 
 
         public PasswordManager()
         {
             _keysize = 256;
+            _blocksize = 256;
             _derivationIterations = 1000;
         }
 
@@ -36,18 +38,18 @@ namespace ModularToolManger.Core
         {
             return createSecureString(ref StringToSecure);
         }
-        public string EncryptPassword(string Data, string Password)
+        public string EncryptPassword(string Data, string passPhrase)
         {
-            byte[] saltKey = Generate256BitsOfRandomEntropy();
+            byte[] saltStringBytes = Generate256BitsOfRandomEntropy();
             byte[] ivStringBytes = Generate256BitsOfRandomEntropy();
-            byte[] plainText = Encoding.UTF8.GetBytes(Data);
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes(Data);
 
-            using (Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(Password, saltKey, _derivationIterations))
+            using (Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, _derivationIterations))
             {
                 byte[] keyBytes = password.GetBytes(_keysize / 8);
                 using (RijndaelManaged symetricKey = new RijndaelManaged())
                 {
-                    symetricKey.BlockSize = _keysize;
+                    symetricKey.BlockSize = _blocksize;
                     symetricKey.Mode = CipherMode.CBC;
                     symetricKey.Padding = PaddingMode.PKCS7;
 
@@ -57,10 +59,10 @@ namespace ModularToolManger.Core
                         {
                             using (CryptoStream cryptoStream = new CryptoStream(memoryStream, encyptor, CryptoStreamMode.Write))
                             {
-                                cryptoStream.Write(plainText, 0, plainText.Length);
+                                cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
                                 cryptoStream.FlushFinalBlock();
 
-                                byte[] cipherTextBytes = saltKey;
+                                byte[] cipherTextBytes = saltStringBytes;
                                 cipherTextBytes = cipherTextBytes.Concat(ivStringBytes).ToArray();
                                 cipherTextBytes = cipherTextBytes.Concat(memoryStream.ToArray()).ToArray();
                                 memoryStream.Close();
@@ -76,11 +78,11 @@ namespace ModularToolManger.Core
         public string DecryptPassword(string cryptedText, string Password)
         {
             byte[] cipherTextBytesWithSaltAndIV = Convert.FromBase64String(cryptedText);
-            byte[] saltKey = cipherTextBytesWithSaltAndIV.Take(_keysize / 8).ToArray();
+            byte[] saltStringBytes = cipherTextBytesWithSaltAndIV.Take(_keysize / 8).ToArray();
             byte[] ivStringBytes = cipherTextBytesWithSaltAndIV.Skip(_keysize / 8).Take(_keysize / 8).ToArray();
             byte[] cipherTextBytes = cipherTextBytesWithSaltAndIV.Skip((_keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIV.Length - ((_keysize / 8) * 2)).ToArray();
 
-            using (Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(Password, saltKey, _derivationIterations))
+            using (Rfc2898DeriveBytes password = new Rfc2898DeriveBytes(Password, saltStringBytes, _derivationIterations))
             {
                 byte[] keyBytes = password.GetBytes(_keysize / 8);
                 using (RijndaelManaged symmetricKey = new RijndaelManaged())
@@ -104,14 +106,14 @@ namespace ModularToolManger.Core
                                 }
                                 catch (Exception)
                                 {
-                                    return String.Empty;
-                                }
 
+                                }
                             }
                         }
                     }
                 }
             }
+            return String.Empty;
         }
 
         private byte[] Generate256BitsOfRandomEntropy()
