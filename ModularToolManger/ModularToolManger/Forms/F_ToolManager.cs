@@ -118,24 +118,29 @@ namespace ModularToolManger.Forms
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            _baseScrollValue = 3;
+            
             SetupSettingsFile();
             MouseWheel += F_ToolManager_MouseWheel;
             SetLanguage();
             SetupButtons();
 
-            _baseScrollValue = _settingsContainer.GetIntValue("ScrollSpeed");
 
-            if (_baseScrollValue < 0)
-                _baseScrollValue = 1;
-            if (_baseScrollValue > 10)
-                _baseScrollValue = 10;
-
+            setScrollSpeed();
             F_ToolManager_Hide.Visible = _settingsContainer.GetBoolValue("Borderless");
             if (_settingsContainer.GetBoolValue("Borderless"))
                 FormBorderStyle = FormBorderStyle.None;
 
 
+        }
+        private void setScrollSpeed()
+        {
+            _baseScrollValue = 3;
+            _baseScrollValue = _settingsContainer.GetIntValue("ScrollSpeed");
+
+            if (_baseScrollValue < F_ToolManager_ScrollBar.Minimum)
+                _baseScrollValue = F_ToolManager_ScrollBar.Minimum;
+            if (_baseScrollValue > F_ToolManager_ScrollBar.Maximum)
+                _baseScrollValue = F_ToolManager_ScrollBar.Maximum;
         }
 
         private void MoveToPosition()
@@ -396,7 +401,7 @@ namespace ModularToolManger.Forms
             else
                 FormBorderStyle = FormBorderStyle.Sizable;
 
-            _baseScrollValue = _settingsContainer.GetIntValue("Scrollspeed");
+            setScrollSpeed();
         }
         private void F_ToolManager_Shown(object sender, EventArgs e)
         {
