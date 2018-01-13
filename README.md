@@ -1,15 +1,52 @@
-# README #
+# Modular tool manager 
 
-This is a Modular Tool Manager. You can create Buttons for fast access to applications or scripts. The Manager is designed to be fully modular each function type gets defined by a plugin assembly.
+## Requirements
 
-The files for settings and functions are located at 
+* Windows 7/8/8.1/10
+* .Net 4.5 installed on your system.
 
-%appdata%\ToolManager
+## Basic information
 
-just add the above line to your explorer search bar and press enter.
+This tool is called "Modular tool manager" it is a plugin based GUI driven script executer. There are two default functions given with the current version so you can exectue simple ".bat/.cmd" files and open up ".exe" files and shortcuts.
 
-To write your own plugin you need to link the PluginInterface file. There will be a tutorial later on.
+Since the tool is plugin based you can write your own plugins to support more script for execution.
 
-### Warning ###
+* [Download](https://bitbucket.org/XanatosX/modulartoolmanager/downloads/)
+* [Report a bug](https://bitbucket.org/XanatosX/modulartoolmanager/issues)
+
+At the moment the tool is available in two languages if you want to add your own translatation just copy one of the json files below the language folder in your installation folder.
+
+* German
+* Englisch
+
+## Installation
+
+To install the program you need to unzip the downloaded folder somewhere to your computer. Best place to do this is your program folder. Don't forget to create a folder for the program there.
+
+After unzipping the file to the folder there you can start the "ModularToolManger.exe".
+
+## Downloads
+
+Click [here](https://bitbucket.org/XanatosX/modulartoolmanager/downloads/) to get to the download section
+
+Or use one of the following links:
+
+* [Last unstable](https://bitbucket.org/XanatosX/modulartoolmanager/downloads/LastUnstable_ModularToolManager.zip)
+* [preSettings]() This version is before the ability to save you settings in the app (Not Stable).
+
+## Reporting bugs
+
+Click [here](https://bitbucket.org/XanatosX/modulartoolmanager/issues) to get to the bug section.
+
+You can create bugs from inside the application aswell, to do so you need to create a OAuth token for your bitbucket account. This can be down in your account settings in the "Access Managment" area.
+
+You need to check the "issues" rights for this token otherwise it will not work!
+
+## Plugins
+
+There will be a document how to create your own plugin later on. At the moment you need to contact me for assistant.
+
+### Warning
 
 If you are using any third party modules (Assembly files) be warned. Those could be infected by a virus or other software trying to damage your computer!
+
