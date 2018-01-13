@@ -251,7 +251,10 @@ namespace ModularToolManger.Forms
             PasswordManager pwManager = new PasswordManager();
             OAuth authentication = new OAuth(pwManager.DecryptPassword(key, passwordForm.Password), pwManager.DecryptPassword(secret, passwordForm.Password));
             if (authentication.ResponseData == null)
+            {
                 return;
+            }
+               
             
             Issue issue = new Issue(repository, authentication.ResponseData);
             HashSet<FileInfo> files = getFiles();
