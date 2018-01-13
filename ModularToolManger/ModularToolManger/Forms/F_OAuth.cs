@@ -39,8 +39,27 @@ namespace ModularToolManger.Forms
         private void Default_OK_Click(object sender, EventArgs e)
         {
             if (F_OAuth_TB_Password.Text != F_OAuth_TB_Password2.Text)
+            {
                 return;
+            }
+
+            if (F_OAuth_L_Password.Text == String.Empty || F_OAuth_TB_Password2.Text == String.Empty)
+            {
+                return;
+            }
+
+
+
             PasswordManager pwManager = new PasswordManager();
+            PasswordHasher hasher = new PasswordHasher();
+
+            string password = hasher.GetHashedPassword(F_OAuth_TB_Password.Text);
+            if (!hasher.CheckPassword(F_OAuth_TB_Password.Text, password))
+            {
+                return;
+            }
+
+            _settings.AddOrChangeKeyValue("OAuthPassword", password);
             _settings.AddOrChangeKeyValue("OauthKey", pwManager.EncryptPassword(F_OAuth_TB_Key.Text, F_OAuth_TB_Password.Text));
             _settings.AddOrChangeKeyValue("OAuthSecret", pwManager.EncryptPassword(F_OAuth_TB_Secret.Text, F_OAuth_TB_Password.Text));
             _settings.Save();

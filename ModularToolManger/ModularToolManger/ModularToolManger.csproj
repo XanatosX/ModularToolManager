@@ -84,6 +84,7 @@
     <Compile Include="Core\Modules\LanguageCom.cs" />
     <Compile Include="Core\Modules\LoggerBridge.cs" />
     <Compile Include="Core\PasswordCrypt.cs" />
+    <Compile Include="Core\PasswordHasher.cs" />
     <Compile Include="Forms\F_NewFunction.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,6 +207,11 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Language_4German_1json__JSONSchema="http://json.schemastore.org/composer" />
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
