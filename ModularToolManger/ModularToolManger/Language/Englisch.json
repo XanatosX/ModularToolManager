@@ -217,6 +217,30 @@
     {
       "key": "Default_All",
       "value": "All plugin filetypes"
+    },
+    {
+      "key": "Message_Upload_Status_Title",
+      "value": "Uploading status"
+    },
+    {
+      "key": "Message_Upload_Status_Succeded",
+      "value": "Uploading successfully done click OK to close the window."
+    },
+    {
+      "key": "Message_Upload_Status_Failed",
+      "value": "Error while trying to upload the issue. Please check your internetconnection and your OAuth token!"
+    },
+    {
+      "key": "Message_Wrong_Password_Text",
+      "value": "The entered password is invalid!"
+    },
+    {
+      "key": "Message_Wrong_Password_Title",
+      "value": "Wrong password"
+    },
+    {
+      "key": "Message_Wrong_Password_Text",
+      "value": "The entered password is invalid!"
     }
   ]
 }

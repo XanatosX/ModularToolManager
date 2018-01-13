@@ -215,7 +215,11 @@ namespace ModularToolManger.Forms
         private void Default_Send_Click(object sender, EventArgs e)
         {
             if (F_ReportBug_TB_Title.Text == String.Empty || F_ReportBug_TB_Content.Text == String.Empty)
+            {
                 return;
+            }
+
+            PasswordHasher hasher = new PasswordHasher();
 
             string key = _settings.GetValue("OauthKey");
             string secret = _settings.GetValue("OAuthSecret");
@@ -231,13 +235,21 @@ namespace ModularToolManger.Forms
                 secret = _settings.GetValue("OAuthSecret");
             }
 
-            F_Password password = new F_Password();
-            password.ShowDialog();
+            F_Password passwordForm = new F_Password();
+            passwordForm.ShowDialog();
+
+            string realPassword = _settings.GetValue("OAuthPassword");
+
+            if (!hasher.CheckPassword(passwordForm.Password, realPassword))
+            {
+                MessageBox.Show(CentralLanguage.LanguageManager.GetText("Message_Wrong_Password_Text"), CentralLanguage.LanguageManager.GetText("Message_Wrong_Password_Title"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             RepositoryData repository = new RepositoryData("XanatosX", "modulartoolmanager");
 
             PasswordManager pwManager = new PasswordManager();
-            OAuth authentication = new OAuth(pwManager.DecryptPassword(key, password.Password), pwManager.DecryptPassword(secret, password.Password));
+            OAuth authentication = new OAuth(pwManager.DecryptPassword(key, passwordForm.Password), pwManager.DecryptPassword(secret, passwordForm.Password));
             if (authentication.ResponseData == null)
                 return;
             
@@ -252,11 +264,15 @@ namespace ModularToolManger.Forms
             }
 
 
-
+            string UploadWindowTitle = CentralLanguage.LanguageManager.GetText("Message_Upload_Status_Title");
             if (issue.CreateIssue(new IssueCreateData(F_ReportBug_TB_Title.Text, F_ReportBug_TB_Content.Text, _curPriority, _curKind), uploadFiles.ToArray()))
             {
+                MessageBox.Show(CentralLanguage.LanguageManager.GetText("Message_Upload_Status_Succeded"), UploadWindowTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
+                return;
             }
+
+            MessageBox.Show(CentralLanguage.LanguageManager.GetText("Message_Upload_Status_Failed"), UploadWindowTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void F_Report_Bug_CB_Kind_SelectedIndexChanged(object sender, EventArgs e)

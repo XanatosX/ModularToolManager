@@ -218,6 +218,26 @@
     {
       "key": "Default_All",
       "value": "Alle plugin Dateitypen"
+    },
+    {
+      "key": "Message_Upload_Status_Title",
+      "value": "Status des Hochladens"
+    },
+    {
+      "key": "Message_Upload_Status_Succeded",
+      "value": "Das Hochladen war erfolgreich. Klicken Sie OK um das Fenster zu schließen."
+    },
+    {
+      "key": "Message_Upload_Status_Failed",
+      "value": "Es ist ein Fehler beim Hochladen. Bitte prüfen Sie Ihre Internetverbindung und Ihren OAuth Token!"
+    },
+    {
+      "key": "Message_Wrong_Password_Title",
+      "value": "Falsches Password"
+    },
+    {
+      "key": "Message_Wrong_Password_Text",
+      "value": "Das eingegebene Password ist falsch!"
     }
 
   ]
