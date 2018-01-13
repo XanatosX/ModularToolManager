@@ -231,10 +231,6 @@
       "value": "Error while trying to upload the issue. Please check your internetconnection and your OAuth token!"
     },
     {
-      "key": "Message_Wrong_Password_Text",
-      "value": "The entered password is invalid!"
-    },
-    {
       "key": "Message_Wrong_Password_Title",
       "value": "Wrong password"
     },
