@@ -11,8 +11,8 @@ This tool is called "Modular tool manager" it is a plugin based GUI driven scrip
 
 Since the tool is plugin based you can write your own plugins to support more script for execution.
 
-* [Download](https://bitbucket.org/XanatosX/modulartoolmanager/downloads/)
-* [Report a bug](https://bitbucket.org/XanatosX/modulartoolmanager/issues)
+* [Download][downloadPage]
+* [Report a bug][issuePage]
 
 At the moment the tool is available in two languages if you want to add your own translatation just copy one of the json files below the language folder in your installation folder.
 
@@ -27,16 +27,16 @@ After unzipping the file to the folder there you can start the "ModularToolMange
 
 ## Downloads
 
-Click [here](https://bitbucket.org/XanatosX/modulartoolmanager/downloads/) to get to the download section
+Click [here][downloadPage] to get to the download section
 
 Or use one of the following links:
 
-* [Last unstable](https://bitbucket.org/XanatosX/modulartoolmanager/downloads/LastUnstable_ModularToolManager.zip)
-* [preSettings]() This version is before the ability to save you settings in the app (Not Stable).
+* [Last unstable][lastUnstable]
+* [preSettings][preSettings] This version is before the ability to save you settings in the app (Not Stable).
 
 ## Reporting bugs
 
-Click [here](https://bitbucket.org/XanatosX/modulartoolmanager/issues) to get to the bug section.
+Click [here][issuePage] to get to the bug section.
 
 You can create bugs from inside the application aswell, to do so you need to create a OAuth token for your bitbucket account. This can be down in your account settings in the "Access Managment" area.
 
@@ -49,4 +49,11 @@ There will be a document how to create your own plugin later on. At the moment y
 ### Warning
 
 If you are using any third party modules (Assembly files) be warned. Those could be infected by a virus or other software trying to damage your computer!
+
+
+[downloadPage]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/
+[lastUnstable]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/LastUnstable_ModularToolManager.zip
+[preSettings]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/ModularToolManager_release-preSettings.zip
+[issuePage]: https://bitbucket.org/XanatosX/modulartoolmanager/issues
+
 
