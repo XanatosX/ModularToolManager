@@ -16,23 +16,26 @@ namespace ModularToolManger.Core
         public int sortingSequence { get; set; }
         public bool ShowInNotification { get; set; }
 
-
+        /// <summary>
+        /// Trigger the action of the currently loaded function
+        /// </summary>
+        /// <param name="plugin">The current plugin to use</param>
+        /// <returns></returns>
         public bool PerformeAction(IFunction plugin)
         {
-
             FileInfo FI = new FileInfo(FilePath);
             if (!FI.Exists || !plugin.FileEndings.ContainsValue(FI.Extension))
                 return false;
-            
-
 
             FunctionContext context = new FunctionContext(FilePath);
-            
 
             return plugin.PerformeAction(context);
         }
     }
 
+    /// <summary>
+    /// Simple container class for the whole functions in the JSON-File
+    /// </summary>
     public class FunctionsRoot
     {
         public List<Function> Functions { get; set; }
