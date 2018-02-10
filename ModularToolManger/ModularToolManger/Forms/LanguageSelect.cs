@@ -26,6 +26,7 @@ namespace ModularToolManger.Forms
             _settings = settings;
             InitializeComponent();
         }
+
         private void F_LanguageSelect_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
@@ -46,13 +47,14 @@ namespace ModularToolManger.Forms
 
             C_Languages.Location = new Point(F_LanguageSelect_Language.Location.X + F_LanguageSelect_Language.Width + 10, C_Languages.Location.Y);
             C_Languages.Size = new Size(_endPos - C_Languages.Location.X, C_Languages.Height);
-
             C_Languages.Text = "";
             C_Languages.Items.Clear();
+
             foreach (string item in CentralLanguage.LanguageManager.AvailableLanguages)
             {
                 C_Languages.Items.Add(item);
             }
+
             for (int i = 0; i < C_Languages.Items.Count; i++)
             {
                 string CurrentItem = C_Languages.Items[i].ToString();
@@ -68,9 +70,13 @@ namespace ModularToolManger.Forms
         private void C_Languages_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_settingUp)
+            {
                 return;
+            }
             if (CentralLanguage.LanguageManager.SetLanguageByName(C_Languages.SelectedItem.ToString()))
+            {
                 SetupDesign();
+            }
         }
         private void Default_Abort_Click(object sender, EventArgs e)
         {
