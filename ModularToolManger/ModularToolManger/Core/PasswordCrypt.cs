@@ -16,7 +16,6 @@ namespace ModularToolManger.Core
         private int _blocksize;
         private int _derivationIterations;
 
-
         public PasswordManager()
         {
             _keysize = 256;
@@ -34,10 +33,12 @@ namespace ModularToolManger.Core
             baseString = String.Empty;
             return returnString;
         }
+
         public SecureString CreateSecureString(ref string StringToSecure)
         {
             return createSecureString(ref StringToSecure);
         }
+
         public string EncryptPassword(string Data, string passPhrase)
         {
             byte[] saltStringBytes = Generate256BitsOfRandomEntropy();
@@ -75,6 +76,7 @@ namespace ModularToolManger.Core
                 }
             }
         }
+
         public string DecryptPassword(string cryptedText, string Password)
         {
             byte[] cipherTextBytesWithSaltAndIV = Convert.FromBase64String(cryptedText);
@@ -96,24 +98,16 @@ namespace ModularToolManger.Core
                         {
                             using (CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
                             {
-                                try
-                                {
-                                    byte[] plainTextBytes = new byte[cipherTextBytes.Length];
-                                    int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
-                                    memoryStream.Close();
-                                    cryptoStream.Close();
-                                    return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
-                                }
-                                catch (Exception)
-                                {
-
-                                }
+                                byte[] plainTextBytes = new byte[cipherTextBytes.Length];
+                                int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                                memoryStream.Close();
+                                cryptoStream.Close();
+                                return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
                             }
                         }
                     }
                 }
             }
-            return String.Empty;
         }
 
         private byte[] Generate256BitsOfRandomEntropy()
