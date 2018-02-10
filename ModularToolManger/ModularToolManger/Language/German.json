@@ -140,6 +140,10 @@
       "value": "Sprachauswahl"
     },
     {
+      "key": "F_Settings_CB_DisableSearchByButtonClick",
+      "value": "Suche beim drücken einer Funktionstaste beenden"
+    },
+    {
       "key": "F_ToolManager_NewFunction",
       "value": "Neue Funktion"
     },

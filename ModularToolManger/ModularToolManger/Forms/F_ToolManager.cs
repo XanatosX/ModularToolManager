@@ -118,8 +118,11 @@ namespace ModularToolManger.Forms
         private void Form1_Load(object sender, EventArgs e)
         {
 
-
             SetupSettingsFile();
+            if (_settingsContainer.GetBoolValue("Borderless"))
+            {
+                FormBorderStyle = FormBorderStyle.None;
+            }
             MouseWheel += F_ToolManager_MouseWheel;
             SetLanguage();
             SetupButtons();
@@ -127,8 +130,7 @@ namespace ModularToolManger.Forms
 
             setScrollSpeed();
             F_ToolManager_Hide.Visible = _settingsContainer.GetBoolValue("Borderless");
-            if (_settingsContainer.GetBoolValue("Borderless"))
-                FormBorderStyle = FormBorderStyle.None;
+
 
 
         }
@@ -456,7 +458,7 @@ namespace ModularToolManger.Forms
                     if (currentPlugin.ContainsInterface(typeof(IFunction)))
                         func.PerformeAction((IFunction)currentPlugin);
 
-                    if (_searchbarAdded)
+                    if (_searchbarAdded && _settingsContainer.GetBoolValue("DisableSearchByButton"))
                     {
                         List<Control> textBoxes = this.GetAllControls(typeof(TextBox));
                         foreach (Control curControl in textBoxes)
@@ -660,7 +662,7 @@ namespace ModularToolManger.Forms
         }
         private void SearchBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyChar == (char)Keys.Escape)
             {
                 RemoveSearchbar(sender);
                 return;
