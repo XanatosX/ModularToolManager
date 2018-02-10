@@ -81,6 +81,7 @@ namespace ModularToolManger.Forms
 
             this.DoForEveryControl(typeof(Button), SizeButtons);
             this.AlignMultipleControls(Default_OK, Default_Abort);
+            this.FormBorderStyle = FormBorderStyle.Fixed3D;
         }
 
         private void SetupTextFields()
