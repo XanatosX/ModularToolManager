@@ -117,7 +117,6 @@ namespace ModularToolManger.Forms
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
             SetupSettingsFile();
             if (_settingsContainer.GetBoolValue("Borderless"))
             {
@@ -130,9 +129,6 @@ namespace ModularToolManger.Forms
 
             setScrollSpeed();
             F_ToolManager_Hide.Visible = _settingsContainer.GetBoolValue("Borderless");
-
-
-
         }
         private void setScrollSpeed()
         {
@@ -258,7 +254,6 @@ namespace ModularToolManger.Forms
                 return;
             }
             CalculateFormSize(lastButton, buttons);
-
         }
 
         private void addNewToolStripMenuItem(Function currentFunction)
