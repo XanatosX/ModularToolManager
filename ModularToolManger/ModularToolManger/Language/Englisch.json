@@ -139,6 +139,10 @@
       "value": "Start with windows"
     },
     {
+      "key": "F_Settings_CB_DisableSearchByButtonClick",
+      "value": "Close search by function click"
+    },
+    {
       "key": "F_LanguageSelect",
       "value": "Langauge selection"
     },

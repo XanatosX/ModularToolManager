@@ -40,6 +40,7 @@
             this.Default_OK = new System.Windows.Forms.Button();
             this.Default_Abort = new System.Windows.Forms.Button();
             this.B_OAuth = new System.Windows.Forms.Button();
+            this.F_Settings_CB_DisableSearchByButtonClick = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.TP_Common.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.F_Settings_TB_ScrollSpeed)).BeginInit();
@@ -57,6 +58,7 @@
             // 
             // TP_Common
             // 
+            this.TP_Common.Controls.Add(this.F_Settings_CB_DisableSearchByButtonClick);
             this.TP_Common.Controls.Add(this.F_Settings_L_ScrollSpeed);
             this.TP_Common.Controls.Add(this.F_Settings_TB_ScrollSpeed);
             this.TP_Common.Controls.Add(this.F_Settings_CB_BorderLess);
@@ -76,7 +78,7 @@
             // F_Settings_L_ScrollSpeed
             // 
             this.F_Settings_L_ScrollSpeed.AutoSize = true;
-            this.F_Settings_L_ScrollSpeed.Location = new System.Drawing.Point(5, 118);
+            this.F_Settings_L_ScrollSpeed.Location = new System.Drawing.Point(5, 141);
             this.F_Settings_L_ScrollSpeed.Name = "F_Settings_L_ScrollSpeed";
             this.F_Settings_L_ScrollSpeed.Size = new System.Drawing.Size(132, 13);
             this.F_Settings_L_ScrollSpeed.TabIndex = 6;
@@ -84,7 +86,7 @@
             // 
             // F_Settings_TB_ScrollSpeed
             // 
-            this.F_Settings_TB_ScrollSpeed.Location = new System.Drawing.Point(8, 144);
+            this.F_Settings_TB_ScrollSpeed.Location = new System.Drawing.Point(8, 157);
             this.F_Settings_TB_ScrollSpeed.Name = "F_Settings_TB_ScrollSpeed";
             this.F_Settings_TB_ScrollSpeed.Size = new System.Drawing.Size(339, 45);
             this.F_Settings_TB_ScrollSpeed.TabIndex = 5;
@@ -178,6 +180,17 @@
             this.B_OAuth.UseVisualStyleBackColor = true;
             this.B_OAuth.Click += new System.EventHandler(this.B_OAuth_Click);
             // 
+            // F_Settings_CB_DisableSearchByButtonClick
+            // 
+            this.F_Settings_CB_DisableSearchByButtonClick.AutoSize = true;
+            this.F_Settings_CB_DisableSearchByButtonClick.Location = new System.Drawing.Point(8, 121);
+            this.F_Settings_CB_DisableSearchByButtonClick.Name = "F_Settings_CB_DisableSearchByButtonClick";
+            this.F_Settings_CB_DisableSearchByButtonClick.Size = new System.Drawing.Size(237, 17);
+            this.F_Settings_CB_DisableSearchByButtonClick.TabIndex = 7;
+            this.F_Settings_CB_DisableSearchByButtonClick.Tag = "DisableSearchByButton";
+            this.F_Settings_CB_DisableSearchByButtonClick.Text = "F_Settings_CB_DisableSearchByButtonClick";
+            this.F_Settings_CB_DisableSearchByButtonClick.UseVisualStyleBackColor = true;
+            // 
             // F_Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -212,5 +225,6 @@
         private System.Windows.Forms.Label F_Settings_L_ScrollSpeed;
         private System.Windows.Forms.TrackBar F_Settings_TB_ScrollSpeed;
         private System.Windows.Forms.Button B_OAuth;
+        private System.Windows.Forms.CheckBox F_Settings_CB_DisableSearchByButtonClick;
     }
 }
