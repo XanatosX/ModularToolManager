@@ -35,6 +35,7 @@ namespace ModularToolManger.Forms
             SetupTextFields();
 
             Default_OK.Center(this);
+            this.FormBorderStyle = FormBorderStyle.Fixed3D;
         }
 
         private void SetupTextFields()
