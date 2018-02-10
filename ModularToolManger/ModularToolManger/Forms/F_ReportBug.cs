@@ -104,11 +104,17 @@ namespace ModularToolManger.Forms
             {
                 FileInfo fi = new FileInfo(s);
                 if (fi.Length > _maxFileSize)
+                {
                     continue;
+                }
                 if (!_allowedFiletypes.Contains(fi.Extension.ToLower()))
+                {
                     continue;
+                }
                 if (getCompleteFileSize() > _allFileSize)
+                {
                     continue;
+                }
 
                 F_ReportBug_LV_Files.Items.Add(new ListViewItem()
                 {
@@ -125,7 +131,9 @@ namespace ModularToolManger.Forms
             foreach (ListViewItem item in F_ReportBug_LV_Files.Items)
             {
                 if (item.Tag == null || item.Tag.GetType() != typeof(FileInfo))
+                {
                     continue;
+                }
                 FileInfo fi = (FileInfo)item.Tag;
                 files.Add(fi);
             }
@@ -138,7 +146,9 @@ namespace ModularToolManger.Forms
             foreach (ListViewItem item in F_ReportBug_LV_Files.Items)
             {
                 if (item.Tag == null || item.Tag.GetType() != typeof(FileInfo))
+                {
                     continue;
+                }
                 FileInfo fi = (FileInfo)item.Tag;
                 Return += (int)fi.Length;
             }
@@ -168,7 +178,6 @@ namespace ModularToolManger.Forms
         }
         private void SetupKindComboBox()
         {
-
             F_Report_Bug_CB_Kind.Items.Add(CentralLanguage.LanguageManager.GetText("F_ReportBug_L_bug"));
             F_Report_Bug_CB_Kind.Items.Add(CentralLanguage.LanguageManager.GetText("F_ReportBug_L_enhancement"));
             F_Report_Bug_CB_Kind.SelectedIndex = 0;
@@ -186,7 +195,9 @@ namespace ModularToolManger.Forms
         private bool getBiggestLabel(Control B)
         {
             if (B.Location.X + B.Size.Width > _biggestLabel)
+            {
                 _biggestLabel = B.Location.X + B.Size.Width;
+            }
             return true;
         }
 

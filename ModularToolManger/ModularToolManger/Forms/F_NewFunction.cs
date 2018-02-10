@@ -33,27 +33,40 @@ namespace ModularToolManger.Forms
 
         private bool _firstOpen;
 
-        //private Dictionary<string, IFunction> _functions;
-
-        public F_NewFunction(ref Manager pluginManager)
-        {
-            InitializeComponent();
-            _pluginManager = pluginManager;
-            _startPos = 0;
-            _returnFunction = null;
-            _editMode = false;
-            _firstOpen = true;
-        }
-        public F_NewFunction(ref Manager pluginManager, Function _functionToEdit)
+        public F_NewFunction(ref Manager pluginManager, Function _functionToEdit = null)
         {
             InitializeComponent();
             _pluginManager = pluginManager;
             _startPos = 0;
             _returnFunction = _functionToEdit;
-            _editMode = true;
+            _editMode = false;
+            if (_returnFunction != null)
+            {
+                _editMode = true;
+            }
+            
             _firstOpen = true;
         }
+
         private void F_NewFunction_Load(object sender, EventArgs e)
+        {
+            SetupWindow();
+        }
+
+        private void SetupWindow()
+        {
+            BasicWindowSetup();
+            SetupLabels();
+            AddFunctionTypesToDropdown();
+            SetupWindowBoxes();
+
+            if (_editMode)
+            {
+                FillFields();
+            }
+        }
+
+        private void BasicWindowSetup()
         {
             this.SetupLanguage();
             this.DoForEveryControl(F_NewFunction_TB_Name, ClearTextBox);
@@ -63,15 +76,19 @@ namespace ModularToolManger.Forms
             Default_Open.Enabled = false;
             Default_OK.Enabled = false;
             FormBorderStyle = FormBorderStyle.Fixed3D;
-
-
             GUIHelper.SetWidthByTextLenght(Default_OK, Default_Abort);
             this.AlignMultipleControls(Default_OK, Default_Abort);
+        }
+        private bool ClearTextBox(Control TB_current)
+        {
+            TB_current.Text = "";
+            return true;
+        }
 
+        private void AddFunctionTypesToDropdown()
+        {
             F_NewFunction_CB_Type.Text = "";
             F_NewFunction_CB_Type.Items.Clear();
-
-
 
             for (int i = 0; i < _pluginManager.LoadetPlugins.Count; i++)
             {
@@ -88,7 +105,10 @@ namespace ModularToolManger.Forms
                 F_NewFunction_CB_Type.SelectedIndex = 0;
                 Default_Open.Tag = _pluginManager.LoadetPlugins[0];
             }
+        }
 
+        private void SetupLabels()
+        {
             List<Control> Labels = this.GetAllControls(typeof(Label));
             for (int i = 0; i < Labels.Count; i++)
             {
@@ -96,6 +116,10 @@ namespace ModularToolManger.Forms
                 if (currentLabel.Width > _startPos)
                     _startPos = currentLabel.Width;
             }
+        }
+
+        private void SetupWindowBoxes()
+        {
             _startPos += 25;
 
             _endPos = F_NewFunction_TB_Name.Location.X + F_NewFunction_TB_Name.Size.Width;
@@ -108,10 +132,6 @@ namespace ModularToolManger.Forms
             F_New_Function_CB_ShowInTaskList.Location = new Point(_startPos, F_New_Function_CB_ShowInTaskList.Location.Y);
 
             F_NewFunction_CB_Type.SelectedIndexChanged += F_NewFunction_CB_Type_SelectedIndexChanged;
-
-
-            if (_editMode)
-                FillFields();
         }
 
         private void FillFields()
@@ -120,7 +140,10 @@ namespace ModularToolManger.Forms
             int _selectIndex = 0;
 
             if (_pluginManager.LoadetPlugins.Count < F_NewFunction_CB_Type.Items.Count)
+            {
                 return;
+            }
+                
             for (int i = 0; i < F_NewFunction_CB_Type.Items.Count; i++)
             {
                 IPlugin plugin = _pluginManager.LoadetPlugins[i];
@@ -138,11 +161,7 @@ namespace ModularToolManger.Forms
             F_NewFunction_CB_Type.SelectedIndex = _selectIndex;
             this.Tag = _returnFunction.FilePath;
         }
-        private bool ClearTextBox(Control TB_current)
-        {
-            TB_current.Text = "";
-            return true;
-        }
+
 
         private string SetupFilter(Dictionary<string, string> extensions)
         {
@@ -171,24 +190,33 @@ namespace ModularToolManger.Forms
         private void F_NewFunction_CB_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_editMode && !_firstOpen)
+            {
                 TB_filePath.Text = string.Empty;
+            }
 
             if (_pluginManager.PluginCount >= F_NewFunction_CB_Type.SelectedIndex)
+            { 
                 Default_Open.Tag = _pluginManager.LoadetPlugins[F_NewFunction_CB_Type.SelectedIndex];
+            }
 
             _firstOpen = false;
         }
+
         private void Default_Open_Click(object sender, EventArgs e)
         {
             OpenFileDialog OFD = new OpenFileDialog();
             if (Default_Open.Tag == null)
+            {
                 return;
+            }
             OFD.Filter = SetupFilter(((IFunction)Default_Open.Tag).FileEndings);
             if (_returnFunction != null && _returnFunction.FilePath != string.Empty)
             {
                 FileInfo currentFile = new FileInfo(_returnFunction.FilePath);
                 if (!OFD.Filter.Contains(currentFile.Extension))
+                {
                     return;
+                }
                 OFD.InitialDirectory = currentFile.DirectoryName;
                 OFD.FileName = currentFile.Name;
                 string[] split = OFD.Filter.Split('|');
@@ -211,9 +239,13 @@ namespace ModularToolManger.Forms
         private void Default_OK_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(F_NewFunction_TB_Name.Text))
+            {
                 return;
+            }
             if (String.IsNullOrEmpty(F_NewFunction_CB_Type.Text))
+            {
                 return;
+            }
             if (Tag != null && Tag.GetType() == typeof(string))
             {
                 _returnFunction = new Function()

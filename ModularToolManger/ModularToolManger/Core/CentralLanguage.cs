@@ -10,6 +10,7 @@ using Helper.GUI;
 
 namespace ModularToolManger.Core
 {
+    //@TODO find a non static way of doing this ...
     public static class CentralLanguage
     {
         public static Language LanguageManager;
@@ -33,7 +34,9 @@ namespace ModularToolManger.Core
                 {
                     item.Text = LanguageManager.GetText(item.Name);
                     if (item.HasDropDownItems)
+                    {
                         ForAllSubItems(item);
+                    }
                 }
             }
             else
@@ -46,9 +49,13 @@ namespace ModularToolManger.Core
             foreach (ToolStripMenuItem item in current.DropDownItems)
             {
                 if (item.HasDropDownItems)
+                {
                     ForAllSubItems(item);
+                }
                 else
+                {
                     item.Text = LanguageManager.GetText(item.Name);
+                }
             }
         }
     }

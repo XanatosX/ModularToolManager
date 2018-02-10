@@ -37,7 +37,10 @@ namespace ModularToolManger.Core
         public void Load()
         {
             if (!File.Exists(_saveFile))
+            {
                 return;
+            }
+
             using (StreamReader writer = new StreamReader(_saveFile))
             {
                 FunctionsRoot data = JsonConvert.DeserializeObject<FunctionsRoot>(writer.ReadToEnd());
@@ -61,7 +64,9 @@ namespace ModularToolManger.Core
             root.Functions = _allFunctions;
             string dicretory = new FileInfo(_saveFile).DirectoryName;
             if (!Directory.Exists(dicretory))
+            {
                 Directory.CreateDirectory(dicretory);
+            }
 
             using (StreamWriter writer = new StreamWriter(_saveFile))
             {
