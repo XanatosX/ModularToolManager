@@ -9,11 +9,6 @@ namespace ModularToolManger.Core
 {
     public class PasswordHasher
     {
-        public PasswordHasher()
-        {
-
-        }
-
         /// <summary>
         /// Creates a hashed password out of a string
         /// </summary>
@@ -26,9 +21,14 @@ namespace ModularToolManger.Core
             return hasedPassword;
         }
 
+        /// <summary>
+        /// Creates the byte hash for the given password string
+        /// </summary>
+        /// <param name="password">The password to generate the byte string for</param>
+        /// <param name="salt">The salt key to use for generating</param>
+        /// <returns></returns>
         private byte[] CreatePassword(string password, byte[] salt = null)
         {
-
             if (salt == null)
             {
                 RNGCryptoServiceProvider CryptoService = new RNGCryptoServiceProvider();
@@ -40,7 +40,6 @@ namespace ModularToolManger.Core
             byte[] hashBytes = new byte[36];
             Array.Copy(salt, 0, hashBytes, 0, salt.Length);
             Array.Copy(hash, 0, hashBytes, salt.Length, 20);
-
 
             return hashBytes;
         }
@@ -66,7 +65,6 @@ namespace ModularToolManger.Core
                     return false;
                 }
             }
-
             return true;
         }
     }
