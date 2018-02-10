@@ -8,8 +8,8 @@
     <ProjectGuid>{42E97A0E-BB73-47A3-8831-80CFE591FF78}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ModularToolManger</RootNamespace>
-    <AssemblyName>ModularToolManger</AssemblyName>
+    <RootNamespace>ModularToolManager</RootNamespace>
+    <AssemblyName>ModularToolManager</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
