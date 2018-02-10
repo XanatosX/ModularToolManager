@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F_ToolManager));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.F_MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.F_ToolManager_File = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_Langauge = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_Settings = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,21 +47,21 @@
             this.Default_Show = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_NI_Taskbar_Buttons = new System.Windows.Forms.ToolStripMenuItem();
             this.F_ToolManager_NI_Taskbar_Close = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
+            this.F_MainMenuStrip.SuspendLayout();
             this.F_ToolManager_ButtonContext.SuspendLayout();
             this.F_ToolManager_TasklisteContext.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // F_MainMenuStrip
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.F_MainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.F_ToolManager_File,
             this.F_ToolManager_ReportBug});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(243, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.F_MainMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.F_MainMenuStrip.Name = "F_MainMenuStrip";
+            this.F_MainMenuStrip.Size = new System.Drawing.Size(243, 24);
+            this.F_MainMenuStrip.TabIndex = 0;
+            this.F_MainMenuStrip.Text = "menuStrip1";
             // 
             // F_ToolManager_File
             // 
@@ -192,17 +192,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(243, 261);
             this.Controls.Add(this.F_ToolManager_ScrollBar);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.F_MainMenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.F_MainMenuStrip;
             this.MaximizeBox = false;
             this.Name = "F_ToolManager";
             this.Text = "F_ToolManager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.F_ToolManager_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.F_ToolManager_Shown);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.F_ToolManager_KeyPress);
+            this.F_MainMenuStrip.ResumeLayout(false);
+            this.F_MainMenuStrip.PerformLayout();
             this.F_ToolManager_ButtonContext.ResumeLayout(false);
             this.F_ToolManager_TasklisteContext.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -212,7 +213,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip F_MainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem F_ToolManager_File;
         private System.Windows.Forms.NotifyIcon F_ToolManager_NI_Taskliste;
         private System.Windows.Forms.ToolStripMenuItem F_ToolManager_Langauge;
