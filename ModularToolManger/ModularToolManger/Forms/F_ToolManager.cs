@@ -4,18 +4,14 @@ using PluginInterface;
 using PluginManager;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Configuration;
 using System.Windows.Forms;
 using ToolMangerInterface;
 using JSONSettings;
 using ModularToolManger.Core.Modules;
+using System.Text.RegularExpressions;
 
 namespace ModularToolManger.Forms
 {
@@ -30,6 +26,7 @@ namespace ModularToolManger.Forms
         private Point _location;
         private bool _forceClose;
         private bool _hidden;
+        private bool _searchbarAdded;
 
         private int _newValue;
 
@@ -46,6 +43,9 @@ namespace ModularToolManger.Forms
             InitializeComponent();
             _hidden = false;
             _forceClose = false;
+            _searchbarAdded = false;
+            KeyPreview = true;
+
             //_lastContextListButton = 0;
 
             Default_Show.Visible = _hidden;
@@ -118,7 +118,7 @@ namespace ModularToolManger.Forms
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            
+
             SetupSettingsFile();
             MouseWheel += F_ToolManager_MouseWheel;
             SetLanguage();
@@ -166,7 +166,7 @@ namespace ModularToolManger.Forms
                 try
                 {
                     IFunction function = (IFunction)_pluginManager.LoadetPlugins[i];
-                    
+
                     foreach (IPluginSetting setting in function.Settings.AllSettings)
                     {
                         SettingsType type = SettingsType.Error;
@@ -214,13 +214,14 @@ namespace ModularToolManger.Forms
             SetLanguageForContextStrip(F_ToolManager_ButtonContext);
             SetLanguageForContextStrip(F_ToolManager_TasklisteContext);
         }
-        private void SetupButtons()
+        private void SetupButtons(string filter = ".*")
         {
             this.DoForEveryControl(typeof(Button), DeleteButton);
             F_ToolManager_NI_Taskbar_Buttons.DropDownItems.Clear();
             F_ToolManager_NI_Taskbar_Buttons.Visible = false;
             F_ToolManager_ScrollBar.Visible = false;
             Button lastButton = null;
+            int buttonsAdded = 0;
 
             if (_functionManager.Functions.Count > 0)
             {
@@ -228,15 +229,20 @@ namespace ModularToolManger.Forms
                 for (int i = 0; i < _functionManager.Functions.Count; i++)
                 {
                     Function currentFunction = _functionManager.Functions[i];
+                    Regex regex = new Regex(filter, RegexOptions.IgnoreCase);
+                    if (!regex.IsMatch(currentFunction.Name))
+                    {
+                        continue;
+                    }
                     Button newButton = createButton(currentFunction);
-                    newButton.Location = new Point(0, _startOffset + i * 25 + newButton.Size.Height);
+                    newButton.Location = new Point(0, _startOffset + buttonsAdded * 25 + newButton.Size.Height);
                     this.Controls.Add(newButton);
+                    lastButton = newButton;
+                    buttonsAdded++;
 
                     if (currentFunction.ShowInNotification)
                         addNewToolStripMenuItem(currentFunction);
                     
-                    if (i == _functionManager.Functions.Count - 1)
-                        lastButton = newButton;
                 }
 
                 if (F_ToolManager_NI_Taskbar_Buttons.DropDownItems.Count > 0)
@@ -251,7 +257,7 @@ namespace ModularToolManger.Forms
             }
             CalculateFormSize(lastButton, buttons);
 
-        } 
+        }
 
         private void addNewToolStripMenuItem(Function currentFunction)
         {
@@ -318,7 +324,7 @@ namespace ModularToolManger.Forms
             return true;
         }
         private bool DeleteButton(Control B)
-        { 
+        {
             if (B.GetType() != typeof(Button))
                 return false;
             this.Controls.Remove(((Button)B));
@@ -329,7 +335,7 @@ namespace ModularToolManger.Forms
             int Offset = _newValue - F_ToolManager_ScrollBar.Value;
             B.Location = new Point(B.Location.X, B.Location.Y - Offset);
             return true;
-        }        
+        }
 
         private Button GetButtonFromTSMI(ToolStripMenuItem tsmi)
         {
@@ -367,7 +373,7 @@ namespace ModularToolManger.Forms
                 ToolStripMenuItem TSMI = (ToolStripMenuItem)sender;
                 if (TSMI.Tag.GetType() == typeof(Function))
                 {
-                    Function func = (Function)TSMI.Tag;  
+                    Function func = (Function)TSMI.Tag;
                     IPlugin currentPlugin = _pluginManager.GetPluginByName(func.Type);
                     if (currentPlugin == null)
                         return;
@@ -397,9 +403,9 @@ namespace ModularToolManger.Forms
 
             F_ToolManager_Hide.Visible = _settingsContainer.GetBoolValue("Borderless");
             if (_settingsContainer.GetBoolValue("Borderless"))
-                FormBorderStyle = FormBorderStyle.None;   
+                FormBorderStyle = FormBorderStyle.None;
             else
-                FormBorderStyle = FormBorderStyle.Sizable;
+                FormBorderStyle = FormBorderStyle.Fixed3D;
 
             setScrollSpeed();
         }
@@ -449,6 +455,16 @@ namespace ModularToolManger.Forms
                         return;
                     if (currentPlugin.ContainsInterface(typeof(IFunction)))
                         func.PerformeAction((IFunction)currentPlugin);
+
+                    if (_searchbarAdded)
+                    {
+                        List<Control> textBoxes = this.GetAllControls(typeof(TextBox));
+                        foreach (Control curControl in textBoxes)
+                        {
+                            RemoveSearchbar((object)curControl);
+                        }
+                        
+                    }
                 }
             }
         }
@@ -573,7 +589,7 @@ namespace ModularToolManger.Forms
         {
             const int WM_SYSCOMMAND = 0x0112;
             const int SC_MOVE = 0xF010;
-
+        
             switch (message.Msg)
             {
                 case WM_SYSCOMMAND:
@@ -587,7 +603,7 @@ namespace ModularToolManger.Forms
 
         private void F_ToolManager_Hide_Click(object sender, EventArgs e)
         {
-            
+
             this.Close();
         }
 
@@ -599,6 +615,74 @@ namespace ModularToolManger.Forms
             BugReporter.Show();
             Show();
             F_ToolManager_NI_Taskbar_Close.Enabled = true;
+        }
+
+        private void F_ToolManager_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBox searchBox;
+            if (!_searchbarAdded)
+            {
+                searchBox = new TextBox();
+
+                searchBox.Location = new Point(0, F_MainMenuStrip.Height);
+                searchBox.Size = new Size(Width, 21);
+                searchBox.Tag = "SearchBox";
+                searchBox.Text = e.KeyChar.ToString();
+                searchBox.TabIndex = 999;
+                searchBox.KeyPress += SearchBox_KeyPress;
+
+                Controls.Add(searchBox);
+                _searchbarAdded = true;
+
+                searchBox.Focus();
+                int textLenght = searchBox.Text.Length;
+                searchBox.Select(textLenght, textLenght);
+                SetupButtons(buildRegex(searchBox.Text));
+            }            
+        }
+        private TextBox getSearchboxBySender(object sender)
+        {
+            if (sender.GetType() == typeof(TextBox))
+            {
+                TextBox curTextBox = (TextBox)sender;
+                if (curTextBox.Tag.ToString() == "SearchBox")
+                {
+                    return curTextBox;
+                }
+            }
+            return null;
+        }
+        private string buildRegex(string value)
+        {
+            value = value.Replace("?", ".");
+            value = value.Replace("*", ".*");
+            return value;
+        }
+        private void SearchBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                RemoveSearchbar(sender);
+                return;
+            }
+            TextBox curTextBox = getSearchboxBySender(sender);
+            if (curTextBox == null)
+            {
+                return;
+            }
+            SetupButtons(buildRegex(curTextBox.Text));
+        }
+
+        private void RemoveSearchbar(object sender)
+        {
+            TextBox curTextBox = getSearchboxBySender(sender);
+            if (curTextBox == null)
+            {
+                return;
+            }
+            Controls.Remove(curTextBox);
+            SetupButtons();
+            _searchbarAdded = false;
         }
     }
 }
