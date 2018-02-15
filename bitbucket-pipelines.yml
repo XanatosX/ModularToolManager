@@ -1,5 +1,8 @@
 image: mono
 
+options:
+  max-time: 3
+
 pipelines:
   default:
     - step:
