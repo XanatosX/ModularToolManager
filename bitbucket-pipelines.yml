@@ -54,12 +54,14 @@ pipelines:
             - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip ./Debug
             - mkdir /artifacts
             - mv /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip /artifacts
+            - ls -la /artifacts/
           artifacts:
             - /artifacts/**
       - step:
           name: Production deployment to download area
           deployment: production
           script: 
+            - ls -la $BITBUCKET_CLONE_DIR/artifacts/
             - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"$BITBUCKET_CLONE_DIR/artifacts/ModularToolManager_${BITBUCKET_TAG}.zip"
   branches:
     master:
