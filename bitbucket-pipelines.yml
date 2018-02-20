@@ -54,7 +54,7 @@ pipelines:
             - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip ./Debug
             - mkdir /artifacts
             - mv /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip /artifacts
-            - mv /artifacts/ ${BITBUCKET_CLONE_DIR}
+            - cp /artifacts/ ${BITBUCKET_CLONE_DIR}
             - ls -la ${BITBUCKET_CLONE_DIR}
             - ls -la ${BITBUCKET_CLONE_DIR}/artifacts/
           artifacts:
