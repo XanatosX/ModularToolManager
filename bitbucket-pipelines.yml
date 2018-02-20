@@ -58,7 +58,7 @@ pipelines:
             - ls -la ${BITBUCKET_CLONE_DIR}
             - ls -la ${BITBUCKET_CLONE_DIR}/artifacts/
           artifacts:
-            - /artifacts/**
+            - artifacts/**
       - step:
           name: Production deployment to download area
           deployment: production
