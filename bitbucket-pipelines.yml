@@ -37,7 +37,7 @@ pipelines:
           name: Production deployment to download area
           deployment: production
           script: 
-            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"$BITBUCKET_CLONE_DIR/artifacts/ModularToolManager_${BITBUCKET_TAG}.zip"
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${BITBUCKET_CLONE_DIR}/artifacts/ModularToolManager_${BITBUCKET_TAG}.zip"
     rc-*:
       - step:
           script:
@@ -61,8 +61,8 @@ pipelines:
           name: Production deployment to download area
           deployment: production
           script: 
-            - ls -la $BITBUCKET_CLONE_DIR/artifacts/
-            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"$BITBUCKET_CLONE_DIR/artifacts/ModularToolManager_${BITBUCKET_TAG}.zip"
+            - ls -la ${BITBUCKET_CLONE_DIR}/artifacts/
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${BITBUCKET_CLONE_DIR}/artifacts/ModularToolManager_${BITBUCKET_TAG}.zip"
   branches:
     master:
       - step:
@@ -89,4 +89,4 @@ pipelines:
           name: Test/Unstable deployment to download area
           deployment: test
           script:
-            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"$BITBUCKET_CLONE_DIR/artifacts/LastUnstable_ModularToolManager.zip"
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${BITBUCKET_CLONE_DIR}/artifacts/LastUnstable_ModularToolManager.zip"
