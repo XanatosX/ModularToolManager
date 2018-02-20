@@ -29,7 +29,10 @@ pipelines:
 
             - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/
             - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./Release
-
+      - step:
+          name: Deploy to download area
+          deployment: production
+          script: 
             - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip"
     rc-*:
       - step:
@@ -45,6 +48,10 @@ pipelines:
 
             - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/
             - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip ./Debug
+      - step:
+          name: Deploy to download area
+          deployment: production
+          script: 
             - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip"
   branches:
     master:
@@ -64,4 +71,8 @@ pipelines:
 
             - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/
             - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip ./Debug
+      - step:
+          name: Deploy to download area
+          deployment: test
+          script:
             - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip"
