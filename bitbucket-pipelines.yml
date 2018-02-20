@@ -62,7 +62,8 @@ pipelines:
       - step:
           name: Production deployment to download area
           deployment: production
-          script: 
+          script:
+            - ls -la ${BITBUCKET_CLONE_DIR}
             - ls -la ${BITBUCKET_CLONE_DIR}/artifacts/
             - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${BITBUCKET_CLONE_DIR}/artifacts/ModularToolManager_${BITBUCKET_TAG}.zip"
   branches:
