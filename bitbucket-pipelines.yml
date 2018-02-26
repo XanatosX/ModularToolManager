@@ -28,9 +28,11 @@ pipelines:
             - zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./ToolMangerInterface.dll
 
             - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/
-            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./Release
+
+            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./Release -x ./*.pdb
             - mkdir /artifacts
             - mv /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip /artifacts
+            - cp -r /artifacts/ ${BITBUCKET_CLONE_DIR}
           artifacts:
             - artifacts/**
       - step:
@@ -51,7 +53,8 @@ pipelines:
             - zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip ./ToolMangerInterface.dll 
 
             - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/
-            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip ./Debug
+            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip ./Debug  -x ./*.pdb
+
             - mkdir /artifacts
             - mv /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip /artifacts
             - cp -r /artifacts/ ${BITBUCKET_CLONE_DIR}
@@ -79,9 +82,11 @@ pipelines:
             - zip -u /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip ./ToolMangerInterface.dll 
 
             - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/
-            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip ./Debug
+            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip ./Debug  -x ./*.pdb
+
             - mkdir /artifacts
             - mv /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip /artifacts
+            - cp -r /artifacts/ ${BITBUCKET_CLONE_DIR}
           artifacts:
             - artifacts/**
       - step:
