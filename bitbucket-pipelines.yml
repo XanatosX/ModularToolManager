@@ -1,5 +1,8 @@
 image: mono
 
+options:
+  max-time: 3
+
 pipelines:
   default:
     - step:
@@ -25,9 +28,18 @@ pipelines:
             - zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./ToolMangerInterface.dll
 
             - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/
-            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./Release
 
-            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip"
+            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip ./Release -x ./*.pdb
+            - mkdir /artifacts
+            - mv /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Release/ModularToolManager_${BITBUCKET_TAG}.zip /artifacts
+            - cp -r /artifacts/ ${BITBUCKET_CLONE_DIR}
+          artifacts:
+            - artifacts/**
+      - step:
+          name: Production deployment to download area
+          deployment: production
+          script: 
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${BITBUCKET_CLONE_DIR}/artifacts/ModularToolManager_${BITBUCKET_TAG}.zip"
     rc-*:
       - step:
           script:
@@ -41,8 +53,18 @@ pipelines:
             - zip /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip ./ToolMangerInterface.dll 
 
             - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/
-            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip ./Debug
-            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip"
+            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip ./Debug  -x ./*.pdb
+
+            - mkdir /artifacts
+            - mv /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/ModularToolManager_${BITBUCKET_TAG}.zip /artifacts
+            - cp -r /artifacts/ ${BITBUCKET_CLONE_DIR}
+          artifacts:
+            - artifacts/**
+      - step:
+          name: Production deployment to download area
+          deployment: production
+          script:
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${BITBUCKET_CLONE_DIR}/artifacts/ModularToolManager_${BITBUCKET_TAG}.zip"
   branches:
     master:
       - step:
@@ -60,5 +82,15 @@ pipelines:
             - zip -u /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip ./ToolMangerInterface.dll 
 
             - cd /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/
-            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip ./Debug
-            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"/opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip"
+            - zip -ur /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip ./Debug  -x ./*.pdb
+
+            - mkdir /artifacts
+            - mv /opt/atlassian/pipelines/agent/build/ModularToolManger/ModularToolManger/bin/Debug/LastUnstable_ModularToolManager.zip /artifacts
+            - cp -r /artifacts/ ${BITBUCKET_CLONE_DIR}
+          artifacts:
+            - artifacts/**
+      - step:
+          name: Test/Unstable deployment to download area
+          deployment: test
+          script:
+            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${BITBUCKET_CLONE_DIR}/artifacts/LastUnstable_ModularToolManager.zip"
