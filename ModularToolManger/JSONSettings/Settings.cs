@@ -14,7 +14,7 @@ namespace JSONSettings
         private SettingJSON _settings;
         private string _defaultApp;
         public string DefaultApp => _defaultApp;
-        private string _saveFile;
+        readonly string _saveFile;
 
 
 
@@ -29,7 +29,10 @@ namespace JSONSettings
         {
             _settings.AddNew(Name);
             if (_settings.nodes.Count == 1)
+            {
                 _defaultApp = Name;
+            }
+                
         }
 
         public void AddOrChangeKeyValue(string Name, string Key, object Value)
@@ -43,9 +46,8 @@ namespace JSONSettings
 
         public bool GetBoolValue(string Name, string key)
         {
-            SettingsType type;
             bool returnBool = false; ;
-            string value = _settings.GetValue(Name, key, out type);
+            string value = _settings.GetValue(Name, key, out SettingsType type);
             if (type == SettingsType.Bool)
             {
                 bool.TryParse(value, out returnBool);
@@ -59,11 +61,12 @@ namespace JSONSettings
 
         public int GetIntValue(string Name, string key)
         {
-            SettingsType type;
             int returnInt = -1;
-            string value = _settings.GetValue(Name, key, out type);
+            string value = _settings.GetValue(Name, key, out SettingsType type);
             if (type == SettingsType.Int)
+            {
                 int.TryParse(value, out returnInt);
+            }
             return returnInt;
         }
         public int GetIntValue(string key)
@@ -73,11 +76,12 @@ namespace JSONSettings
 
         public float GetFloatValue(string Name, string key)
         {
-            SettingsType type;
             float returnFloat = -1;
-            string value = _settings.GetValue(Name, key, out type);
+            string value = _settings.GetValue(Name, key, out SettingsType type);
             if (type == SettingsType.Float)
+            {
                 float.TryParse(value, out returnFloat);
+            }
             return returnFloat;
         }
         public float GetFloatValue(string key)
@@ -89,7 +93,9 @@ namespace JSONSettings
         {
             string returnString = _settings.GetValue(Name, key, out type);
             if (type == SettingsType.Error)
+            {
                 return "";
+            }
             return returnString;
         }
 
@@ -100,10 +106,12 @@ namespace JSONSettings
 
         public string GetValue(string Name, string key)
         {
-            SettingsType type;
-            string returnString = _settings.GetValue(Name, key, out type);
+            string returnString = _settings.GetValue(Name, key, out SettingsType type);
             if (type == SettingsType.Error)
+            {
                 return "";
+            }
+
             return returnString;
         }
         public string GetValue(string key)
@@ -113,15 +121,23 @@ namespace JSONSettings
 
 
 
-
-        public void Save(bool compressed = false )
+        public void Save()
+        {
+            Save(false);
+        }
+        public void Save(bool compressed)
         {
             Formatting format = Formatting.Indented;
             if (compressed)
+            {
                 format = Formatting.None;
+            }
             FileInfo FI = new FileInfo(_saveFile);
             if (!Directory.Exists(FI.DirectoryName))
+            {
                 Directory.CreateDirectory(FI.DirectoryName);
+            }
+                
             string settings = JsonConvert.SerializeObject(_settings, format);
             using (StreamWriter writer = new StreamWriter(_saveFile))
             {
@@ -132,7 +148,10 @@ namespace JSONSettings
         private void Load()
         {
             if (!File.Exists(_saveFile))
+            {
                 return;
+            }
+                
             using (StreamReader reader = new StreamReader(_saveFile))
             {
                 string data = reader.ReadToEnd();
@@ -140,7 +159,10 @@ namespace JSONSettings
                 {
                     _settings = JsonConvert.DeserializeObject<SettingJSON>(data);
                     if (_settings.nodes.Count > 0)
+                    {
                         _defaultApp = _settings.nodes[0].Name;
+                    }
+                        
                 }
                 catch (Exception)
                 {
