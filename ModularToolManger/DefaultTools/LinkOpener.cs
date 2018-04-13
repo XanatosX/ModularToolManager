@@ -15,78 +15,27 @@ namespace DefaultTools
     {
         public bool Active { get; set; }
 
-        public string Author
-        {
-            get
-            {
-                return "Simon Aberle";
-            }
-        }
+        public string Author => "Simon Aberle";
 
         private PluginContext _context;
-        public PluginContext context
-        {
-            get
-            {
-                return _context;
-            }
-        }
+        public PluginContext context => _context;
 
-        public string Description
-        {
-            get
-            {
-                return "Open a windows shortcut";
-            }
-        }
+        public string Description => "Open a windows shortcut";
 
-        public string DisplayName
-        {
-            get
-            {
-                return "Windows shortcut";
-            }
-        }
+        public string DisplayName => "Windows shortcut";
 
         private Dictionary<string, string> _fileEndings;
-        public Dictionary<string,string> FileEndings
-        {
-            get
-            {
-                return _fileEndings;
-            }
-        }
+        public Dictionary<string, string> FileEndings => _fileEndings;
 
         private bool _initialized;
-        public bool initialized
-        {
-            get
-            {
-                return _initialized;
-            }
-        }
+        public bool initialized => _initialized;
 
-        public string UniqueName
-        {
-            get
-            {
-                return "Shortcut";
-            }
-        }
+        public string UniqueName => "Shortcut";
 
-        public Version Version
-        {
-            get
-            {
-                return new Version(1, 0, 0, 0);
-            }
-        }
+        public Version Version => new Version(1, 0, 0, 0);
 
         private Module _comModule;
-        public Module ComModule
-        {
-            get => _comModule;
-        }
+        public Module ComModule => _comModule;
 
 
         PluginSettings _settings;
@@ -123,7 +72,7 @@ namespace DefaultTools
                 return false;
 
             FunctionContext CurrentContext = (FunctionContext)context;
-            Process process = new Process(); ;
+            Process process = new Process();
             process.StartInfo.FileName = CurrentContext.FilePath;
             process.StartInfo.WorkingDirectory = (new FileInfo(CurrentContext.FilePath)).DirectoryName;
             try
@@ -134,8 +83,6 @@ namespace DefaultTools
             {
                 _comModule.SendMessage("log", ex.Message);
             }
-            
-
 
             return true;
         }
