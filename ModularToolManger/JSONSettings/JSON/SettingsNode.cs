@@ -8,7 +8,7 @@ namespace JSONSettings
 {
     public class SettingsNode
     {
-        private String _name;
+        readonly string _name;
         public string Name => _name;
 
         readonly List<KeyValue> _settings;
