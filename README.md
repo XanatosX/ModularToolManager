@@ -1,5 +1,7 @@
 # Modular tool manager 
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a76b14fe59a54a9ab4d3e4f6afed53dc)](https://app.codacy.com/app/simonaberle/ModularToolManager?utm_source=github.com&utm_medium=referral&utm_content=XanatosX/ModularToolManager&utm_campaign=badger)
+
 ## Requirements
 
 * Windows 7/8/8.1/10
