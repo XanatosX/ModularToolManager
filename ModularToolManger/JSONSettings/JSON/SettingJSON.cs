@@ -18,23 +18,27 @@ namespace JSONSettings
         public bool AddNew(string Name)
         {
             if (Contained(Name))
+            {
                 return false;
+            }
             nodes.Add(new SettingsNode(Name));
             return true;
         }
 
         public bool AddValue(string Name, string Key, object Value)
         {
-            SettingsNode node = getNode(Name);
+            SettingsNode node = GetNode(Name);
             if (node == null)
+            {
                 return false;
+            }
             node.AddOrChangeKeyValue(Key, Value);
             return true;
         }
 
         public string GetValue(string Name, string Key, out SettingsType type)
         {
-            SettingsNode node = getNode(Name);
+            SettingsNode node = GetNode(Name);
             if (node == null)
             {
                 type = SettingsType.Error;
@@ -44,12 +48,14 @@ namespace JSONSettings
 
             return Value;
         }
-        private SettingsNode getNode(string Name)
+        private SettingsNode GetNode(string Name)
         {
             foreach (SettingsNode node in nodes)
             {
                 if (node.Name == Name)
+                {
                     return node;
+                }
             }
             return null;
         }
@@ -59,7 +65,10 @@ namespace JSONSettings
             foreach (SettingsNode node in nodes)
             {
                 if (node.Name == name)
+                {
                     return true;
+                }
+                    
             }
             return false;
         }

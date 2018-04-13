@@ -14,18 +14,22 @@ using System.Windows.Forms;
 
 namespace ModularToolManger.Forms
 {
+    //ToDo This need's to use the GitHub issue creation instead of the Bitbucket one
     public partial class F_ReportBug : Form
     {
         private int _biggestLabel;
         private int _textFieldEndPos;
-        private Settings _settings;
+
+        readonly Settings _settings;
+
+        readonly HashSet<string> _allowedFiletypes;
+        readonly int _maxFileSize;
+        readonly int _allFileSize;
 
         private Kind _curKind;
         private Priority _curPriority;
 
-        private HashSet<string> _allowedFiletypes;
-        private int _maxFileSize;
-        private int _allFileSize;
+
 
         public F_ReportBug(Settings settings)
         {
@@ -63,7 +67,7 @@ namespace ModularToolManger.Forms
 
             SetLanguage();
             SetupComboBoxes();
-            this.DoForEveryControl(typeof(Label), getBiggestLabel);
+            this.DoForEveryControl(typeof(Label), GetBiggestLabel);
             SetupTextFields();
 
             this.DoForEveryControl(typeof(Button), SizeButtons);
@@ -111,12 +115,12 @@ namespace ModularToolManger.Forms
                 {
                     continue;
                 }
-                if (getCompleteFileSize() > _allFileSize)
+                if (GetCompleteFileSize() > _allFileSize)
                 {
                     continue;
                 }
 
-                F_ReportBug_LV_Files.Items.Add(new ListViewItem()
+                F_ReportBug_LV_Files.Items.Add(new ListViewItem
                 {
                     Text = fi.Name,
                     Tag = fi,
@@ -125,7 +129,7 @@ namespace ModularToolManger.Forms
 
         }
 
-        private HashSet<FileInfo> getFiles()
+        private HashSet<FileInfo> GetFiles()
         {
             HashSet<FileInfo> files = new HashSet<FileInfo>();
             foreach (ListViewItem item in F_ReportBug_LV_Files.Items)
@@ -140,7 +144,7 @@ namespace ModularToolManger.Forms
             return files;
         }
 
-        private int getCompleteFileSize()
+        private int GetCompleteFileSize()
         {
             int Return = 0;
             foreach (ListViewItem item in F_ReportBug_LV_Files.Items)
@@ -192,7 +196,7 @@ namespace ModularToolManger.Forms
             F_Report_Bug_CB_Priority.SelectedIndex = 0;
         }
 
-        private bool getBiggestLabel(Control B)
+        private bool GetBiggestLabel(Control B)
         {
             if (B.Location.X + B.Size.Width > _biggestLabel)
             {
@@ -205,12 +209,12 @@ namespace ModularToolManger.Forms
         {
             _textFieldEndPos = F_ReportBug_TB_Title.Location.X + F_ReportBug_TB_Title.Size.Width;
 
-            this.DoForEveryControl(typeof(TextBox), setTextFieldSize);
-            this.DoForEveryControl(typeof(ListView), setTextFieldSize);
-            this.DoForEveryControl(typeof(ComboBox), setTextFieldSize);
+            this.DoForEveryControl(typeof(TextBox), SetTextFieldSize);
+            this.DoForEveryControl(typeof(ListView), SetTextFieldSize);
+            this.DoForEveryControl(typeof(ComboBox), SetTextFieldSize);
         }
 
-        private bool setTextFieldSize(Control B)
+        private bool SetTextFieldSize(Control B)
         {
             B.Location = new Point(_biggestLabel, B.Location.Y);
             B.Size = new Size(_textFieldEndPos - _biggestLabel, B.Size.Height);
@@ -241,7 +245,9 @@ namespace ModularToolManger.Forms
 
                 OAuthEntry.ShowDialog();
                 if (!OAuthEntry.GoodToGO)
+                {
                     return;
+                } 
                 key = _settings.GetValue("OauthKey");
                 secret = _settings.GetValue("OAuthSecret");
             }
@@ -268,12 +274,14 @@ namespace ModularToolManger.Forms
                
             
             Issue issue = new Issue(repository, authentication.ResponseData);
-            HashSet<FileInfo> files = getFiles();
+            HashSet<FileInfo> files = GetFiles();
             List<string> uploadFiles = new List<string>();
             foreach (FileInfo fi in files)
             {
                 if (!File.Exists(fi.FullName))
+                {
                     continue;
+                }
                 uploadFiles.Add(fi.FullName);
             }
 
@@ -333,7 +341,6 @@ namespace ModularToolManger.Forms
             {
                 CMS_LV_Files.Visible = false;
                 e.Cancel = true;
-                return;
             }
         }
 

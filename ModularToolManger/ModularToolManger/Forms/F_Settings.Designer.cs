@@ -147,7 +147,6 @@
             this.F_Settings_CB_KeepOnTop.Tag = "KeepOnTop";
             this.F_Settings_CB_KeepOnTop.Text = "F_Settings_CB_KeepOnTop";
             this.F_Settings_CB_KeepOnTop.UseVisualStyleBackColor = true;
-            this.F_Settings_CB_KeepOnTop.CheckedChanged += new System.EventHandler(this.F_Settings_CB_KeepOnTop_CheckedChanged);
             // 
             // Default_OK
             // 

@@ -8,26 +8,24 @@ namespace JSONSettings
 {
     public class SettingsNode
     {
-        public string Name;
-        public List<KeyValue> Settings;
+        readonly string _name;
+        public string Name => _name;
+
+        readonly List<KeyValue> _settings;
+        public List<KeyValue> Settings => _settings;
 
         public SettingsNode()
         {
-            init();
+            _settings = new List<KeyValue>();
         }
 
         public SettingsNode(string name)
         {
-            init();
-            Name = name;
+            _settings = new List<KeyValue>();
+            _name = name;
         }
 
-        private void init()
-        {
-            Settings = new List<KeyValue>();
-        }
-
-        private bool AddKeyValue(string key, object Value, SettingsType valueType = SettingsType.String)
+        private void AddKeyValue(string key, object Value, SettingsType valueType = SettingsType.String)
         {
             if (KeyContained(key))
             {
@@ -42,19 +40,18 @@ namespace JSONSettings
             }
             else
             {
-                Settings.Add(new KeyValue()
+                Settings.Add(new KeyValue
                 {
                     Key = key,
                     Value = Value.ToString(),
                     ValueType = valueType,
                 });
             }
-
-            return true;
         }
+
         public bool AddOrChangeKeyValue(string key, object Value)
         {
-            SettingsType type = SettingsType.String;
+            SettingsType type;
             TypeCode code = Type.GetTypeCode(Value.GetType());
             switch (code)
             {
@@ -69,6 +66,7 @@ namespace JSONSettings
                     type = SettingsType.Float;
                     break;
                 default:
+                    type = SettingsType.String;
                     break;
             }
             if (type != SettingsType.Error)
@@ -105,14 +103,11 @@ namespace JSONSettings
             foreach (KeyValue pair in Settings)
             {
                 if (pair.Key == key)
+                {
                     return true;
+                }
             }
             return false;
-        }
-
-        internal void GetValue(string Name)
-        {
-
         }
     }
 }

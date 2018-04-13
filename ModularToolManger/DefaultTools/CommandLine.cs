@@ -15,78 +15,27 @@ namespace DefaultTools
     {
         public bool Active { get; set; }
 
-        public string Author
-        {
-            get
-            {
-                return "Simon Aberle";
-            }
-        }
+        public string Author => "Simon Aberle";
 
         private PluginContext _context;
-        public PluginContext context
-        {
-            get
-            {
-                return _context;
-            }
-        }
+        public PluginContext context => _context;
 
-        public string Description
-        {
-            get
-            {
-                return "Create a function performed by the commandline in Windows";
-            }
-        }
+        public string Description => "Create a function performed by the commandline in Windows";
 
-        public string DisplayName
-        {
-            get
-            {
-                return "Windows commandline";
-            }
-        }
+        public string DisplayName => "Windows commandline";
 
         private Dictionary<string, string> _fileEndings;
-        public Dictionary<string,string> FileEndings
-        {
-            get
-            {
-                return _fileEndings;
-            }
-        }
+        public Dictionary<string, string> FileEndings => _fileEndings;
 
         private bool _initialized;
-        public bool initialized
-        {
-            get
-            {
-                return _initialized;
-            }
-        }
+        public bool initialized => _initialized;
 
-        public string UniqueName
-        {
-            get
-            {
-                return "WindowsCommandLine";
-            }
-        }
+        public string UniqueName => "WindowsCommandLine";
 
-        public Version Version
-        {
-            get
-            {
-                return new Version(1, 0, 0, 0);
-            }
-        }
+        public Version Version => new Version(1, 0, 0, 0);
 
         private Module _comModule;
-        public Module ComModule
-        {
-            get => _comModule;
-        }
+        public Module ComModule => _comModule;
 
         PluginSettings _settings;
         PluginSettings ISettingPlugin.Settings => _settings;
@@ -121,8 +70,10 @@ namespace DefaultTools
         public bool PerformeAction(PluginContext context)
         {
             if (context.GetType() != typeof(FunctionContext))
+            {
                 return false;
-
+            }
+                
             FunctionContext CurrentContext = (FunctionContext)context;
             Process process = new Process();
 

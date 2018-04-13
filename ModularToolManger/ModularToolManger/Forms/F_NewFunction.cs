@@ -17,33 +17,29 @@ namespace ModularToolManger.Forms
 {
     public partial class F_NewFunction : Form
     {
-        private Manager _pluginManager;
+        readonly Manager _pluginManager;
         private int _endPos;
         private int _startPos;
 
         private Function _returnFunction;
-        public Function NewFunction
-        {
-            get
-            {
-                return _returnFunction;
-            }
-        }
-        private bool _editMode;
+        public Function NewFunction => _returnFunction;
+
+        readonly bool _editMode;
 
         private bool _firstOpen;
 
-        public F_NewFunction(ref Manager pluginManager, Function _functionToEdit = null)
+        public F_NewFunction(Manager pluginManager, Function _functionToEdit) : this(pluginManager)
+        {
+            _returnFunction = _functionToEdit;
+            _editMode = true;
+        }
+
+        public F_NewFunction(Manager pluginManager)
         {
             InitializeComponent();
             _pluginManager = pluginManager;
             _startPos = 0;
-            _returnFunction = _functionToEdit;
             _editMode = false;
-            if (_returnFunction != null)
-            {
-                _editMode = true;
-            }
             
             _firstOpen = true;
         }
@@ -114,7 +110,9 @@ namespace ModularToolManger.Forms
             {
                 Control currentLabel = Labels[i];
                 if (currentLabel.Width > _startPos)
+                {
                     _startPos = currentLabel.Width;
+                }    
             }
         }
 
@@ -147,7 +145,6 @@ namespace ModularToolManger.Forms
             for (int i = 0; i < F_NewFunction_CB_Type.Items.Count; i++)
             {
                 IPlugin plugin = _pluginManager.LoadetPlugins[i];
-                object CBI = F_NewFunction_CB_Type.Items[i];
                 if (plugin.UniqueName == _returnFunction.Type)
                 {
                     _selectIndex = i;
@@ -248,7 +245,7 @@ namespace ModularToolManger.Forms
             }
             if (Tag != null && Tag.GetType() == typeof(string))
             {
-                _returnFunction = new Function()
+                _returnFunction = new Function
                 {
                     ID = Guid.NewGuid().ToString(),
                     Name = F_NewFunction_TB_Name.Text,

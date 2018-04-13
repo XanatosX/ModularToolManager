@@ -56,9 +56,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>DLL\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PluginSystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -167,6 +166,7 @@
     <None Include="Language\Englisch.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -183,7 +183,6 @@
     <Content Include="DLL\Helper.dll" />
     <Content Include="DLL\jsonLanguage.dll" />
     <Content Include="DLL\Logging.dll" />
-    <Content Include="DLL\Newtonsoft.Json.dll" />
     <Content Include="DLL\PluginSystem.dll" />
     <Content Include="Images\Tool.ico" />
     <Content Include="Modules\DefaultTools.dll">

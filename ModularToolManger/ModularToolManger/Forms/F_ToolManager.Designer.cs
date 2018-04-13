@@ -108,7 +108,7 @@
             this.Default_Close.Name = "Default_Close";
             this.Default_Close.Size = new System.Drawing.Size(232, 22);
             this.Default_Close.Text = "Default_Close";
-            this.Default_Close.Click += new System.EventHandler(this.defaultCloseToolStripMenuItem_Click);
+            this.Default_Close.Click += new System.EventHandler(this.DefaultCloseToolStripMenuItem_Click);
             // 
             // F_ToolManager_ReportBug
             // 
@@ -171,7 +171,7 @@
             this.Default_Show.Name = "Default_Show";
             this.Default_Show.Size = new System.Drawing.Size(265, 22);
             this.Default_Show.Text = "Default_Show";
-            this.Default_Show.Click += new System.EventHandler(this.defaultShowToolStripMenuItem_Click);
+            this.Default_Show.Click += new System.EventHandler(this.DefaultShowToolStripMenuItem_Click);
             // 
             // F_ToolManager_NI_Taskbar_Buttons
             // 

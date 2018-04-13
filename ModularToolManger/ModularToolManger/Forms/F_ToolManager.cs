@@ -19,9 +19,11 @@ namespace ModularToolManger.Forms
     {
         private Manager _pluginManager;
         private FunctionsManager _functionManager;
-        private int _startOffset = 25;
+        readonly int _startOffset;
+        readonly int _maxHeight;
+
         private int _baseScrollValue;
-        private int _maxHeight;
+        
         private int _minWidth;
         private Point _location;
         private bool _forceClose;
@@ -32,7 +34,6 @@ namespace ModularToolManger.Forms
 
         private string _functionsPath;
 
-        //private int _lastContextListButton;
         private Settings _settingsContainer;
 
         private LanguageCom _languageConnector;
@@ -41,12 +42,11 @@ namespace ModularToolManger.Forms
         public F_ToolManager()
         {
             InitializeComponent();
+            _startOffset = 25;
             _hidden = false;
             _forceClose = false;
             _searchbarAdded = false;
             KeyPreview = true;
-
-            //_lastContextListButton = 0;
 
             Default_Show.Visible = _hidden;
 
@@ -87,7 +87,7 @@ namespace ModularToolManger.Forms
         private List<string> LoadPlugins()
         {
             _pluginManager.Initialize(new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + @"\Modules");
-            _pluginManager.Error += _pluginManager_Error;
+            _pluginManager.Error += PluginManager_Error;
             _pluginManager.LoadPlugins();
 
             List<string> allowedTypes = new List<string>();
@@ -109,7 +109,7 @@ namespace ModularToolManger.Forms
             _functionManager = new FunctionsManager(_functionsPath + "functions.json", allowedTypes);
             _functionManager.Load();
         }
-        private void _pluginManager_Error(object sender, ErrorData e)
+        private void PluginManager_Error(object sender, ErrorData e)
         {
             CentralLogging.AppDebugLogger.Log(e.Message, Logging.LogLevel.Error);
             CentralLogging.AppDebugLogger.Log(e.ErrorException.Message, Logging.LogLevel.Error);
@@ -127,18 +127,24 @@ namespace ModularToolManger.Forms
             SetupButtons();
 
 
-            setScrollSpeed();
+            SetScrollSpeed();
             F_ToolManager_Hide.Visible = _settingsContainer.GetBoolValue("Borderless");
         }
-        private void setScrollSpeed()
+        private void SetScrollSpeed()
         {
             _baseScrollValue = 3;
             _baseScrollValue = _settingsContainer.GetIntValue("ScrollSpeed");
 
             if (_baseScrollValue < F_ToolManager_ScrollBar.Minimum)
+            {
                 _baseScrollValue = F_ToolManager_ScrollBar.Minimum;
+            }
+
             if (_baseScrollValue > F_ToolManager_ScrollBar.Maximum)
+            {
                 _baseScrollValue = F_ToolManager_ScrollBar.Maximum;
+            }
+                
         }
 
         private void MoveToPosition()
@@ -161,45 +167,42 @@ namespace ModularToolManger.Forms
             for (int i = 0; i < _pluginManager.PluginCount; i++)
             {
                 _settingsContainer.AddNewField(_pluginManager.LoadetPlugins[i].UniqueName);
-                try
-                {
-                    IFunction function = (IFunction)_pluginManager.LoadetPlugins[i];
+                IFunction function = (IFunction)_pluginManager.LoadetPlugins[i];
 
-                    foreach (IPluginSetting setting in function.Settings.AllSettings)
+                foreach (IPluginSetting setting in function.Settings.AllSettings)
+                {
+                    SettingsType type = SettingsType.Error;
+                    string curSettings = _settingsContainer.GetValue(function.UniqueName, setting.Key, out type);
+                    switch (type)
                     {
-                        SettingsType type = SettingsType.Error;
-                        string curSettings = _settingsContainer.GetValue(function.UniqueName, setting.Key, out type);
-                        switch (type)
-                        {
-                            case SettingsType.String:
-                                function.Settings.UpdateValue(setting.Key, curSettings);
-                                break;
-                            case SettingsType.Bool:
-                                bool Bvalue = false;
-                                if (bool.TryParse(curSettings, out Bvalue))
-                                    function.Settings.UpdateValue(setting.Key, Bvalue);
-                                break;
-                            case SettingsType.Int:
-                                int Ivalue = 0;
-                                if (int.TryParse(curSettings, out Ivalue))
-                                    function.Settings.UpdateValue(setting.Key, Ivalue);
-                                break;
-                            case SettingsType.Float:
-                                float Fvalue = 0;
-                                if (float.TryParse(curSettings, out Fvalue))
-                                    function.Settings.UpdateValue(setting.Key, Fvalue);
-                                break;
-                            case SettingsType.Error:
-                                break;
-                            default:
-                                break;
-                        }
-                        //
+                        case SettingsType.String:
+                            function.Settings.UpdateValue(setting.Key, curSettings);
+                            break;
+                        case SettingsType.Bool:
+                            bool Bvalue = false;
+                            if (bool.TryParse(curSettings, out Bvalue))
+                            {
+                                function.Settings.UpdateValue(setting.Key, Bvalue);
+                            }
+                            break;
+                        case SettingsType.Int:
+                            int Ivalue = 0;
+                            if (int.TryParse(curSettings, out Ivalue))
+                            {
+                                function.Settings.UpdateValue(setting.Key, Ivalue);
+                            }
+                            break;
+                        case SettingsType.Float:
+                            float Fvalue = 0;
+                            if (float.TryParse(curSettings, out Fvalue))
+                            {
+                                function.Settings.UpdateValue(setting.Key, Fvalue);
+                            }
+                            break;
+                        case SettingsType.Error:
+                        default:
+                            break;
                     }
-
-                }
-                catch (Exception)
-                {
                 }
             }
         }
@@ -232,19 +235,23 @@ namespace ModularToolManger.Forms
                     {
                         continue;
                     }
-                    Button newButton = createButton(currentFunction);
+                    Button newButton = CreateButton(currentFunction);
                     newButton.Location = new Point(0, _startOffset + buttonsAdded * 25 + newButton.Size.Height);
                     this.Controls.Add(newButton);
                     lastButton = newButton;
                     buttonsAdded++;
 
                     if (currentFunction.ShowInNotification)
-                        addNewToolStripMenuItem(currentFunction);
-                    
+                    {
+                        AddNewToolStripMenuItem(currentFunction);
+                    }
+                        
                 }
 
                 if (F_ToolManager_NI_Taskbar_Buttons.DropDownItems.Count > 0)
+                {
                     F_ToolManager_NI_Taskbar_Buttons.Visible = true;
+                } 
             }
 
             List<Control> buttons = this.GetAllControls(typeof(Button));
@@ -256,7 +263,7 @@ namespace ModularToolManger.Forms
             CalculateFormSize(lastButton, buttons);
         }
 
-        private void addNewToolStripMenuItem(Function currentFunction)
+        private void AddNewToolStripMenuItem(Function currentFunction)
         {
             ToolStripMenuItem newItem = new ToolStripMenuItem(currentFunction.Name)
             {
@@ -268,9 +275,9 @@ namespace ModularToolManger.Forms
             F_ToolManager_NI_Taskbar_Buttons.DropDownItems.Add(newItem);
 
         }
-        private Button createButton(Function currentFunction)
+        private Button CreateButton(Function currentFunction)
         {
-            Button newButton = new Button()
+            Button newButton = new Button
             {
                 Name = currentFunction.ID,
                 Text = currentFunction.Name,
@@ -291,7 +298,9 @@ namespace ModularToolManger.Forms
             int newWidth = 0;
             int newHeight = 0;
             if (lastButton != null)
+            {
                 newHeight = lastButton.Location.Y + lastButton.Size.Height + _startOffset * 2;
+            }
             if (newHeight > _maxHeight)
             {
                 F_ToolManager_ScrollBar.Maximum = newHeight - _maxHeight;
@@ -302,11 +311,17 @@ namespace ModularToolManger.Forms
             for (int i = 0; i < buttons.Count; i++)
             {
                 if (buttons[i].Size.Width > BiggestValue)
+                {
                     BiggestValue = buttons[i].Size.Width;
+                }
+                    
             }
             newWidth = BiggestValue;
             if (newWidth < _minWidth)
+            {
                 newWidth = _minWidth;
+            }
+                
             this.Size = new Size(newWidth, newHeight);
 
             this.DoForEveryControl(typeof(Button), CenterButton);
@@ -323,7 +338,10 @@ namespace ModularToolManger.Forms
         private bool DeleteButton(Control B)
         {
             if (B.GetType() != typeof(Button))
+            {
                 return false;
+            }
+                
             this.Controls.Remove(((Button)B));
             return true;
         }
@@ -334,7 +352,7 @@ namespace ModularToolManger.Forms
             return true;
         }
 
-        private Button GetButtonFromTSMI(ToolStripMenuItem tsmi)
+        private Button GetButtonFromTsmi(ToolStripMenuItem tsmi)
         {
             if (tsmi != null)
             {
@@ -343,7 +361,10 @@ namespace ModularToolManger.Forms
                 {
                     Control Source = ((ContextMenuStrip)owner).SourceControl;
                     if (Source != null && Source.GetType() == typeof(Button))
+                    {
                         return (Button)Source;
+                    }
+                        
                 }
             }
             return null;
@@ -373,9 +394,15 @@ namespace ModularToolManger.Forms
                     Function func = (Function)TSMI.Tag;
                     IPlugin currentPlugin = _pluginManager.GetPluginByName(func.Type);
                     if (currentPlugin == null)
+                    {
                         return;
+                    }
+
                     if (currentPlugin.ContainsInterface(typeof(IFunction)))
+                    {
                         func.PerformeAction((IFunction)currentPlugin);
+                    }
+                        
                 }
             }
         }
@@ -386,14 +413,14 @@ namespace ModularToolManger.Forms
             F_ToolManager_NI_Taskbar_Close.Enabled = false;
             settingsForm.ShowDialog();
             if (settingsForm.Save)
+            {
                 _settingsContainer = settingsForm.Settings;
+            }
+
             Show();
             _settingsContainer.Save();
 
-            if (_settingsContainer.GetBoolValue("KeepOnTop"))
-                TopMost = true;
-            else
-                TopMost = false;
+            CheckForTopmost();
 
             ShowInTaskbar = (!_settingsContainer.GetBoolValue("HideInTaskbar"));
             F_ToolManager_NI_Taskbar_Close.Enabled = true;
@@ -404,8 +431,21 @@ namespace ModularToolManger.Forms
             else
                 FormBorderStyle = FormBorderStyle.Fixed3D;
 
-            setScrollSpeed();
+            SetScrollSpeed();
         }
+
+        private void CheckForTopmost()
+        {
+            if (_settingsContainer.GetBoolValue("KeepOnTop"))
+            {
+                TopMost = true;
+            }
+            else
+            {
+                TopMost = false;
+            }
+        }
+
         private void F_ToolManager_Shown(object sender, EventArgs e)
         {
             if (_settingsContainer.GetBoolValue("StartMinimized"))
@@ -419,22 +459,30 @@ namespace ModularToolManger.Forms
         private void F_ToolManager_MouseWheel(object sender, MouseEventArgs e)
         {
             if (!F_ToolManager_ScrollBar.Visible)
+            {
                 return;
+            }
+                
 
 
 
             int Test = e.Delta < 0 ? _baseScrollValue : -_baseScrollValue;
             Test = F_ToolManager_ScrollBar.Value + Test;
             if (Test < 0)
+            {
                 return;
+            }
+
             if (Test > F_ToolManager_ScrollBar.Maximum)
+            {
                 return;
+            }
 
             _newValue = Test;
             this.DoForEveryControl(typeof(Button), OffsetButton);
             F_ToolManager_ScrollBar.Value = Test;
         }
-        private void defaultCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DefaultCloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _forceClose = true;
             this.Close();
@@ -449,10 +497,15 @@ namespace ModularToolManger.Forms
                     Function func = (Function)B.Tag;
                     IPlugin currentPlugin = _pluginManager.GetPluginByName(func.Type);
                     if (currentPlugin == null)
+                    {
                         return;
-                    if (currentPlugin.ContainsInterface(typeof(IFunction)))
-                        func.PerformeAction((IFunction)currentPlugin);
+                    }
 
+                    if (currentPlugin.ContainsInterface(typeof(IFunction)))
+                    {
+                        func.PerformeAction((IFunction)currentPlugin);
+                    }
+                        
                     if (_searchbarAdded && _settingsContainer.GetBoolValue("DisableSearchByButton"))
                     {
                         List<Control> textBoxes = this.GetAllControls(typeof(TextBox));
@@ -481,7 +534,7 @@ namespace ModularToolManger.Forms
         }
         private void F_ToolManager_NewFunction_Click(object sender, EventArgs e)
         {
-            F_NewFunction NewFunction = new F_NewFunction(ref _pluginManager);
+            F_NewFunction NewFunction = new F_NewFunction(_pluginManager);
             Hide();
             F_ToolManager_NI_Taskbar_Close.Enabled = false;
             NewFunction.ShowDialog();
@@ -498,11 +551,14 @@ namespace ModularToolManger.Forms
         private void F_ToolManager_ButtonContext_Edit_Click(object sender, EventArgs e)
         {
             if (sender.GetType() != typeof(ToolStripMenuItem))
+            {
                 return;
+            }
+                
 
-            Button B = GetButtonFromTSMI((ToolStripMenuItem)sender);
+            Button B = GetButtonFromTsmi((ToolStripMenuItem)sender);
             Function currentFunction = GetFunctionFromButton(B);
-            F_NewFunction EditFunction = new F_NewFunction(ref _pluginManager, currentFunction);
+            F_NewFunction EditFunction = new F_NewFunction(_pluginManager, currentFunction);
             this.Hide();
             EditFunction.ShowDialog();
             if (EditFunction.NewFunction != null)
@@ -524,7 +580,7 @@ namespace ModularToolManger.Forms
             if (sender.GetType() != typeof(ToolStripMenuItem))
                 return;
 
-            Button B = GetButtonFromTSMI((ToolStripMenuItem)sender);
+            Button B = GetButtonFromTsmi((ToolStripMenuItem)sender);
             _functionManager.DeleteFunction(GetFunctionFromButton(B));
             SetupButtons();
         }
@@ -549,7 +605,10 @@ namespace ModularToolManger.Forms
             {
                 MouseEventArgs NewE = (MouseEventArgs)e;
                 if (NewE.Button == MouseButtons.Right)
+                {
                     return;
+                }
+                    
             }
             if (_hidden)
             {
@@ -557,27 +616,24 @@ namespace ModularToolManger.Forms
                 this.MoveToPosition();
                 this.Show();
                 Default_Show.Visible = _hidden;
-
-                if (_settingsContainer.GetBoolValue("KeepOnTop"))
-                    TopMost = true;
-                else
-                    TopMost = false;
+                CheckForTopmost();
             }
             else
             {
                 TopMost = true;
                 if (!_settingsContainer.GetBoolValue("KeepOnTop"))
+                {
                     TopMost = false;
+                }
+                    
             }
-
-
         }
         private void F_ToolManager_NI_Taskliste_Close_Click(object sender, EventArgs e)
         {
             _forceClose = true;
             this.Close();
         }
-        private void defaultShowToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DefaultShowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             F_ToolManager_NI_Taskliste_Click(sender, e);
         }
@@ -586,15 +642,16 @@ namespace ModularToolManger.Forms
         {
             const int WM_SYSCOMMAND = 0x0112;
             const int SC_MOVE = 0xF010;
-        
-            switch (message.Msg)
+
+            if (message.Msg == WM_SYSCOMMAND)
             {
-                case WM_SYSCOMMAND:
-                    int command = message.WParam.ToInt32() & 0xfff0;
-                    if (command == SC_MOVE)
-                        return;
-                    break;
+                int command = message.WParam.ToInt32() & 0xfff0;
+                if (command == SC_MOVE)
+                {
+                    return;
+                }        
             }
+
             base.WndProc(ref message);
         }
 
@@ -619,13 +676,14 @@ namespace ModularToolManger.Forms
             TextBox searchBox;
             if (!_searchbarAdded)
             {
-                searchBox = new TextBox();
-
-                searchBox.Location = new Point(0, F_MainMenuStrip.Height);
-                searchBox.Size = new Size(Width, 21);
-                searchBox.Tag = "SearchBox";
-                searchBox.Text = e.KeyChar.ToString();
-                searchBox.TabIndex = 999;
+                searchBox = new TextBox
+                {
+                    Location = new Point(0, F_MainMenuStrip.Height),
+                    Size = new Size(Width, 21),
+                    Tag = "SearchBox",
+                    Text = e.KeyChar.ToString(),
+                    TabIndex = 999
+                };
                 searchBox.KeyPress += SearchBox_KeyPress;
 
                 Controls.Add(searchBox);
@@ -634,10 +692,10 @@ namespace ModularToolManger.Forms
                 searchBox.Focus();
                 int textLenght = searchBox.Text.Length;
                 searchBox.Select(textLenght, textLenght);
-                SetupButtons(buildRegex(searchBox.Text));
+                SetupButtons(BuildRegex(searchBox.Text));
             }            
         }
-        private TextBox getSearchboxBySender(object sender)
+        private TextBox GetSearchboxBySender(object sender)
         {
             if (sender.GetType() == typeof(TextBox))
             {
@@ -649,7 +707,7 @@ namespace ModularToolManger.Forms
             }
             return null;
         }
-        private string buildRegex(string value)
+        private string BuildRegex(string value)
         {
             value = value.Replace("?", ".");
             value = value.Replace("*", ".*");
@@ -662,17 +720,17 @@ namespace ModularToolManger.Forms
                 RemoveSearchbar(sender);
                 return;
             }
-            TextBox curTextBox = getSearchboxBySender(sender);
+            TextBox curTextBox = GetSearchboxBySender(sender);
             if (curTextBox == null)
             {
                 return;
             }
-            SetupButtons(buildRegex(curTextBox.Text));
+            SetupButtons(BuildRegex(curTextBox.Text));
         }
 
         private void RemoveSearchbar(object sender)
         {
-            TextBox curTextBox = getSearchboxBySender(sender);
+            TextBox curTextBox = GetSearchboxBySender(sender);
             if (curTextBox == null)
             {
                 return;
