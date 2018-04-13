@@ -1,5 +1,6 @@
 # Modular tool manager 
 
+[![Build status](https://ci.appveyor.com/api/projects/status/y81w82f44tsxyju4/branch/master?svg=true)](https://ci.appveyor.com/project/XanatosX/modulartoolmanager/branch/master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a76b14fe59a54a9ab4d3e4f6afed53dc)](https://app.codacy.com/app/simonaberle/ModularToolManager?utm_source=github.com&utm_medium=referral&utm_content=XanatosX/ModularToolManager&utm_campaign=badger)
 
 ## Requirements
