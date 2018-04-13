@@ -31,7 +31,7 @@ namespace ModularToolManger.Forms
             SetLanguage();
             F_Password_TB_Password.Focus();
 
-            this.DoForEveryControl(typeof(Label), getBiggestLabel);
+            this.DoForEveryControl(typeof(Label), GetBiggestLabel);
             SetupTextFields();
 
             Default_OK.Center(this);
@@ -42,10 +42,10 @@ namespace ModularToolManger.Forms
         {
             _textFieldEndPos = F_Password_TB_Password.Location.X + F_Password_TB_Password.Size.Width;
 
-            this.DoForEveryControl(typeof(TextBox), setTextFieldSize);
+            this.DoForEveryControl(typeof(TextBox), SetTextFieldSize);
         }
 
-        private bool setTextFieldSize(Control B)
+        private bool SetTextFieldSize(Control B)
         {
             B.Location = new Point(_biggestLabel, B.Location.Y);
             B.Size = new Size(_textFieldEndPos - _biggestLabel, B.Size.Height);
@@ -53,10 +53,12 @@ namespace ModularToolManger.Forms
             return true;
         }
 
-        private bool getBiggestLabel(Control B)
+        private bool GetBiggestLabel(Control B)
         {
             if (B.Location.X + B.Size.Width > _biggestLabel)
+            {
                 _biggestLabel = B.Location.X + B.Size.Width;
+            }
             return true;
         }
 
@@ -75,7 +77,10 @@ namespace ModularToolManger.Forms
         private void F_Password_TB_Password_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
+            {
                 Default_OK.PerformClick();
+            }
+                
         }
     }
 }

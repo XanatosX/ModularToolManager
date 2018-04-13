@@ -51,7 +51,7 @@ namespace JSONSettings
 
         public bool AddOrChangeKeyValue(string key, object Value)
         {
-            SettingsType type = SettingsType.String;
+            SettingsType type;
             TypeCode code = Type.GetTypeCode(Value.GetType());
             switch (code)
             {

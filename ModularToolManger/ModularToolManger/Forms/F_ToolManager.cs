@@ -87,7 +87,7 @@ namespace ModularToolManger.Forms
         private List<string> LoadPlugins()
         {
             _pluginManager.Initialize(new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName + @"\Modules");
-            _pluginManager.Error += _pluginManager_Error;
+            _pluginManager.Error += PluginManager_Error;
             _pluginManager.LoadPlugins();
 
             List<string> allowedTypes = new List<string>();
@@ -109,7 +109,7 @@ namespace ModularToolManger.Forms
             _functionManager = new FunctionsManager(_functionsPath + "functions.json", allowedTypes);
             _functionManager.Load();
         }
-        private void _pluginManager_Error(object sender, ErrorData e)
+        private void PluginManager_Error(object sender, ErrorData e)
         {
             CentralLogging.AppDebugLogger.Log(e.Message, Logging.LogLevel.Error);
             CentralLogging.AppDebugLogger.Log(e.ErrorException.Message, Logging.LogLevel.Error);
@@ -352,7 +352,7 @@ namespace ModularToolManger.Forms
             return true;
         }
 
-        private Button GetButtonFromTSMI(ToolStripMenuItem tsmi)
+        private Button GetButtonFromTsmi(ToolStripMenuItem tsmi)
         {
             if (tsmi != null)
             {
@@ -556,7 +556,7 @@ namespace ModularToolManger.Forms
             }
                 
 
-            Button B = GetButtonFromTSMI((ToolStripMenuItem)sender);
+            Button B = GetButtonFromTsmi((ToolStripMenuItem)sender);
             Function currentFunction = GetFunctionFromButton(B);
             F_NewFunction EditFunction = new F_NewFunction(ref _pluginManager, currentFunction);
             this.Hide();
@@ -580,7 +580,7 @@ namespace ModularToolManger.Forms
             if (sender.GetType() != typeof(ToolStripMenuItem))
                 return;
 
-            Button B = GetButtonFromTSMI((ToolStripMenuItem)sender);
+            Button B = GetButtonFromTsmi((ToolStripMenuItem)sender);
             _functionManager.DeleteFunction(GetFunctionFromButton(B));
             SetupButtons();
         }
