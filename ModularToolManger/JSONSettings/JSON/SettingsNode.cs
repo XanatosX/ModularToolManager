@@ -106,7 +106,6 @@ namespace JSONSettings
                 {
                     return true;
                 }
-                    
             }
             return false;
         }
