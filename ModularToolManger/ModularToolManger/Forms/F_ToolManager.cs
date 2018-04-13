@@ -534,7 +534,7 @@ namespace ModularToolManger.Forms
         }
         private void F_ToolManager_NewFunction_Click(object sender, EventArgs e)
         {
-            F_NewFunction NewFunction = new F_NewFunction(ref _pluginManager);
+            F_NewFunction NewFunction = new F_NewFunction(_pluginManager);
             Hide();
             F_ToolManager_NI_Taskbar_Close.Enabled = false;
             NewFunction.ShowDialog();
@@ -558,7 +558,7 @@ namespace ModularToolManger.Forms
 
             Button B = GetButtonFromTsmi((ToolStripMenuItem)sender);
             Function currentFunction = GetFunctionFromButton(B);
-            F_NewFunction EditFunction = new F_NewFunction(ref _pluginManager, currentFunction);
+            F_NewFunction EditFunction = new F_NewFunction(_pluginManager, currentFunction);
             this.Hide();
             EditFunction.ShowDialog();
             if (EditFunction.NewFunction != null)

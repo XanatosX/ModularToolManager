@@ -28,13 +28,13 @@ namespace ModularToolManger.Forms
 
         private bool _firstOpen;
 
-        public F_NewFunction(ref Manager pluginManager, Function _functionToEdit = null) : this(ref pluginManager)
+        public F_NewFunction(Manager pluginManager, Function _functionToEdit) : this(pluginManager)
         {
             _returnFunction = _functionToEdit;
             _editMode = true;
         }
 
-        public F_NewFunction(ref Manager pluginManager)
+        public F_NewFunction(Manager pluginManager)
         {
             InitializeComponent();
             _pluginManager = pluginManager;
