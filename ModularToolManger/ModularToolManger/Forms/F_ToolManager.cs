@@ -235,7 +235,7 @@ namespace ModularToolManger.Forms
                     {
                         continue;
                     }
-                    Button newButton = createButton(currentFunction);
+                    Button newButton = CreateButton(currentFunction);
                     newButton.Location = new Point(0, _startOffset + buttonsAdded * 25 + newButton.Size.Height);
                     this.Controls.Add(newButton);
                     lastButton = newButton;
@@ -243,7 +243,7 @@ namespace ModularToolManger.Forms
 
                     if (currentFunction.ShowInNotification)
                     {
-                        addNewToolStripMenuItem(currentFunction);
+                        AddNewToolStripMenuItem(currentFunction);
                     }
                         
                 }
@@ -263,7 +263,7 @@ namespace ModularToolManger.Forms
             CalculateFormSize(lastButton, buttons);
         }
 
-        private void addNewToolStripMenuItem(Function currentFunction)
+        private void AddNewToolStripMenuItem(Function currentFunction)
         {
             ToolStripMenuItem newItem = new ToolStripMenuItem(currentFunction.Name)
             {
@@ -275,7 +275,7 @@ namespace ModularToolManger.Forms
             F_ToolManager_NI_Taskbar_Buttons.DropDownItems.Add(newItem);
 
         }
-        private Button createButton(Function currentFunction)
+        private Button CreateButton(Function currentFunction)
         {
             Button newButton = new Button
             {
@@ -482,7 +482,7 @@ namespace ModularToolManger.Forms
             this.DoForEveryControl(typeof(Button), OffsetButton);
             F_ToolManager_ScrollBar.Value = Test;
         }
-        private void defaultCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DefaultCloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _forceClose = true;
             this.Close();
@@ -633,7 +633,7 @@ namespace ModularToolManger.Forms
             _forceClose = true;
             this.Close();
         }
-        private void defaultShowToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DefaultShowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             F_ToolManager_NI_Taskliste_Click(sender, e);
         }
@@ -676,13 +676,14 @@ namespace ModularToolManger.Forms
             TextBox searchBox;
             if (!_searchbarAdded)
             {
-                searchBox = new TextBox();
-
-                searchBox.Location = new Point(0, F_MainMenuStrip.Height);
-                searchBox.Size = new Size(Width, 21);
-                searchBox.Tag = "SearchBox";
-                searchBox.Text = e.KeyChar.ToString();
-                searchBox.TabIndex = 999;
+                searchBox = new TextBox
+                {
+                    Location = new Point(0, F_MainMenuStrip.Height),
+                    Size = new Size(Width, 21),
+                    Tag = "SearchBox",
+                    Text = e.KeyChar.ToString(),
+                    TabIndex = 999
+                };
                 searchBox.KeyPress += SearchBox_KeyPress;
 
                 Controls.Add(searchBox);
@@ -691,10 +692,10 @@ namespace ModularToolManger.Forms
                 searchBox.Focus();
                 int textLenght = searchBox.Text.Length;
                 searchBox.Select(textLenght, textLenght);
-                SetupButtons(buildRegex(searchBox.Text));
+                SetupButtons(BuildRegex(searchBox.Text));
             }            
         }
-        private TextBox getSearchboxBySender(object sender)
+        private TextBox GetSearchboxBySender(object sender)
         {
             if (sender.GetType() == typeof(TextBox))
             {
@@ -706,7 +707,7 @@ namespace ModularToolManger.Forms
             }
             return null;
         }
-        private string buildRegex(string value)
+        private string BuildRegex(string value)
         {
             value = value.Replace("?", ".");
             value = value.Replace("*", ".*");
@@ -719,17 +720,17 @@ namespace ModularToolManger.Forms
                 RemoveSearchbar(sender);
                 return;
             }
-            TextBox curTextBox = getSearchboxBySender(sender);
+            TextBox curTextBox = GetSearchboxBySender(sender);
             if (curTextBox == null)
             {
                 return;
             }
-            SetupButtons(buildRegex(curTextBox.Text));
+            SetupButtons(BuildRegex(curTextBox.Text));
         }
 
         private void RemoveSearchbar(object sender)
         {
-            TextBox curTextBox = getSearchboxBySender(sender);
+            TextBox curTextBox = GetSearchboxBySender(sender);
             if (curTextBox == null)
             {
                 return;
