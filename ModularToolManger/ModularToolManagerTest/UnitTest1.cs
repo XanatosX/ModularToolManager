@@ -19,7 +19,7 @@ namespace ModularToolManagerTest
         }
 
         [TestMethod()]
-        public void SetupTest()
+        public void PasswordHasherSetupTest()
         {
             Assert.AreEqual(typeof(PasswordHasher), hasher.GetType());
         }

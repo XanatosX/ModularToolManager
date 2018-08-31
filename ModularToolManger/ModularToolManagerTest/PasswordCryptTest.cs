@@ -17,7 +17,7 @@ namespace ModularToolManagerTest
         }
 
         [TestMethod()]
-        public void SetupTest()
+        public void PasswordCryptTestSetupTest()
         {
             Assert.AreEqual(typeof(PasswordManager), manager.GetType());
         }
