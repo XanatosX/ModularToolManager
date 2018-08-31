@@ -46,7 +46,7 @@ namespace JSONSettings
 
         public bool GetBoolValue(string Name, string key)
         {
-            bool returnBool = false; ;
+            bool returnBool = false;
             string value = _settings.GetValue(Name, key, out SettingsType type);
             if (type == SettingsType.Bool)
             {
@@ -188,8 +188,6 @@ namespace JSONSettings
             Save();
             Load();
         }
-
-
 
         public void ForceLoad()
         {

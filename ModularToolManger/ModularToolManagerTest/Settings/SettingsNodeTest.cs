@@ -2,7 +2,7 @@
 using JSONSettings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace ModularToolManagerTest.Settings
+namespace ModularToolManagerTest
 {
     [TestClass]
     public class SettingsNodeTest
