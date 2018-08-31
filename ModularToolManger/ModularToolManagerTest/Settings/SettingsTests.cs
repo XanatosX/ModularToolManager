@@ -167,7 +167,6 @@ namespace ModularToolManagerTest
             testSettings.AddOrChangeKeyValue(testKey2, testValue2);
 
             testSettings.Save(true);
-            testSettings = null;
 
             Settings testSettings2 = new Settings(filePath);
 

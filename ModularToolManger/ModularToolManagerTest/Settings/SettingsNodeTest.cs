@@ -33,7 +33,7 @@ namespace ModularToolManagerTest
 
 
             settingsNode.AddOrChangeKeyValue(nodeName, nodeValue);
-            Assert.AreEqual(nodeValue.ToString(), settingsNode.GetKeyValue(nodeName, out SettingsType typeOfValue));
+            Assert.AreEqual(nodeValue, settingsNode.GetKeyValue(nodeName, out SettingsType typeOfValue));
             Assert.AreEqual(SettingsType.String, typeOfValue);
         }
 
@@ -79,7 +79,7 @@ namespace ModularToolManagerTest
 
             settingsNode.AddOrChangeKeyValue(nodeName, nodeValue);
             settingsNode.AddOrChangeKeyValue(nodeName, updatedValue);
-            Assert.AreEqual(updatedValue.ToString(), settingsNode.GetKeyValue(nodeName, out SettingsType typeOfValue));
+            Assert.AreEqual(updatedValue, settingsNode.GetKeyValue(nodeName, out SettingsType typeOfValue));
             Assert.AreEqual(SettingsType.String, typeOfValue);
         }
 

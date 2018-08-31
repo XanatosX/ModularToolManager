@@ -53,7 +53,7 @@ namespace JSONSettings
         private SettingsType GetValueType(object valueToCheck)
         {
             TypeCode code = Type.GetTypeCode(valueToCheck.GetType());
-            SettingsType returnType = SettingsType.Error;
+            SettingsType returnType;
             switch (code)
             {
                 case TypeCode.Boolean:
