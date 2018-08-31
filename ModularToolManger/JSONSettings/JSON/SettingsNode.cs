@@ -14,11 +14,6 @@ namespace JSONSettings
         readonly List<KeyValue> _settings;
         public List<KeyValue> Settings => _settings;
 
-        public SettingsNode()
-        {
-            _settings = new List<KeyValue>();
-        }
-
         public SettingsNode(string name)
         {
             _settings = new List<KeyValue>();
@@ -27,18 +22,8 @@ namespace JSONSettings
 
         private void AddKeyValue(string key, object Value, SettingsType valueType = SettingsType.String)
         {
-            if (KeyContained(key))
-            {
-                foreach (KeyValue pair in Settings)
-                {
-                    if (pair.Key == key)
-                    {
-                        pair.Value = Value.ToString();
-                        pair.ValueType = valueType;
-                    }
-                }
-            }
-            else
+            KeyValue pair = GetKeyValue(key);
+            if (pair == null)
             {
                 Settings.Add(new KeyValue
                 {
@@ -46,29 +31,16 @@ namespace JSONSettings
                     Value = Value.ToString(),
                     ValueType = valueType,
                 });
+                return;
             }
+
+            pair.Value = Value.ToString();
+            pair.ValueType = valueType;
         }
 
         public bool AddOrChangeKeyValue(string key, object Value)
         {
-            SettingsType type;
-            TypeCode code = Type.GetTypeCode(Value.GetType());
-            switch (code)
-            {
-                case TypeCode.Boolean:
-                    type = SettingsType.Bool;
-                    break;
-                case TypeCode.Int32:
-                    type = SettingsType.Int;
-                    break;
-                case TypeCode.Single:
-                case TypeCode.Decimal:
-                    type = SettingsType.Float;
-                    break;
-                default:
-                    type = SettingsType.String;
-                    break;
-            }
+            SettingsType type = GetValueType(Value);
             if (type != SettingsType.Error)
             {
                 AddKeyValue(key, Value, type);
@@ -76,38 +48,55 @@ namespace JSONSettings
             }
                 
             return false;
-              
+        }
+
+        private SettingsType GetValueType(object valueToCheck)
+        {
+            TypeCode code = Type.GetTypeCode(valueToCheck.GetType());
+            SettingsType returnType = SettingsType.Error;
+            switch (code)
+            {
+                case TypeCode.Boolean:
+                    returnType = SettingsType.Bool;
+                    break;
+                case TypeCode.Int32:
+                    returnType = SettingsType.Int;
+                    break;
+                case TypeCode.Single:
+                case TypeCode.Decimal:
+                    returnType = SettingsType.Float;
+                    break;
+                default:
+                    returnType = SettingsType.String;
+                    break;
+            }
+            return returnType;
         }
 
         public string GetKeyValue(string key, out SettingsType type)
         {
-            if (KeyContained(key))
-            {
-                foreach (KeyValue pair in Settings)
-                {
-                    if (pair.Key == key)
-                    {
-                        type = pair.ValueType;
-                        return pair.Value;
-                    }
-                }
-                
-            }
             type = SettingsType.Error;
-            return String.Empty;
+            KeyValue pair = GetKeyValue(key);
+           
+            if (pair == null)
+            {
+                return String.Empty;
+            }
+
+            type = pair.ValueType;
+            return pair.Value;
         }
 
-        private bool KeyContained(string key)
+        private KeyValue GetKeyValue(string key)
         {
-
             foreach (KeyValue pair in Settings)
             {
                 if (pair.Key == key)
                 {
-                    return true;
+                    return pair;
                 }
             }
-            return false;
+            return null;
         }
     }
 }
