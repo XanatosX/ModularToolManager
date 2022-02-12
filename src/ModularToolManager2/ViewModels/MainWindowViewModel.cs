@@ -1,5 +1,6 @@
 using ReactiveUI;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Windows.Input;
 
 namespace ModularToolManager2.ViewModels
@@ -18,14 +19,35 @@ namespace ModularToolManager2.ViewModels
 
         public ICommand ReportBugCommand { get; }
 
+
         public Interaction<Unit, Unit> CloseWindowInteraction { get; }
+
+        public Interaction<ModalWindowViewModel, Unit> ShowModalWindowInteraction { get; }
 
 
         public MainWindowViewModel()
         {
             MainContentModel = new FunctionSelectionViewModel();
             CloseWindowInteraction = new Interaction<Unit, Unit>();
-            ExitApplicationCommand = ReactiveCommand.Create(() => CloseWindowInteraction?.Handle(new Unit()));
+            ShowModalWindowInteraction = new Interaction<ModalWindowViewModel, Unit>();
+            ExitApplicationCommand = ReactiveCommand.Create(async () =>
+            {
+                _ = await CloseWindowInteraction?.Handle(new Unit());
+            });
+
+            OpenSettingsCommand = ReactiveCommand.Create(async () =>
+            {
+                _ = await ShowModalWindowInteraction?.Handle(
+                    new ModalWindowViewModel(Properties.Resources.SubMenu_Settings, "settings_regular", new SettingsViewModel())
+                    );
+            });
+
+            NewFunctionCommand = ReactiveCommand.Create(async () =>
+            {
+                _ = await ShowModalWindowInteraction?.Handle(
+                    new ModalWindowViewModel(Properties.Resources.SubMenu_NewFunction, "settings_regular", new AddFunctionViewModel())
+                    );
+            });
         }
     }
 }

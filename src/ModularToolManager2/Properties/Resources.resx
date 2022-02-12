@@ -123,8 +123,20 @@
   <data name="Menu_ReportBug" xml:space="preserve">
     <value>Report Bug</value>
   </data>
+  <data name="Settings_KeepOnTop" xml:space="preserve">
+    <value>Keep on Top</value>
+  </data>
+  <data name="Settings_ShowInTaskbar" xml:space="preserve">
+    <value>Show in Taskbar</value>
+  </data>
+  <data name="Settings_StartMinimized" xml:space="preserve">
+    <value>Start minimized</value>
+  </data>
   <data name="SubMenu_Exit" xml:space="preserve">
     <value>Exit</value>
+  </data>
+  <data name="SubMenu_Hide" xml:space="preserve">
+    <value>Hide</value>
   </data>
   <data name="SubMenu_Language" xml:space="preserve">
     <value>Language</value>

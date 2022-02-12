@@ -123,13 +123,28 @@
   <data name="Menu_ReportBug" xml:space="preserve">
     <value>Fehler Melden</value>
   </data>
+  <data name="Settings_KeepOnTop" xml:space="preserve">
+    <value>Immer über anderen Fenstern</value>
+  </data>
+  <data name="Settings_ShowInTaskbar" xml:space="preserve">
+    <value>In Taskbar anzeigen</value>
+  </data>
+  <data name="Settings_StartMinimized" xml:space="preserve">
+    <value>Minimiert starten</value>
+  </data>
   <data name="SubMenu_Exit" xml:space="preserve">
     <value>Beenden</value>
+  </data>
+  <data name="SubMenu_Hide" xml:space="preserve">
+    <value>Verstecken</value>
   </data>
   <data name="SubMenu_Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
   <data name="SubMenu_NewFunction" xml:space="preserve">
     <value>Neue Funktion</value>
+  </data>
+  <data name="SubMenu_Settings" xml:space="preserve">
+    <value>Einstellungen</value>
   </data>
 </root>

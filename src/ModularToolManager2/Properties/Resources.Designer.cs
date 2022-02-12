@@ -79,11 +79,47 @@ namespace ModularToolManager2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keep on Top.
+        /// </summary>
+        public static string Settings_KeepOnTop {
+            get {
+                return ResourceManager.GetString("Settings_KeepOnTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show in Taskbar.
+        /// </summary>
+        public static string Settings_ShowInTaskbar {
+            get {
+                return ResourceManager.GetString("Settings_ShowInTaskbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start minimized.
+        /// </summary>
+        public static string Settings_StartMinimized {
+            get {
+                return ResourceManager.GetString("Settings_StartMinimized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string SubMenu_Exit {
             get {
                 return ResourceManager.GetString("SubMenu_Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide.
+        /// </summary>
+        public static string SubMenu_Hide {
+            get {
+                return ResourceManager.GetString("SubMenu_Hide", resourceCulture);
             }
         }
         
