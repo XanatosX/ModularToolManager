@@ -13,10 +13,9 @@
         ExtendClientAreaToDecorationsHint="True"
 		SizeToContent="Height"
 		Width="250"
-		MinHeight="300"
+		MaxWidth="350"
 		HasSystemDecorations="False"
-		CanResize="False"
-		Design.Width="350">
+		CanResize="False">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -33,7 +32,7 @@
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
 		<Panel>
-			<Grid RowDefinitions="40, *">
+			<Grid RowDefinitions="40, Auto">
 				<Grid ColumnDefinitions="*, Auto">
 					<Menu>
 						<MenuItem Header="{x:Static p:Resources.Menu_File}">
@@ -49,7 +48,7 @@
 						<PathIcon Foreground="LightBlue" Data="{StaticResource eye_hide_regular}"></PathIcon>
 					</Button>
 				</Grid>
-			<ContentControl Grid.Row="1" Content="{Binding MainContentModel}"/>
+				<ContentControl Grid.Row="1" Content="{Binding MainContentModel}"/>
 			</Grid>
 		</Panel>
 	</Panel>

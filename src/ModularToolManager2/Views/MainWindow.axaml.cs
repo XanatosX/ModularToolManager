@@ -18,6 +18,25 @@ namespace ModularToolManager2.Views
 #endif
             this.WhenActivated(d => d(ViewModel!.CloseWindowInteraction.RegisterHandler(Close)));
             this.WhenActivated(d => d(ViewModel!.ShowModalWindowInteraction.RegisterHandler(DoHandleShowModalWindow)));
+
+            PropertyChanged += (s, e) =>
+            {
+                if (e.Property.Name == "Height")
+                {
+                    PositionWindow((double)e.NewValue);
+                }
+            };
+
+
+            PositionWindow(Height);
+        }
+
+        private void PositionWindow(double newHeight)
+        {
+            PixelRect workingArea = Screens.Primary.WorkingArea;
+            double newXPos = workingArea.X + workingArea.Width - Width;
+            double newYPos = workingArea.Y + workingArea.Height - Height;
+            Position = new PixelPoint((int)newXPos, (int)newYPos);
         }
 
         private async Task DoHandleShowModalWindow(InteractionContext<ModalWindowViewModel, Unit> context)
