@@ -61,6 +61,24 @@ namespace ModularToolManager2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abort.
+        /// </summary>
+        public static string DefaultButton_Abort {
+            get {
+                return ResourceManager.GetString("DefaultButton_Abort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string DefaultButton_Ok {
+            get {
+                return ResourceManager.GetString("DefaultButton_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         public static string Menu_File {
@@ -75,6 +93,24 @@ namespace ModularToolManager2.Properties {
         public static string Menu_ReportBug {
             get {
                 return ResourceManager.GetString("Menu_ReportBug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Function Display Name.
+        /// </summary>
+        public static string NewFunction_Name {
+            get {
+                return ResourceManager.GetString("NewFunction_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Function Parameters.
+        /// </summary>
+        public static string NewFunction_Parameters {
+            get {
+                return ResourceManager.GetString("NewFunction_Parameters", resourceCulture);
             }
         }
         

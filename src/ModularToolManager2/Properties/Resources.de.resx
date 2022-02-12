@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DefaultButton_Abort" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="DefaultButton_Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="Menu_File" xml:space="preserve">
     <value>Datei</value>
   </data>
   <data name="Menu_ReportBug" xml:space="preserve">
     <value>Fehler Melden</value>
+  </data>
+  <data name="NewFunction_Name" xml:space="preserve">
+    <value>Funktionsanzeigename</value>
+  </data>
+  <data name="NewFunction_Parameters" xml:space="preserve">
+    <value>Funktions Parameter</value>
   </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>
