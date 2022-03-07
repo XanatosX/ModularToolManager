@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:p="clr-namespace:ModularToolManager2.Properties"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ModularToolManager2.Views.ChangeLanguageView">
+	<Grid>
+		<Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto">
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,5,0">
+				<TextBlock Text="{x:Static p:Resources.SubMenu_Language}"/>
+				<TextBlock Text=":"/>
+			</StackPanel>
+
+			<ComboBox  Grid.Column="1" Items="{Binding Cultures}" SelectedItem="{Binding SelectedCulture}"/>
+			<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Spacing="5" Grid.Row="1" Grid.ColumnSpan="2">
+				<Button Content="{x:Static p:Resources.DefaultButton_Ok}" Command="{Binding ChangeLanguageCommand}"/>
+				<Button Content="{x:Static p:Resources.DefaultButton_Abort}" Command="{Binding AbortCommand}"/>
+			</StackPanel>
+		</Grid>
+
+	</Grid>
+</UserControl>

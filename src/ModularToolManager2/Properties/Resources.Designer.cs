@@ -97,6 +97,15 @@ namespace ModularToolManager2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search for function.
+        /// </summary>
+        public static string FunctionSelection_SearchForFunction {
+            get {
+                return ResourceManager.GetString("FunctionSelection_SearchForFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         public static string Menu_File {

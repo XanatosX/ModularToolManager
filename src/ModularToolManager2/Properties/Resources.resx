@@ -129,6 +129,9 @@
   <data name="DefaultButton_OpenFile" xml:space="preserve">
     <value>...</value>
   </data>
+  <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
+    <value>Search for function</value>
+  </data>
   <data name="Menu_File" xml:space="preserve">
     <value>File</value>
   </data>

@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
+using ModularToolManager2.Models;
 using ModularToolManager2.ViewModels;
 using ReactiveUI;
 using System.Reactive;
@@ -50,10 +51,11 @@ namespace ModularToolManager2.Views
             Position = new PixelPoint((int)newXPos, (int)newYPos);
         }
 
-        private async Task DoHandleShowModalWindow(InteractionContext<ModalWindowViewModel, Unit> context)
+        private async Task DoHandleShowModalWindow(InteractionContext<ShowWindowModel, Unit> context)
         {
             ModalWindow window = new ModalWindow();
-            window.DataContext = context.Input;
+            window.WindowStartupLocation = context.Input.StartupLocation;
+            window.DataContext = context.Input.ViewModel;
             await window.ShowDialog(this);
 
         }
