@@ -18,6 +18,7 @@ namespace ModularToolManager2.Views
 #endif
             this.WhenActivated(d => d(ViewModel!.CloseWindowInteraction.RegisterHandler(Close)));
             this.WhenActivated(d => d(ViewModel!.ShowModalWindowInteraction.RegisterHandler(DoHandleShowModalWindow)));
+            this.WhenActivated(d => d(ViewModel!.ToggleApplicationVisibilityInteraction.RegisterHandler(DoToggleWindowVisibility)));
 
             PropertyChanged += (s, e) =>
             {
@@ -29,6 +30,16 @@ namespace ModularToolManager2.Views
 
 
             PositionWindow(Height);
+        }
+
+        private void DoToggleWindowVisibility(InteractionContext<Unit, Unit> context)
+        {
+            if (IsVisible)
+            {
+                Hide();
+                return;
+            }
+            Show();
         }
 
         private void PositionWindow(double newHeight)

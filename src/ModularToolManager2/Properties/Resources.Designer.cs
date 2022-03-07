@@ -61,6 +61,15 @@ namespace ModularToolManager2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path to function.
+        /// </summary>
+        public static string AddFunction_FunctionPathWatermark {
+            get {
+                return ResourceManager.GetString("AddFunction_FunctionPathWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abort.
         /// </summary>
         public static string DefaultButton_Abort {
@@ -75,6 +84,15 @@ namespace ModularToolManager2.Properties {
         public static string DefaultButton_Ok {
             get {
                 return ResourceManager.GetString("DefaultButton_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ....
+        /// </summary>
+        public static string DefaultButton_OpenFile {
+            get {
+                return ResourceManager.GetString("DefaultButton_OpenFile", resourceCulture);
             }
         }
         
