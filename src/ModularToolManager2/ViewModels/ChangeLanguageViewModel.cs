@@ -2,6 +2,7 @@
 using Avalonia.ReactiveUI;
 using ModularToolManager2.Models;
 using ModularToolManager2.Services.Language;
+using ModularToolManager2.ViewModels.Extenions;
 using ReactiveUI;
 using Splat;
 using System;
@@ -14,7 +15,7 @@ using System.Windows.Input;
 
 namespace ModularToolManager2.ViewModels
 {
-    public class ChangeLanguageViewModel : ViewModelBase
+    public class ChangeLanguageViewModel : ViewModelBase, IModalWindowEvents
     {
         private readonly ILanguageService languageService;
 
@@ -30,7 +31,9 @@ namespace ModularToolManager2.ViewModels
 
         public ICommand ChangeLanguageCommand { get; }
 
-        public ICommand AbortCommand;
+        public ICommand AbortCommand { get; }
+
+        public event EventHandler Closing;
 
         public ChangeLanguageViewModel()
         {
@@ -41,7 +44,7 @@ namespace ModularToolManager2.ViewModels
 
             AbortCommand = ReactiveCommand.Create(async () =>
             {
-
+                Closing?.Invoke(this, EventArgs.Empty);
             });
         }
     }
