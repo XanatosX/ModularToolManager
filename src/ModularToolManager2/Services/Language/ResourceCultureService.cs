@@ -30,7 +30,8 @@ internal class ResourceCultureService : ILanguageService
     /// <inheritdoc/>
     public bool ValidLanguage(CultureInfo culture)
     {
-        return availableCultures.Contains(culture);
+
+        return availableCultures is null ? false : availableCultures.Contains(culture);
     }
 
     /// <inheritdoc/>

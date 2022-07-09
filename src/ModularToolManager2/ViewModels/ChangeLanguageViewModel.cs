@@ -1,51 +1,75 @@
 ﻿using Avalonia;
-using Avalonia.ReactiveUI;
 using ModularToolManager2.Models;
 using ModularToolManager2.Services.Language;
 using ModularToolManager2.ViewModels.Extenions;
 using ReactiveUI;
 using Splat;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace ModularToolManager2.ViewModels
+namespace ModularToolManager2.ViewModels;
+
+/// <summary>
+/// View model used to change the language
+/// </summary>
+public class ChangeLanguageViewModel : ViewModelBase, IModalWindowEvents
 {
-    public class ChangeLanguageViewModel : ViewModelBase, IModalWindowEvents
+    /// <summary>
+    /// The language service to use
+    /// </summary>
+    private readonly ILanguageService languageService;
+
+    /// <summary>
+    /// A list with all the cultures available
+    /// </summary>
+    public ObservableCollection<CultureInfoViewModel> Cultures { get; }
+
+    /// <summary>
+    /// The currently selected culture
+    /// </summary>
+    public CultureInfoViewModel? SelectedCulture
     {
-        private readonly ILanguageService languageService;
+        get => selectedCulture;
+        set => this.RaiseAndSetIfChanged(ref selectedCulture, value);
+    }
 
-        public ObservableCollection<CultureInfoViewModel> Cultures { get; }
+    /// <summary>
+    /// The currently selected culture full field
+    /// </summary>
+    private CultureInfoViewModel? selectedCulture;
 
-        public CultureInfoViewModel SelectedCulture
+    /// <summary>
+    /// The command to change the language
+    /// </summary>
+    public ICommand ChangeLanguageCommand { get; }
+
+    /// <summary>
+    /// Command to abort the window execution
+    /// </summary>
+    public ICommand AbortCommand { get; }
+
+    /// <summary>
+    /// Event handler if the modal is getting closed
+    /// </summary>
+    public event EventHandler Closing;
+
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    public ChangeLanguageViewModel()
+    {
+        languageService = Locator.Current.GetService<ILanguageService>();
+        Cultures = new ObservableCollection<CultureInfoViewModel>(languageService.GetAvailableCultures().Select(culture => new CultureInfoViewModel(new CultureInfoModel(culture.DisplayName, culture))));
+
+        SelectedCulture = Cultures.FirstOrDefault(cultureViewModel => cultureViewModel.Culture == CultureInfo.CurrentCulture);
+        SelectedCulture = SelectedCulture is null ? Cultures.First() : SelectedCulture;
+
+        AbortCommand = ReactiveCommand.Create(async () =>
         {
-            get => selectedCulture;
-            set => this.RaiseAndSetIfChanged(ref selectedCulture, value);
-        }
-
-        private CultureInfoViewModel selectedCulture;
-
-        public ICommand ChangeLanguageCommand { get; }
-
-        public ICommand AbortCommand { get; }
-
-        public event EventHandler Closing;
-
-        public ChangeLanguageViewModel()
-        {
-            languageService = Locator.Current.GetService<ILanguageService>();
-            Cultures = new ObservableCollection<CultureInfoViewModel>(languageService.GetAvailableCultures().Select(culture => new CultureInfoViewModel(new CultureInfoModel(culture.DisplayName, culture))));
-
-            //SelectedCulture = Cultures.First(cultureViewModel => cultureViewModel.Culture == Application.Current.cul);
-
-            AbortCommand = ReactiveCommand.Create(async () =>
-            {
-                Closing?.Invoke(this, EventArgs.Empty);
-            });
-        }
+            Closing?.Invoke(this, EventArgs.Empty);
+        });
     }
 }

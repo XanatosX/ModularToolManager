@@ -25,15 +25,19 @@ namespace ModularToolManager2.Views
             {
                 if (e.Property.Name == "Height")
                 {
-                    PositionWindow((double)e.NewValue);
+                    PositionWindow();
                 }
             };
 
 
-            PositionWindow(Height);
+            PositionWindow();
         }
 
-        private void DoToggleWindowVisibility(InteractionContext<Unit, Unit> context)
+        /// <summary>
+        /// Method to toggle the window visibilty based on an interaction
+        /// </summary>
+        /// <param name="context">Empty context</param>
+        private void DoToggleWindowVisibility(InteractionContext<Unit, Unit> _)
         {
             if (IsVisible)
             {
@@ -43,7 +47,10 @@ namespace ModularToolManager2.Views
             Show();
         }
 
-        private void PositionWindow(double newHeight)
+        /// <summary>
+        /// Method to position a given window in the bottom right corner based on the window height
+        /// </summary>
+        private void PositionWindow()
         {
             PixelRect workingArea = Screens.Primary.WorkingArea;
             double newXPos = workingArea.X + workingArea.Width - Width;
@@ -51,6 +58,11 @@ namespace ModularToolManager2.Views
             Position = new PixelPoint((int)newXPos, (int)newYPos);
         }
 
+        /// <summary>
+        /// Show the given modal
+        /// </summary>
+        /// <param name="context">The interaction context which tells us which modal to instantiate and show</param>
+        /// <returns>A reference to the new modal as task</returns>
         private async Task DoHandleShowModalWindow(InteractionContext<ShowWindowModel, Unit> context)
         {
             ModalWindow window = new ModalWindow();

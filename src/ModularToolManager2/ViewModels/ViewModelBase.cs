@@ -1,11 +1,10 @@
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ModularToolManager2.ViewModels
+namespace ModularToolManager2.ViewModels;
+
+/// <summary>
+/// Base class for the view model
+/// </summary>
+public class ViewModelBase : ReactiveObject
 {
-    public class ViewModelBase : ReactiveObject
-    {
-    }
 }
