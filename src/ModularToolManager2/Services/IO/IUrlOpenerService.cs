@@ -1,15 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ModularToolManager2.Services.IO
+namespace ModularToolManager2.Services.IO;
+
+/// <summary>
+/// Interface used to describe a service to open urls in the browser
+/// </summary>
+internal interface IUrlOpenerService
 {
-    internal interface IUrlOpenerService
-    {
-        bool OpenUrl(string url);
+    /// <summary>
+    /// Open the url in the browser
+    /// </summary>
+    /// <param name="url">The url to open up in the browsers as a string</param>
+    /// <returns>True if the url could be opened successful</returns>
+    bool OpenUrl(string url);
 
-        bool OpenUrl(Uri url);
-    }
+    /// <summary>
+    /// Open the url in the browser
+    /// </summary>
+    /// <param name="url">The url to open up in the browsers as a uri</param>
+    /// <returns>True if the url could be opened successful</returns>
+    bool OpenUrl(Uri url);
 }

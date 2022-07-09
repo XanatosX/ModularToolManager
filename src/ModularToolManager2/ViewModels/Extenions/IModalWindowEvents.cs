@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ModularToolManager2.ViewModels.Extenions
+namespace ModularToolManager2.ViewModels.Extenions;
+
+/// <summary>
+/// Interface to define modal window events
+/// </summary>
+public interface IModalWindowEvents
 {
-    public interface IModalWindowEvents
-    {
-        event EventHandler Closing;
-    }
+    /// <summary>
+    /// Window is getting closed event
+    /// </summary>
+    event EventHandler Closing;
 }
