@@ -1,43 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ModularToolManager2.Services.IO
+namespace ModularToolManager2.Services.IO;
+
+/// <summary>
+/// Implementation of the url opener service
+/// </summary>
+public class UrlOpenerService : IUrlOpenerService
 {
-    public class UrlOpenerService : IUrlOpenerService
+    /// <inheritdoc/>
+    public bool OpenUrl(string url)
     {
-        public bool OpenUrl(string url)
+        try
         {
-            try
-            {
-                return OpenUrl(new Uri(url));
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return OpenUrl(new Uri(url));
         }
-
-        public bool OpenUrl(Uri url)
+        catch (Exception)
         {
-            try
-            {
-
-                ProcessStartInfo processStartInfo = new ProcessStartInfo()
-                {
-                    UseShellExecute = true,
-                    FileName = url.OriginalString
-                };
-                Process process = Process.Start(processStartInfo);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            return true;
+            return false;
         }
+    }
+
+    /// <inheritdoc/>
+    public bool OpenUrl(Uri url)
+    {
+        try
+        {
+            ProcessStartInfo processStartInfo = new ProcessStartInfo()
+            {
+                UseShellExecute = true,
+                FileName = url.OriginalString
+            };
+            _ = Process.Start(processStartInfo);
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+        return true;
     }
 }
