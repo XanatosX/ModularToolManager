@@ -5,5 +5,4 @@
 /// </summary>
 internal class SettingsViewModel : ViewModelBase
 {
-
 }
