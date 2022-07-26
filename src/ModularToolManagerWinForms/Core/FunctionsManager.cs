@@ -1,10 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
-using JSONSettings;
 
 namespace ModularToolManger.Core
 {
@@ -51,7 +47,7 @@ namespace ModularToolManger.Core
                     {
                         _availablefunctions.Add(currentFunction);
                     }
-                       
+
                 }
             }
 

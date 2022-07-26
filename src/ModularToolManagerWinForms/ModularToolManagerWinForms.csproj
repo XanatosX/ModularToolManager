@@ -56,8 +56,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PluginSystem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -179,7 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DLL\BitbucketAPI.dll" />
-    <Content Include="DLL\Diagnostics.dll" />
     <Content Include="DLL\Helper.dll" />
     <Content Include="DLL\jsonLanguage.dll" />
     <Content Include="DLL\Logging.dll" />
@@ -196,7 +195,7 @@
       <Name>JSONSettings</Name>
     </ProjectReference>
     <ProjectReference Include="..\ToolMangerInterface\ToolMangerInterface.csproj">
-      <Project>{51804EDD-6999-4F6B-B279-0868A9E2505C}</Project>
+      <Project>{51804edd-6999-4f6b-b279-0868a9e2505c}</Project>
       <Name>ToolMangerInterface</Name>
     </ProjectReference>
   </ItemGroup>
