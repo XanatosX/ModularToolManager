@@ -1,39 +1,35 @@
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using Avalonia.Threading;
 using ModularToolManager2.ViewModels;
 using ReactiveUI;
-using System;
 using System.Reactive;
-using System.Reactive.Concurrency;
 
-namespace ModularToolManager2.Views
+namespace ModularToolManager2.Views;
+
+public partial class ModalWindow : ReactiveWindow<ModalWindowViewModel>
 {
-    public partial class ModalWindow : ReactiveWindow<ModalWindowViewModel>
+    public ModalWindow()
     {
-        public ModalWindow()
-        {
-            InitializeComponent();
+        InitializeComponent();
 #if DEBUG
-            this.AttachDevTools();
+        this.AttachDevTools();
 #endif
-            this.WhenActivated(d => d(ViewModel!.CloseWindowInteraction.RegisterHandler(HandleWindowClose)));
-        }
+        this.WhenActivated(d => d(ViewModel!.CloseWindowInteraction.RegisterHandler(HandleWindowClose)));
+    }
 
-        private async void HandleWindowClose(InteractionContext<Unit, Unit> obj)
+    private async void HandleWindowClose(InteractionContext<Unit, Unit> obj)
+    {
+        await Dispatcher.UIThread.InvokeAsync(() =>
         {
-            await Dispatcher.UIThread.InvokeAsync(() =>
-            {
-                Close();
-            });
+            Close();
+        });
 
-        }
+    }
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

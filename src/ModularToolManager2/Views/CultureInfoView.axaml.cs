@@ -1,19 +1,17 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace ModularToolManager2.Views
-{
-    public partial class CultureInfoView : UserControl
-    {
-        public CultureInfoView()
-        {
-            InitializeComponent();
-        }
+namespace ModularToolManager2.Views;
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+public partial class CultureInfoView : UserControl
+{
+    public CultureInfoView()
+    {
+        InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }
