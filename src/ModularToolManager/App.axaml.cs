@@ -8,29 +8,31 @@ using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using Splat;
 
-namespace ModularToolManager
+namespace ModularToolManager;
+
+/// <inheritdoc/>
+public class App : Application
 {
-    public class App : Application
+    /// <inheritdoc/>
+    public override void Initialize()
     {
-        public override void Initialize()
-        {
-            AvaloniaXamlLoader.Load(this);
-            Locator.CurrentMutable.Register(() => new DefaultStyleService(), typeof(IStyleService));
-            Locator.CurrentMutable.RegisterConstant<IUrlOpenerService>(new UrlOpenerService());
-            Locator.CurrentMutable.RegisterConstant<ILanguageService>(new ResourceCultureService());
-        }
+        AvaloniaXamlLoader.Load(this);
+        Locator.CurrentMutable.Register(() => new DefaultStyleService(), typeof(IStyleService));
+        Locator.CurrentMutable.RegisterConstant<IUrlOpenerService>(new UrlOpenerService());
+        Locator.CurrentMutable.RegisterConstant<ILanguageService>(new ResourceCultureService());
+    }
 
-        public override void OnFrameworkInitializationCompleted()
+    /// <inheritdoc/>
+    public override void OnFrameworkInitializationCompleted()
+    {
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            desktop.MainWindow = new MainWindow
             {
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = new MainWindowViewModel(),
-                };
-            }
-
-            base.OnFrameworkInitializationCompleted();
+                DataContext = new MainWindowViewModel(),
+            };
         }
+
+        base.OnFrameworkInitializationCompleted();
     }
 }
