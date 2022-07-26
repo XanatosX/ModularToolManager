@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularToolManagerWinForms", "ModularToolManger\ModularToolManagerWinForms.csproj", "{42E97A0E-BB73-47A3-8831-80CFE591FF78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularToolManagerWinForms", "ModularToolManagerWinForms\ModularToolManagerWinForms.csproj", "{42E97A0E-BB73-47A3-8831-80CFE591FF78}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolMangerInterface", "ToolMangerInterface\ToolMangerInterface.csproj", "{51804EDD-6999-4F6B-B279-0868A9E2505C}"
 EndProject
