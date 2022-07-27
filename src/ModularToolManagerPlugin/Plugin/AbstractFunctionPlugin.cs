@@ -1,6 +1,7 @@
 ﻿using ModularToolManagerPlugin.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,12 @@ namespace ModularToolManagerPlugin.Plugin
         protected IPluginTranslationService translationService;
         protected IFunctionSettingsService settingsService;
         protected OperatingSystem operatingSystem;
+        protected CultureInfo currentCulture;
+
+        public void ChangeLanguage(CultureInfo culture)
+        {
+            currentCulture = culture;
+        }
 
         public abstract void Dispose();
 

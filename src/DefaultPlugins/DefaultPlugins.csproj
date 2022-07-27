@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Translations\de-DE_asdasd.json" />
+    <None Remove="Translations\en-EN.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Translations\en-EN.json" />
+    <EmbeddedResource Include="Translations\de-DE_asdasd.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj" />
   </ItemGroup>
 

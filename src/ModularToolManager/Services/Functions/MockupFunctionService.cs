@@ -35,47 +35,4 @@ namespace ModularToolManager.Services.Functions
             plugins.Clear();
         }
     }
-
-    internal class MockupPlugin : IFunctionPlugin
-    {
-        private IPluginTranslationService translationService;
-        private IFunctionSettingsService functionSettingsService;
-        private OperatingSystem operatingSystem;
-
-        public bool Startup(IPluginTranslationService translationService, IFunctionSettingsService settingsService, OperatingSystem operatingSystem)
-        {
-            this.translationService = translationService;
-            functionSettingsService = settingsService;
-            this.operatingSystem = operatingSystem;
-            return true;
-        }
-
-        public string GetFunctionDisplayName()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Version GetFunctionVersion()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsOperationSystemValid()
-        {
-            OperatingSystem.IsWindows();
-            return operatingSystem.Platform == PlatformID.Win32NT;
-        }
-
-
-
-        public bool Execute(string parameters, string path)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-    }
 }

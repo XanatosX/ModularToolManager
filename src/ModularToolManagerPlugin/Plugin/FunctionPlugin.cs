@@ -1,4 +1,5 @@
 ﻿using ModularToolManagerPlugin.Services;
+using System.Globalization;
 
 namespace ModularToolManagerPlugin.Plugin
 {
@@ -8,6 +9,8 @@ namespace ModularToolManagerPlugin.Plugin
             IPluginTranslationService translationService,
             IFunctionSettingsService settingsService,
             OperatingSystem operatingSystem);
+
+        void ChangeLanguage(CultureInfo culture);
 
         bool IsOperationSystemValid();
 

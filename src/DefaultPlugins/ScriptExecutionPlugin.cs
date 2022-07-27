@@ -1,4 +1,6 @@
 ﻿using ModularToolManagerPlugin.Plugin;
+using System.Globalization;
+
 namespace DefaultPlugins
 {
     public class ScriptExecutionPlugin : AbstractFunctionPlugin
@@ -15,7 +17,7 @@ namespace DefaultPlugins
 
         public override string GetFunctionDisplayName()
         {
-            return "Test";
+            return translationService.GetTranslationByKey("displayname", CultureInfo.GetCultureInfo("en-EN")) ?? "Script Execution";
         }
 
         public override Version GetFunctionVersion()
