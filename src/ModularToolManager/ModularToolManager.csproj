@@ -16,6 +16,9 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Properties\Properties.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -3,6 +3,8 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
+using ModularToolManager.Services.Plugin;
+using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
@@ -20,6 +22,7 @@ public class App : Application
         Locator.CurrentMutable.Register(() => new DefaultStyleService(), typeof(IStyleService));
         Locator.CurrentMutable.RegisterConstant<IUrlOpenerService>(new UrlOpenerService());
         Locator.CurrentMutable.RegisterConstant<ILanguageService>(new ResourceCultureService());
+        Locator.CurrentMutable.RegisterConstant<IPluginService>(new PluginService(new PluginTranslationService(), new FunctionSettingsService()));
     }
 
     /// <inheritdoc/>

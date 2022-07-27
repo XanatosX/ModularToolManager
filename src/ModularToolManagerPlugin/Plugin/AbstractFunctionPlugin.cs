@@ -1,0 +1,35 @@
+﻿using ModularToolManagerPlugin.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ModularToolManagerPlugin.Plugin
+{
+    public abstract class AbstractFunctionPlugin : IFunctionPlugin
+    {
+        protected IPluginTranslationService translationService;
+        protected IFunctionSettingsService settingsService;
+        protected OperatingSystem operatingSystem;
+
+        public abstract void Dispose();
+
+        public abstract bool Execute(string parameters, string path);
+
+        public abstract string GetFunctionDisplayName();
+
+        public abstract Version GetFunctionVersion();
+
+        public abstract bool IsOperationSystemValid();
+
+        public virtual bool Startup(IPluginTranslationService translationService, IFunctionSettingsService settingsService, OperatingSystem operatingSystem)
+        {
+            this.translationService = translationService;
+            this.settingsService = settingsService;
+            this.operatingSystem = operatingSystem;
+
+            return true;
+        }
+    }
+}
