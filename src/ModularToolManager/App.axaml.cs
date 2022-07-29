@@ -8,6 +8,7 @@ using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
+using ModularToolManagerPlugin.Services;
 using Splat;
 
 namespace ModularToolManager;
@@ -22,7 +23,13 @@ public class App : Application
         Locator.CurrentMutable.Register(() => new DefaultStyleService(), typeof(IStyleService));
         Locator.CurrentMutable.RegisterConstant<IUrlOpenerService>(new UrlOpenerService());
         Locator.CurrentMutable.RegisterConstant<ILanguageService>(new ResourceCultureService());
-        Locator.CurrentMutable.RegisterConstant<IPluginService>(new PluginService(new PluginTranslationService(), new FunctionSettingsService()));
+
+        Locator.CurrentMutable.RegisterConstant<IPluginTranslationFactoryService>(new PluginTranslationFactoryService());
+        Locator.CurrentMutable.RegisterConstant<IFunctionSettingsService>(new FunctionSettingsService());
+
+        IPluginTranslationFactoryService translationFactoryService = Locator.Current.GetService<IPluginTranslationFactoryService>();
+        IFunctionSettingsService settingsService = Locator.Current.GetService<IFunctionSettingsService>();
+        Locator.CurrentMutable.RegisterConstant<IPluginService>(new PluginService(translationFactoryService, settingsService));
     }
 
     /// <inheritdoc/>

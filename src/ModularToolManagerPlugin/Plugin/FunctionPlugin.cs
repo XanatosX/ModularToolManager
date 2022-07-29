@@ -1,23 +1,22 @@
 ﻿using ModularToolManagerPlugin.Services;
 using System.Globalization;
 
-namespace ModularToolManagerPlugin.Plugin
+namespace ModularToolManagerPlugin.Plugin;
+
+public interface IFunctionPlugin : IDisposable
 {
-    public interface IFunctionPlugin : IDisposable
-    {
-        bool Startup(
-            IPluginTranslationService translationService,
-            IFunctionSettingsService settingsService,
-            OperatingSystem operatingSystem);
+    bool Startup(
+        IPluginTranslationService translationService,
+        IFunctionSettingsService settingsService,
+        OperatingSystem operatingSystem);
 
-        void ChangeLanguage(CultureInfo culture);
+    void ChangeLanguage(CultureInfo culture);
 
-        bool IsOperationSystemValid();
+    bool IsOperationSystemValid();
 
-        string GetFunctionDisplayName();
+    string GetFunctionDisplayName();
 
-        Version GetFunctionVersion();
+    Version GetFunctionVersion();
 
-        bool Execute(string parameters, string path);
-    }
+    bool Execute(string parameters, string path);
 }

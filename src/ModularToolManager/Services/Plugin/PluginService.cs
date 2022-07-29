@@ -1,4 +1,5 @@
-﻿using ModularToolManagerPlugin.Plugin;
+﻿using ModularToolManager.Services.Language;
+using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
 using System;
 using System.Collections.Generic;
@@ -13,20 +14,20 @@ namespace ModularToolManager.Services.Plugin
     internal class PluginService : IPluginService
     {
         private string pluginPath;
-        private readonly IPluginTranslationService pluginTranslationService;
+        private readonly IPluginTranslationFactoryService pluginTranslationFactoryService;
         private readonly IFunctionSettingsService functionSettingsService;
         private List<IFunctionPlugin> plugins;
 
         /// <summary>
         /// Create a new instance of this class
         /// </summary>
-        /// <param name="pluginTranslationService">The plugin translation service to use</param>
+        /// <param name="pluginTranslationFactoryService">The plugin translation service to use</param>
         /// <param name="functionSettingsService">The function settings service to use</param>
-        public PluginService(IPluginTranslationService pluginTranslationService, IFunctionSettingsService functionSettingsService)
+        public PluginService(IPluginTranslationFactoryService pluginTranslationFactoryService, IFunctionSettingsService functionSettingsService)
         {
             FileInfo executable = new FileInfo(Assembly.GetExecutingAssembly().Location);
             pluginPath = Path.Combine(executable.DirectoryName ?? Path.GetTempPath(), "plugins");
-            this.pluginTranslationService = pluginTranslationService;
+            this.pluginTranslationFactoryService = pluginTranslationFactoryService;
             this.functionSettingsService = functionSettingsService;
 
             plugins = new List<IFunctionPlugin>();
@@ -87,7 +88,7 @@ namespace ModularToolManager.Services.Plugin
             try
             {
                 plugin = (IFunctionPlugin)Activator.CreateInstance(pluginType)!;
-                plugin?.Startup(pluginTranslationService, functionSettingsService, Environment.OSVersion);
+                plugin?.Startup(pluginTranslationFactoryService.createPluginTranslationService(), functionSettingsService, Environment.OSVersion);
             }
             catch (Exception)
             {

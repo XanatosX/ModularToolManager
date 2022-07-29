@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ModularToolManagerPlugin.Services
+namespace ModularToolManagerPlugin.Services;
+
+public interface IFunctionSettingsService
 {
-    public interface IFunctionSettingsService
-    {
-    }
 }
