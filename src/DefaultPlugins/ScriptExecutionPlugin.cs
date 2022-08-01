@@ -1,13 +1,20 @@
-﻿using ModularToolManagerPlugin.Plugin;
+﻿using ModularToolManagerPlugin.Models;
+using ModularToolManagerPlugin.Plugin;
 using System.Globalization;
 
 namespace DefaultPlugins;
 
 public class ScriptExecutionPlugin : AbstractFunctionPlugin
 {
+    private readonly CultureInfo fallbackCulture;
+
+    public ScriptExecutionPlugin()
+    {
+        fallbackCulture = CultureInfo.GetCultureInfo("en-EN");
+    }
+
     public override void Dispose()
     {
-
     }
 
     public override bool Execute(string parameters, string path)
@@ -17,7 +24,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
 
     public override string GetFunctionDisplayName()
     {
-        return translationService.GetTranslationByKey("displayname", CultureInfo.GetCultureInfo("en-EN")) ?? "Script Execution";
+        return translationService.GetTranslationByKey("displayname", fallbackCulture) ?? "Script Execution";
     }
 
     public override Version GetFunctionVersion()
@@ -28,5 +35,21 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     public override bool IsOperationSystemValid()
     {
         return true;
+    }
+
+    public override IEnumerable<FileExtension> GetAllowedFileEndings()
+    {
+        return GetWindowsExtensions().Where(extension => !string.IsNullOrEmpty(extension.Name) && !string.IsNullOrEmpty(extension.Extension))
+                                     .OrderBy(item => item.Name);
+    }
+
+    private IEnumerable<FileExtension> GetWindowsExtensions()
+    {
+        return new List<FileExtension>()
+        {
+            new FileExtension(translationService.GetTranslationByKey("batch", fallbackCulture), ".bat"),
+            new FileExtension(translationService.GetTranslationByKey("cmd", fallbackCulture), ".cmd"),
+            new FileExtension(translationService.GetTranslationByKey("powershell", fallbackCulture), ".ps")
+        };
     }
 }

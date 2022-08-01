@@ -7,8 +7,6 @@ namespace ModularToolManager.ViewModels;
 /// </summary>
 public class FunctionPluginViewModel : ViewModelBase
 {
-
-
     /// <summary>
     /// The function plugin to show
     /// </summary>

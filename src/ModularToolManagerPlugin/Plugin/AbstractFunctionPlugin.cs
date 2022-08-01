@@ -1,4 +1,5 @@
-﻿using ModularToolManagerPlugin.Services;
+﻿using ModularToolManagerPlugin.Models;
+using ModularToolManagerPlugin.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,6 +24,8 @@ public abstract class AbstractFunctionPlugin : IFunctionPlugin
     public abstract void Dispose();
 
     public abstract bool Execute(string parameters, string path);
+
+    public abstract IEnumerable<FileExtension> GetAllowedFileEndings();
 
     public abstract string GetFunctionDisplayName();
 

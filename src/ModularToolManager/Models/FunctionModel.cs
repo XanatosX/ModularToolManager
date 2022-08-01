@@ -9,7 +9,7 @@ namespace ModularToolManager.Models
 {
     internal class FunctionModel
     {
-        //string UniqueIdentifier { get; init; }
+        public string UniqueIdentifier { get; init; }
 
         public string DisplayName { get; set; }
 
@@ -21,11 +21,11 @@ namespace ModularToolManager.Models
 
         public int SortOrder { get; set; }
 
-        public FunctionModel() : this(string.Empty, null, string.Empty, string.Empty, int.MaxValue)
+        public FunctionModel() : this(Guid.NewGuid().ToString(), string.Empty, null, string.Empty, string.Empty, int.MaxValue)
         {
         }
 
-        public FunctionModel(string displayName, IFunctionPlugin plugin, string path, string parameters, int sortOrder)
+        public FunctionModel(string uniqueIdentifier, string displayName, IFunctionPlugin plugin, string path, string parameters, int sortOrder)
         {
             DisplayName = displayName;
             Plugin = plugin;

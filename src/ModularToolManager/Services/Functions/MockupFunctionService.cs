@@ -10,29 +10,36 @@ using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.Functions
 {
-    internal class MockupFunctionService : IFunctionService, IDisposable
+    internal class MockupFunctionService : IFunctionService
     {
-        private List<IFunctionPlugin> plugins;
+        private List<FunctionModel> functions;
 
         public MockupFunctionService()
         {
-            plugins = new List<IFunctionPlugin>();
+            functions = new List<FunctionModel>()
+            {
+                new FunctionModel(Guid.NewGuid().ToString(), "Mocked Test", null, String.Empty, string.Empty, int.MinValue)
+            };
         }
 
         public List<FunctionModel> GetAvailableFunctions()
         {
-            List<FunctionModel> functions = new List<FunctionModel>();
-
             return functions;
         }
 
-        public void Dispose()
+        public FunctionModel GetFunction(string identifier)
         {
-            foreach (var plugin in plugins)
-            {
-                plugin.Dispose();
-            }
-            plugins.Clear();
+            return functions.Find(function => function.UniqueIdentifier == identifier);
+        }
+
+        public void AddFunction(FunctionModel function)
+        {
+            functions.Add(function);
+        }
+
+        public void DeleteFunction(string identifier)
+        {
+            functions.RemoveAll(function => function.UniqueIdentifier == identifier);
         }
     }
 }

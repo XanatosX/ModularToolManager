@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using ModularToolManager.Services.Functions;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
 using ModularToolManager.Services.Plugin;
@@ -23,6 +24,7 @@ public class App : Application
         Locator.CurrentMutable.Register(() => new DefaultStyleService(), typeof(IStyleService));
         Locator.CurrentMutable.RegisterConstant<IUrlOpenerService>(new UrlOpenerService());
         Locator.CurrentMutable.RegisterConstant<ILanguageService>(new ResourceCultureService());
+        Locator.CurrentMutable.RegisterConstant<IFunctionService>(new MockupFunctionService());
 
         Locator.CurrentMutable.RegisterConstant<IPluginTranslationFactoryService>(new PluginTranslationFactoryService());
         Locator.CurrentMutable.RegisterConstant<IFunctionSettingsService>(new FunctionSettingsService());

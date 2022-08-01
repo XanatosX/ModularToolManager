@@ -1,4 +1,5 @@
-﻿using ModularToolManagerPlugin.Services;
+﻿using ModularToolManagerPlugin.Models;
+using ModularToolManagerPlugin.Services;
 using System.Globalization;
 
 namespace ModularToolManagerPlugin.Plugin;
@@ -19,4 +20,6 @@ public interface IFunctionPlugin : IDisposable
     Version GetFunctionVersion();
 
     bool Execute(string parameters, string path);
+
+    IEnumerable<FileExtension> GetAllowedFileEndings();
 }

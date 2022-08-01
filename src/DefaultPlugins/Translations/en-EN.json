@@ -2,5 +2,17 @@
   {
     "key": "displayname",
     "value": "Script execution"
+  },
+  {
+    "key": "batch",
+    "value": "Batch-Script"
+  },
+  {
+    "key": "cmd",
+    "value": "CMD-Script"
+  },
+  {
+    "key": "powershell",
+    "value": "PowerShell-Script"
   }
 ]

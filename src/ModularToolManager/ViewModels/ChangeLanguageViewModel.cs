@@ -67,9 +67,6 @@ public class ChangeLanguageViewModel : ViewModelBase, IModalWindowEvents
         SelectedCulture = Cultures.FirstOrDefault(cultureViewModel => cultureViewModel.Culture == CultureInfo.CurrentCulture);
         SelectedCulture = SelectedCulture is null ? Cultures.First() : SelectedCulture;
 
-        AbortCommand = ReactiveCommand.Create(async () =>
-        {
-            Closing?.Invoke(this, EventArgs.Empty);
-        });
+        AbortCommand = ReactiveCommand.Create(async () => Closing?.Invoke(this, EventArgs.Empty));
     }
 }
