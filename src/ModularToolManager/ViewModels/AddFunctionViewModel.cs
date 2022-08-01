@@ -1,11 +1,14 @@
-﻿using Avalonia.ReactiveUI;
-using ModularToolManager.Models;
+﻿using ModularToolManager.Models;
 using ModularToolManager.Services.Plugin;
 using ModularToolManagerPlugin.Plugin;
 using ReactiveUI;
 using Splat;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Linq;
 
 namespace ModularToolManager.ViewModels;
 
@@ -20,6 +23,7 @@ public class AddFunctionViewModel : ViewModelBase
 
     private FunctionModel functionModel;
 
+    [MinLength(5), MaxLength(25)]
     public string DisplayName
     {
         get => functionModel.DisplayName;
@@ -35,7 +39,7 @@ public class AddFunctionViewModel : ViewModelBase
         get => functionModel.Plugin is null ? null : new FunctionPluginViewModel(functionModel.Plugin!);
         set
         {
-            functionModel.Plugin = value.Plugin;
+            functionModel.Plugin = value?.Plugin;
             this.RaisePropertyChanged("SelectedFunctionService");
         }
     }
@@ -65,5 +69,19 @@ public class AddFunctionViewModel : ViewModelBase
         functionModel = new FunctionModel();
         pluginService = Locator.Current.GetService<IPluginService>();
         functionServices = pluginService.GetAvailablePlugins().Select(plugin => new FunctionPluginViewModel(plugin)).ToList();
+        this.WhenAnyValue(x => x.SelectedPath)
+            .Throttle(TimeSpan.FromSeconds(2))
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(path => SelectedPath = path.Trim());
+
+        this.WhenAnyValue(x => x.FunctionParameters)
+            .Throttle(TimeSpan.FromSeconds(2))
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(parameters => FunctionParameters = parameters.Trim());
+
+        this.WhenAnyValue(x => x.DisplayName)
+            .Throttle(TimeSpan.FromSeconds(2))
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(displayName => DisplayName = displayName.Trim());
     }
 }
