@@ -1,12 +1,11 @@
 ﻿using ModularToolManager.Models;
+using ModularToolManager.Services.Functions;
 using ModularToolManager.Services.Plugin;
-using ModularToolManagerPlugin.Plugin;
 using ReactiveUI;
 using Splat;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 
@@ -17,7 +16,9 @@ namespace ModularToolManager.ViewModels;
 /// </summary>
 public class AddFunctionViewModel : ViewModelBase
 {
-    private readonly IPluginService pluginService;
+    private readonly IPluginService? pluginService;
+    private readonly IFunctionService? functionService;
+
     public List<FunctionPluginViewModel> FunctionServices => functionServices;
     private readonly List<FunctionPluginViewModel> functionServices;
 
@@ -68,7 +69,14 @@ public class AddFunctionViewModel : ViewModelBase
     {
         functionModel = new FunctionModel();
         pluginService = Locator.Current.GetService<IPluginService>();
-        functionServices = pluginService.GetAvailablePlugins().Select(plugin => new FunctionPluginViewModel(plugin)).ToList();
+        functionService = Locator.Current.GetService<IFunctionService>();
+        if (pluginService is not null)
+        {
+            functionServices = pluginService.GetAvailablePlugins()
+                                            .Select(plugin => new FunctionPluginViewModel(plugin))
+                                            .ToList();
+        }
+
         this.WhenAnyValue(x => x.SelectedPath)
             .Throttle(TimeSpan.FromSeconds(2))
             .ObserveOn(RxApp.MainThreadScheduler)
