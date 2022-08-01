@@ -9,17 +9,37 @@ namespace ModularToolManager.Models
 {
     internal class FunctionModel
     {
-        string UniqueIdentifier { get; init; }
+        //string UniqueIdentifier { get; init; }
 
-        IFunctionPlugin Plugin { get; init; }
+        public string DisplayName { get; set; }
 
-        int SortOrder { get; }
+        public IFunctionPlugin? Plugin { get; set; }
 
-        public FunctionModel(string identifier, int sortOrder, IFunctionPlugin plugin)
+        public string Path { get; set; }
+
+        public string Parameters { get; set; }
+
+        public int SortOrder { get; set; }
+
+        public FunctionModel() : this(string.Empty, null, string.Empty, string.Empty, int.MaxValue)
         {
-            UniqueIdentifier = identifier;
+        }
+
+        public FunctionModel(string displayName, IFunctionPlugin plugin, string path, string parameters, int sortOrder)
+        {
+            DisplayName = displayName;
             Plugin = plugin;
+            Path = path;
+            Parameters = parameters;
             SortOrder = sortOrder;
+        }
+
+        public bool IsUseable()
+        {
+            bool valid = Plugin is not null;
+            valid &= !string.IsNullOrEmpty(DisplayName);
+            valid &= !string.IsNullOrEmpty(Path);
+            return valid;
         }
     }
 }

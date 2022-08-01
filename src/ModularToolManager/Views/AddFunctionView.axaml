@@ -14,7 +14,7 @@
 		<TextBox 
 			Watermark="{x:Static p:Resources.NewFunction_Parameters}"
 			UseFloatingWatermark="true"
-			Text="{Binding FunctionParamters}"
+			Text="{Binding FunctionParameters}"
 			IsEnabled="{Binding FunctionServiceAllowsParameter}"/>
 		<DockPanel>
 			<Button

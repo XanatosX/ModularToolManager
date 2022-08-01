@@ -7,15 +7,17 @@ namespace ModularToolManager.ViewModels;
 /// </summary>
 public class FunctionPluginViewModel : ViewModelBase
 {
+
+
     /// <summary>
     /// The function plugin to show
     /// </summary>
-    private readonly IFunctionPlugin functionPlugin;
+    public readonly IFunctionPlugin Plugin;
 
     /// <summary>
     /// The name of the function plugin
     /// </summary>
-    public string PluginName => functionPlugin.GetFunctionDisplayName();
+    public string PluginName => Plugin.GetFunctionDisplayName();
 
     /// <summary>
     /// Create a new instance of this class
@@ -23,6 +25,6 @@ public class FunctionPluginViewModel : ViewModelBase
     /// <param name="functionPlugin">The function plugin to display</param>
     public FunctionPluginViewModel(IFunctionPlugin functionPlugin)
     {
-        this.functionPlugin = functionPlugin;
+        this.Plugin = functionPlugin;
     }
 }
