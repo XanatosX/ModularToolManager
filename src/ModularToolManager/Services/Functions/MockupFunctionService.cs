@@ -18,7 +18,7 @@ namespace ModularToolManager.Services.Functions
         {
             functions = new List<FunctionModel>()
             {
-                new FunctionModel(Guid.NewGuid().ToString(), "Mocked Test", null, String.Empty, string.Empty, int.MinValue)
+                new FunctionModel(Guid.NewGuid().ToString(), "Mocked Test", null , String.Empty, string.Empty, int.MinValue)
             };
         }
 

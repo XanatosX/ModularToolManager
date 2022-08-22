@@ -11,10 +11,10 @@ namespace ModularToolManagerPlugin.Plugin;
 
 public abstract class AbstractFunctionPlugin : IFunctionPlugin
 {
-    protected IPluginTranslationService translationService;
-    protected IFunctionSettingsService settingsService;
-    protected OperatingSystem operatingSystem;
-    protected CultureInfo currentCulture;
+    protected IPluginTranslationService? translationService;
+    protected IFunctionSettingsService? settingsService;
+    protected OperatingSystem? operatingSystem;
+    protected CultureInfo? currentCulture;
 
     public void ChangeLanguage(CultureInfo culture)
     {

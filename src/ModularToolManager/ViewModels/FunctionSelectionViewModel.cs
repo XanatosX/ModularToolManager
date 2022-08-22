@@ -2,6 +2,7 @@
 using ModularToolManager.Services.Functions;
 using Splat;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ModularToolManager.ViewModels;
 
@@ -12,11 +13,13 @@ internal class FunctionSelectionViewModel : ViewModelBase
 {
     private readonly IFunctionService? functionService;
 
-    public ObservableCollection<FunctionModel> AllFunctions { get; set; }
+    public ObservableCollection<FunctionButtonViewModel> AllFunctions { get; set; }
 
     public FunctionSelectionViewModel()
     {
         functionService = Locator.Current.GetService<IFunctionService>();
-        AllFunctions = new ObservableCollection<FunctionModel>(functionService?.GetAvailableFunctions());
+        AllFunctions = new ObservableCollection<FunctionButtonViewModel>(
+                functionService?.GetAvailableFunctions().Select(function => new FunctionButtonViewModel(function))
+            );
     }
 }
