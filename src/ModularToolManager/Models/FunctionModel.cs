@@ -1,12 +1,11 @@
 ﻿using ModularToolManagerPlugin.Plugin;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Models
 {
+    /// <summary>
+    /// Model for a Function stored by the user
+    /// </summary>
     internal class FunctionModel
     {
         public string UniqueIdentifier { get; init; }
