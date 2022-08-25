@@ -21,7 +21,7 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// View model to add a new function to the application
 /// </summary>
-public class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
+internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
 {
     private readonly IPluginService? pluginService;
     private readonly IFunctionService? functionService;
@@ -78,11 +78,11 @@ public class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
     public event EventHandler Closing;
 
 
-    public AddFunctionViewModel()
+    public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService)
     {
         functionModel = new FunctionModel();
-        pluginService = Locator.Current.GetService<IPluginService>();
-        functionService = Locator.Current.GetService<IFunctionService>();
+        this.pluginService = pluginService; // Locator.Current.GetService<IPluginService>();
+        this.functionService = functionService; // Locator.Current.GetService<IFunctionService>();
         if (pluginService is not null)
         {
             functionServices = pluginService.GetAvailablePlugins()

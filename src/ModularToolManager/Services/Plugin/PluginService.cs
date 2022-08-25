@@ -1,4 +1,5 @@
-﻿using ModularToolManager.Services.Language;
+﻿using ModularToolManager.Services.IO;
+using ModularToolManager.Services.Language;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
 using System;
@@ -13,9 +14,9 @@ namespace ModularToolManager.Services.Plugin
 {
     internal class PluginService : IPluginService
     {
-        private string pluginPath;
         private readonly IPluginTranslationFactoryService pluginTranslationFactoryService;
         private readonly IFunctionSettingsService functionSettingsService;
+        private readonly IPathService pathService;
         private List<IFunctionPlugin> plugins;
 
         /// <summary>
@@ -23,13 +24,15 @@ namespace ModularToolManager.Services.Plugin
         /// </summary>
         /// <param name="pluginTranslationFactoryService">The plugin translation service to use</param>
         /// <param name="functionSettingsService">The function settings service to use</param>
-        public PluginService(IPluginTranslationFactoryService pluginTranslationFactoryService, IFunctionSettingsService functionSettingsService)
+        public PluginService(
+            IPluginTranslationFactoryService pluginTranslationFactoryService,
+            IFunctionSettingsService functionSettingsService,
+            IPathService pathService
+            )
         {
-            FileInfo executable = new FileInfo(Assembly.GetExecutingAssembly().Location);
-            pluginPath = Path.Combine(executable.DirectoryName ?? Path.GetTempPath(), "plugins");
             this.pluginTranslationFactoryService = pluginTranslationFactoryService;
             this.functionSettingsService = functionSettingsService;
-
+            this.pathService = pathService;
             plugins = new List<IFunctionPlugin>();
         }
 
@@ -101,7 +104,7 @@ namespace ModularToolManager.Services.Plugin
 
         private List<string> GetPlugins()
         {
-            return Directory.GetFiles(pluginPath)
+            return Directory.GetFiles(pathService.GetPluginPathString())
                             .ToList()
                             .Select(file => new FileInfo(file))
                             .Where(file => file.Extension.ToLower() == ".dll")

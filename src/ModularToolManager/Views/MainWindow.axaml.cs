@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using ModularToolManager.Models;
+using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ReactiveUI;
 using System.Reactive;
@@ -11,7 +12,14 @@ namespace ModularToolManager.Views;
 
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {
-    public MainWindow()
+    private readonly IModalService modalService;
+
+    public MainWindow() : this(null)
+    {
+
+    }
+
+    public MainWindow(IModalService modalService)
     {
         InitializeComponent();
 #if DEBUG
@@ -31,6 +39,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
 
         PositionWindow();
+        this.modalService = modalService;
     }
 
     /// <summary>
@@ -65,11 +74,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     /// <returns>A reference to the new modal as task</returns>
     private async Task DoHandleShowModalWindow(InteractionContext<ShowWindowModel, Unit> context)
     {
-        ModalWindow window = new ModalWindow();
-        window.WindowStartupLocation = context.Input.StartupLocation;
-        window.DataContext = context.Input.ViewModel;
-        await window.ShowDialog(this);
-
+        await modalService.ShowModalWindowAsync(context.Input, this);
     }
 
     private void InitializeComponent()
