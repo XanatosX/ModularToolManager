@@ -15,7 +15,7 @@ public class FunctionPluginViewModel : ViewModelBase
     /// <summary>
     /// The name of the function plugin
     /// </summary>
-    public string PluginName => Plugin.GetFunctionDisplayName();
+    public string PluginName => Plugin.GetDisplayName();
 
     /// <summary>
     /// Create a new instance of this class

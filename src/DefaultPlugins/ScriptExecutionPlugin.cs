@@ -32,12 +32,12 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
         return true;
     }
 
-    public override string GetFunctionDisplayName()
+    public override string GetDisplayName()
     {
         return pluginTranslationService?.GetTranslationByKey("displayname", fallbackCulture) ?? "Script Execution";
     }
 
-    public override Version GetFunctionVersion()
+    public override Version GetVersion()
     {
         return Version.Parse("0.0.0.0");
     }
