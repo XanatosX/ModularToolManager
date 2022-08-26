@@ -1,7 +1,9 @@
 ﻿using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
+using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
+using Splat;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +16,6 @@ namespace ModularToolManager.Services.Plugin
 {
     internal class PluginService : IPluginService
     {
-        private readonly IPluginTranslationFactoryService pluginTranslationFactoryService;
         private readonly IFunctionSettingsService functionSettingsService;
         private readonly IPathService pathService;
         private List<IFunctionPlugin> plugins;
@@ -25,12 +26,10 @@ namespace ModularToolManager.Services.Plugin
         /// <param name="pluginTranslationFactoryService">The plugin translation service to use</param>
         /// <param name="functionSettingsService">The function settings service to use</param>
         public PluginService(
-            IPluginTranslationFactoryService pluginTranslationFactoryService,
             IFunctionSettingsService functionSettingsService,
             IPathService pathService
             )
         {
-            this.pluginTranslationFactoryService = pluginTranslationFactoryService;
             this.functionSettingsService = functionSettingsService;
             this.pathService = pathService;
             plugins = new List<IFunctionPlugin>();
@@ -76,8 +75,14 @@ namespace ModularToolManager.Services.Plugin
             return assembly.GetTypes().Where(type => type.IsVisible)
                                       .Where(type => type.GetInterfaces()
                                       .Contains(typeof(IFunctionPlugin)))
-                                      .Where(type => type.GetConstructors().Any(constructor => constructor.GetParameters().Length == 0))
+                                      .Where(type => type.GetConstructors().Any(constructor => IsConstructorValid(constructor)))
                                       .ToList();
+        }
+
+        private bool IsConstructorValid(ConstructorInfo constructor)
+        {
+            return !constructor.GetParameters().Select(param => param.ParameterType)
+                                               .Any(type => type.GetCustomAttribute(typeof(PluginInjectableAttribute)) is null);
         }
 
         /// <summary>
@@ -90,8 +95,15 @@ namespace ModularToolManager.Services.Plugin
             IFunctionPlugin? plugin = null;
             try
             {
-                plugin = (IFunctionPlugin)Activator.CreateInstance(pluginType)!;
-                plugin?.Startup(pluginTranslationFactoryService.createPluginTranslationService(), functionSettingsService, Environment.OSVersion);
+                ConstructorInfo constructor = pluginType.GetConstructors().FirstOrDefault();
+                object?[] dependencies = constructor.GetParameters().Where(parameter => parameter.ParameterType.GetCustomAttribute<PluginInjectableAttribute>() is not null)
+                                                                   .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
+                                                                   .ToArray();
+
+                //Load settings of a plugin
+                //List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(pluginType).ToList();
+
+                plugin = (IFunctionPlugin)Activator.CreateInstance(pluginType, dependencies)!;
             }
             catch (Exception)
             {

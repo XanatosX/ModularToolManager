@@ -1,16 +1,10 @@
 ﻿using ModularToolManagerPlugin.Models;
-using ModularToolManagerPlugin.Services;
 using System.Globalization;
 
 namespace ModularToolManagerPlugin.Plugin;
 
 public interface IFunctionPlugin : IDisposable
 {
-    bool Startup(
-        IPluginTranslationService translationService,
-        IFunctionSettingsService settingsService,
-        OperatingSystem operatingSystem);
-
     void ChangeLanguage(CultureInfo culture);
 
     bool IsOperationSystemValid();

@@ -1,16 +1,26 @@
-﻿using ModularToolManagerPlugin.Models;
+﻿using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
+using ModularToolManagerPlugin.Services;
 using System.Globalization;
 
 namespace DefaultPlugins;
 
 public class ScriptExecutionPlugin : AbstractFunctionPlugin
 {
+    private const string FALLBACK_TRANSLATION = "MISSING TRANSLATION";
+
     private readonly CultureInfo fallbackCulture;
 
-    public ScriptExecutionPlugin()
+    private readonly IPluginTranslationService? pluginTranslationService;
+
+    [Setting("hide", ModularToolManagerPlugin.Enums.SettingType.Boolean, false)]
+    public bool HideCmd { get; init; }
+
+    public ScriptExecutionPlugin(IPluginTranslationService translationService)
     {
         fallbackCulture = CultureInfo.GetCultureInfo("en-EN");
+        pluginTranslationService = translationService;
     }
 
     public override void Dispose()
@@ -24,7 +34,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
 
     public override string GetFunctionDisplayName()
     {
-        return translationService.GetTranslationByKey("displayname", fallbackCulture) ?? "Script Execution";
+        return pluginTranslationService?.GetTranslationByKey("displayname", fallbackCulture) ?? "Script Execution";
     }
 
     public override Version GetFunctionVersion()
@@ -47,9 +57,9 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     {
         return new List<FileExtension>()
         {
-            new FileExtension(translationService.GetTranslationByKey("batch", fallbackCulture), ".bat"),
-            new FileExtension(translationService.GetTranslationByKey("cmd", fallbackCulture), ".cmd"),
-            new FileExtension(translationService.GetTranslationByKey("powershell", fallbackCulture), ".ps")
+            new FileExtension(pluginTranslationService?.GetTranslationByKey("batch", fallbackCulture) ?? FALLBACK_TRANSLATION, ".bat"),
+            new FileExtension(pluginTranslationService?.GetTranslationByKey("cmd", fallbackCulture) ?? FALLBACK_TRANSLATION, ".cmd"),
+            new FileExtension(pluginTranslationService?.GetTranslationByKey("powershell", fallbackCulture) ?? FALLBACK_TRANSLATION, ".ps")
         };
     }
 }

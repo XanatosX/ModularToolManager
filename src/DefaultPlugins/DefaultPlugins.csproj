@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -21,4 +21,10 @@
     <ProjectReference Include="..\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj" />
   </ItemGroup>
 
+
+
+	<Target Condition=" '$(Configuration)' == 'Debug' " Name="CopyAfterBuild" AfterTargets="Build">
+		<Copy SourceFiles="$(OutDir)DefaultPlugins.dll" DestinationFolder="$(ProjectDir)../ModularToolManager/bin/$(Configuration)/net6.0/$(PlatformShortName)/plugins" SkipUnchangedFiles="false" />
+	</Target>
 </Project>
+ 

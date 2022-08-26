@@ -11,5 +11,5 @@ internal interface IPluginTranslationFactoryService
     /// Create a new translation service
     /// </summary>
     /// <returns>A new useable translation service</returns>
-    IPluginTranslationService createPluginTranslationService();
+    IPluginTranslationService CreatePluginTranslationService();
 }

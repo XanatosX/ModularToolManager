@@ -8,5 +8,5 @@ namespace ModularToolManager.Services.Language;
 internal class PluginTranslationFactoryService : IPluginTranslationFactoryService
 {
     /// <inheritdoc/>
-    public IPluginTranslationService createPluginTranslationService() => new PluginTranslationService();
+    public IPluginTranslationService CreatePluginTranslationService() => new PluginTranslationService();
 }

@@ -1,5 +1,4 @@
-﻿using DynamicData.Aggregation;
-using ModularToolManagerPlugin.Models;
+﻿using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Services;
 using System;
 using System.Collections.Generic;
@@ -17,13 +16,16 @@ namespace ModularToolManager.Services.Language;
 /// </summary>
 public class PluginTranslationService : IPluginTranslationService
 {
+    /// <summary>
+    /// Regex to get the translation files from the resources
+    /// </summary>
     private const string JSON_TRANSLATION_REGEX = @"[a-zA-Z\.]*\.Translations\.([a-z]{2}-[A-Z]{2}.json)";
 
     /// <inheritdoc/>
     public List<TranslationModel> GetAllTranslations()
     {
         Assembly assembly = Assembly.GetCallingAssembly();
-        return GetTranslationsFromFile(assembly, GetCorrectFile(assembly, GetCurrentCulture()));
+        return GetTranslationsFromFile(assembly, GetTranslationResourceByCulture(assembly, GetCurrentCulture()));
     }
 
     /// <inheritdoc/>
@@ -32,7 +34,7 @@ public class PluginTranslationService : IPluginTranslationService
         Assembly assembly = Assembly.GetCallingAssembly();
         return GetTranslationsFromFile(
                 assembly,
-                GetCorrectFile(assembly, GetCurrentCulture())
+                GetTranslationResourceByCulture(assembly, GetCurrentCulture())
             ).Select(translation => translation.Key)
              .ToList();
     }
@@ -47,24 +49,44 @@ public class PluginTranslationService : IPluginTranslationService
 
     }
 
+    /// <summary>
+    /// Get all the valid resource file names
+    /// </summary>
+    /// <param name="assembly">The assembly to search the files in</param>
+    /// <returns>A list with all resource file paths</returns>
     private IEnumerable<string> GetTranslationManifests(Assembly assembly)
     {
         return assembly.GetManifestResourceNames()
                        .Where(path => IsValidTranslationPath(path));
     }
 
+    /// <summary>
+    /// Check if a given string is a valid translation path
+    /// </summary>
+    /// <param name="path">The path to check if valid</param>
+    /// <returns>True if the path is a valid translation path</returns>
     private bool IsValidTranslationPath(string path)
     {
         Regex regex = new Regex(JSON_TRANSLATION_REGEX);
         return regex.IsMatch(path);
     }
 
-    private string? GetCorrectFile(Assembly assembly, CultureInfo culture)
+    /// <summary>
+    /// Get the resource path by culture
+    /// </summary>
+    /// <param name="assembly">The assembly to search through</param>
+    /// <param name="culture">The culture to get the resource file for</param>
+    /// <returns>A string with the filepath or null if nothing was found</returns>
+    private string? GetTranslationResourceByCulture(Assembly assembly, CultureInfo culture)
     {
-
         return GetTranslationManifests(assembly).FirstOrDefault(path => path.EndsWith(culture.Name + ".json"));
     }
 
+    /// <summary>
+    /// Extract the culture information from the resource path
+    /// </summary>
+    /// <param name="path">The resource path to get the culture information from</param>
+    /// <returns>The culture information as string</returns>
     private string GetLanguageFromPath(string path)
     {
         string returnLanguage = string.Empty;
@@ -98,17 +120,35 @@ public class PluginTranslationService : IPluginTranslationService
         return translation;
     }
 
+    /// <summary>
+    /// Get all the translations from the given file
+    /// </summary>
+    /// <param name="assembly">The assembly to get the translations from</param>
+    /// <param name="cultureFile">The culture info for the resource file to get</param>
+    /// <returns>A list with all possible translations</returns>
     private List<TranslationModel> GetTranslationsFromFile(Assembly assembly, string cultureFile)
     {
         return JsonSerializer.Deserialize<List<TranslationModel>>(LoadResourceData(assembly, cultureFile));
     }
 
+    /// <summary>
+    /// Get the file to load the data from based on the given culture
+    /// </summary>
+    /// <param name="fallbackCulture">The fallback culture to use if no translation for the current culture can be found</param>
+    /// <param name="assembly">The assembly to search the translation file in</param>
+    /// <returns></returns>
     private string GetCultureTranslationFile(CultureInfo fallbackCulture, Assembly assembly)
     {
-        string cultureFile = GetCorrectFile(assembly, GetCurrentCulture());
-        return cultureFile ?? GetCorrectFile(assembly, fallbackCulture);
+        string cultureFile = GetTranslationResourceByCulture(assembly, GetCurrentCulture());
+        return cultureFile ?? GetTranslationResourceByCulture(assembly, fallbackCulture);
     }
 
+    /// <summary>
+    /// Load the data from the resource and return it as a sring
+    /// </summary>
+    /// <param name="assembly">The assembly to load the data from</param>
+    /// <param name="path">The resource file to load</param>
+    /// <returns>The data in the resource file or a empty string if nothing could be loaded</returns>
     private string LoadResourceData(Assembly assembly, string path)
     {
         string returnData = string.Empty;
@@ -127,10 +167,20 @@ public class PluginTranslationService : IPluginTranslationService
         return returnData;
     }
 
+    /// <summary>
+    /// Get the current culture of the main application
+    /// </summary>
+    /// <returns>The current culture information of the main application</returns>
     private CultureInfo GetCurrentCulture()
     {
         //@TODO use correct culture as soon as we save it!
         CultureInfo culture = CultureInfo.CurrentCulture;
         return culture;
+    }
+
+    /// <inheritdoc/>
+    public CultureInfo GetFallbackLanguage()
+    {
+        return null;
     }
 }
