@@ -35,12 +35,11 @@ public class App : Application
     private void RegisterServices(IMutableDependencyResolver dependencyContainer, IReadonlyDependencyResolver resolver)
     {
         dependencyContainer.Register<IStyleService>(() => new DefaultStyleService());
+        dependencyContainer.Register<IPluginTranslationService>(() => new PluginTranslationService());
         dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
         dependencyContainer.RegisterConstant<IUrlOpenerService>(new UrlOpenerService());
         dependencyContainer.RegisterConstant<ILanguageService>(new ResourceCultureService());
         dependencyContainer.RegisterConstant<IFunctionService>(new MockupFunctionService());
-        dependencyContainer.RegisterConstant<IPluginTranslationFactoryService>(new PluginTranslationFactoryService());
-        dependencyContainer.Register(() => resolver.GetService<IPluginTranslationFactoryService>()?.CreatePluginTranslationService());
         dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
         dependencyContainer.RegisterConstant<IModalService>(new WindowModalService());
         dependencyContainer.RegisterConstant<IPathService>(new PathService());
