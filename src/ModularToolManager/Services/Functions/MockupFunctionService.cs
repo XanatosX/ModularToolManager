@@ -1,12 +1,6 @@
 ﻿using ModularToolManager.Models;
-using ModularToolManager.Services.Plugin;
-using ModularToolManagerPlugin.Plugin;
-using ModularToolManagerPlugin.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.Functions
 {

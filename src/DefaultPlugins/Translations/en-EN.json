@@ -14,5 +14,9 @@
   {
     "key": "powershell",
     "value": "PowerShell-Script"
+  },
+  {
+    "key": "error_cant_find_script_file",
+    "value": "Could not find script '{0}' to execute"
   }
 ]

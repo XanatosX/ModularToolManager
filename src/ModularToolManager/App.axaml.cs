@@ -5,7 +5,6 @@ using ModularToolManager.Services.Functions;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
 using ModularToolManager.Services.Plugin;
-using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;

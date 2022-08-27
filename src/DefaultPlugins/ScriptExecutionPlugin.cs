@@ -2,6 +2,7 @@
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace DefaultPlugins;
@@ -13,25 +14,37 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
 {
     private const string FALLBACK_TRANSLATION = "MISSING TRANSLATION";
 
+    private const string FALLBACK_SCRIPT_NOT_FOUND = "Could not find script '{0}' to execute";
+
     private readonly CultureInfo fallbackCulture;
 
     private readonly IPluginTranslationService? pluginTranslationService;
+    private readonly IPluginLoggerService? logger;
 
     [Setting("hide", ModularToolManagerPlugin.Enums.SettingType.Boolean, false)]
     public bool HideCmd { get; init; }
 
-    public ScriptExecutionPlugin(IPluginTranslationService translationService)
+    public ScriptExecutionPlugin(IPluginTranslationService? translationService, IPluginLoggerService? logger)
     {
         fallbackCulture = CultureInfo.GetCultureInfo("en-EN");
         pluginTranslationService = translationService;
-    }
-
-    public override void Dispose()
-    {
+        this.logger = logger;
     }
 
     public override bool Execute(string parameters, string path)
     {
+        if (!File.Exists(path))
+        {
+            string baseMessage = pluginTranslationService?.GetTranslationByKey("error_cant_find_script_file", fallbackCulture) ?? FALLBACK_SCRIPT_NOT_FOUND;
+            logger?.LogError(baseMessage, path);
+            return false;
+        }
+
+        ProcessStartInfo startInfo = new ProcessStartInfo()
+        {
+            FileName = path,
+        };
+        Process.Start(startInfo);
         return true;
     }
 
@@ -64,5 +77,8 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
             new FileExtension(pluginTranslationService?.GetTranslationByKey("cmd", fallbackCulture) ?? FALLBACK_TRANSLATION, ".cmd"),
             new FileExtension(pluginTranslationService?.GetTranslationByKey("powershell", fallbackCulture) ?? FALLBACK_TRANSLATION, ".ps")
         };
+    }
+    public override void Dispose()
+    {
     }
 }
