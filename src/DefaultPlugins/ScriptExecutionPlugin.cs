@@ -6,6 +6,9 @@ using System.Globalization;
 
 namespace DefaultPlugins;
 
+/// <summary>
+/// Plugin to run scripts
+/// </summary>
 public class ScriptExecutionPlugin : AbstractFunctionPlugin
 {
     private const string FALLBACK_TRANSLATION = "MISSING TRANSLATION";
@@ -39,12 +42,12 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
 
     public override Version GetVersion()
     {
-        return Version.Parse("0.0.0.0");
+        return Version.Parse("0.1.0.0");
     }
 
     public override bool IsOperationSystemValid()
     {
-        return true;
+        return OperatingSystem.IsWindows();
     }
 
     public override IEnumerable<FileExtension> GetAllowedFileEndings()

@@ -22,21 +22,33 @@ public class PluginTranslationService : IPluginTranslationService
     private const string JSON_TRANSLATION_REGEX = @"[a-zA-Z\.]*\.Translations\.([a-z]{2}-[A-Z]{2}.json)";
 
     /// <inheritdoc/>
+    public List<TranslationModel> GetAllTranslations(Assembly assemblyToUse)
+    {
+        return GetTranslationsFromFile(assemblyToUse, GetTranslationResourceByCulture(assemblyToUse, GetCurrentCulture()));
+    }
+
+    /// <inheritdoc/>
     public List<TranslationModel> GetAllTranslations()
     {
-        Assembly assembly = Assembly.GetCallingAssembly();
-        return GetTranslationsFromFile(assembly, GetTranslationResourceByCulture(assembly, GetCurrentCulture()));
+        return GetAllTranslations(Assembly.GetCallingAssembly());
+
     }
 
     /// <inheritdoc/>
     public List<string> GetKeys()
     {
-        Assembly assembly = Assembly.GetCallingAssembly();
+        return GetKeys(Assembly.GetCallingAssembly());
+
+    }
+
+    /// <inheritdoc/>
+    public List<string> GetKeys(Assembly assembly)
+    {
         return GetTranslationsFromFile(
-                assembly,
-                GetTranslationResourceByCulture(assembly, GetCurrentCulture())
-            ).Select(translation => translation.Key)
-             .ToList();
+        assembly,
+        GetTranslationResourceByCulture(assembly, GetCurrentCulture())
+    ).Select(translation => translation.Key)
+     .ToList();
     }
 
     /// <inheritdoc/>
@@ -104,8 +116,14 @@ public class PluginTranslationService : IPluginTranslationService
     /// <inheritdoc/>
     public string? GetTranslationByKey(string key, CultureInfo fallbackCulture)
     {
+        return GetTranslationByKey(Assembly.GetCallingAssembly(), key, fallbackCulture);
+
+    }
+
+    /// <inheritdoc/>
+    public string? GetTranslationByKey(Assembly assembly, string key, CultureInfo fallbackCulture)
+    {
         string? translation = null;
-        Assembly assembly = Assembly.GetCallingAssembly();
         string cultureFile = GetCultureTranslationFile(fallbackCulture, assembly);
         try
         {
@@ -116,7 +134,6 @@ public class PluginTranslationService : IPluginTranslationService
         catch (Exception)
         {
         }
-
         return translation;
     }
 
