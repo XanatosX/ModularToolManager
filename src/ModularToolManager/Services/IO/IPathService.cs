@@ -6,18 +6,18 @@ namespace ModularToolManager.Services.IO
     {
         string GetApplicationPathString();
 
-        DirectoryInfo GetApplicationPath();
+        DirectoryInfo? GetApplicationPath();
 
         string GetSettingsFolderPathString();
 
-        DirectoryInfo GetSettingsFolderPath();
+        DirectoryInfo? GetSettingsFolderPath();
 
         string GetSettingsFilePathString();
 
-        FileInfo GetSettingsFilePath();
+        FileInfo? GetSettingsFilePath();
 
         string GetPluginPathString();
 
-        FileInfo GetPluginPath();
+        FileInfo? GetPluginPath();
     }
 }

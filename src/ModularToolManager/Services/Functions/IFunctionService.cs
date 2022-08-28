@@ -11,7 +11,7 @@ namespace ModularToolManager.Services.Functions
         public FunctionModel GetFunction(string identifier);
 
 
-        void AddFunction(FunctionModel function);
+        bool AddFunction(FunctionModel function);
 
 
         void DeleteFunction(FunctionModel function) => DeleteFunction(function.UniqueIdentifier);

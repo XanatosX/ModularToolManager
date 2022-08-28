@@ -9,8 +9,11 @@ using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
+using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
 using Splat;
+using System;
+using System.Linq;
 
 namespace ModularToolManager;
 
@@ -33,15 +36,18 @@ public class App : Application
     /// <param name="resolver">The resolver to resolve dependencies</param>
     private void RegisterServices(IMutableDependencyResolver dependencyContainer, IReadonlyDependencyResolver resolver)
     {
-        dependencyContainer.Register<IStyleService>(() => new DefaultStyleService());
+        dependencyContainer.RegisterConstant<IPathService>(new PathService());
+        dependencyContainer.RegisterConstant<IStyleService>(new DefaultStyleService());
         dependencyContainer.Register<IPluginTranslationService>(() => new PluginTranslationService());
         dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
         dependencyContainer.RegisterConstant<IUrlOpenerService>(new UrlOpenerService());
         dependencyContainer.RegisterConstant<ILanguageService>(new ResourceCultureService());
-        dependencyContainer.RegisterConstant<IFunctionService>(new MockupFunctionService());
+        dependencyContainer.RegisterConstant<ISerializeService>(new JsonSerializationService());
+        //dependencyContainer.RegisterConstant<IFunctionService>(new MockupFunctionService());
+        dependencyContainer.RegisterConstant<IFunctionService>(new SerializedFunctionService(resolver.GetService<ISerializeService>(), resolver.GetService<IPathService>()));
         dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
         dependencyContainer.RegisterConstant<IModalService>(new WindowModalService());
-        dependencyContainer.RegisterConstant<IPathService>(new PathService());
+
         dependencyContainer.RegisterConstant<IPluginService>(new PluginService(
             resolver.GetService<IFunctionSettingsService>(),
             resolver.GetService<IPathService>()

@@ -26,9 +26,10 @@ namespace ModularToolManager.Services.Functions
             return functions.Find(function => function.UniqueIdentifier == identifier);
         }
 
-        public void AddFunction(FunctionModel function)
+        public bool AddFunction(FunctionModel function)
         {
             functions.Add(function);
+            return true;
         }
 
         public void DeleteFunction(string identifier)

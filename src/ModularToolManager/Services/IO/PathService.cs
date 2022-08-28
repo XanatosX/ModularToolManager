@@ -1,29 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Avalonia;
+using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.IO
 {
     internal class PathService : IPathService
     {
         /// <inheritdoc/>
-        public DirectoryInfo GetApplicationPath()
+        public DirectoryInfo? GetApplicationPath()
         {
-            throw new NotImplementedException();
+            FileInfo appLocation = new FileInfo(Assembly.GetExecutingAssembly().Location);
+            return appLocation.Directory;
         }
 
         /// <inheritdoc/>
         public string GetApplicationPathString()
         {
-            throw new NotImplementedException();
+            return GetApplicationPath()?.FullName ?? string.Empty;
         }
 
         /// <inheritdoc/>
-        public FileInfo GetPluginPath()
+        public FileInfo? GetPluginPath()
         {
             FileInfo executable = new FileInfo(Assembly.GetExecutingAssembly().Location);
             string pluginPath = Path.Combine(executable.DirectoryName ?? Path.GetTempPath(), "plugins");
@@ -33,31 +31,32 @@ namespace ModularToolManager.Services.IO
         /// <inheritdoc/>
         public string GetPluginPathString()
         {
-            return GetPluginPath().FullName;
+            return GetPluginPath()?.FullName ?? string.Empty;
         }
 
         /// <inheritdoc/>
-        public FileInfo GetSettingsFilePath()
+        public FileInfo? GetSettingsFilePath()
         {
-            throw new NotImplementedException();
+            return new FileInfo(Path.Combine(GetSettingsFolderPathString(), Properties.Properties.SettingsFile));
         }
 
         /// <inheritdoc/>
         public string GetSettingsFilePathString()
         {
-            throw new NotImplementedException();
+            return GetSettingsFilePath()?.FullName ?? String.Empty;
         }
 
         /// <inheritdoc/>
-        public DirectoryInfo GetSettingsFolderPath()
+        public DirectoryInfo? GetSettingsFolderPath()
         {
-            throw new NotImplementedException();
+            DirectoryInfo folderPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Properties.Properties.ApplicationName.Replace(" ", string.Empty)));
+            return folderPath;
         }
 
         /// <inheritdoc/>
         public string GetSettingsFolderPathString()
         {
-            throw new NotImplementedException();
+            return GetSettingsFolderPath()?.FullName ?? string.Empty;
         }
     }
 }

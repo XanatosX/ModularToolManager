@@ -28,6 +28,7 @@ namespace ModularToolManager.Models
 
         public FunctionModel(string uniqueIdentifier, string displayName, IFunctionPlugin plugin, string path, string parameters, int sortOrder)
         {
+            UniqueIdentifier = uniqueIdentifier;
             DisplayName = displayName;
             Plugin = plugin;
             Path = path;
