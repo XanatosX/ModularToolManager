@@ -1,10 +1,13 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using ModularToolManager.Converters.Serialization;
+using ModularToolManager.Models;
 using ModularToolManager.Services.Functions;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
 using ModularToolManager.Services.Plugin;
+using ModularToolManager.Services.Serialization;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
@@ -14,6 +17,8 @@ using ModularToolManagerPlugin.Services;
 using Splat;
 using System;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ModularToolManager;
 
@@ -42,9 +47,6 @@ public class App : Application
         dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
         dependencyContainer.RegisterConstant<IUrlOpenerService>(new UrlOpenerService());
         dependencyContainer.RegisterConstant<ILanguageService>(new ResourceCultureService());
-        dependencyContainer.RegisterConstant<ISerializeService>(new JsonSerializationService());
-        //dependencyContainer.RegisterConstant<IFunctionService>(new MockupFunctionService());
-        dependencyContainer.RegisterConstant<IFunctionService>(new SerializedFunctionService(resolver.GetService<ISerializeService>(), resolver.GetService<IPathService>()));
         dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
         dependencyContainer.RegisterConstant<IModalService>(new WindowModalService());
 
@@ -54,6 +56,9 @@ public class App : Application
 
         ));
 
+        dependencyContainer.Register<ISerializationOptionFactory<JsonSerializerOptions>>(() => new JsonSerializationOptionFactory(resolver));
+        dependencyContainer.RegisterConstant<ISerializeService>(new JsonSerializationService(resolver.GetService<ISerializationOptionFactory<JsonSerializerOptions>>()));
+        dependencyContainer.RegisterConstant<IFunctionService>(new SerializedFunctionService(resolver.GetService<ISerializeService>(), resolver.GetService<IPathService>()));
     }
 
     /// <summary>
