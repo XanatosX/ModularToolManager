@@ -1,10 +1,12 @@
-﻿using Avalonia;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 
 namespace ModularToolManager.Services.IO
 {
+    /// <summary>
+    /// Path service to provice basic path information
+    /// </summary>
     internal class PathService : IPathService
     {
         /// <inheritdoc/>
@@ -12,12 +14,6 @@ namespace ModularToolManager.Services.IO
         {
             FileInfo appLocation = new FileInfo(Assembly.GetExecutingAssembly().Location);
             return appLocation.Directory;
-        }
-
-        /// <inheritdoc/>
-        public string GetApplicationPathString()
-        {
-            return GetApplicationPath()?.FullName ?? string.Empty;
         }
 
         /// <inheritdoc/>
@@ -29,21 +25,9 @@ namespace ModularToolManager.Services.IO
         }
 
         /// <inheritdoc/>
-        public string GetPluginPathString()
-        {
-            return GetPluginPath()?.FullName ?? string.Empty;
-        }
-
-        /// <inheritdoc/>
         public FileInfo? GetSettingsFilePath()
         {
-            return new FileInfo(Path.Combine(GetSettingsFolderPathString(), Properties.Properties.SettingsFile));
-        }
-
-        /// <inheritdoc/>
-        public string GetSettingsFilePathString()
-        {
-            return GetSettingsFilePath()?.FullName ?? String.Empty;
+            return new FileInfo(Path.Combine(GetSettingsFolderPath()?.FullName ?? string.Empty, Properties.Properties.SettingsFile));
         }
 
         /// <inheritdoc/>
@@ -51,12 +35,6 @@ namespace ModularToolManager.Services.IO
         {
             DirectoryInfo folderPath = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Properties.Properties.ApplicationName.Replace(" ", string.Empty)));
             return folderPath;
-        }
-
-        /// <inheritdoc/>
-        public string GetSettingsFolderPathString()
-        {
-            return GetSettingsFolderPath()?.FullName ?? string.Empty;
         }
     }
 }

@@ -1,24 +1,34 @@
 ﻿using ModularToolManager.Services.IO;
-using ModularToolManager.Services.Language;
 using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
 using Splat;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.Plugin
 {
+    /// <summary>
+    /// Plugin service for loading plugins from dlls
+    /// </summary>
     internal class PluginService : IPluginService
     {
+        /// <summary>
+        /// Service to get or load function settings
+        /// </summary>
         private readonly IFunctionSettingsService functionSettingsService;
+
+        /// <summary>
+        /// Service for getting application paths
+        /// </summary>
         private readonly IPathService pathService;
+
+        /// <summary>
+        /// A list with all the plugins currently available
+        /// </summary>
         private List<IFunctionPlugin> plugins;
 
         /// <summary>
@@ -80,6 +90,11 @@ namespace ModularToolManager.Services.Plugin
                                       .ToList();
         }
 
+        /// <summary>
+        /// Is the constructor of the plugin valid for injection
+        /// </summary>
+        /// <param name="constructor">The constructor to check</param>
+        /// <returns>True if is a valid constructor</returns>
         private bool IsConstructorValid(ConstructorInfo constructor)
         {
             return !constructor.GetParameters().Select(param => param.ParameterType)
@@ -114,7 +129,10 @@ namespace ModularToolManager.Services.Plugin
         }
 
 
-
+        /// <summary>
+        /// Get all the plugin paths on the plugin directory
+        /// </summary>
+        /// <returns>A list with all the plugins</returns>
         private List<string> GetPlugins()
         {
             return Directory.GetFiles(pathService.GetPluginPathString())

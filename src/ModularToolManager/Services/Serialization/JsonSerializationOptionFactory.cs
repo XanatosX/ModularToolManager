@@ -1,18 +1,24 @@
 ﻿using ModularToolManager.Converters.Serialization;
 using ModularToolManager.Services.Plugin;
 using Splat;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.Serialization;
+
+/// <summary>
+/// Class to get json serailazation options
+/// </summary>
 internal class JsonSerializationOptionFactory : ISerializationOptionFactory<JsonSerializerOptions>
 {
+    /// <summary>
+    /// Instance of the dependency resolver
+    /// </summary>
     private readonly IReadonlyDependencyResolver? dependencyResolver;
 
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="dependencyResolver">The resolver to use to resolve dependencies</param>
     public JsonSerializationOptionFactory(IReadonlyDependencyResolver? dependencyResolver)
     {
         this.dependencyResolver = dependencyResolver;

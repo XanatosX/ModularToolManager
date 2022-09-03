@@ -45,10 +45,10 @@ public class PluginTranslationService : IPluginTranslationService
     public List<string> GetKeys(Assembly assembly)
     {
         return GetTranslationsFromFile(
-        assembly,
-        GetTranslationResourceByCulture(assembly, GetCurrentCulture())
-    ).Select(translation => translation.Key)
-     .ToList();
+            assembly,
+            GetTranslationResourceByCulture(assembly, GetCurrentCulture()) ?? string.Empty
+        ).Select(translation => translation.Key)
+         .ToList();
     }
 
     /// <inheritdoc/>
@@ -156,8 +156,9 @@ public class PluginTranslationService : IPluginTranslationService
     /// <returns></returns>
     private string GetCultureTranslationFile(CultureInfo fallbackCulture, Assembly assembly)
     {
-        string cultureFile = GetTranslationResourceByCulture(assembly, GetCurrentCulture());
-        return cultureFile ?? GetTranslationResourceByCulture(assembly, fallbackCulture);
+        string? cultureFile = GetTranslationResourceByCulture(assembly, GetCurrentCulture());
+        cultureFile = cultureFile ?? GetTranslationResourceByCulture(assembly, fallbackCulture);
+        return cultureFile ?? string.Empty;
     }
 
     /// <summary>
@@ -174,11 +175,14 @@ public class PluginTranslationService : IPluginTranslationService
             return returnData;
         }
 
-        using (Stream stream = assembly.GetManifestResourceStream(path))
+        using (Stream? stream = assembly.GetManifestResourceStream(path))
         {
-            using (StreamReader reader = new StreamReader(stream))
+            if (stream is not null)
             {
-                returnData = reader.ReadToEnd();
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    returnData = reader.ReadToEnd();
+                }
             }
         }
         return returnData;
@@ -198,6 +202,7 @@ public class PluginTranslationService : IPluginTranslationService
     /// <inheritdoc/>
     public CultureInfo GetFallbackLanguage()
     {
+        //@Todo add fallback language logic here
         return null;
     }
 }
