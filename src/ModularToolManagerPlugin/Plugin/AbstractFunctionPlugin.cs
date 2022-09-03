@@ -1,6 +1,4 @@
 ﻿using ModularToolManagerPlugin.Models;
-using ModularToolManagerPlugin.Services;
-using System;
 using System.Globalization;
 
 namespace ModularToolManagerPlugin.Plugin;
