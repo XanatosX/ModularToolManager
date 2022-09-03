@@ -22,13 +22,13 @@ namespace ModularToolManagerPlugin.Services
         }
 
         /// <inheritdoc/>
-        public T GetSettingValue<T>(SettingAttribute settingAttribute, IFunctionPlugin plugin)
+        public T? GetSettingValue<T>(SettingAttribute settingAttribute, IFunctionPlugin plugin)
         {
-            PropertyInfo setting = plugin.GetType().GetProperties()
+            PropertyInfo? setting = plugin.GetType().GetProperties()
                                                   .FirstOrDefault(property => IsSearchedSettingValue(property, settingAttribute));
             if (setting?.PropertyType == typeof(T) && setting.CanRead)
             {
-                return (T)setting?.GetValue(plugin);
+                return (T?)setting?.GetValue(plugin);
             }
             return default(T);
         }
@@ -36,7 +36,7 @@ namespace ModularToolManagerPlugin.Services
         /// <inheritdoc/>
         public bool SetSettingValue<T>(SettingAttribute attribute, IFunctionPlugin plugin, T value)
         {
-            PropertyInfo setting = plugin.GetType().GetProperties()
+            PropertyInfo? setting = plugin.GetType().GetProperties()
                                                    .FirstOrDefault(property => IsSearchedSettingValue(property, attribute));
             if (setting?.PropertyType == typeof(T) && setting.CanWrite)
             {
