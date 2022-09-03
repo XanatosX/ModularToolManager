@@ -18,6 +18,13 @@ namespace ModularToolManagerPlugin.Services
         void Log(LogSeverity logSeverity, string format, params string[] parameter);
 
         /// <summary>
+        /// Log data to the application logger on trace level
+        /// </summary>
+        /// <param name="format">The format of the message</param>
+        /// <param name="parameter">The parameters to use in the format</param>
+        void LogTrace(string format, params string[] parameter);
+
+        /// <summary>
         /// Log data to the application logger on debug level
         /// </summary>
         /// <param name="format">The format of the message</param>
