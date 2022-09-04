@@ -1,6 +1,5 @@
 ﻿using ModularToolManager.Services.Serialization;
-using System;
-using System.IO;
+using ModularToolManagerModel.Services.Logging;
 using System.Text;
 using System.Text.Json;
 
@@ -17,13 +16,20 @@ public class JsonSerializationService : ISerializeService
     private readonly JsonSerializerOptions jsonSerializerOptions;
 
     /// <summary>
+    /// The logging service to use
+    /// </summary>
+    private readonly ILoggingService? loggingService;
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="serializationOptionFactory">The factory to use for creating the serialization options</param>
+    /// /// <param name="loggingService">The logging service to use</param>
     /// <exception cref="NullReferenceException">A empty factory was recievend, the class cannot be used</exception>
-    public JsonSerializationService(ISerializationOptionFactory<JsonSerializerOptions>? serializationOptionFactory)
+    public JsonSerializationService(ISerializationOptionFactory<JsonSerializerOptions>? serializationOptionFactory, ILoggingService? loggingService)
     {
         jsonSerializerOptions = serializationOptionFactory?.CreateOptions() ?? throw new NullReferenceException();
+        this.loggingService = loggingService;
     }
 
     /// <inheritdoc/>
@@ -35,9 +41,9 @@ public class JsonSerializationService : ISerializeService
         {
             returnData = JsonSerializer.Deserialize<T>(data, jsonSerializerOptions);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            //Serialize did fail return empty object
+            loggingService?.LogError($"{GetType().FullName}: Error while deserialaizing {data}: {e.Message}");
         }
 
         return returnData;
@@ -53,9 +59,9 @@ public class JsonSerializationService : ISerializeService
             {
                 returnData = GetDeserialized<T>(reader.ReadToEnd());
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                //Serialize did fail return empty object
+                loggingService?.LogError($"{GetType().FullName}: Error while deserialaizing {data}: {e.Message}");
             }
         }
         return returnData;
@@ -81,9 +87,9 @@ public class JsonSerializationService : ISerializeService
         {
             JsonSerializer.Serialize(writer.BaseStream, data, jsonSerializerOptions);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            //Serialize did fail return empty stream
+            loggingService?.LogError($"{GetType().FullName}: Error while serializing data: {e.Message}");
         }
         memoryStream.Position = 0;
         return memoryStream;

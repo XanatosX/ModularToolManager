@@ -12,6 +12,7 @@ using ModularToolManager.Views;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Language;
+using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerModel.Services.Serialization;
 using ModularToolManagerPlugin.Services;
@@ -40,6 +41,8 @@ public class App : Application
     private void RegisterServices(IMutableDependencyResolver dependencyContainer, IReadonlyDependencyResolver resolver)
     {
         dependencyContainer.RegisterConstant<IPathService>(new PathService());
+        dependencyContainer.RegisterLazySingleton<ILoggingService>(() => new NLogLoggingWrapperService(resolver.GetService<IPathService>()));
+        dependencyContainer.RegisterLazySingleton<IPluginLoggerService>(() => new LoggingPluginAdapter(resolver.GetService<ILoggingService>()));
         dependencyContainer.RegisterConstant<IStyleService>(new DefaultStyleService());
         dependencyContainer.Register<IPluginTranslationService>(() => new PluginTranslationService());
         dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
@@ -47,16 +50,17 @@ public class App : Application
         dependencyContainer.RegisterConstant<ILanguageService>(new ResourceCultureService());
         dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
         dependencyContainer.RegisterConstant<IModalService>(new WindowModalService());
-
         dependencyContainer.RegisterConstant<IPluginService>(new PluginService(
             resolver.GetService<IFunctionSettingsService>(),
-            resolver.GetService<IPathService>()
-
+            resolver.GetService<IPathService>(),
+            resolver.GetService<ILoggingService>()
         ));
-
         dependencyContainer.Register<ISerializationOptionFactory<JsonSerializerOptions>>(() => new JsonSerializationOptionFactory(resolver));
-        dependencyContainer.RegisterConstant<ISerializeService>(new JsonSerializationService(resolver.GetService<ISerializationOptionFactory<JsonSerializerOptions>>()));
-        dependencyContainer.RegisterConstant<IFunctionService>(new SerializedFunctionService(resolver.GetService<ISerializeService>(), resolver.GetService<IPathService>()));
+        dependencyContainer.RegisterConstant<ISerializeService>(new JsonSerializationService(resolver.GetService<ISerializationOptionFactory<JsonSerializerOptions>>(), resolver.GetService<ILoggingService>()));
+        dependencyContainer.RegisterConstant<IFunctionService>(new SerializedFunctionService(
+            resolver.GetService<ISerializeService>(),
+            resolver.GetService<IPathService>(),
+            resolver.GetService<ILoggingService>()));
     }
 
     /// <summary>

@@ -1,9 +1,7 @@
 ﻿using ModularToolManager.Models;
 using ModularToolManager.Services.Serialization;
 using ModularToolManagerModel.Services.IO;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using ModularToolManagerModel.Services.Logging;
 
 namespace ModularToolManagerModel.Services.Functions;
 
@@ -23,25 +21,34 @@ public class SerializedFunctionService : IFunctionService
     private readonly IPathService? pathService;
 
     /// <summary>
+    /// The logging service to use
+    /// </summary>
+    private readonly ILoggingService? loggingService;
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="serializer">The serailzier class to use</param>
     /// <param name="pathService">The path service to use</param>
-    public SerializedFunctionService(ISerializeService? serializer, IPathService? pathService)
+    public SerializedFunctionService(ISerializeService? serializer, IPathService? pathService, ILoggingService? loggingService)
     {
         this.serializer = serializer;
         this.pathService = pathService;
+        this.loggingService = loggingService;
     }
 
     /// <inheritdoc/>
     public bool AddFunction(FunctionModel function)
     {
+        loggingService?.LogTrace($"Add new function with name {function.DisplayName} and unique id {function.UniqueIdentifier}");
         var currentData = GetAvailableFunctions();
         if (currentData.Any(model => model.UniqueIdentifier == function.UniqueIdentifier) || !IsFunctionValid(function))
         {
+            loggingService?.LogTrace($"Adding failed for function {function.DisplayName} with unique id {function.UniqueIdentifier}");
             return false;
         }
         currentData.Add(function);
+        loggingService?.LogTrace($"Adding succeeded for function {function.DisplayName} with unique id {function.UniqueIdentifier}");
         return SaveFunctionsToDisc(currentData);
     }
 
@@ -52,6 +59,7 @@ public class SerializedFunctionService : IFunctionService
     /// <returns>True if the provided function is valid</returns>
     private bool IsFunctionValid(FunctionModel modelToCheck)
     {
+        loggingService?.LogTrace($"Check if given function is valid name: {modelToCheck.DisplayName} unique id: {modelToCheck.UniqueIdentifier}");
         return !string.IsNullOrEmpty(modelToCheck.UniqueIdentifier)
                 && modelToCheck.Plugin != null
                 && !string.IsNullOrEmpty(modelToCheck.DisplayName);
@@ -96,7 +104,9 @@ public class SerializedFunctionService : IFunctionService
         DirectoryInfo? settingsFolder = pathService?.GetSettingsFolderPath();
         if (serializer == null || settingsFolder == null)
         {
-            //@Note add logging
+            loggingService?.LogError("Cannot save function models to disc because there is no serializator available or the settings folder is empty");
+            loggingService?.LogError($"Serializer: {serializer?.GetType().FullName ?? string.Empty}");
+            loggingService?.LogError($"Settings folder: {settingsFolder?.FullName ?? string.Empty}");
             return false;
         }
         if (!settingsFolder.Exists)
