@@ -2,6 +2,10 @@
 using ModularToolManagerModel.Data.Enum;
 
 namespace ModularToolManagerModel.Services.Logging;
+
+/// <summary>
+/// interface for the logging service of the application
+/// </summary>
 public interface ILoggingService
 {
     /// <summary>

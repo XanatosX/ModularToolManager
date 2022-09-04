@@ -2,10 +2,8 @@
 using ModularToolManagerModel.Services.IO;
 using NLog;
 using NLog.Config;
-using NLog.Fluent;
 using NLog.Targets;
 using System.Data;
-using System.Net.Http.Headers;
 
 namespace ModularToolManagerModel.Services.Logging;
 
