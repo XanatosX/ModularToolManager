@@ -92,9 +92,9 @@ public class NLogLoggingWrapperService : ILoggingService
             MaxArchiveFiles = 5
         });
 
-        returnConfiguration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Debug, "trace-log");
-        returnConfiguration.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Warn, "default-file-log");
-        returnConfiguration.AddRule(NLog.LogLevel.Error, NLog.LogLevel.Fatal, "error-log");
+        returnConfiguration.AddRule(LogLevel.Trace, LogLevel.Debug, "trace-log");
+        returnConfiguration.AddRule(LogLevel.Info, LogLevel.Warn, "default-file-log");
+        returnConfiguration.AddRule(LogLevel.Error, LogLevel.Fatal, "error-log");
         return returnConfiguration;
     }
 
@@ -110,17 +110,17 @@ public class NLogLoggingWrapperService : ILoggingService
     /// </summary>
     /// <param name="logLevel">The log level to map</param>
     /// <returns>The mapped log level</returns>
-    private NLog.LogLevel GetNLogLogLevel(Data.Enum.LogLevel logLevel)
+    private LogLevel GetNLogLogLevel(Data.Enum.LogLevel logLevel)
     {
         return logLevel switch
         {
-            Data.Enum.LogLevel.Trace => NLog.LogLevel.Trace,
-            Data.Enum.LogLevel.Debug => NLog.LogLevel.Debug,
-            Data.Enum.LogLevel.Information => NLog.LogLevel.Info,
-            Data.Enum.LogLevel.Warning => NLog.LogLevel.Warn,
-            Data.Enum.LogLevel.Error => NLog.LogLevel.Error,
-            Data.Enum.LogLevel.Fatal => NLog.LogLevel.Fatal,
-            _ => NLog.LogLevel.Off
+            Data.Enum.LogLevel.Trace => LogLevel.Trace,
+            Data.Enum.LogLevel.Debug => LogLevel.Debug,
+            Data.Enum.LogLevel.Information => LogLevel.Info,
+            Data.Enum.LogLevel.Warning => LogLevel.Warn,
+            Data.Enum.LogLevel.Error => LogLevel.Error,
+            Data.Enum.LogLevel.Fatal => LogLevel.Fatal,
+            _ => LogLevel.Off
         };
     }
 
@@ -129,30 +129,30 @@ public class NLogLoggingWrapperService : ILoggingService
     /// </summary>
     /// <param name="logLevel">The log level to map</param>
     /// <returns>The mapped log level</returns>
-    private Data.Enum.LogLevel GetModelLogLevel(NLog.LogLevel logLevel)
+    private Data.Enum.LogLevel GetModelLogLevel(LogLevel logLevel)
     {
         Data.Enum.LogLevel returnLevel = Data.Enum.LogLevel.Unknown;
-        if (logLevel == NLog.LogLevel.Trace)
+        if (logLevel == LogLevel.Trace)
         {
             returnLevel = Data.Enum.LogLevel.Trace;
         }
-        if (logLevel == NLog.LogLevel.Debug)
+        if (logLevel == LogLevel.Debug)
         {
             returnLevel = Data.Enum.LogLevel.Debug;
         }
-        if (logLevel == NLog.LogLevel.Info)
+        if (logLevel == LogLevel.Info)
         {
             returnLevel = Data.Enum.LogLevel.Information;
         }
-        if (logLevel == NLog.LogLevel.Warn)
+        if (logLevel == LogLevel.Warn)
         {
             returnLevel = Data.Enum.LogLevel.Warning;
         }
-        if (logLevel == NLog.LogLevel.Error)
+        if (logLevel == LogLevel.Error)
         {
             returnLevel = Data.Enum.LogLevel.Error;
         }
-        if (logLevel == NLog.LogLevel.Fatal)
+        if (logLevel == LogLevel.Fatal)
         {
             returnLevel = Data.Enum.LogLevel.Fatal;
         }
