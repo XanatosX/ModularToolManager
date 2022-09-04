@@ -133,12 +133,12 @@ internal class PluginService : IPluginService
                                                                  .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
                                                                  .ToArray();
 
-            loggingService.LogInfo($"Activation for plugin of type {pluginType.FullName} imminent");
+            loggingService?.LogInfo($"Activation for plugin of type {pluginType.FullName} imminent");
 
             var parameters = constructor.GetParameters().Select(parameter => parameter.ParameterType.FullName);
-            loggingService.LogInfo($"Required parameters for constructor: {string.Join(",", parameters)}");
+            loggingService?.LogInfo($"Required parameters for constructor: {string.Join(",", parameters)}");
             IEnumerable<string> objectInstances = dependencies?.Select(dependency => dependency?.GetType().FullName) ?? Enumerable.Empty<string>();
-            loggingService.LogInfo($"Instances used for filling up: {string.Join(", ", objectInstances)}");
+            loggingService?.LogInfo($"Instances used for filling up: {string.Join(", ", objectInstances)}");
 
             //@NOTE: load settings of a plugin, this will be reuqired later on!
             //List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(pluginType).ToList();
