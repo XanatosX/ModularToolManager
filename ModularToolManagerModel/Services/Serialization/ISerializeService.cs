@@ -7,7 +7,7 @@ namespace ModularToolManager.Services.Serialization;
 /// Interface to define a serialization service to parse or set a string serialization
 /// </summary>
 /// <typeparam name="T">The data type to de/serialize</typeparam>
-internal interface ISerializeService
+public interface ISerializeService
 {
     /// <summary>
     /// Get the given string as a deserialized object

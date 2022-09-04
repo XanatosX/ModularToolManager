@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ModularToolManager.Services.IO;
+namespace ModularToolManagerModel.Services.IO;
 
 /// <summary>
 /// Interface used to describe a service to open urls in the browser

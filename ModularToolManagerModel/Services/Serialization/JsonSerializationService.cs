@@ -1,14 +1,15 @@
-﻿using System;
+﻿using ModularToolManager.Services.Serialization;
+using System;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 
-namespace ModularToolManager.Services.Serialization;
+namespace ModularToolManagerModel.Services.Serialization;
 
 /// <summary>
 /// Service to serialize data as json
 /// </summary>
-internal class JsonSerializationService : ISerializeService
+public class JsonSerializationService : ISerializeService
 {
     /// <summary>
     /// The serialization options to use
@@ -64,7 +65,7 @@ internal class JsonSerializationService : ISerializeService
     public string GetSerialized<T>(T data) where T : class
     {
         string returnData = string.Empty;
-        using (var reader = new StreamReader(GetSerializedStream<T>(data)))
+        using (var reader = new StreamReader(GetSerializedStream(data)))
         {
             returnData = reader.ReadToEnd();
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ModularToolManagerModel.Services.Language;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -30,7 +31,6 @@ internal class ResourceCultureService : ILanguageService
     /// <inheritdoc/>
     public bool ValidLanguage(CultureInfo culture)
     {
-
         return availableCultures is null ? false : availableCultures.Contains(culture);
     }
 

@@ -1,16 +1,16 @@
 ﻿using ModularToolManager.Models;
-using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Serialization;
+using ModularToolManagerModel.Services.IO;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace ModularToolManager.Services.Functions;
+namespace ModularToolManagerModel.Services.Functions;
 
 /// <summary>
 /// Service to save the function to the disc
 /// </summary>
-internal class SerializedFunctionService : IFunctionService
+public class SerializedFunctionService : IFunctionService
 {
     /// <summary>
     /// Service used for seralization

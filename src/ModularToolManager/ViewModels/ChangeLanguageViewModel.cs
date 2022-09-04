@@ -1,7 +1,8 @@
 ﻿using Avalonia;
 using ModularToolManager.Models;
-using ModularToolManager.Services.Language;
 using ModularToolManager.ViewModels.Extenions;
+using ModularToolManagerModel.Data;
+using ModularToolManagerModel.Services.Language;
 using ReactiveUI;
 using Splat;
 using System;

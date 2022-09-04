@@ -1,9 +1,6 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using ModularToolManager.Converters.Serialization;
-using ModularToolManager.Models;
-using ModularToolManager.Services.Functions;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
 using ModularToolManager.Services.Plugin;
@@ -12,13 +9,14 @@ using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
-using ModularToolManagerPlugin.Plugin;
+using ModularToolManagerModel.Services.Functions;
+using ModularToolManagerModel.Services.IO;
+using ModularToolManagerModel.Services.Language;
+using ModularToolManagerModel.Services.Plugin;
+using ModularToolManagerModel.Services.Serialization;
 using ModularToolManagerPlugin.Services;
 using Splat;
-using System;
-using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace ModularToolManager;
 

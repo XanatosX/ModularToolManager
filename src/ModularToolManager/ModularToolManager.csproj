@@ -17,6 +17,7 @@
     <PackageReference Include="ReactiveUI.Fody" Version="18.3.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ModularToolManagerModel\ModularToolManagerModel.csproj" />
     <ProjectReference Include="..\DefaultPlugins\DefaultPlugins.csproj" />
     <ProjectReference Include="..\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj" />
   </ItemGroup>

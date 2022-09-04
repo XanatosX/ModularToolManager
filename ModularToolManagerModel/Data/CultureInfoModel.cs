@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace ModularToolManager.Models;
+namespace ModularToolManagerModel.Data;
 
 /// <summary>
 /// Model for culture information

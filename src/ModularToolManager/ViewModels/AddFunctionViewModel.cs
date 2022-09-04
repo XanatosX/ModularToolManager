@@ -1,7 +1,7 @@
 ﻿using ModularToolManager.Models;
-using ModularToolManager.Services.Functions;
-using ModularToolManager.Services.Plugin;
 using ModularToolManager.ViewModels.Extenions;
+using ModularToolManagerModel.Services.Functions;
+using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerPlugin.Plugin;
 using ReactiveUI;
 using System;

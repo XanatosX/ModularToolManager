@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ModularToolManager.Services.Functions
+namespace ModularToolManagerModel.Services.Functions
 {
     /// <summary>
     /// Service to load, save and manage functionhs
     /// </summary>
-    internal interface IFunctionService
+    public interface IFunctionService
     {
         /// <summary>
         /// Method to get all the function which are currently available

@@ -1,4 +1,4 @@
-﻿namespace ModularToolManager.Services.Settings;
+﻿namespace ModularToolManagerModel.Services.Settings;
 
 /// <summary>
 /// Interface for the application settings service
