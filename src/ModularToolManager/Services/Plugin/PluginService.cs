@@ -9,138 +9,137 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace ModularToolManager.Services.Plugin
+namespace ModularToolManager.Services.Plugin;
+
+/// <summary>
+/// Plugin service for loading plugins from dlls
+/// </summary>
+internal class PluginService : IPluginService
 {
     /// <summary>
-    /// Plugin service for loading plugins from dlls
+    /// Service to get or load function settings
     /// </summary>
-    internal class PluginService : IPluginService
+    private readonly IFunctionSettingsService functionSettingsService;
+
+    /// <summary>
+    /// Service for getting application paths
+    /// </summary>
+    private readonly IPathService pathService;
+
+    /// <summary>
+    /// A list with all the plugins currently available
+    /// </summary>
+    private List<IFunctionPlugin> plugins;
+
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="pluginTranslationFactoryService">The plugin translation service to use</param>
+    /// <param name="functionSettingsService">The function settings service to use</param>
+    public PluginService(
+        IFunctionSettingsService functionSettingsService,
+        IPathService pathService
+        )
     {
-        /// <summary>
-        /// Service to get or load function settings
-        /// </summary>
-        private readonly IFunctionSettingsService functionSettingsService;
+        this.functionSettingsService = functionSettingsService;
+        this.pathService = pathService;
+        plugins = new List<IFunctionPlugin>();
+    }
 
-        /// <summary>
-        /// Service for getting application paths
-        /// </summary>
-        private readonly IPathService pathService;
-
-        /// <summary>
-        /// A list with all the plugins currently available
-        /// </summary>
-        private List<IFunctionPlugin> plugins;
-
-        /// <summary>
-        /// Create a new instance of this class
-        /// </summary>
-        /// <param name="pluginTranslationFactoryService">The plugin translation service to use</param>
-        /// <param name="functionSettingsService">The function settings service to use</param>
-        public PluginService(
-            IFunctionSettingsService functionSettingsService,
-            IPathService pathService
-            )
+    /// <inheritdoc/>
+    public List<IFunctionPlugin> GetAvailablePlugins()
+    {
+        if (plugins.Count == 0)
         {
-            this.functionSettingsService = functionSettingsService;
-            this.pathService = pathService;
-            plugins = new List<IFunctionPlugin>();
+            plugins.AddRange(GetPlugins().Select(pluginPath => LoadAssemblySavely(pluginPath))
+                                         .Where(assembly => assembly is not null)
+                                         .SelectMany(assembly => GetValidPlugins(assembly!))
+                                         .Select(pluginType => ActivatePlugin(pluginType))
+                                         .Where(plugin => plugin is not null)
+                                         .Where(plugin => plugin.IsOperationSystemValid()));
         }
 
-        /// <inheritdoc/>
-        public List<IFunctionPlugin> GetAvailablePlugins()
-        {
-            if (plugins.Count == 0)
-            {
-                plugins.AddRange(GetPlugins().Select(pluginPath => LoadAssemblySavely(pluginPath))
-                                             .Where(assembly => assembly is not null)
-                                             .SelectMany(assembly => GetValidPlugins(assembly!))
-                                             .Select(pluginType => ActivatePlugin(pluginType))
-                                             .Where(plugin => plugin is not null)
-                                             .Where(plugin => plugin.IsOperationSystemValid()));
-            }
+        return plugins;
+    }
 
-            return plugins;
+    public Assembly? LoadAssemblySavely(string path)
+    {
+        try
+        {
+            Assembly possiblePlugin = Assembly.LoadFrom(path);
+            return possiblePlugin;
+        }
+        catch (Exception)
+        {
+            return null;
         }
 
-        public Assembly? LoadAssemblySavely(string path)
-        {
-            try
-            {
-                Assembly possiblePlugin = Assembly.LoadFrom(path);
-                return possiblePlugin;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+    }
 
+    /// <summary>
+    /// Get all the valid plugin types from a given assembly
+    /// </summary>
+    /// <param name="assembly">The assembly to get the plugin types from</param>
+    /// <returns>A list with all the types</returns>
+    public List<Type> GetValidPlugins(Assembly assembly)
+    {
+        return assembly.GetTypes().Where(type => type.IsVisible)
+                                  .Where(type => type.GetInterfaces()
+                                  .Contains(typeof(IFunctionPlugin)))
+                                  .Where(type => type.GetConstructors().Any(constructor => IsConstructorValid(constructor)))
+                                  .ToList();
+    }
+
+    /// <summary>
+    /// Is the constructor of the plugin valid for injection
+    /// </summary>
+    /// <param name="constructor">The constructor to check</param>
+    /// <returns>True if is a valid constructor</returns>
+    private bool IsConstructorValid(ConstructorInfo constructor)
+    {
+        return !constructor.GetParameters().Select(param => param.ParameterType)
+                                           .Any(type => type.GetCustomAttribute(typeof(PluginInjectableAttribute)) is null);
+    }
+
+    /// <summary>
+    /// Activate a plugin and call the startup method
+    /// </summary>
+    /// <param name="pluginType">The plugin type to activate and start</param>
+    /// <returns>The newly created ready to use plugin</returns>
+    public IFunctionPlugin? ActivatePlugin(Type pluginType)
+    {
+        IFunctionPlugin? plugin = null;
+        try
+        {
+            ConstructorInfo constructor = pluginType.GetConstructors().FirstOrDefault();
+            object?[] dependencies = constructor.GetParameters().Where(parameter => parameter.ParameterType.GetCustomAttribute<PluginInjectableAttribute>() is not null)
+                                                               .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
+                                                               .ToArray();
+
+            //Load settings of a plugin
+            //List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(pluginType).ToList();
+
+            plugin = (IFunctionPlugin)Activator.CreateInstance(pluginType, dependencies)!;
+        }
+        catch (Exception)
+        {
         }
 
-        /// <summary>
-        /// Get all the valid plugin types from a given assembly
-        /// </summary>
-        /// <param name="assembly">The assembly to get the plugin types from</param>
-        /// <returns>A list with all the types</returns>
-        public List<Type> GetValidPlugins(Assembly assembly)
-        {
-            return assembly.GetTypes().Where(type => type.IsVisible)
-                                      .Where(type => type.GetInterfaces()
-                                      .Contains(typeof(IFunctionPlugin)))
-                                      .Where(type => type.GetConstructors().Any(constructor => IsConstructorValid(constructor)))
-                                      .ToList();
-        }
-
-        /// <summary>
-        /// Is the constructor of the plugin valid for injection
-        /// </summary>
-        /// <param name="constructor">The constructor to check</param>
-        /// <returns>True if is a valid constructor</returns>
-        private bool IsConstructorValid(ConstructorInfo constructor)
-        {
-            return !constructor.GetParameters().Select(param => param.ParameterType)
-                                               .Any(type => type.GetCustomAttribute(typeof(PluginInjectableAttribute)) is null);
-        }
-
-        /// <summary>
-        /// Activate a plugin and call the startup method
-        /// </summary>
-        /// <param name="pluginType">The plugin type to activate and start</param>
-        /// <returns>The newly created ready to use plugin</returns>
-        public IFunctionPlugin? ActivatePlugin(Type pluginType)
-        {
-            IFunctionPlugin? plugin = null;
-            try
-            {
-                ConstructorInfo constructor = pluginType.GetConstructors().FirstOrDefault();
-                object?[] dependencies = constructor.GetParameters().Where(parameter => parameter.ParameterType.GetCustomAttribute<PluginInjectableAttribute>() is not null)
-                                                                   .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
-                                                                   .ToArray();
-
-                //Load settings of a plugin
-                //List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(pluginType).ToList();
-
-                plugin = (IFunctionPlugin)Activator.CreateInstance(pluginType, dependencies)!;
-            }
-            catch (Exception)
-            {
-            }
-
-            return plugin;
-        }
+        return plugin;
+    }
 
 
-        /// <summary>
-        /// Get all the plugin paths on the plugin directory
-        /// </summary>
-        /// <returns>A list with all the plugins</returns>
-        private List<string> GetPlugins()
-        {
-            return Directory.GetFiles(pathService.GetPluginPathString())
-                            .ToList()
-                            .Select(file => new FileInfo(file))
-                            .Where(file => file.Extension.ToLower() == ".dll")
-                            .Select(file => file.FullName)
-                            .ToList();
-        }
+    /// <summary>
+    /// Get all the plugin paths on the plugin directory
+    /// </summary>
+    /// <returns>A list with all the plugins</returns>
+    private List<string> GetPlugins()
+    {
+        return Directory.GetFiles(pathService.GetPluginPathString())
+                        .ToList()
+                        .Select(file => new FileInfo(file))
+                        .Where(file => file.Extension.ToLower() == ".dll")
+                        .Select(file => file.FullName)
+                        .ToList();
     }
 }
