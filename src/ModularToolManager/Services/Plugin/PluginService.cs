@@ -19,12 +19,12 @@ internal class PluginService : IPluginService
     /// <summary>
     /// Service to get or load function settings
     /// </summary>
-    private readonly IFunctionSettingsService functionSettingsService;
+    private readonly IFunctionSettingsService? functionSettingsService;
 
     /// <summary>
     /// Service for getting application paths
     /// </summary>
-    private readonly IPathService pathService;
+    private readonly IPathService? pathService;
 
     /// <summary>
     /// A list with all the plugins currently available
@@ -37,8 +37,8 @@ internal class PluginService : IPluginService
     /// <param name="pluginTranslationFactoryService">The plugin translation service to use</param>
     /// <param name="functionSettingsService">The function settings service to use</param>
     public PluginService(
-        IFunctionSettingsService functionSettingsService,
-        IPathService pathService
+        IFunctionSettingsService? functionSettingsService,
+        IPathService? pathService
         )
     {
         this.functionSettingsService = functionSettingsService;
@@ -117,10 +117,10 @@ internal class PluginService : IPluginService
         IFunctionPlugin? plugin = null;
         try
         {
-            ConstructorInfo constructor = pluginType.GetConstructors().FirstOrDefault();
-            object?[] dependencies = constructor.GetParameters().Where(parameter => parameter.ParameterType.GetCustomAttribute<PluginInjectableAttribute>() is not null)
-                                                               .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
-                                                               .ToArray();
+            ConstructorInfo? constructor = pluginType.GetConstructors().FirstOrDefault();
+            object?[] dependencies = constructor?.GetParameters().Where(parameter => parameter.ParameterType.GetCustomAttribute<PluginInjectableAttribute>() is not null)
+                                                                 .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
+                                                                 .ToArray();
 
             //@NOTE: load settings of a plugin, this will be reuqired later on!
             //List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(pluginType).ToList();
@@ -143,7 +143,7 @@ internal class PluginService : IPluginService
     /// <returns>A list with all the plugins</returns>
     private List<string> GetPlugins()
     {
-        return Directory.GetFiles(pathService.GetPluginPathString())
+        return Directory.GetFiles(pathService?.GetPluginPathString() ?? string.Empty)
                         .ToList()
                         .Select(file => new FileInfo(file))
                         .Where(file => file.Extension.ToLower() == ".dll")
