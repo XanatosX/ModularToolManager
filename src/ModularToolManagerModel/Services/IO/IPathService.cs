@@ -1,11 +1,11 @@
 ﻿using System.IO;
 
-namespace ModularToolManager.Services.IO;
+namespace ModularToolManagerModel.Services.IO;
 
 /// <summary>
 /// Service to get paths for this application
 /// </summary>
-internal interface IPathService
+public interface IPathService
 {
     /// <summary>
     /// Get the path to the application itself as a string

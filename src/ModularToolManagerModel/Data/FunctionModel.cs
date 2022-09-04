@@ -1,13 +1,11 @@
 ﻿using ModularToolManagerPlugin.Plugin;
-using System;
-using System.IO;
 
 namespace ModularToolManager.Models
 {
     /// <summary>
     /// Model for a Function stored by the user
     /// </summary>
-    internal class FunctionModel
+    public class FunctionModel
     {
         /// <summary>
         /// Unique identifier for the function model

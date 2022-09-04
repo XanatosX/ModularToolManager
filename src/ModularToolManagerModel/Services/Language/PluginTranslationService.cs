@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace ModularToolManager.Services.Language;
+namespace ModularToolManagerModel.Services.Language;
 
 /// <summary>
 /// Plugin translation service to get translations inside of the plugins

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace ModularToolManager.Services.IO;
+namespace ModularToolManagerModel.Services.IO;
 
 /// <summary>
 /// Implementation of the url opener service

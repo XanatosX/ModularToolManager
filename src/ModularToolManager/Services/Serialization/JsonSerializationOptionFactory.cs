@@ -1,9 +1,9 @@
 ﻿using ModularToolManager.Converters.Serialization;
-using ModularToolManager.Services.Plugin;
+using ModularToolManagerModel.Services.Plugin;
 using Splat;
 using System.Text.Json;
 
-namespace ModularToolManager.Services.Serialization;
+namespace ModularToolManagerModel.Services.Serialization;
 
 /// <summary>
 /// Class to get json serailazation options

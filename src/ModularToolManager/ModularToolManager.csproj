@@ -18,6 +18,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DefaultPlugins\DefaultPlugins.csproj" />
+    <ProjectReference Include="..\ModularToolManagerModel\ModularToolManagerModel.csproj" />
     <ProjectReference Include="..\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj" />
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
-﻿using ModularToolManager.Models;
+﻿using ModularToolManagerModel.Data;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace ModularToolManager.Services.Language;
+namespace ModularToolManagerModel.Services.Language;
 
 /// <summary>
 /// Interface to describe the language service
