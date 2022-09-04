@@ -17,6 +17,9 @@ public class NLogLoggingWrapperService : ILoggingService
     /// </summary>
     private readonly Logger logger;
 
+    /// <summary>
+    /// All the logging files with the log level
+    /// </summary>
     private readonly IEnumerable<LoggingFileModel> loggingFileModels;
 
     /// <summary>
