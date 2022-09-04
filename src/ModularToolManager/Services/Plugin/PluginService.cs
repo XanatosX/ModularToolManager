@@ -62,17 +62,23 @@ internal class PluginService : IPluginService
         return plugins;
     }
 
+    /// <summary>
+    /// Load the assembly 
+    /// </summary>
+    /// <param name="path">The path of the assembly to load</param>
+    /// <returns>The assembly to load or null if loading failed</returns>
     public Assembly? LoadAssemblySavely(string path)
     {
+        Assembly? assembly = null;
         try
         {
-            Assembly possiblePlugin = Assembly.LoadFrom(path);
-            return possiblePlugin;
+            assembly = Assembly.LoadFrom(path);
         }
         catch (Exception)
         {
-            return null;
+            //Loading went wrong, returning a null value
         }
+        return assembly;
 
     }
 

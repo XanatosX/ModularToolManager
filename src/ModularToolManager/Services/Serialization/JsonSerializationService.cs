@@ -5,15 +5,27 @@ using System.Text.Json;
 
 namespace ModularToolManager.Services.Serialization;
 
+/// <summary>
+/// Service to serialize data as json
+/// </summary>
 internal class JsonSerializationService : ISerializeService
 {
+    /// <summary>
+    /// The serialization options to use
+    /// </summary>
     private readonly JsonSerializerOptions jsonSerializerOptions;
 
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="serializationOptionFactory">The factory to use for creating the serialization options</param>
+    /// <exception cref="NullReferenceException">A empty factory was recievend, the class cannot be used</exception>
     public JsonSerializationService(ISerializationOptionFactory<JsonSerializerOptions>? serializationOptionFactory)
     {
         jsonSerializerOptions = serializationOptionFactory?.CreateOptions() ?? throw new NullReferenceException();
     }
 
+    /// <inheritdoc/>
     public T? GetDeserialized<T>(string data) where T : class
     {
         T? returnData = default;
@@ -30,6 +42,7 @@ internal class JsonSerializationService : ISerializeService
         return returnData;
     }
 
+    /// <inheritdoc/>
     public T? GetDeserialized<T>(Stream data) where T : class
     {
         T? returnData = default;
@@ -46,6 +59,7 @@ internal class JsonSerializationService : ISerializeService
         return returnData;
     }
 
+    /// <inheritdoc/>
     public string GetSerialized<T>(T data) where T : class
     {
         string returnData = string.Empty;
@@ -56,6 +70,7 @@ internal class JsonSerializationService : ISerializeService
         return returnData;
     }
 
+    /// <inheritdoc/>
     public Stream GetSerializedStream<T>(T data) where T : class
     {
         MemoryStream memoryStream = new MemoryStream();

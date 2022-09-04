@@ -72,7 +72,7 @@ internal class SerializedFunctionService : IFunctionService
         {
             return Enumerable.Empty<FunctionModel>().ToList();
         }
-        List<FunctionModel> returnData = null;
+        List<FunctionModel> returnData = Enumerable.Empty<FunctionModel>().ToList();
         using (FileStream fileStream = new FileStream(functionFile, FileMode.Open, FileAccess.Read))
         {
             returnData = serializer?.GetDeserialized<List<FunctionModel>>(fileStream) ?? Enumerable.Empty<FunctionModel>().ToList();
@@ -103,7 +103,7 @@ internal class SerializedFunctionService : IFunctionService
         {
             settingsFolder.Create();
         }
-        string saveData = serializer?.GetSerialized(dataToSave);
+        string? saveData = serializer?.GetSerialized(dataToSave);
         if (!string.IsNullOrEmpty(saveData))
         {
             using (FileStream fileStream = new FileStream(GetFunctionPath(), FileMode.Create, FileAccess.Write))

@@ -57,8 +57,6 @@ public class PluginTranslationService : IPluginTranslationService
         return GetTranslationManifests(Assembly.GetCallingAssembly()).Select(path => GetLanguageFromPath(path))
                                                .Where(path => !string.IsNullOrEmpty(path))
                                                .ToList();
-
-
     }
 
     /// <summary>
@@ -153,7 +151,7 @@ public class PluginTranslationService : IPluginTranslationService
     /// </summary>
     /// <param name="fallbackCulture">The fallback culture to use if no translation for the current culture can be found</param>
     /// <param name="assembly">The assembly to search the translation file in</param>
-    /// <returns></returns>
+    /// <returns>Get the path to translation file of the given culture</returns>
     private string GetCultureTranslationFile(CultureInfo fallbackCulture, Assembly assembly)
     {
         string? cultureFile = GetTranslationResourceByCulture(assembly, GetCurrentCulture());

@@ -1,19 +1,15 @@
-﻿using Avalonia.Controls;
-using ModularToolManager.Models;
+﻿using ModularToolManager.Models;
 using ModularToolManager.Services.Functions;
 using ModularToolManager.Services.Plugin;
 using ModularToolManager.ViewModels.Extenions;
-using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ReactiveUI;
-using Splat;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ModularToolManager.ViewModels;
@@ -23,14 +19,34 @@ namespace ModularToolManager.ViewModels;
 /// </summary>
 internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
 {
+    /// <summary>
+    /// Service to use to manage plugins
+    /// </summary>
     private readonly IPluginService? pluginService;
+
+    /// <summary>
+    /// Service to use for loading functions
+    /// </summary>
     private readonly IFunctionService? functionService;
 
-    public List<FunctionPluginViewModel> FunctionServices => functionServices;
-    private readonly List<FunctionPluginViewModel> functionServices;
+    /// <summary>
+    /// A list with all the function plugin possiblities
+    /// </summary>
+    public List<FunctionPluginViewModel> FunctionPlugins => functionPlugins;
 
+    /// <summary>
+    /// Private list for all the function plugins
+    /// </summary>
+    private readonly List<FunctionPluginViewModel> functionPlugins;
+
+    /// <summary>
+    /// The current function model
+    /// </summary>
     private FunctionModel functionModel;
 
+    /// <summary>
+    /// The display name of the new function
+    /// </summary>
     [MinLength(5), MaxLength(25)]
     public string DisplayName
     {
@@ -42,7 +58,10 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         }
     }
 
-    public FunctionPluginViewModel? SelectedFunctionService
+    /// <summary>
+    /// The currenctly selected plugin for the function
+    /// </summary>
+    public FunctionPluginViewModel? SelectedFunctionPlugin
     {
         get => functionModel.Plugin is null ? null : new FunctionPluginViewModel(functionModel.Plugin!);
         set
@@ -52,6 +71,9 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         }
     }
 
+    /// <summary>
+    /// The parameters for the function
+    /// </summary>
     public string FunctionParameters
     {
         get => functionModel.Parameters;
@@ -62,6 +84,9 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         }
     }
 
+    /// <summary>
+    /// The currently selected path
+    /// </summary>
     public string SelectedPath
     {
         get => functionModel.Path;
@@ -71,21 +96,36 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
             this.RaisePropertyChanged("SelectedPath");
         }
     }
+
+    /// <summary>
+    /// Command used to add the new function
+    /// </summary>
     public ICommand OkCommand { get; }
 
+    /// <summary>
+    /// Command used to abord the current changes or addition
+    /// </summary>
     public ICommand AbortCommand { get; }
 
-    public event EventHandler Closing;
+    /// <summary>
+    /// Event if the window is getting a close requested
+    /// </summary>
+    public event EventHandler? Closing;
 
-
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="pluginService">The plugin service to use</param>
+    /// <param name="functionService">The function service to use</param>
     public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService)
     {
         functionModel = new FunctionModel();
-        this.pluginService = pluginService; // Locator.Current.GetService<IPluginService>();
-        this.functionService = functionService; // Locator.Current.GetService<IFunctionService>();
+        this.pluginService = pluginService;
+        this.functionService = functionService;
+        functionPlugins = new();
         if (pluginService is not null)
         {
-            functionServices = pluginService.GetAvailablePlugins()
+            functionPlugins = pluginService.GetAvailablePlugins()
                                             .Select(plugin => new FunctionPluginViewModel(plugin))
                                             .ToList();
         }
@@ -106,7 +146,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
             .Subscribe(displayName => DisplayName = displayName.Trim());
 
         IObservable<bool> canSave = this.WhenAnyValue(x => x.DisplayName,
-                                                                x => x.SelectedFunctionService,
+                                                                x => x.SelectedFunctionPlugin,
                                                                 x => x.FunctionParameters,
                                                                 x => x.SelectedPath,
                                                                 (name, selectedFunction, parameters, path) =>

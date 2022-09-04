@@ -9,8 +9,8 @@
 	<StackPanel>
 		<TextBox Watermark="{x:Static p:Resources.NewFunction_Name}" UseFloatingWatermark="true" Text="{Binding DisplayName}"/>
 		<DropDown
-			Items="{Binding FunctionServices}"
-			SelectedItem="{Binding SelectedFunctionService}"/>
+			Items="{Binding FunctionPlugins}"
+			SelectedItem="{Binding SelectedFunctionPlugin}"/>
 		<TextBox 
 			Watermark="{x:Static p:Resources.NewFunction_Parameters}"
 			UseFloatingWatermark="true"

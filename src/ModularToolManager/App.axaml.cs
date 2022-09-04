@@ -72,7 +72,7 @@ public class App : Application
                 resolver.GetService<IPluginService>(),
                 resolver.GetService<IFunctionService>()
             ));
-        dependencyContainer.Register(() => new FunctionSelectionViewModel());
+        dependencyContainer.Register(() => new FunctionSelectionViewModel(resolver.GetService<IFunctionService>()));
         dependencyContainer.Register(() => new MainWindowViewModel(resolver.GetService<FunctionSelectionViewModel>(), resolver.GetService<IUrlOpenerService>()));
 
         dependencyContainer.Register(() => new MainWindow(resolver.GetService<IModalService>())
