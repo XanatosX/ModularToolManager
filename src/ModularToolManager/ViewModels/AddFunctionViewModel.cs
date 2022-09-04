@@ -159,7 +159,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
                                                                     {
                                                                         FileInfo info = new FileInfo(SelectedPath);
                                                                         valid &= plugin.GetAllowedFileEndings().Select(fileExtension => fileExtension.Extension.ToLower())
-                                                                                                               .Any(ending => ending == info.Extension.ToLower());
+                                                                                                               .Any(ending => ending == info.Extension.ToLowerInvariant());
                                                                     }
 
                                                                     return valid;

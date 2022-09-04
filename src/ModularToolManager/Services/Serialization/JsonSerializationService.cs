@@ -36,7 +36,7 @@ internal class JsonSerializationService : ISerializeService
         }
         catch (Exception)
         {
-
+            //Serialize did fail return empty object
         }
 
         return returnData;
@@ -54,6 +54,7 @@ internal class JsonSerializationService : ISerializeService
             }
             catch (Exception)
             {
+                //Serialize did fail return empty object
             }
         }
         return returnData;
@@ -81,6 +82,7 @@ internal class JsonSerializationService : ISerializeService
         }
         catch (Exception)
         {
+            //Serialize did fail return empty stream
         }
         memoryStream.Position = 0;
         return memoryStream;

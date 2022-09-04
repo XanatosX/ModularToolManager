@@ -131,6 +131,7 @@ public class PluginTranslationService : IPluginTranslationService
         }
         catch (Exception)
         {
+            //No translation found, keep as null
         }
         return translation;
     }

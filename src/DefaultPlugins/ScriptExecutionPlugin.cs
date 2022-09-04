@@ -65,7 +65,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
             return false;
         }
 
-        ProcessStartInfo startInfo = new ProcessStartInfo()
+        ProcessStartInfo startInfo = new ProcessStartInfo
         {
             FileName = path,
         };
@@ -104,7 +104,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// <returns></returns>
     private IEnumerable<FileExtension> GetWindowsExtensions()
     {
-        return new List<FileExtension>()
+        return new List<FileExtension>
         {
             new FileExtension(pluginTranslationService?.GetTranslationByKey("batch", fallbackCulture) ?? FALLBACK_TRANSLATION, ".bat"),
             new FileExtension(pluginTranslationService?.GetTranslationByKey("cmd", fallbackCulture) ?? FALLBACK_TRANSLATION, ".cmd"),
@@ -115,5 +115,6 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// <inheritdoc/>
     public override void Dispose()
     {
+        //Nothing to dispose!
     }
 }

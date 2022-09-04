@@ -3,7 +3,7 @@
 /// <summary>
 /// File extension to use
 /// </summary>
-public struct FileExtension
+public struct FileExtension : IEquatable<FileExtension>
 {
     /// <summary>
     /// Display name for the file open dialog
@@ -24,5 +24,11 @@ public struct FileExtension
     {
         Name = name;
         Extension = extension;
+    }
+
+    /// <inheritdoc/>
+    public bool Equals(FileExtension other)
+    {
+        return Extension.Equals(other.Extension);
     }
 }

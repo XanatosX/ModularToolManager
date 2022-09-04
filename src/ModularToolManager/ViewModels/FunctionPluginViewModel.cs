@@ -10,7 +10,7 @@ public class FunctionPluginViewModel : ViewModelBase
     /// <summary>
     /// The function plugin to show
     /// </summary>
-    public readonly IFunctionPlugin Plugin;
+    public IFunctionPlugin Plugin { get; init; }
 
     /// <summary>
     /// The name of the function plugin

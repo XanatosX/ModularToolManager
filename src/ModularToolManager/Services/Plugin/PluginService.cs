@@ -29,7 +29,7 @@ internal class PluginService : IPluginService
     /// <summary>
     /// A list with all the plugins currently available
     /// </summary>
-    private List<IFunctionPlugin> plugins;
+    private readonly List<IFunctionPlugin> plugins;
 
     /// <summary>
     /// Create a new instance of this class
@@ -122,13 +122,15 @@ internal class PluginService : IPluginService
                                                                .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
                                                                .ToArray();
 
-            //Load settings of a plugin
+            //@NOTE: load settings of a plugin, this will be reuqired later on!
             //List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(pluginType).ToList();
 
             plugin = (IFunctionPlugin)Activator.CreateInstance(pluginType, dependencies)!;
         }
         catch (Exception)
         {
+            //@Note: logging required
+            //Activation did fail, keep a null return value
         }
 
         return plugin;
