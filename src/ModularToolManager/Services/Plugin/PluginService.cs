@@ -1,4 +1,5 @@
-﻿using ModularToolManagerModel.Services.IO;
+﻿using Avalonia.Logging;
+using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerPlugin.Attributes;
@@ -81,11 +82,12 @@ internal class PluginService : IPluginService
         Assembly? assembly = null;
         try
         {
+            loggingService?.LogTrace($"Trying to load assembly {path}");
             assembly = Assembly.LoadFrom(path);
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            //Loading went wrong, returning a null value
+            loggingService?.LogTrace($"Loading assembly {path} did fail with errroe {e.Message}");
         }
         return assembly;
 
@@ -130,6 +132,13 @@ internal class PluginService : IPluginService
             object?[] dependencies = constructor?.GetParameters().Where(parameter => parameter.ParameterType.GetCustomAttribute<PluginInjectableAttribute>() is not null)
                                                                  .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
                                                                  .ToArray();
+
+            loggingService.LogInfo($"Activation for plugin of type {pluginType.FullName} imminent");
+
+            var parameters = constructor.GetParameters().Select(parameter => parameter.ParameterType.FullName);
+            loggingService.LogInfo($"Required parameters for constructor: {string.Join(",", parameters)}");
+            IEnumerable<string> objectInstances = dependencies?.Select(dependency => dependency?.GetType().FullName) ?? Enumerable.Empty<string>();
+            loggingService.LogInfo($"Instances used for filling up: {string.Join(", ", objectInstances)}");
 
             //@NOTE: load settings of a plugin, this will be reuqired later on!
             //List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(pluginType).ToList();
