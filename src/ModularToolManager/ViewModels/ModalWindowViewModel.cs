@@ -19,7 +19,7 @@ public class ModalWindowViewModel : ViewModelBase
     /// <summary>
     /// The service to use for loading styles
     /// </summary>
-    private readonly IStyleService styleService;
+    private readonly IStyleService? styleService;
 
     /// <summary>
     /// The path to the icon to show in the upper left corner
@@ -65,7 +65,7 @@ public class ModalWindowViewModel : ViewModelBase
             };
         }
 
-        IStyle? styles = styleService.GetCurrentAppIncludeStyles().FirstOrDefault();
-        PathIcon = styleService.GetStyleByName<StreamGeometry>(pathName) ?? null;
+        IStyle? styles = styleService?.GetCurrentAppIncludeStyles().FirstOrDefault();
+        PathIcon = styleService?.GetStyleByName<StreamGeometry>(pathName) ?? null;
     }
 }
