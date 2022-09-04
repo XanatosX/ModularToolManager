@@ -1,0 +1,22 @@
+﻿[
+  {
+    "key": "displayname",
+    "value": "Skript ausführung"
+  },
+  {
+    "key": "batch",
+    "value": "Batch-Skript"
+  },
+  {
+    "key": "cmd",
+    "value": "CMD-Skript"
+  },
+  {
+    "key": "powershell",
+    "value": "PowerShell-Skript"
+  },
+  {
+    "key": "error_cant_find_script_file",
+    "value": "Konnte das auszuführende Skript '{0}' nicht finden"
+  }
+]

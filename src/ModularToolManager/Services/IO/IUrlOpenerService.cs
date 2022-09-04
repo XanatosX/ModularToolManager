@@ -5,7 +5,7 @@ namespace ModularToolManager.Services.IO;
 /// <summary>
 /// Interface used to describe a service to open urls in the browser
 /// </summary>
-internal interface IUrlOpenerService
+public interface IUrlOpenerService
 {
     /// <summary>
     /// Open the url in the browser

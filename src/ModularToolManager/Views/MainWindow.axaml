@@ -32,17 +32,6 @@
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
 		<Panel>
-			<TrayIcon.Icons>
-				<TrayIcons>
-					<TrayIcon Icon="/Assets/avalonia-logo.ico" Command="{Binding ShowApplicationCommand}" ToolTipText="Modular tool manager">
-						<TrayIcon.Menu>
-							<NativeMenu>
-								<NativeMenuItem Header="{x:Static p:Resources.SubMenu_Exit}" Command="{Binding ExitApplicationCommand}"/>
-							</NativeMenu>
-						</TrayIcon.Menu>
-					</TrayIcon>
-				</TrayIcons>
-			</TrayIcon.Icons>
 			<Grid RowDefinitions="40, Auto">
 				<Grid ColumnDefinitions="*, Auto">
 					<Menu>

@@ -25,7 +25,6 @@ public partial class ModalWindow : ReactiveWindow<ModalWindowViewModel>
         {
             Close();
         });
-
     }
 
     private void InitializeComponent()

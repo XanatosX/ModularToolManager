@@ -77,10 +77,10 @@ public class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    public MainWindowViewModel()
+    public MainWindowViewModel(ViewModelBase mainContentModel, IUrlOpenerService urlOpenerService)
     {
-        urlOpenerService = Locator.Current.GetService<IUrlOpenerService>();
-        MainContentModel = new FunctionSelectionViewModel();
+        this.urlOpenerService = urlOpenerService;
+        MainContentModel = mainContentModel;
         CloseWindowInteraction = new Interaction<Unit, Unit>();
         ShowModalWindowInteraction = new Interaction<ShowWindowModel, Unit>();
         ExitApplicationCommand = ReactiveCommand.Create(async () =>
@@ -100,7 +100,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             _ = await ShowModalWindowInteraction?.Handle(
                                     new ShowWindowModel(
-                    new ModalWindowViewModel(Properties.Resources.SubMenu_NewFunction, "settings_regular", new AddFunctionViewModel()),
+                    new ModalWindowViewModel(Properties.Resources.SubMenu_NewFunction, "settings_regular", Locator.Current.GetService<AddFunctionViewModel>()),
                     Avalonia.Controls.WindowStartupLocation.CenterScreen
                 ));
         });

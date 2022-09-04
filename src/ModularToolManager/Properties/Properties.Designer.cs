@@ -61,11 +61,38 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modular Tool Manager.
+        /// </summary>
+        internal static string ApplicationName {
+            get {
+                return ResourceManager.GetString("ApplicationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to functions.dat.
+        /// </summary>
+        internal static string FunctionsFile {
+            get {
+                return ResourceManager.GetString("FunctionsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/XanatosX/ModularToolManager/issues.
         /// </summary>
         internal static string GithubUrl {
             get {
                 return ResourceManager.GetString("GithubUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings.set.
+        /// </summary>
+        internal static string SettingsFile {
+            get {
+                return ResourceManager.GetString("SettingsFile", resourceCulture);
             }
         }
     }
