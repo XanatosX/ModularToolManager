@@ -12,6 +12,7 @@ using ModularToolManager.Views;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Language;
+using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerModel.Services.Serialization;
 using ModularToolManagerPlugin.Services;
@@ -40,6 +41,8 @@ public class App : Application
     private void RegisterServices(IMutableDependencyResolver dependencyContainer, IReadonlyDependencyResolver resolver)
     {
         dependencyContainer.RegisterConstant<IPathService>(new PathService());
+        dependencyContainer.RegisterLazySingleton<ILoggingService>(() => new NLogLoggingWrapperService(resolver.GetService<IPathService>()));
+        dependencyContainer.RegisterLazySingleton<IPluginLoggerService>(() => new LoggingPluginAdapter(resolver.GetService<ILoggingService>()));
         dependencyContainer.RegisterConstant<IStyleService>(new DefaultStyleService());
         dependencyContainer.Register<IPluginTranslationService>(() => new PluginTranslationService());
         dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
@@ -53,7 +56,6 @@ public class App : Application
             resolver.GetService<IPathService>()
 
         ));
-
         dependencyContainer.Register<ISerializationOptionFactory<JsonSerializerOptions>>(() => new JsonSerializationOptionFactory(resolver));
         dependencyContainer.RegisterConstant<ISerializeService>(new JsonSerializationService(resolver.GetService<ISerializationOptionFactory<JsonSerializerOptions>>()));
         dependencyContainer.RegisterConstant<IFunctionService>(new SerializedFunctionService(resolver.GetService<ISerializeService>(), resolver.GetService<IPathService>()));
