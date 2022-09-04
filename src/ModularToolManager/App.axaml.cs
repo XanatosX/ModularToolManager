@@ -57,8 +57,11 @@ public class App : Application
 
         ));
         dependencyContainer.Register<ISerializationOptionFactory<JsonSerializerOptions>>(() => new JsonSerializationOptionFactory(resolver));
-        dependencyContainer.RegisterConstant<ISerializeService>(new JsonSerializationService(resolver.GetService<ISerializationOptionFactory<JsonSerializerOptions>>()));
-        dependencyContainer.RegisterConstant<IFunctionService>(new SerializedFunctionService(resolver.GetService<ISerializeService>(), resolver.GetService<IPathService>()));
+        dependencyContainer.RegisterConstant<ISerializeService>(new JsonSerializationService(resolver.GetService<ISerializationOptionFactory<JsonSerializerOptions>>(), resolver.GetService<ILoggingService>()));
+        dependencyContainer.RegisterConstant<IFunctionService>(new SerializedFunctionService(
+            resolver.GetService<ISerializeService>(),
+            resolver.GetService<IPathService>(),
+            resolver.GetService<ILoggingService>()));
     }
 
     /// <summary>
