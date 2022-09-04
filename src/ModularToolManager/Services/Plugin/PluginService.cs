@@ -1,4 +1,5 @@
 ﻿using ModularToolManagerModel.Services.IO;
+using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Plugin;
@@ -28,6 +29,11 @@ internal class PluginService : IPluginService
     private readonly IPathService? pathService;
 
     /// <summary>
+    /// The logging service to use
+    /// </summary>
+    private readonly ILoggingService? loggingService;
+
+    /// <summary>
     /// A list with all the plugins currently available
     /// </summary>
     private readonly List<IFunctionPlugin> plugins;
@@ -39,11 +45,13 @@ internal class PluginService : IPluginService
     /// <param name="functionSettingsService">The function settings service to use</param>
     public PluginService(
         IFunctionSettingsService? functionSettingsService,
-        IPathService? pathService
+        IPathService? pathService,
+        ILoggingService? loggingService
         )
     {
         this.functionSettingsService = functionSettingsService;
         this.pathService = pathService;
+        this.loggingService = loggingService;
         plugins = new List<IFunctionPlugin>();
     }
 
@@ -128,10 +136,9 @@ internal class PluginService : IPluginService
 
             plugin = (IFunctionPlugin)Activator.CreateInstance(pluginType, dependencies)!;
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            //@Note: logging required
-            //Activation did fail, keep a null return value
+            loggingService?.LogError($"Activation of plugin {pluginType.FullName} did fail: {e.Message}");
         }
 
         return plugin;

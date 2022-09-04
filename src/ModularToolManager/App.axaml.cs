@@ -50,11 +50,10 @@ public class App : Application
         dependencyContainer.RegisterConstant<ILanguageService>(new ResourceCultureService());
         dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
         dependencyContainer.RegisterConstant<IModalService>(new WindowModalService());
-
         dependencyContainer.RegisterConstant<IPluginService>(new PluginService(
             resolver.GetService<IFunctionSettingsService>(),
-            resolver.GetService<IPathService>()
-
+            resolver.GetService<IPathService>(),
+            resolver.GetService<ILoggingService>()
         ));
         dependencyContainer.Register<ISerializationOptionFactory<JsonSerializerOptions>>(() => new JsonSerializationOptionFactory(resolver));
         dependencyContainer.RegisterConstant<ISerializeService>(new JsonSerializationService(resolver.GetService<ISerializationOptionFactory<JsonSerializerOptions>>(), resolver.GetService<ILoggingService>()));
