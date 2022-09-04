@@ -104,7 +104,9 @@ public class SerializedFunctionService : IFunctionService
         DirectoryInfo? settingsFolder = pathService?.GetSettingsFolderPath();
         if (serializer == null || settingsFolder == null)
         {
-            //@Note add logging
+            loggingService?.LogError("Cannot save function models to disc because there is no serializator available or the settings folder is empty");
+            loggingService?.LogError($"Serializer: {serializer?.GetType().FullName ?? string.Empty}");
+            loggingService?.LogError($"Settings folder: {settingsFolder?.FullName ?? string.Empty}");
             return false;
         }
         if (!settingsFolder.Exists)
