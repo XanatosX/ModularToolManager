@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModularToolManagerPlugin", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultPlugins", "src\DefaultPlugins\DefaultPlugins.csproj", "{FC3E8684-9A29-4959-81D5-9A29E8DE094A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularToolManagerModel", "ModularToolManagerModel\ModularToolManagerModel.csproj", "{BA2EB811-1909-4DAA-878A-185F5FF53C67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularToolManagerModel", "src\ModularToolManagerModel\ModularToolManagerModel.csproj", "{BA2EB811-1909-4DAA-878A-185F5FF53C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
