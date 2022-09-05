@@ -8,6 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace ModularToolManager.Services.Logging;
+
+/// <summary>
+/// Service to get all the log files from a nlog configuration
+/// </summary>
 public class NLogFileService : ILogFileService
 {
     /// <summary>
