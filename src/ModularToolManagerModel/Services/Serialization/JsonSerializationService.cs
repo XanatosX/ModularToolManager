@@ -1,4 +1,5 @@
-﻿using ModularToolManager.Services.Serialization;
+﻿using Microsoft.Extensions.Logging;
+using ModularToolManager.Services.Serialization;
 using ModularToolManagerModel.Services.Logging;
 using System.Text;
 using System.Text.Json;
@@ -18,7 +19,7 @@ public class JsonSerializationService : ISerializeService
     /// <summary>
     /// The logging service to use
     /// </summary>
-    private readonly ILoggingService? loggingService;
+    private readonly ILogger<JsonSerializationService>? loggingService;
 
     /// <summary>
     /// Create a new instance of this class
@@ -26,7 +27,7 @@ public class JsonSerializationService : ISerializeService
     /// <param name="serializationOptionFactory">The factory to use for creating the serialization options</param>
     /// /// <param name="loggingService">The logging service to use</param>
     /// <exception cref="NullReferenceException">A empty factory was recievend, the class cannot be used</exception>
-    public JsonSerializationService(ISerializationOptionFactory<JsonSerializerOptions>? serializationOptionFactory, ILoggingService? loggingService)
+    public JsonSerializationService(ISerializationOptionFactory<JsonSerializerOptions>? serializationOptionFactory, ILogger<JsonSerializationService>? loggingService)
     {
         jsonSerializerOptions = serializationOptionFactory?.CreateOptions() ?? throw new NullReferenceException();
         this.loggingService = loggingService;

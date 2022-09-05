@@ -80,7 +80,6 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<ISerializationOptionFactory<JsonSerializerOptions>, JsonSerializationOptionFactory>()
                          .AddSingleton<ISerializeService, JsonSerializationService>()
                          .AddSingleton<IFunctionService, SerializedFunctionService>()
-                         .AddSingleton<ILoggingService, NLogLoggingWrapperService>()
                          .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>));
     }
 }
