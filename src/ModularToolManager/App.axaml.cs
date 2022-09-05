@@ -1,23 +1,20 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using ModularToolManager.Services.IO;
-using ModularToolManager.Services.Language;
-using ModularToolManager.Services.Plugin;
-using ModularToolManager.Services.Serialization;
-using ModularToolManager.Services.Styling;
-using ModularToolManager.Services.Ui;
-using ModularToolManager.ViewModels;
+using Avalonia.Threading;
+using Microsoft.Extensions.DependencyInjection;
+using ModularToolManager.DependencyInjection;
+using ModularToolManager.Services.Logging;
 using ModularToolManager.Views;
-using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.IO;
-using ModularToolManagerModel.Services.Language;
 using ModularToolManagerModel.Services.Logging;
-using ModularToolManagerModel.Services.Plugin;
-using ModularToolManagerModel.Services.Serialization;
-using ModularToolManagerPlugin.Services;
+using NLog.Config;
+using NLog.Extensions.Logging;
+using NLog.Targets;
+using ReactiveUI;
 using Splat;
-using System.Text.Json;
+using Splat.Microsoft.Extensions.DependencyInjection;
+using System.IO;
 
 namespace ModularToolManager;
 
@@ -28,64 +25,50 @@ public class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
-
-        RegisterServices(Locator.CurrentMutable, Locator.Current);
-        RegisterViewModels(Locator.CurrentMutable, Locator.Current);
     }
 
-    /// <summary>
-    /// Register services for the application
-    /// </summary>
-    /// <param name="dependencyContainer">The container to register the models into</param>
-    /// <param name="resolver">The resolver to resolve dependencies</param>
-    private void RegisterServices(IMutableDependencyResolver dependencyContainer, IReadonlyDependencyResolver resolver)
+    private IServiceCollection BuildServiceCollection()
     {
-        dependencyContainer.RegisterConstant<IPathService>(new PathService());
-        dependencyContainer.RegisterLazySingleton<ILoggingService>(() => new NLogLoggingWrapperService(resolver.GetService<IPathService>()));
-        dependencyContainer.RegisterLazySingleton<IPluginLoggerService>(() => new LoggingPluginAdapter(resolver.GetService<ILoggingService>()));
-        dependencyContainer.RegisterConstant<IStyleService>(new DefaultStyleService());
-        dependencyContainer.Register<IPluginTranslationService>(() => new PluginTranslationService());
-        dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
-        dependencyContainer.RegisterConstant<IUrlOpenerService>(new UrlOpenerService());
-        dependencyContainer.RegisterConstant<ILanguageService>(new ResourceCultureService());
-        dependencyContainer.RegisterConstant<IFunctionSettingsService>(new FunctionSettingService());
-        dependencyContainer.RegisterConstant<IModalService>(new WindowModalService());
-        dependencyContainer.RegisterConstant<IPluginService>(new PluginService(
-            resolver.GetService<IFunctionSettingsService>(),
-            resolver.GetService<IPathService>(),
-            resolver.GetService<ILoggingService>()
-        ));
-        dependencyContainer.Register<ISerializationOptionFactory<JsonSerializerOptions>>(() => new JsonSerializationOptionFactory(resolver));
-        dependencyContainer.RegisterConstant<ISerializeService>(new JsonSerializationService(resolver.GetService<ISerializationOptionFactory<JsonSerializerOptions>>(), resolver.GetService<ILoggingService>()));
-        dependencyContainer.RegisterConstant<IFunctionService>(new SerializedFunctionService(
-            resolver.GetService<ISerializeService>(),
-            resolver.GetService<IPathService>(),
-            resolver.GetService<ILoggingService>()));
-    }
+        var NLogConfiguration = new LoggingConfiguration();
+        return new ServiceCollection().AddAvaloniaDefault()
+                                      .AddServices()
+                                      .AddViewModels()
+                                      .AddViews()
+                                      .AddLogging(config =>
+                                      {
+                                          var pathService = Locator.Current.GetService<IPathService>();
+                                          string basePath = pathService?.GetSettingsFolderPathString() ?? Path.GetTempPath();
+                                          string logFolder = Path.Combine(basePath, "logs");
 
-    /// <summary>
-    /// Method to register the view models for the application
-    /// </summary>
-    /// <param name="dependencyContainer">The container to register the models into</param>
-    /// <param name="resolver">The resolver to resolve dependencies</param>
-    private void RegisterViewModels(IMutableDependencyResolver dependencyContainer, IReadonlyDependencyResolver resolver)
-    {
-        dependencyContainer.Register(() => new AddFunctionViewModel(
-                resolver.GetService<IPluginService>(),
-                resolver.GetService<IFunctionService>()
-            ));
-        dependencyContainer.Register(() => new FunctionSelectionViewModel(resolver.GetService<IFunctionService>()));
-        dependencyContainer.Register(() => new MainWindowViewModel(resolver.GetService<FunctionSelectionViewModel>(), resolver.GetService<IUrlOpenerService>()));
-
-        dependencyContainer.Register(() => new MainWindow(resolver.GetService<IModalService>())
-        {
-            DataContext = resolver.GetService<MainWindowViewModel>(),
-        });
+                                          NLogConfiguration.AddTarget(new TraceTarget("trace-log"));
+                                          NLogConfiguration.AddTarget(new FileTarget("default-file-log")
+                                          {
+                                              FileName = Path.Combine(logFolder, "application.log"),
+                                              ArchiveAboveSize = 5242880,
+                                              MaxArchiveFiles = 10
+                                          });
+                                          NLogConfiguration.AddTarget(new FileTarget("error-log")
+                                          {
+                                              FileName = Path.Combine(logFolder, "error.log"),
+                                              ArchiveAboveSize = 5242880,
+                                              MaxArchiveFiles = 5
+                                          });
+                                          NLogConfiguration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Debug, "trace-log");
+                                          NLogConfiguration.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Warn, "default-file-log");
+                                          NLogConfiguration.AddRule(NLog.LogLevel.Error, NLog.LogLevel.Fatal, "error-log");
+                                          config.AddNLog(NLogConfiguration);
+                                      })
+                                      .AddSingleton<ILogFileService, NLogFileService>(provider => new NLogFileService(NLogConfiguration));
     }
 
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
+        BuildServiceCollection().UseMicrosoftDependencyResolver();
+
+        Locator.CurrentMutable.InitializeSplat();
+        Locator.CurrentMutable.InitializeReactiveUI();
+        RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = Locator.Current.GetService<MainWindow>();

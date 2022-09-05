@@ -1,4 +1,5 @@
-﻿using ModularToolManager.Models;
+﻿using Microsoft.Extensions.Logging;
+using ModularToolManager.Models;
 using ModularToolManager.Services.Serialization;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Logging;
@@ -23,14 +24,14 @@ public class SerializedFunctionService : IFunctionService
     /// <summary>
     /// The logging service to use
     /// </summary>
-    private readonly ILoggingService? loggingService;
+    private readonly ILogger<SerializedFunctionService>? loggingService;
 
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="serializer">The serailzier class to use</param>
     /// <param name="pathService">The path service to use</param>
-    public SerializedFunctionService(ISerializeService? serializer, IPathService? pathService, ILoggingService? loggingService)
+    public SerializedFunctionService(ISerializeService? serializer, IPathService? pathService, ILogger<SerializedFunctionService>? loggingService)
     {
         this.serializer = serializer;
         this.pathService = pathService;

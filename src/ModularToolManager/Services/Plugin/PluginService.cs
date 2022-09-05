@@ -1,4 +1,5 @@
 ﻿using Avalonia.Logging;
+using Microsoft.Extensions.Logging;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
@@ -32,7 +33,7 @@ internal class PluginService : IPluginService
     /// <summary>
     /// The logging service to use
     /// </summary>
-    private readonly ILoggingService? loggingService;
+    private readonly ILogger<PluginService>? loggingService;
 
     /// <summary>
     /// A list with all the plugins currently available
@@ -47,7 +48,7 @@ internal class PluginService : IPluginService
     public PluginService(
         IFunctionSettingsService? functionSettingsService,
         IPathService? pathService,
-        ILoggingService? loggingService
+        ILogger<PluginService>? loggingService
         )
     {
         this.functionSettingsService = functionSettingsService;
@@ -133,12 +134,12 @@ internal class PluginService : IPluginService
                                                                  .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
                                                                  .ToArray();
 
-            loggingService?.LogInfo($"Activation for plugin of type {pluginType.FullName} imminent");
+            loggingService?.LogInformation($"Activation for plugin of type {pluginType.FullName} imminent");
 
             var parameters = constructor.GetParameters().Select(parameter => parameter.ParameterType.FullName);
-            loggingService?.LogInfo($"Required parameters for constructor: {string.Join(",", parameters)}");
+            loggingService?.LogInformation($"Required parameters for constructor: {string.Join(",", parameters)}");
             IEnumerable<string> objectInstances = dependencies?.Select(dependency => dependency?.GetType().FullName) ?? Enumerable.Empty<string>();
-            loggingService?.LogInfo($"Instances used for filling up: {string.Join(", ", objectInstances)}");
+            loggingService?.LogInformation($"Instances used for filling up: {string.Join(", ", objectInstances)}");
 
             //@NOTE: load settings of a plugin, this will be reuqired later on!
             //List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(pluginType).ToList();

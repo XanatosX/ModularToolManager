@@ -7,7 +7,7 @@ namespace ModularToolManagerPlugin.Services;
 /// Interface to log data in the application
 /// </summary>
 [PluginInjectable]
-public interface IPluginLoggerService
+public interface IPluginLoggerService<T>
 {
     /// <summary>
     /// Log data to the application logger

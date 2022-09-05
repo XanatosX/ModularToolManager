@@ -77,7 +77,7 @@ public class MainWindowViewModel : ViewModelBase
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    public MainWindowViewModel(ViewModelBase mainContentModel, IUrlOpenerService urlOpenerService)
+    public MainWindowViewModel(FunctionSelectionViewModel mainContentModel, IUrlOpenerService urlOpenerService)
     {
         this.urlOpenerService = urlOpenerService;
         MainContentModel = mainContentModel;
