@@ -8,7 +8,7 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// Class to use as a view model for a single function
 /// </summary>
-internal class FunctionButtonViewModel : ViewModelBase
+public class FunctionButtonViewModel : ViewModelBase
 {
     /// <summary>
     /// The function model to show

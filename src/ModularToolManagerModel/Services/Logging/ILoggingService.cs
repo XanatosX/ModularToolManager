@@ -6,6 +6,7 @@ namespace ModularToolManagerModel.Services.Logging;
 /// <summary>
 /// interface for the logging service of the application
 /// </summary>
+[Obsolete("Please use microsoft ILogger instead")]
 public interface ILoggingService
 {
     /// <summary>

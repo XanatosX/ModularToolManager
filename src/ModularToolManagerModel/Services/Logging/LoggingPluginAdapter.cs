@@ -1,4 +1,4 @@
-﻿using ModularToolManagerModel.Data.Enum;
+﻿using Microsoft.Extensions.Logging;
 using ModularToolManagerPlugin.Enums;
 using ModularToolManagerPlugin.Services;
 
@@ -7,18 +7,18 @@ namespace ModularToolManagerModel.Services.Logging;
 /// <summary>
 /// Adapter class to allow logging
 /// </summary>
-public class LoggingPluginAdapter : IPluginLoggerService
+public class LoggingPluginAdapter<T> : IPluginLoggerService<T>
 {
     /// <summary>
     /// The real logging service to use
     /// </summary>
-    private readonly ILoggingService? loggingService;
+    private readonly ILogger<T>? loggingService;
 
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="loggingService">The logging service to use</param>
-    public LoggingPluginAdapter(ILoggingService? loggingService)
+    public LoggingPluginAdapter(ILogger<T> loggingService)
     {
         this.loggingService = loggingService;
     }
@@ -34,17 +34,17 @@ public class LoggingPluginAdapter : IPluginLoggerService
     /// </summary>
     /// <param name="severity">The severity to use</param>
     /// <returns>The log level for the logging service</returns>
-    private LogLevel MatchLogLevel(LogSeverity severity)
+    private Microsoft.Extensions.Logging.LogLevel MatchLogLevel(LogSeverity severity)
     {
         return severity switch
         {
-            LogSeverity.Trace => LogLevel.Trace,
-            LogSeverity.Debug => LogLevel.Debug,
-            LogSeverity.Information => LogLevel.Information,
-            LogSeverity.Warning => LogLevel.Warning,
-            LogSeverity.Error => LogLevel.Error,
-            LogSeverity.Fatal => LogLevel.Fatal,
-            _ => LogLevel.Unknown
+            LogSeverity.Trace => Microsoft.Extensions.Logging.LogLevel.Trace,
+            LogSeverity.Debug => Microsoft.Extensions.Logging.LogLevel.Debug,
+            LogSeverity.Information => Microsoft.Extensions.Logging.LogLevel.Information,
+            LogSeverity.Warning => Microsoft.Extensions.Logging.LogLevel.Warning,
+            LogSeverity.Error => Microsoft.Extensions.Logging.LogLevel.Error,
+            LogSeverity.Fatal => Microsoft.Extensions.Logging.LogLevel.Critical,
+            _ => Microsoft.Extensions.Logging.LogLevel.None
         };
     }
 

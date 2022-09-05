@@ -13,22 +13,22 @@ internal class JsonSerializationOptionFactory : ISerializationOptionFactory<Json
     /// <summary>
     /// Instance of the dependency resolver
     /// </summary>
-    private readonly IReadonlyDependencyResolver? dependencyResolver;
+    private readonly IPluginService? pluginService;
 
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    /// <param name="dependencyResolver">The resolver to use to resolve dependencies</param>
-    public JsonSerializationOptionFactory(IReadonlyDependencyResolver? dependencyResolver)
+    /// <param name="pluginService">The resolver to use to resolve dependencies</param>
+    public JsonSerializationOptionFactory(IPluginService? pluginService)
     {
-        this.dependencyResolver = dependencyResolver;
+        this.pluginService = pluginService;
     }
 
     ///<inheritdoc/>
     public JsonSerializerOptions CreateOptions()
     {
         JsonSerializerOptions options = new JsonSerializerOptions();
-        options.Converters.Add(new PluginConverter(dependencyResolver?.GetService<IPluginService>()));
+        options.Converters.Add(new PluginConverter(pluginService));
         return options;
     }
 }

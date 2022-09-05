@@ -12,14 +12,14 @@ namespace ModularToolManager.Views;
 
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {
-    private readonly IModalService modalService;
+    private readonly IModalService? modalService;
 
     public MainWindow() : this(null)
     {
 
     }
 
-    public MainWindow(IModalService modalService)
+    public MainWindow(IModalService? modalService)
     {
         InitializeComponent();
 #if DEBUG
@@ -74,7 +74,7 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     /// <returns>A reference to the new modal as task</returns>
     private async Task DoHandleShowModalWindow(InteractionContext<ShowWindowModel, Unit> context)
     {
-        await modalService.ShowModalWindowAsync(context.Input, this);
+        await modalService?.ShowModalWindowAsync(context.Input, this);
     }
 
     private void InitializeComponent()

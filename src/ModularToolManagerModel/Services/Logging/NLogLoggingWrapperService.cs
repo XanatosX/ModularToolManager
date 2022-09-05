@@ -10,6 +10,7 @@ namespace ModularToolManagerModel.Services.Logging;
 /// <summary>
 /// Nlogger warpper service
 /// </summary>
+[Obsolete("Please use ILogger instead")]
 public class NLogLoggingWrapperService : ILoggingService
 {
     /// <summary>

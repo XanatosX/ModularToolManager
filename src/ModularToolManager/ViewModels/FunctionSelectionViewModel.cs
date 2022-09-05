@@ -7,7 +7,7 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// View model to select a function
 /// </summary>
-internal class FunctionSelectionViewModel : ViewModelBase
+public class FunctionSelectionViewModel : ViewModelBase
 {
     /// <summary>
     /// The service to use for function selection
