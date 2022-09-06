@@ -7,6 +7,7 @@ on: push
 
 env:
   DEBUG: true
+  RELEASE_NAME: Recent develop build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj
   APPLICATION_PUBLISH_FOLDER: ./publish
@@ -101,7 +102,7 @@ jobs:
         run: ls -la $RELEASE_ARTIFACT_FOLDER
       - uses: ncipollo/release-action@v1
         with:
-          name: Recent develop build [${{ GITHUB.RUN_NUMBER }}]
+          name: ${{ env.RELEASE_NAME }} [${{ GITHUB.RUN_NUMBER }}]
           tag: Develop-${{ GITHUB.RUN_NUMBER }}
           generateReleaseNotes: true
           body: Recent version of the develop branch, ready for testing
