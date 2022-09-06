@@ -129,6 +129,9 @@
   <data name="DefaultButton_OpenFile" xml:space="preserve">
     <value>...</value>
   </data>
+  <data name="Default_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Search for function</value>
   </data>

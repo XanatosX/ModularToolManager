@@ -103,6 +103,7 @@ public class MainWindowViewModel : ViewModelBase
                     new ModalWindowViewModel(Properties.Resources.SubMenu_NewFunction, "settings_regular", Locator.Current.GetService<AddFunctionViewModel>()),
                     Avalonia.Controls.WindowStartupLocation.CenterScreen
                 ));
+            mainContentModel?.ReloadFunctions();
         });
         ToggleApplicationVisibilityInteraction = new Interaction<Unit, Unit>();
         HideApplicationCommand = ReactiveCommand.Create(async () =>

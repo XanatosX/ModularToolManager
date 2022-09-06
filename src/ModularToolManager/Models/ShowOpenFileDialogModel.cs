@@ -9,4 +9,4 @@ namespace ModularToolManager.Models;
 /// <param name="FileDialogFilters">The filter for the dialog</param>
 /// <param name="InialDirectory">The directory to start in</param>
 /// <param name="AllowMultipleSelection">Allow selecting multiple files</param>
-internal record ShowOpenFileDialogModel(IEnumerable<FileDialogFilter> FileDialogFilters, string InialDirectory, bool AllowMultipleSelection);
+public record ShowOpenFileDialogModel(List<FileDialogFilter> FileDialogFilters, string? InialDirectory, bool AllowMultipleSelection);

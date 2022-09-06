@@ -22,7 +22,7 @@ namespace ModularToolManagerModel.Services.Functions
         async Task<List<FunctionModel>> GetAvailableFunctionAsync() => await Task.Run(() => GetAvailableFunctions());
 
         /// <summary>
-        /// Method to get all a specific function
+        /// Method to get a specific function
         /// </summary>
         /// <param name="identifier"></param>
         /// <returns>The function model or null if nothing was found</returns>

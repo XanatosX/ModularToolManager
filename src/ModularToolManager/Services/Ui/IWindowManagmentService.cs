@@ -17,9 +17,13 @@ public interface IWindowManagmentService
     /// <returns>A awaitable task for the modal</returns>
     Task ShowModalWindowAsync(ShowWindowModel modalData, Window parent);
 
-    Task<string[]> ShowOpenFileDialogAsync(FileDialogFilter filter, Window parent);
+    Task<string[]> ShowOpenFileDialogAsync(ShowOpenFileDialogModel fileDialogModel);
 
-    Task<string?> ShowSaveFileDialogAsync(FileDialogFilter filter, Window parent);
+    Task<string[]> ShowOpenFileDialogAsync(ShowOpenFileDialogModel fileDialogModel, Window parent);
+
+    Task<string?> ShowSaveFileDialogAsync(ShowOpenFileDialogModel fileDialogModel);
+
+    Task<string?> ShowSaveFileDialogAsync(ShowOpenFileDialogModel fileDialogModel, Window parent);
 }
 
 

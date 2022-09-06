@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Styling;
+using ModularToolManager.Models;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.ViewModels.Extenions;
 using ReactiveUI;
@@ -41,16 +42,6 @@ public class ModalWindowViewModel : ViewModelBase
     /// Interaction to close the modal window
     /// </summary>
     public Interaction<Unit, Unit> CloseWindowInteraction { get; }
-
-    /// <summary>
-    /// Interaction to open a file dialog
-    /// </summary>
-    public Interaction<FileDialogFilter, string[]> OpenFileDialog { get; }
-
-    /// <summary>
-    /// Interaction to open a save file dialog
-    /// </summary>
-    public Interaction<FileDialogFilter, string?> SaveFileDialog { get; }
 
     /// <summary>
     /// Create a new instance of this class

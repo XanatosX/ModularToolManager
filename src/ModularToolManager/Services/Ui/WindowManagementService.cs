@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
 using ModularToolManager.Views;
@@ -34,18 +35,38 @@ internal class WindowManagementService : IWindowManagmentService
         await window.ShowDialog(parent);
     }
 
-    public Task<string[]> ShowOpenFileDialogAsync(ShowOpenFileDialogModel fileDialogModel, Window parent)
+    public async Task<string[]> ShowOpenFileDialogAsync(ShowOpenFileDialogModel fileDialogModel, Window parent)
     {
         OpenFileDialog openFileDialog = new OpenFileDialog
         {
             AllowMultiple = fileDialogModel.AllowMultipleSelection,
             Filters = fileDialogModel.FileDialogFilters.ToList(),
         };
-        string? directory = openFileDialog.Directory;
+        if (!string.IsNullOrEmpty(fileDialogModel.InialDirectory))
+        {
+            openFileDialog.Directory = fileDialogModel.InialDirectory;
+        }
+        string[] files = await openFileDialog.ShowAsync(parent) ?? new string[0];
+        return files;
+    }
+
+    public async Task<string[]> ShowOpenFileDialogAsync(ShowOpenFileDialogModel fileDialogModel)
+    {
+        var desktop = Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+        if (desktop is null)
+        {
+            logger?.LogError("Could not find main window to use a parent for open file dialog");
+            return new string[0];
+        }
+        return await ShowOpenFileDialogAsync(fileDialogModel, desktop!.MainWindow);
+    }
+
+    public Task<string?> ShowSaveFileDialogAsync(ShowOpenFileDialogModel fileDialogModel)
+    {
         throw new System.NotImplementedException();
     }
 
-    public Task<string?> ShowSaveFileDialogAsync(FileDialogFilter filter, Window parent)
+    public Task<string?> ShowSaveFileDialogAsync(ShowOpenFileDialogModel fileDialogModel, Window parent)
     {
         throw new System.NotImplementedException();
     }
