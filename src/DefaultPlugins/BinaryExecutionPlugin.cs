@@ -51,11 +51,21 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
         {
             FileName = path,
         };
-        Process.Start(startInfo);
+        try
+        {
+            Process.Start(startInfo);
+        }
+        catch (Exception e)
+        {
+            loggingService?.LogError($"Could not run plugin with path {path} and parameters {parameters}");
+            loggingService?.LogError(e.Message);
+        }
+
         loggingService?.LogTrace($"Executing of plugin done");
         return true;
     }
 
+    /// <inheritdoc/>
     public override IEnumerable<FileExtension> GetAllowedFileEndings()
     {
         return GetWindowsExtensions();
