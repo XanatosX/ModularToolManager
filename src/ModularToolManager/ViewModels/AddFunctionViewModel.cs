@@ -61,9 +61,12 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         }
     }
 
+    /// <summary>
+    /// The description of the function model
+    /// </summary>
     public string Description
     {
-        get => functionModel.Description;
+        get => functionModel?.Description ?? string.Empty;
         set
         {
             functionModel.Description = value;
@@ -199,11 +202,17 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
 
         OpenFunctionPathCommand = ReactiveCommand.Create(async () =>
         {
-            var openConfig = new ShowOpenFileDialogModel(SelectedFunctionPlugin.Plugin.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter()
+
+            var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter()
             {
                 Extensions = new List<string>() { fileEnding.Extension },
                 Name = fileEnding.Name
-            }).ToList(), null, false);
+            }).ToList();
+            if (fileDialogs is null)
+            {
+                return;
+            }
+            ShowOpenFileDialogModel openConfig = new ShowOpenFileDialogModel(fileDialogs, null, false);
             var files = await windowManagmentService?.ShowOpenFileDialogAsync(openConfig) ?? new string[0];
             string file = files.FirstOrDefault(string.Empty);
             if (string.IsNullOrEmpty(file))

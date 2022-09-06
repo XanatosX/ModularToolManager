@@ -14,11 +14,18 @@ namespace ModularToolManager.Services.Ui;
 /// </summary>
 internal class WindowManagementService : IWindowManagmentService
 {
-    private readonly ILogger<WindowManagementService>? logger;
+    /// <summary>
+    /// The logger service to use
+    /// </summary>
+    private readonly ILogger<WindowManagementService>? loggingService;
 
-    public WindowManagementService(ILogger<WindowManagementService>? logger)
+    /// <summary>
+    /// Create a new isntance of this class
+    /// </summary>
+    /// <param name="loggingService">The logging service to use</param>
+    public WindowManagementService(ILogger<WindowManagementService>? loggingService)
     {
-        this.logger = logger;
+        this.loggingService = loggingService;
     }
 
     /// <inheritdoc/>
@@ -27,7 +34,7 @@ internal class WindowManagementService : IWindowManagmentService
         ModalWindow? window = Locator.Current.GetService<ModalWindow>();
         if (window is null)
         {
-            logger?.LogError($"Could not get {typeof(ModalWindow).FullName}, abort opening modal");
+            loggingService?.LogError($"Could not get {typeof(ModalWindow).FullName}, abort opening modal");
             return;
         }
         window.WindowStartupLocation = modalData.StartupLocation;
@@ -35,6 +42,7 @@ internal class WindowManagementService : IWindowManagmentService
         await window.ShowDialog(parent);
     }
 
+    /// <inheritdoc/>
     public async Task<string[]> ShowOpenFileDialogAsync(ShowOpenFileDialogModel fileDialogModel, Window parent)
     {
         OpenFileDialog openFileDialog = new OpenFileDialog
@@ -50,22 +58,25 @@ internal class WindowManagementService : IWindowManagmentService
         return files;
     }
 
+    /// <inheritdoc/>
     public async Task<string[]> ShowOpenFileDialogAsync(ShowOpenFileDialogModel fileDialogModel)
     {
         var desktop = Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
         if (desktop is null)
         {
-            logger?.LogError("Could not find main window to use a parent for open file dialog");
+            loggingService?.LogError("Could not find main window to use a parent for open file dialog");
             return new string[0];
         }
         return await ShowOpenFileDialogAsync(fileDialogModel, desktop!.MainWindow);
     }
 
+    /// <inheritdoc/>
     public Task<string?> ShowSaveFileDialogAsync(ShowOpenFileDialogModel fileDialogModel)
     {
         throw new System.NotImplementedException();
     }
 
+    /// <inheritdoc/>
     public Task<string?> ShowSaveFileDialogAsync(ShowOpenFileDialogModel fileDialogModel, Window parent)
     {
         throw new System.NotImplementedException();
