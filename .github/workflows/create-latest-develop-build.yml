@@ -99,10 +99,12 @@ jobs:
         run: |
           cd ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_ARTIFACT_NAME
           zip -r $WINDOWS_ARTIFACT_NAME.zip ./*
+          mv $WINDOWS_ARTIFACT_NAME.zip ./$RELEASE_ARTIFACT_FOLDER/
       - name: Zip Linux build
         run: |
           cd ./$RELEASE_ARTIFACT_FOLDER/$LINUX_ARTIFACT_NAME
           zip -r $LINUX_ARTIFACT_NAME.zip ./*
+          mv $WINDOWS_ARTIFACT_NAME.zip ./$RELEASE_ARTIFACT_FOLDER/
       - name: display artifacts folder content
         if: ${{ env.DEBUG == 'true' }}
         run: ls -la $RELEASE_ARTIFACT_FOLDER
