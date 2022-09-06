@@ -47,7 +47,7 @@ public class FunctionSelectionViewModel : ViewModelBase
     /// The search text used for the filtering of the plugins
     /// </summary>
     [Reactive]
-    public string SearchText { get; set; }
+    public string? SearchText { get; set; }
 
     /// <summary>
     /// Create a new instance of this class
@@ -84,9 +84,6 @@ public class FunctionSelectionViewModel : ViewModelBase
                              });
 
         ReloadFunctions();
-
-        //.AutoRefreshOnObservable(x => x.IsActive)
-        //.Select(x => )
     }
 
     /// <summary>
@@ -103,16 +100,22 @@ public class FunctionSelectionViewModel : ViewModelBase
         return t => t.DisplayName.Contains(text, StringComparison.OrdinalIgnoreCase);
     }
 
+    /// <summary>
+    /// Reload the functions of the application
+    /// </summary>
     public void ReloadFunctions()
     {
-        //allAvailableFunctions.Clear();
-        foreach (var item in functionService?.GetAvailableFunctions().Select(function => new FunctionButtonViewModel(function)))
+        foreach (FunctionButtonViewModel? functionViewModel in functionService?.GetAvailableFunctions().Select(function => new FunctionButtonViewModel(function)) ?? Enumerable.Empty<FunctionButtonViewModel?>())
         {
-            if (allAvailableFunctions.Items.Select(item => item.Identifier).Contains(item.Identifier))
+            if (functionViewModel is null || allAvailableFunctions is null)
             {
                 continue;
             }
-            allAvailableFunctions.Add(item);
+            if (allAvailableFunctions.Items.Select(item => item.Identifier).Contains(functionViewModel?.Identifier))
+            {
+                continue;
+            }
+            allAvailableFunctions!.Add(functionViewModel);
         }
     }
 }
