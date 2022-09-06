@@ -105,6 +105,10 @@ public class FunctionSelectionViewModel : ViewModelBase
         //allAvailableFunctions.Clear();
         foreach (var item in functionService?.GetAvailableFunctions().Select(function => new FunctionButtonViewModel(function)))
         {
+            if (allAvailableFunctions.Items.Select(item => item.Identifier).Contains(item.Identifier))
+            {
+                continue;
+            }
             allAvailableFunctions.Add(item);
         }
     }
