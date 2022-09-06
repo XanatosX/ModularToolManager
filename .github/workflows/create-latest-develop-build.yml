@@ -11,8 +11,8 @@ env:
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj
   APPLICATION_PUBLISH_FOLDER: ./publish
   PLUGIN_PUBLISH_FOLDER: ./publish/plugin
-  WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact_x64.zip
-  LINUX_ARTIFACT_NAME: LinuxBuildArtifact_x64.zip
+  WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact_x64
+  LINUX_ARTIFACT_NAME: LinuxBuildArtifact_x64
   RELEASE_ARTIFACT_FOLDER: artifacts
 
 jobs:
@@ -97,7 +97,8 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           name: Recent develop build
+          tag: Develop-${{ GITHUB.RUN_NUMBER }}
           generateReleaseNotes: true
           body: Recent version of the develop branch, ready for testing
-          draft: true
+          draft: ${{ env.DEBUG }}
           prerelease: true
