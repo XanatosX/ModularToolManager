@@ -18,6 +18,7 @@ env:
 jobs:
   create-windows-build:
     name: Create Windows build
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -51,6 +52,7 @@ jobs:
        if-no-files-found: error
   create-linux-build:
     name: Create Linux build
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -84,6 +86,7 @@ jobs:
        if-no-files-found: error
   create-release:
     name: Create GitHub Release
+    if: github.event.pull_request.merged == true
     needs: ["create-linux-build", "create-windows-build"]
     runs-on: ubuntu-latest
     steps:
@@ -91,6 +94,8 @@ jobs:
         uses: actions/download-artifact@v2
         with: 
           path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
+      - name: Zip Windows build
+        run: zip -r $WINDOWS_ARTIFACT_NAME.zip ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_ARTIFACT_NAME
       - name: display artifacts folder content
         if: ${{ env.DEBUG == 'true' }}
         run: ls -la $RELEASE_ARTIFACT_FOLDER
@@ -102,5 +107,5 @@ jobs:
           body: Recent version of the develop branch, ready for testing
           draft: ${{ env.DEBUG }}
           prerelease: true
-          artifacts: ${{ env.RELEASE_ARTIFACT_FOLDER }}/*
+          artifacts: ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.zip
           artifactContentType: "application/zip"
