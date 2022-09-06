@@ -6,7 +6,7 @@ on:
     branches: [ "develop" ]
 
 env:
-  DEBUG: true
+  DEBUG: false
   RELEASE_NAME: Recent develop build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj
