@@ -1,9 +1,9 @@
 name: Recent develop build
 
-on: push
-  #pull_request:
-    #types: [closed]
-    #branches: [ "develop" ]
+on:
+  pull_request:
+    types: [closed]
+    branches: [ "develop" ]
 
 env:
   DEBUG: true
