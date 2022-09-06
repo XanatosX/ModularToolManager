@@ -1,4 +1,4 @@
-name: Check pull request
+name: Recent develop build
 
 on: push
   #pull_request:
@@ -96,7 +96,7 @@ jobs:
         with: 
           path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
       - name: Zip Windows build
-        run: zip -r $WINDOWS_ARTIFACT_NAME.zip ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_ARTIFACT_NAME
+        run: zip -r ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_ARTIFACT_NAME.zip ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_ARTIFACT_NAME
       - name: display artifacts folder content
         if: ${{ env.DEBUG == 'true' }}
         run: ls -la $RELEASE_ARTIFACT_FOLDER
