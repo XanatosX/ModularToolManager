@@ -96,7 +96,9 @@ jobs:
         with: 
           path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
       - name: Zip Windows build
-        run: zip -r ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_ARTIFACT_NAME.zip ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_ARTIFACT_NAME
+        run: |
+          cd ./$RELEASE_ARTIFACT_FOLDER
+          zip -r $WINDOWS_ARTIFACT_NAME.zip ./*
       - name: display artifacts folder content
         if: ${{ env.DEBUG == 'true' }}
         run: ls -la $RELEASE_ARTIFACT_FOLDER
