@@ -9,7 +9,7 @@ env:
   DEBUG: false
   RELEASE_NAME: Recent develop build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
-  APPLICATION_PLUGIN_PROJECT_PATH: .\src\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj
+  APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
   APPLICATION_PUBLISH_FOLDER: ./publish
   PLUGIN_PUBLISH_FOLDER: ./publish/plugin
   WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact_x64
