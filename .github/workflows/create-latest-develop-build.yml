@@ -39,8 +39,8 @@ jobs:
     - name: Show content to publish
       if: ${{ env.DEBUG == true }}
       run: |
-      cd ./publish
-      ls -la
+        cd ./publish
+        ls -la
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
