@@ -5,9 +5,20 @@ using System.Diagnostics;
 using System.Globalization;
 
 namespace DefaultPlugins;
+
+/// <summary>
+/// Plugin for executing binaries on the system
+/// </summary>
 public class BinaryExecutionPlugin : AbstractFunctionPlugin
 {
+    /// <summary>
+    /// The translation service to use
+    /// </summary>
     private readonly IPluginTranslationService translationService;
+
+    /// <summary>
+    /// The logging service to use
+    /// </summary>
     private readonly IPluginLoggerService<BinaryExecutionPlugin> loggingService;
 
     /// <summary>
