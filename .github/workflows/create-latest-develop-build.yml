@@ -1,15 +1,16 @@
 name: Check pull request
 
-on:
-  pull_request:
-    types: [closed]
-    branches: [ "develop" ]
+on: push
+  #pull_request:
+    #types: [closed]
+    #branches: [ "develop" ]
 
 env:
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj
   APPLICATION_PUBLISH_FOLDER: ./publish
   PLUGIN_PUBLISH_FOLDER: ./publish/plugin
+  WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact
 
 jobs:
   build:
@@ -34,5 +35,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-       name: WindowsBuildArtifact
-       path: 
+       name: $WINDOWS_ARTIFACT_NAME
+       path: $APPLICATION_PUBLISH_FOLDER
