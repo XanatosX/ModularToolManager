@@ -32,6 +32,8 @@ jobs:
       run: dotnet publish $APPLICATION_PROJECT_PATH -r win-x64 -c Release -o $APPLICATION_PUBLISH_FOLDER
     - name: Publish Plugin
       run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r win-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER
+    - name: Show content for debug
+      run: ls -la
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
