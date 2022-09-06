@@ -6,6 +6,7 @@ on: push
     #branches: [ "develop" ]
 
 env:
+  DEBUG: true
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj
   APPLICATION_PUBLISH_FOLDER: ./publish
@@ -33,8 +34,10 @@ jobs:
     - name: Publish Plugin
       run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r win-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER
     - name: Show content for debug
+      if: $DEBUG == true
       run: ls -la
     - name: Show content to publish
+      if: $DEBUG == true
       run: |
       cd ./publish
       ls -la
