@@ -1,0 +1,120 @@
+name: Recent develop build
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [ "develop" ]
+
+env:
+  DEBUG: false
+  RELEASE_NAME: Recent develop build
+  APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
+  APPLICATION_PLUGIN_PROJECT_PATH: .\src\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj
+  APPLICATION_PUBLISH_FOLDER: ./publish
+  PLUGIN_PUBLISH_FOLDER: ./publish/plugin
+  WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact_x64
+  LINUX_ARTIFACT_NAME: LinuxBuildArtifact_x64
+  RELEASE_ARTIFACT_FOLDER: artifacts
+
+jobs:
+  create-windows-build:
+    name: Create Windows build
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Publish Application
+      run: dotnet publish $APPLICATION_PROJECT_PATH -r win-x64 -c Release -o $APPLICATION_PUBLISH_FOLDER
+    - name: Publish Plugin
+      run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r win-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER
+    - name: Show content for debug
+      if: ${{ env.DEBUG == 'true' }}
+      run: ls -la
+    - name: Show content to publish
+      if: ${{ env.DEBUG == 'true' }}
+      run: |
+        cd ./publish
+        ls -la
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+       name: ${{ env.WINDOWS_ARTIFACT_NAME }}
+       path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
+       if-no-files-found: error
+  create-linux-build:
+    name: Create Linux build
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Publish Application
+      run: dotnet publish $APPLICATION_PROJECT_PATH -r linux-x64 -c Release -o $APPLICATION_PUBLISH_FOLDER
+    - name: Publish Plugin
+      run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r linux-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER
+    - name: Show content for debug
+      if: ${{ env.DEBUG == 'true' }}
+      run: ls -la
+    - name: Show content to publish
+      if: ${{ env.DEBUG == 'true' }}
+      run: |
+        cd ./publish
+        ls -la
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+       name: ${{ env.LINUX_ARTIFACT_NAME }}
+       path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
+       if-no-files-found: error
+  create-release:
+    name: Create GitHub Release
+    if: github.event.pull_request.merged == true
+    needs: ["create-linux-build", "create-windows-build"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with: 
+          path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
+      - name: Zip Windows build
+        run: |
+          cd ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_ARTIFACT_NAME
+          zip -r $WINDOWS_ARTIFACT_NAME.zip ./*
+          mv $WINDOWS_ARTIFACT_NAME.zip ../
+      - name: Zip Linux build
+        run: |
+          cd ./$RELEASE_ARTIFACT_FOLDER/$LINUX_ARTIFACT_NAME
+          zip -r $LINUX_ARTIFACT_NAME.zip ./*
+          mv $LINUX_ARTIFACT_NAME.zip ../
+      - name: display artifacts folder content
+        if: ${{ env.DEBUG == 'true' }}
+        run: ls -la $RELEASE_ARTIFACT_FOLDER
+      - uses: ncipollo/release-action@v1
+        with:
+          name: ${{ env.RELEASE_NAME }} [${{ GITHUB.RUN_NUMBER }}]
+          tag: Develop-${{ GITHUB.RUN_NUMBER }}
+          generateReleaseNotes: true
+          body: Recent version of the develop branch, ready for testing
+          draft: ${{ env.DEBUG }}
+          prerelease: true
+          artifacts: ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.zip
+          artifactContentType: "application/zip"
