@@ -1,0 +1,38 @@
+name: Check pull request
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [ "develop" ]
+
+env:
+  APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
+  APPLICATION_PLUGIN_PROJECT_PATH: .\src\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj
+  APPLICATION_PUBLISH_FOLDER: ./publish
+  PLUGIN_PUBLISH_FOLDER: ./publish/plugin
+
+jobs:
+  build:
+    name: Create Windows build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Publish Application
+      run: dotnet publish $APPLICATION_PROJECT_PATH -r win-x64 -c Release -o $APPLICATION_PUBLISH_FOLDER
+    - name: Publish Plugin
+      run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r win-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+       name: WindowsBuildArtifact
+       path: 

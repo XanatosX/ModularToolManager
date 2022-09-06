@@ -20,7 +20,6 @@
     <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" Version="14.4.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DefaultPlugins\DefaultPlugins.csproj" />
     <ProjectReference Include="..\ModularToolManagerModel\ModularToolManagerModel.csproj" />
     <ProjectReference Include="..\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj" />
   </ItemGroup>
