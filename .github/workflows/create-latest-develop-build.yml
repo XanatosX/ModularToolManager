@@ -102,5 +102,5 @@ jobs:
           body: Recent version of the develop branch, ready for testing
           draft: ${{ env.DEBUG }}
           prerelease: true
-          artifacts: ${{ $RELEASE_ARTIFACT_FOLDER }}/*
+          artifacts: ${{ env.RELEASE_ARTIFACT_FOLDER }}/*
           artifactContentType: "application/zip"
