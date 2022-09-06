@@ -7,7 +7,7 @@ namespace ModularToolManager.Services.Ui;
 /// <summary>
 /// Interface to use for open up modals
 /// </summary>
-public interface IModalService
+public interface IWindowManagmentService
 {
     /// <summary>
     /// Show a new modal async
@@ -16,4 +16,10 @@ public interface IModalService
     /// <param name="parent">The parent of the modal</param>
     /// <returns>A awaitable task for the modal</returns>
     Task ShowModalWindowAsync(ShowWindowModel modalData, Window parent);
+
+    Task<string[]> ShowOpenFileDialogAsync(FileDialogFilter filter, Window parent);
+
+    Task<string?> ShowSaveFileDialogAsync(FileDialogFilter filter, Window parent);
 }
+
+

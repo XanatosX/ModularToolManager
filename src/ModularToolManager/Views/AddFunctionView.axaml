@@ -8,6 +8,7 @@
 			 MaxWidth="400">
 	<StackPanel>
 		<TextBox Watermark="{x:Static p:Resources.NewFunction_Name}" UseFloatingWatermark="true" Text="{Binding DisplayName}"/>
+		<TextBox AcceptsReturn="True" TextWrapping="Wrap"  Watermark="{x:Static p:Resources.NewFunction_Description}" UseFloatingWatermark="true" Text="{Binding Description}"/>
 		<DropDown
 			Items="{Binding FunctionPlugins}"
 			SelectedItem="{Binding SelectedFunctionPlugin}"/>

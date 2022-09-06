@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ModularToolManager.ViewModels;
@@ -54,7 +55,17 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         set
         {
             functionModel.DisplayName = value;
-            this.RaisePropertyChanged("DisplayName");
+            this.RaisePropertyChanged(nameof(DisplayName));
+        }
+    }
+
+    public string Description
+    {
+        get => functionModel.Description;
+        set
+        {
+            functionModel.Description = value;
+            this.RaisePropertyChanged(nameof(Description));
         }
     }
 
@@ -67,7 +78,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         set
         {
             functionModel.Plugin = value?.Plugin;
-            this.RaisePropertyChanged("SelectedFunctionService");
+            this.RaisePropertyChanged(nameof(SelectedFunctionPlugin));
         }
     }
 
@@ -80,7 +91,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         set
         {
             functionModel.Parameters = value;
-            this.RaisePropertyChanged("FunctionParameters");
+            this.RaisePropertyChanged(nameof(FunctionParameters));
         }
     }
 
@@ -93,7 +104,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         set
         {
             functionModel.Path = value;
-            this.RaisePropertyChanged("SelectedPath");
+            this.RaisePropertyChanged(nameof(SelectedPath));
         }
     }
 
@@ -165,11 +176,14 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
                                                                     return valid;
                                                                 });
 
-        AbortCommand = ReactiveCommand.Create(async () => Closing?.Invoke(this, EventArgs.Empty));
-        OkCommand = ReactiveCommand.Create(async () =>
+        AbortCommand = ReactiveCommand.Create(() => Closing?.Invoke(this, EventArgs.Empty));
+        OkCommand = ReactiveCommand.Create(() =>
         {
-            functionService?.AddFunction(functionModel);
-            Closing?.Invoke(this, EventArgs.Empty);
+            bool success = functionService?.AddFunction(functionModel) ?? false;
+            if (success)
+            {
+                Closing?.Invoke(this, EventArgs.Empty);
+            }
         }, canSave);
     }
 }

@@ -124,6 +124,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Function Description.
+        /// </summary>
+        public static string NewFunction_Description {
+            get {
+                return ResourceManager.GetString("NewFunction_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Function Display Name.
         /// </summary>
         public static string NewFunction_Name {
