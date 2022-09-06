@@ -34,10 +34,10 @@ jobs:
     - name: Publish Plugin
       run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r win-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER
     - name: Show content for debug
-      if: ${{ env.DEBUG == true }}
+      if: ${{ env.DEBUG == 'true' }}
       run: ls -la
     - name: Show content to publish
-      if: ${{ env.DEBUG == true }}
+      if: ${{ env.DEBUG == 'true' }}
       run: |
         cd ./publish
         ls -la
