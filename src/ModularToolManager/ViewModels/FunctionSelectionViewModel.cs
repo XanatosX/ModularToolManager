@@ -43,6 +43,9 @@ public class FunctionSelectionViewModel : ViewModelBase
     /// </summary>
     private readonly SourceList<FunctionButtonViewModel> allAvailableFunctions;
 
+    /// <summary>
+    /// The search text used for the filtering of the plugins
+    /// </summary>
     [Reactive]
     public string SearchText { get; set; }
 

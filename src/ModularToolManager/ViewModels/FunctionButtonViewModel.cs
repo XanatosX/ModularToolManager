@@ -16,6 +16,9 @@ public class FunctionButtonViewModel : ViewModelBase
     /// </summary>
     private readonly FunctionModel functionModel;
 
+    /// <summary>
+    /// The identifier for this function button
+    /// </summary>
     public string Identifier => functionModel.UniqueIdentifier;
 
     /// <summary>
@@ -31,6 +34,9 @@ public class FunctionButtonViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// The sort id to use for this function button
+    /// </summary>
     public int SortId
     {
         get => functionModel.SortOrder;
@@ -55,8 +61,14 @@ public class FunctionButtonViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// The tool tip delay to use, a really high value is returned if no description is present
+    /// </summary>
     public int ToolTipDelay => string.IsNullOrEmpty(Description) ? int.MaxValue : 400;
 
+    /// <summary>
+    /// Is the tooltip active right now
+    /// </summary>
     public bool IsActive { get; private set; }
 
     /// <summary>
@@ -79,10 +91,6 @@ public class FunctionButtonViewModel : ViewModelBase
         this.functionModel = functionModel;
         ExecuteFunctionCommand = ReactiveCommand.Create(async () => await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path)));
 
-        DeleteFunctionCommand = ReactiveCommand.CreateFromTask(async () =>
-        {
-            this.IsActive = false;
-        });
-        //DeleteFunctionCommand = ReactiveCommand.Create(() => IsActive = false);
+        DeleteFunctionCommand = ReactiveCommand.CreateFromTask(async () => { IsActive = false; });
     }
 }
