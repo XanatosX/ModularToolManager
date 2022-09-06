@@ -13,6 +13,7 @@ env:
   PLUGIN_PUBLISH_FOLDER: ./publish/plugin
   WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact
   LINUX_ARTIFACT_NAME: LINUXBuildArtifact
+  RELEASE_ARTIFACT_FOLDER: artifacts
 
 jobs:
   create-windows-build:
@@ -81,3 +82,15 @@ jobs:
        name: ${{ env.LINUX_ARTIFACT_NAME }}
        path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
        if-no-files-found: error
+  create-release:
+    name: Create GitHub Release
+    needs: ["create-linux-build", "create-windows-build"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with: 
+          path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
+      - name: display artifacts folder content
+        if: ${{ env.DEBUG == 'true' }}
+        run: ls -la $RELEASE_ARTIFACT_FOLDER
