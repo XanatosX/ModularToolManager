@@ -25,12 +25,6 @@ public class FunctionSelectionViewModel : ViewModelBase
     /// <summary>
     /// All the possible functions currently available
     /// </summary>
-    //public ObservableCollection<FunctionButtonViewModel> AllFunctions { get; set; }
-
-
-    /// <summary>
-    /// All the possible functions currently available
-    /// </summary>
     public ReadOnlyObservableCollection<FunctionButtonViewModel> AllFunctions => allFunctions;
 
     /// <summary>

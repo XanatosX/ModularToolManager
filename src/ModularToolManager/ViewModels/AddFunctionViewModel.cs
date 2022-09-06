@@ -203,9 +203,9 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         OpenFunctionPathCommand = ReactiveCommand.Create(async () =>
         {
 
-            var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter()
+            var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter
             {
-                Extensions = new List<string>() { fileEnding.Extension },
+                Extensions = new List<string> { fileEnding.Extension },
                 Name = fileEnding.Name
             }).ToList();
             if (fileDialogs is null)

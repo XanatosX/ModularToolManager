@@ -43,6 +43,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     /// <param name="loggingService">The logger service to use</param>
     public BinaryExecutionPlugin(IPluginTranslationService translationService, IPluginLoggerService<BinaryExecutionPlugin> loggingService)
     {
+        fallbackCulture = CultureInfo.GetCultureInfo("en-EN");
         this.translationService = translationService;
         this.loggingService = loggingService;
     }
