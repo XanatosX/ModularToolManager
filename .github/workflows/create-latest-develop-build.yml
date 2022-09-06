@@ -44,6 +44,6 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-       name: $WINDOWS_ARTIFACT_NAME
+       name: ${{ env.WINDOWS_ARTIFACT_NAME }}
        path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
        if-no-files-found: error
