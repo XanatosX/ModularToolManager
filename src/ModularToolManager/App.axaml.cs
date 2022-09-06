@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.DependencyInjection;
+using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Logging;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;
@@ -36,7 +37,7 @@ public class App : Application
                                       .AddViews()
                                       .AddLogging(config =>
                                       {
-                                          var pathService = Locator.Current.GetService<IPathService>();
+                                          var pathService = Locator.Current.GetService<IPathService>() ?? new PathService();
                                           string basePath = pathService?.GetSettingsFolderPathString() ?? Path.GetTempPath();
                                           string logFolder = Path.Combine(basePath, "logs");
 

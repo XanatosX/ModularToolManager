@@ -1,4 +1,6 @@
-﻿using ModularToolManager.Models;
+﻿using Avalonia.Controls;
+using ModularToolManager.Models;
+using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels.Extenions;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.Plugin;
@@ -28,6 +30,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
     /// Service to use for loading functions
     /// </summary>
     private readonly IFunctionService? functionService;
+    private readonly IWindowManagmentService windowManagmentService;
 
     /// <summary>
     /// A list with all the function plugin possiblities
@@ -54,7 +57,20 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         set
         {
             functionModel.DisplayName = value;
-            this.RaisePropertyChanged("DisplayName");
+            this.RaisePropertyChanged(nameof(DisplayName));
+        }
+    }
+
+    /// <summary>
+    /// The description of the function model
+    /// </summary>
+    public string Description
+    {
+        get => functionModel?.Description ?? string.Empty;
+        set
+        {
+            functionModel.Description = value;
+            this.RaisePropertyChanged(nameof(Description));
         }
     }
 
@@ -67,7 +83,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         set
         {
             functionModel.Plugin = value?.Plugin;
-            this.RaisePropertyChanged("SelectedFunctionService");
+            this.RaisePropertyChanged(nameof(SelectedFunctionPlugin));
         }
     }
 
@@ -80,7 +96,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         set
         {
             functionModel.Parameters = value;
-            this.RaisePropertyChanged("FunctionParameters");
+            this.RaisePropertyChanged(nameof(FunctionParameters));
         }
     }
 
@@ -93,7 +109,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
         set
         {
             functionModel.Path = value;
-            this.RaisePropertyChanged("SelectedPath");
+            this.RaisePropertyChanged(nameof(SelectedPath));
         }
     }
 
@@ -108,6 +124,11 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
     public ICommand AbortCommand { get; }
 
     /// <summary>
+    /// Command to use for opening a gile
+    /// </summary>
+    public ICommand OpenFunctionPathCommand { get; }
+
+    /// <summary>
     /// Event if the window is getting a close requested
     /// </summary>
     public event EventHandler? Closing;
@@ -117,11 +138,12 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
     /// </summary>
     /// <param name="pluginService">The plugin service to use</param>
     /// <param name="functionService">The function service to use</param>
-    public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService)
+    public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService, IWindowManagmentService windowManagmentService)
     {
         functionModel = new FunctionModel();
         this.pluginService = pluginService;
         this.functionService = functionService;
+        this.windowManagmentService = windowManagmentService;
         functionPlugins = new();
         if (pluginService is not null)
         {
@@ -159,17 +181,45 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
                                                                     {
                                                                         FileInfo info = new FileInfo(SelectedPath);
                                                                         valid &= plugin.GetAllowedFileEndings().Select(fileExtension => fileExtension.Extension.ToLower())
-                                                                                                               .Any(ending => ending == info.Extension.ToLowerInvariant());
+                                                                                                               .Any(ending => ending == info.Extension.TrimStart('.').ToLowerInvariant());
                                                                     }
 
                                                                     return valid;
                                                                 });
 
-        AbortCommand = ReactiveCommand.Create(async () => Closing?.Invoke(this, EventArgs.Empty));
-        OkCommand = ReactiveCommand.Create(async () =>
+        AbortCommand = ReactiveCommand.Create(() => Closing?.Invoke(this, EventArgs.Empty));
+        OkCommand = ReactiveCommand.Create(() =>
         {
-            functionService?.AddFunction(functionModel);
-            Closing?.Invoke(this, EventArgs.Empty);
+            bool success = functionService?.AddFunction(functionModel) ?? false;
+            if (success)
+            {
+                Closing?.Invoke(this, EventArgs.Empty);
+            }
         }, canSave);
+
+        IObservable<bool> canOpenFile = this.WhenAnyValue(x => x.SelectedFunctionPlugin,
+                                                          (FunctionPluginViewModel? plugin) => plugin is not null);
+
+        OpenFunctionPathCommand = ReactiveCommand.Create(async () =>
+        {
+
+            var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter
+            {
+                Extensions = new List<string> { fileEnding.Extension },
+                Name = fileEnding.Name
+            }).ToList();
+            if (fileDialogs is null)
+            {
+                return;
+            }
+            ShowOpenFileDialogModel openConfig = new ShowOpenFileDialogModel(fileDialogs, null, false);
+            var files = await windowManagmentService?.ShowOpenFileDialogAsync(openConfig) ?? new string[0];
+            string file = files.FirstOrDefault(string.Empty);
+            if (string.IsNullOrEmpty(file))
+            {
+                return;
+            }
+            SelectedPath = file;
+        }, canOpenFile);
     }
 }

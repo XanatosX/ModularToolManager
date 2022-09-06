@@ -30,12 +30,12 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// <summary>
     /// Service to use for getting translation from this assembly
     /// </summary>
-    private readonly IPluginTranslationService? pluginTranslationService;
+    private readonly IPluginTranslationService? translationsService;
 
     /// <summary>
     /// Logger service to use for logging purpose
     /// </summary>
-    private readonly IPluginLoggerService<ScriptExecutionPlugin>? logger;
+    private readonly IPluginLoggerService<ScriptExecutionPlugin>? loggingService;
 
     /// <summary>
     /// Sould the execution be hidden
@@ -47,23 +47,23 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// Create a new instance of this class
     /// </summary>
     /// <param name="translationService">The translation service to use</param>
-    /// <param name="logger">The logger service to use</param>
-    public ScriptExecutionPlugin(IPluginTranslationService? translationService, IPluginLoggerService<ScriptExecutionPlugin>? logger)
+    /// <param name="loggingService">The logger service to use</param>
+    public ScriptExecutionPlugin(IPluginTranslationService? translationService, IPluginLoggerService<ScriptExecutionPlugin>? loggingService)
     {
         fallbackCulture = CultureInfo.GetCultureInfo("en-EN");
-        pluginTranslationService = translationService;
-        this.logger = logger;
-        logger?.LogTrace($"Instance was created");
+        translationsService = translationService;
+        this.loggingService = loggingService;
+        loggingService?.LogTrace($"Instance was created");
     }
 
     /// <inheritdoc/>
     public override bool Execute(string parameters, string path)
     {
-        logger?.LogTrace($"Execute plugin with path attribute '{path}' including the following parameters '{parameters}'");
+        loggingService?.LogTrace($"Execute plugin with path attribute '{path}' including the following parameters '{parameters}'");
         if (!File.Exists(path))
         {
-            string baseMessage = pluginTranslationService?.GetTranslationByKey("error_cant_find_script_file", fallbackCulture) ?? FALLBACK_SCRIPT_NOT_FOUND;
-            logger?.LogError(baseMessage, path);
+            string baseMessage = translationsService?.GetTranslationByKey("error_cant_find_script_file", fallbackCulture) ?? FALLBACK_SCRIPT_NOT_FOUND;
+            loggingService?.LogError(baseMessage, path);
             return false;
         }
 
@@ -72,35 +72,35 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
             FileName = path,
         };
         Process.Start(startInfo);
-        logger?.LogTrace($"Executing of plugin done");
+        loggingService?.LogTrace($"Executing of plugin done");
         return true;
     }
 
     /// <inheritdoc/>
     public override string GetDisplayName()
     {
-        logger?.LogTrace($"Requested display name");
-        return pluginTranslationService?.GetTranslationByKey("displayname", fallbackCulture) ?? "Script Execution";
+        loggingService?.LogTrace($"Requested display name");
+        return translationsService?.GetTranslationByKey("script-displayname", fallbackCulture) ?? "Script Execution";
     }
 
     /// <inheritdoc/>
     public override Version GetVersion()
     {
-        logger?.LogTrace($"Requested version");
+        loggingService?.LogTrace($"Requested version");
         return Version.Parse("0.1.0.0");
     }
 
     /// <inheritdoc/>
     public override bool IsOperationSystemValid()
     {
-        logger?.LogTrace($"Checked if os is valid");
+        loggingService?.LogTrace($"Checked if os is valid");
         return OperatingSystem.IsWindows();
     }
 
     /// <inheritdoc/>
     public override IEnumerable<FileExtension> GetAllowedFileEndings()
     {
-        logger?.LogTrace($"Get allowed file extensions");
+        loggingService?.LogTrace($"Get allowed file extensions");
         return GetWindowsExtensions().Where(extension => !string.IsNullOrEmpty(extension.Name) && !string.IsNullOrEmpty(extension.Extension))
                                      .OrderBy(item => item.Name);
     }
@@ -111,19 +111,19 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// <returns></returns>
     private IEnumerable<FileExtension> GetWindowsExtensions()
     {
-        logger?.LogTrace($"Create windows extensions");
+        loggingService?.LogTrace($"Create windows extensions");
         return new List<FileExtension>
         {
-            new FileExtension(pluginTranslationService?.GetTranslationByKey("batch", fallbackCulture) ?? FALLBACK_TRANSLATION, ".bat"),
-            new FileExtension(pluginTranslationService?.GetTranslationByKey("cmd", fallbackCulture) ?? FALLBACK_TRANSLATION, ".cmd"),
-            new FileExtension(pluginTranslationService?.GetTranslationByKey("powershell", fallbackCulture) ?? FALLBACK_TRANSLATION, ".ps")
+            new FileExtension(translationsService?.GetTranslationByKey("batch", fallbackCulture) ?? FALLBACK_TRANSLATION, "bat"),
+            new FileExtension(translationsService?.GetTranslationByKey("cmd", fallbackCulture) ?? FALLBACK_TRANSLATION, "cmd"),
+            new FileExtension(translationsService?.GetTranslationByKey("powershell", fallbackCulture) ?? FALLBACK_TRANSLATION, "ps")
         };
     }
 
     /// <inheritdoc/>
     public override void Dispose()
     {
-        logger?.LogTrace($"Dispose plugin");
+        loggingService?.LogTrace("Dispose plugin");
         //Nothing to dispose!
     }
 }

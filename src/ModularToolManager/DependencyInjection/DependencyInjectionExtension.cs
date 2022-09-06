@@ -44,10 +44,9 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddViewModels(this IServiceCollection collection)
     {
-        return collection.AddTransient(resolver => new MainWindow(resolver?.GetService<IModalService>())
-        {
-            DataContext = resolver?.GetService<MainWindowViewModel>(),
-        });
+        return collection.AddTransient<AddFunctionViewModel>()
+                         .AddTransient<FunctionSelectionViewModel>()
+                         .AddTransient<MainWindowViewModel>();
     }
 
     /// <summary>
@@ -57,9 +56,11 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddViews(this IServiceCollection collection)
     {
-        return collection.AddTransient<AddFunctionViewModel>()
-                         .AddTransient<FunctionSelectionViewModel>()
-                         .AddTransient<MainWindowViewModel>();
+        return collection.AddTransient(resolver => new MainWindow(resolver?.GetService<IWindowManagmentService>())
+        {
+            DataContext = resolver?.GetService<MainWindowViewModel>(),
+        })
+                         .AddTransient<ModalWindow>();
     }
 
     /// <summary>
@@ -75,7 +76,7 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<IFunctionSettingsService, FunctionSettingService>()
                          .AddSingleton<IUrlOpenerService, UrlOpenerService>()
                          .AddSingleton<ILanguageService, ResourceCultureService>()
-                         .AddSingleton<IModalService, WindowModalService>()
+                         .AddSingleton<IWindowManagmentService, WindowManagementService>()
                          .AddSingleton<IPluginService, PluginService>()
                          .AddSingleton<ISerializationOptionFactory<JsonSerializerOptions>, JsonSerializationOptionFactory>()
                          .AddSingleton<ISerializeService, JsonSerializationService>()

@@ -2,14 +2,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:p="clr-namespace:ModularToolManager.Properties"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.FunctionButtonView">
-	<Button Content="{Binding DisplayName}" Command="{Binding ExecuteFunctionCommand}">
-		<!--
-		<ToolTip.Tip>
-				<TextBlock Text="{Binding Description}"/>
-			</ToolTip.Tip>
-			-->
+	<Button x:Name="btn_function" HorizontalAlignment="Stretch" ToolTip.Tip="{Binding Description}" ToolTip.ShowDelay="{Binding ToolTipDelay}" HorizontalContentAlignment="Center" Content="{Binding DisplayName}" Command="{Binding ExecuteFunctionCommand}">
+		<Button.ContextMenu>
+			<ContextMenu>
+				<MenuItem Header="{x:Static p:Resources.Default_Delete}" Command="{Binding DeleteFunctionCommand}"/>
+			</ContextMenu>
+		</Button.ContextMenu>
 	</Button>
 	
 </UserControl>

@@ -126,6 +126,9 @@
   <data name="DefaultButton_Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="Default_Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Nach Funktion suchen</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="Menu_ReportBug" xml:space="preserve">
     <value>Fehler Melden</value>
+  </data>
+  <data name="NewFunction_Description" xml:space="preserve">
+    <value>Funktionsbeschreibung</value>
   </data>
   <data name="NewFunction_Name" xml:space="preserve">
     <value>Funktionsanzeigename</value>

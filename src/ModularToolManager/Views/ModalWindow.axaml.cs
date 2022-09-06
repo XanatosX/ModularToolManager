@@ -1,9 +1,14 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.ReactiveUI;
 using Avalonia.Threading;
+using ModularToolManager.Models;
+using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ReactiveUI;
+using System;
+using System.Linq;
 using System.Reactive;
 
 namespace ModularToolManager.Views;
@@ -21,10 +26,12 @@ public partial class ModalWindow : ReactiveWindow<ModalWindowViewModel>
 
     private async void HandleWindowClose(InteractionContext<Unit, Unit> obj)
     {
+        obj.SetOutput(new Unit());
         await Dispatcher.UIThread.InvokeAsync(() =>
         {
             Close();
         });
+
     }
 
     private void InitializeComponent()

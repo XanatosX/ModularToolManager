@@ -194,7 +194,7 @@ public class PluginTranslationService : IPluginTranslationService
     private CultureInfo GetCurrentCulture()
     {
         //@TODO use correct culture as soon as we save it!
-        CultureInfo culture = CultureInfo.CurrentCulture;
+        CultureInfo culture = CultureInfo.CurrentUICulture;
         return culture;
     }
 

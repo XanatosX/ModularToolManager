@@ -129,6 +129,9 @@
   <data name="DefaultButton_OpenFile" xml:space="preserve">
     <value>...</value>
   </data>
+  <data name="Default_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Search for function</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="Menu_ReportBug" xml:space="preserve">
     <value>Report Bug</value>
+  </data>
+  <data name="NewFunction_Description" xml:space="preserve">
+    <value>Function Description</value>
   </data>
   <data name="NewFunction_Name" xml:space="preserve">
     <value>Function Display Name</value>

@@ -1,7 +1,11 @@
 ﻿[
   {
-    "key": "displayname",
+    "key": "script-displayname",
     "value": "Skript ausführung"
+  },
+  {
+    "key": "binary-displayname",
+    "value": "Ausführbare Datei starten"
   },
   {
     "key": "batch",
@@ -14,6 +18,10 @@
   {
     "key": "powershell",
     "value": "PowerShell-Skript"
+  },
+  {
+    "key": "executable",
+    "value": "Ausführbare-Datei"
   },
   {
     "key": "error_cant_find_script_file",

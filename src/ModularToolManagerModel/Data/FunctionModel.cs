@@ -20,7 +20,7 @@ namespace ModularToolManager.Models
         /// <summary>
         /// The description of the function
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// The plugin to use to execute the function
@@ -61,7 +61,7 @@ namespace ModularToolManager.Models
         {
             UniqueIdentifier = Guid.NewGuid().ToString().Replace("-", string.Empty);
             DisplayName = displayName;
-            Description = string.Empty;
+            Description = null;
             Plugin = plugin;
             Path = path;
             Parameters = parameters;

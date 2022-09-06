@@ -1,7 +1,11 @@
 ﻿[
   {
-    "key": "displayname",
+    "key": "script-displayname",
     "value": "Script execution"
+  },
+  {
+    "key": "binary-displayname",
+    "value": "Start executable binary file"
   },
   {
     "key": "batch",
@@ -16,7 +20,15 @@
     "value": "PowerShell-Script"
   },
   {
+    "key": "executable",
+    "value": "Executable-File"
+  },
+  {
     "key": "error_cant_find_script_file",
     "value": "Could not find script '{0}' to execute"
+  },
+  {
+    "key": "error_cant_find_binary_file",
+    "value": "Could not find binary file '{0}' to run"
   }
 ]

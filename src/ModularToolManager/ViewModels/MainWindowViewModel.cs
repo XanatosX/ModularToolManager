@@ -98,11 +98,22 @@ public class MainWindowViewModel : ViewModelBase
         });
         NewFunctionCommand = ReactiveCommand.Create(async () =>
         {
-            _ = await ShowModalWindowInteraction?.Handle(
-                                    new ShowWindowModel(
-                    new ModalWindowViewModel(Properties.Resources.SubMenu_NewFunction, "settings_regular", Locator.Current.GetService<AddFunctionViewModel>()),
-                    Avalonia.Controls.WindowStartupLocation.CenterScreen
-                ));
+            try
+            {
+                _ = await ShowModalWindowInteraction?.Handle(
+                                        new ShowWindowModel(
+                        new ModalWindowViewModel(Properties.Resources.SubMenu_NewFunction, "settings_regular", Locator.Current.GetService<AddFunctionViewModel>()),
+                        Avalonia.Controls.WindowStartupLocation.CenterScreen
+                    ));
+            }
+            catch (System.Exception)
+            {
+                //Not good but okay for now
+            }
+            finally
+            {
+                mainContentModel?.ReloadFunctions();
+            }
         });
         ToggleApplicationVisibilityInteraction = new Interaction<Unit, Unit>();
         HideApplicationCommand = ReactiveCommand.Create(async () =>

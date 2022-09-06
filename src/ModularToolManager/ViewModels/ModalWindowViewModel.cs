@@ -1,5 +1,7 @@
-﻿using Avalonia.Media;
+﻿using Avalonia.Controls;
+using Avalonia.Media;
 using Avalonia.Styling;
+using ModularToolManager.Models;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.ViewModels.Extenions;
 using ReactiveUI;
