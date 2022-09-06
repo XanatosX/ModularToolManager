@@ -98,7 +98,7 @@ jobs:
         with:
           name: Recent develop build [${{ GITHUB.RUN_NUMBER }}]
           tag: Develop-${{ GITHUB.RUN_NUMBER }}
-          #generateReleaseNotes: true
+          generateReleaseNotes: true
           body: Recent version of the develop branch, ready for testing
           draft: ${{ env.DEBUG }}
           prerelease: true
