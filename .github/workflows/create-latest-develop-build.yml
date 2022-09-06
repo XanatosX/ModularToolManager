@@ -14,7 +14,7 @@ env:
   WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact
 
 jobs:
-  build:
+  create-windows-build:
     name: Create Windows build
     runs-on: ubuntu-latest
     steps:
