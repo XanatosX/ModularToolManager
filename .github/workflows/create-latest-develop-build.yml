@@ -96,9 +96,11 @@ jobs:
         run: ls -la $RELEASE_ARTIFACT_FOLDER
       - uses: ncipollo/release-action@v1
         with:
-          name: Recent develop build
+          name: Recent develop build [${{ GITHUB.RUN_NUMBER }}]
           tag: Develop-${{ GITHUB.RUN_NUMBER }}
-          generateReleaseNotes: true
+          #generateReleaseNotes: true
           body: Recent version of the develop branch, ready for testing
           draft: ${{ env.DEBUG }}
           prerelease: true
+          artifacts: ${{ $RELEASE_ARTIFACT_FOLDER }}/*
+          artifactContentType: "application/zip"
