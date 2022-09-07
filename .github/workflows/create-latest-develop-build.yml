@@ -51,7 +51,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish Application
-      run: dotnet publish ${env:APPLICATION_PROJECT_PATH} -r win-x64 -c Release -o ${env:env.APPLICATION_PUBLISH_FOLDER}
+      run: dotnet publish ${{ env:APPLICATION_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.APPLICATION_PUBLISH_FOLDER }}
     - name: Publish Plugin
       run: dotnet publish ${{ env.APPLICATION_PLUGIN_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.PLUGIN_PUBLISH_FOLDER }}
     - name: Show content for debug
