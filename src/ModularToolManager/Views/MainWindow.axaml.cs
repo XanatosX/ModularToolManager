@@ -12,14 +12,14 @@ namespace ModularToolManager.Views;
 
 public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 {
-    private readonly IWindowManagmentService? modalService;
+    private readonly IWindowManagementService? modalService;
 
     public MainWindow() : this(null)
     {
 
     }
 
-    public MainWindow(IWindowManagmentService? modalService)
+    public MainWindow(IWindowManagementService? modalService)
     {
         InitializeComponent();
 #if DEBUG

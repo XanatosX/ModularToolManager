@@ -30,7 +30,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
     /// Service to use for loading functions
     /// </summary>
     private readonly IFunctionService? functionService;
-    private readonly IWindowManagmentService windowManagmentService;
+    private readonly IWindowManagementService windowManagmentService;
 
     /// <summary>
     /// A list with all the function plugin possiblities
@@ -138,7 +138,7 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
     /// </summary>
     /// <param name="pluginService">The plugin service to use</param>
     /// <param name="functionService">The function service to use</param>
-    public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService, IWindowManagmentService windowManagmentService)
+    public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService, IWindowManagementService windowManagmentService)
     {
         functionModel = new FunctionModel();
         this.pluginService = pluginService;

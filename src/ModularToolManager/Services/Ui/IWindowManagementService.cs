@@ -1,5 +1,7 @@
 ﻿using Avalonia.Controls;
 using ModularToolManager.Models;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.Ui;
@@ -7,8 +9,14 @@ namespace ModularToolManager.Services.Ui;
 /// <summary>
 /// Interface to use for open up modals
 /// </summary>
-public interface IWindowManagmentService
+public interface IWindowManagementService
 {
+    IEnumerable<Window> GetAllActiveWindows();
+
+    Window? GetTopmostWindow();
+
+    Window? GetMainWindow();
+
     /// <summary>
     /// Show a new modal async
     /// </summary>

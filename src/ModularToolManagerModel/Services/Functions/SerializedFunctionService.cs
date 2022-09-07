@@ -3,6 +3,7 @@ using ModularToolManager.Models;
 using ModularToolManager.Services.Serialization;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Logging;
+using ModularToolManagerPlugin.Plugin;
 
 namespace ModularToolManagerModel.Services.Functions;
 
@@ -27,6 +28,11 @@ public class SerializedFunctionService : IFunctionService
     private readonly ILogger<SerializedFunctionService>? loggingService;
 
     /// <summary>
+    /// A list with all the cached functions
+    /// </summary>
+    private readonly List<FunctionModel> cachedFunctions;
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="serializer">The serailzier class to use</param>
@@ -36,6 +42,8 @@ public class SerializedFunctionService : IFunctionService
         this.serializer = serializer;
         this.pathService = pathService;
         this.loggingService = loggingService;
+
+        cachedFunctions = new List<FunctionModel>();
     }
 
     /// <inheritdoc/>
@@ -50,7 +58,13 @@ public class SerializedFunctionService : IFunctionService
         }
         currentData.Add(function);
         loggingService?.LogTrace($"Adding succeeded for function {function.DisplayName} with unique id {function.UniqueIdentifier}");
-        return SaveFunctionsToDisc(currentData);
+        if (SaveFunctionsToDisc(currentData))
+        {
+            cachedFunctions.Add(function);
+            return true;
+        }
+        loggingService?.LogError("Something went wrong while saving the function data");
+        return false;
     }
 
     /// <summary>
@@ -76,16 +90,21 @@ public class SerializedFunctionService : IFunctionService
     /// <inheritdoc/>
     public List<FunctionModel> GetAvailableFunctions()
     {
+        if (cachedFunctions.Count > 0)
+        {
+            return cachedFunctions;
+        }
         string functionFile = GetFunctionPath();
         if (!File.Exists(functionFile))
         {
             return Enumerable.Empty<FunctionModel>().ToList();
         }
         List<FunctionModel> returnData = Enumerable.Empty<FunctionModel>().ToList();
-        using (FileStream fileStream = new FileStream(functionFile, FileMode.Open, FileAccess.Read))
+        using (FileStream fileStream = new(functionFile, FileMode.Open, FileAccess.Read))
         {
             returnData = serializer?.GetDeserialized<List<FunctionModel>>(fileStream) ?? Enumerable.Empty<FunctionModel>().ToList();
         }
+        cachedFunctions.AddRange(returnData);
         return returnData!;
     }
 
@@ -117,9 +136,9 @@ public class SerializedFunctionService : IFunctionService
         string? saveData = serializer?.GetSerialized(dataToSave);
         if (!string.IsNullOrEmpty(saveData))
         {
-            using (FileStream fileStream = new FileStream(GetFunctionPath(), FileMode.Create, FileAccess.Write))
+            using (FileStream fileStream = new(GetFunctionPath(), FileMode.Create, FileAccess.Write))
             {
-                using (StreamWriter writer = new StreamWriter(fileStream))
+                using (StreamWriter writer = new(fileStream))
                 {
                     writer.Write(saveData);
                 }

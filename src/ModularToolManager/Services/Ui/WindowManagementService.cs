@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
 using ModularToolManager.Views;
 using Splat;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace ModularToolManager.Services.Ui;
 /// <summary>
 /// Service class to show modal as a new window
 /// </summary>
-internal class WindowManagementService : IWindowManagmentService
+internal class WindowManagementService : IWindowManagementService
 {
     /// <summary>
     /// The logger service to use
@@ -26,6 +27,35 @@ internal class WindowManagementService : IWindowManagmentService
     public WindowManagementService(ILogger<WindowManagementService>? loggingService)
     {
         this.loggingService = loggingService;
+    }
+
+    public IEnumerable<Window> GetAllActiveWindows()
+    {
+        var desktop = Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+        if (desktop is null)
+        {
+            loggingService?.LogError("Could not get main window from application");
+            return Enumerable.Empty<Window>();
+        }
+        return desktop.Windows;
+    }
+
+    public Window? GetMainWindow()
+    {
+        var desktop = Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+        if (desktop is null)
+        {
+            loggingService?.LogError("Can't get application lifetime");
+            return null;
+        }
+        return desktop!.MainWindow;
+    }
+
+    public Window? GetTopmostWindow()
+    {
+        IEnumerable<Window> windows = GetAllActiveWindows().Where(window => window.IsActive).Where(window => window.IsVisible);
+        return windows.LastOrDefault();
+
     }
 
     /// <inheritdoc/>
@@ -64,10 +94,16 @@ internal class WindowManagementService : IWindowManagmentService
         var desktop = Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
         if (desktop is null)
         {
+
+            return new string[0];
+        }
+        Window? mainWindow = GetMainWindow();
+        if (mainWindow is null)
+        {
             loggingService?.LogError("Could not find main window to use a parent for open file dialog");
             return new string[0];
         }
-        return await ShowOpenFileDialogAsync(fileDialogModel, desktop!.MainWindow);
+        return await ShowOpenFileDialogAsync(fileDialogModel, mainWindow!);
     }
 
     /// <inheritdoc/>

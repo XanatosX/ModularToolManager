@@ -92,7 +92,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             _ = await ShowModalWindowInteraction?.Handle(
                 new ShowWindowModel(
-                    new ModalWindowViewModel(Properties.Resources.SubMenu_Settings, "settings_regular", new SettingsViewModel()),
+                    new ModalWindowViewModel(Properties.Resources.SubMenu_Settings, "settings_regular", Locator.Current.GetService<SettingsViewModel>()),
                     Avalonia.Controls.WindowStartupLocation.CenterScreen
                 ));
         });
@@ -140,7 +140,7 @@ public class MainWindowViewModel : ViewModelBase
         {
             _ = await ShowModalWindowInteraction?.Handle(
                         new ShowWindowModel(
-                        new ModalWindowViewModel(Properties.Resources.SubMenu_Language, "flag_regular", new ChangeLanguageViewModel()),
+                        new ModalWindowViewModel(Properties.Resources.SubMenu_Language, "flag_regular", Locator.Current.GetService<ChangeLanguageViewModel>()),
                         Avalonia.Controls.WindowStartupLocation.CenterScreen
                     ));
         });

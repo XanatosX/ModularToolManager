@@ -67,6 +67,7 @@ public class App : Application
     {
         BuildServiceCollection().UseMicrosoftDependencyResolver();
 
+
         Locator.CurrentMutable.InitializeSplat();
         Locator.CurrentMutable.InitializeReactiveUI();
         RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;

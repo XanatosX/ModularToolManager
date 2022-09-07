@@ -21,7 +21,7 @@ public class ChangeLanguageViewModel : ViewModelBase, IModalWindowEvents
     /// <summary>
     /// The language service to use
     /// </summary>
-    private readonly ILanguageService languageService;
+    private readonly ILanguageService? languageService;
 
     /// <summary>
     /// A list with all the cultures available
@@ -55,14 +55,14 @@ public class ChangeLanguageViewModel : ViewModelBase, IModalWindowEvents
     /// <summary>
     /// Event handler if the modal is getting closed
     /// </summary>
-    public event EventHandler Closing;
+    public event EventHandler? Closing;
 
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    public ChangeLanguageViewModel()
+    public ChangeLanguageViewModel(ILanguageService? languageService)
     {
-        languageService = Locator.Current.GetService<ILanguageService>();
+        this.languageService = languageService;
         Cultures = new ObservableCollection<CultureInfoViewModel>(languageService.GetAvailableCultures().Select(culture => new CultureInfoViewModel(new CultureInfoModel(culture.DisplayName, culture))));
 
         SelectedCulture = Cultures.FirstOrDefault(cultureViewModel => cultureViewModel.Culture == CultureInfo.CurrentCulture);

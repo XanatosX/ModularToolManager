@@ -46,7 +46,9 @@ internal static class DependencyInjectionExtension
     {
         return collection.AddTransient<AddFunctionViewModel>()
                          .AddTransient<FunctionSelectionViewModel>()
-                         .AddTransient<MainWindowViewModel>();
+                         .AddTransient<MainWindowViewModel>()
+                         .AddTransient<ChangeLanguageViewModel>()
+                         .AddTransient<SettingsViewModel>();
     }
 
     /// <summary>
@@ -56,7 +58,7 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddViews(this IServiceCollection collection)
     {
-        return collection.AddTransient(resolver => new MainWindow(resolver?.GetService<IWindowManagmentService>())
+        return collection.AddTransient(resolver => new MainWindow(resolver?.GetService<IWindowManagementService>())
         {
             DataContext = resolver?.GetService<MainWindowViewModel>(),
         })
@@ -76,7 +78,7 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<IFunctionSettingsService, FunctionSettingService>()
                          .AddSingleton<IUrlOpenerService, UrlOpenerService>()
                          .AddSingleton<ILanguageService, ResourceCultureService>()
-                         .AddSingleton<IWindowManagmentService, WindowManagementService>()
+                         .AddSingleton<IWindowManagementService, WindowManagementService>()
                          .AddSingleton<IPluginService, PluginService>()
                          .AddSingleton<ISerializationOptionFactory<JsonSerializerOptions>, JsonSerializationOptionFactory>()
                          .AddSingleton<ISerializeService, JsonSerializationService>()
