@@ -1,12 +1,12 @@
 name: Recent develop build
 
-on: push
-  #pull_request:
-    #types: [closed]
-    #branches: [ "develop" ]
+on:
+  pull_request:
+    types: [closed]
+    branches: [ "develop" ]
 
 env:
-  DEBUG: true
+  DEBUG: false
   RELEASE_NAME: Recent develop build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
@@ -19,7 +19,7 @@ env:
 jobs:
   check-build:
     name: Check and Test build
-    #if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -37,7 +37,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
   create-windows-build:
     name: Create Windows build
-    #if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     needs: ["check-build"]
     runs-on: windows-latest
     steps:
