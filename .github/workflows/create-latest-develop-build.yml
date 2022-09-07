@@ -1,9 +1,9 @@
 name: Recent develop build
 
-on: 
-  pull_request:
-    types: [closed]
-    branches: [ "develop" ]
+on: push
+  #pull_request:
+    #types: [closed]
+    #branches: [ "develop" ]
 
 env:
   DEBUG: true
@@ -19,7 +19,7 @@ env:
 jobs:
   check-build:
     name: Check and Test build
-    if: github.event.pull_request.merged == true
+    #if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -37,9 +37,9 @@ jobs:
       run: dotnet test --no-build --verbosity normal
   create-windows-build:
     name: Create Windows build
-    if: github.event.pull_request.merged == true
+    #if: github.event.pull_request.merged == true
     needs: ["check-build"]
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
       with:
