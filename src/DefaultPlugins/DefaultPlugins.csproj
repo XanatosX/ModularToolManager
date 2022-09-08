@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <None Remove="Translations\de-DE.json" />
-    <None Remove="Translations\de-DE_asdasd.json" />
     <None Remove="Translations\en-EN.json" />
   </ItemGroup>
 
@@ -18,12 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj" />
+	  <ProjectReference Include="..\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj">
+		  <Private>false</Private>
+	  </ProjectReference>
   </ItemGroup>
 
 
 
-	<Target Condition=" '$(Configuration)' == 'Debug' " Name="CopyAfterBuild" AfterTargets="Build">
+	<Target Condition="'$(Configuration)' == 'Debug'" Name="CopyAfterBuild" AfterTargets="Build">
 		<Copy SourceFiles="$(OutDir)DefaultPlugins.dll" DestinationFolder="$(ProjectDir)../ModularToolManager/bin/$(Configuration)/net6.0/$(PlatformShortName)/plugins" SkipUnchangedFiles="false" />
 	</Target>
 </Project>
