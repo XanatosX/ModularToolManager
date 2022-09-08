@@ -11,7 +11,7 @@ env:
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
   APPLICATION_PUBLISH_FOLDER: ./publish
-  PLUGIN_PUBLISH_FOLDER: ./publish/plugin
+  PLUGIN_PUBLISH_FOLDER: ./publish/plugins
   WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact_x64
   LINUX_ARTIFACT_NAME: LinuxBuildArtifact_x64
   RELEASE_ARTIFACT_FOLDER: artifacts
