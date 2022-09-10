@@ -161,7 +161,13 @@ internal class PluginService : IPluginService
     /// <returns>A list with all the plugins</returns>
     private List<string> GetPlugins()
     {
-        return Directory.GetFiles(pathService?.GetPluginPathString() ?? string.Empty)
+        string pluginDirectory = pathService?.GetPluginPathString() ?? string.Empty;
+        if (!Directory.Exists(pluginDirectory))
+        {
+            loggingService?.LogError($"Could not find plugin directory on path {pluginDirectory} nothing was loaded");
+            return Enumerable.Empty<string>().ToList();
+        }
+        return Directory.GetFiles(pluginDirectory)
                         .ToList()
                         .Select(file => new FileInfo(file))
                         .Where(file => file.Extension.ToLower() == ".dll")
