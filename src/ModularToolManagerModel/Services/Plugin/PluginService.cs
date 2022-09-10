@@ -1,24 +1,17 @@
-﻿using Avalonia.Logging;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.IO;
-using ModularToolManagerModel.Services.Logging;
-using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
-using Splat;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 
-namespace ModularToolManager.Services.Plugin;
+namespace ModularToolManagerModel.Services.Plugin;
 
 /// <summary>
 /// Plugin service for loading plugins from dlls
 /// </summary>
-internal class PluginService : IPluginService
+public class PluginService : IPluginService
 {
     /// <summary>
     /// Service to get or load function settings
@@ -29,6 +22,11 @@ internal class PluginService : IPluginService
     /// Service for getting application paths
     /// </summary>
     private readonly IPathService? pathService;
+
+    /// <summary>
+    /// The dependency resolver to use
+    /// </summary>
+    private readonly IDependencyResolverService dependencyResolver;
 
     /// <summary>
     /// The logging service to use
@@ -48,11 +46,13 @@ internal class PluginService : IPluginService
     public PluginService(
         IFunctionSettingsService? functionSettingsService,
         IPathService? pathService,
+        IDependencyResolverService dependencyResolver,
         ILogger<PluginService>? loggingService
         )
     {
         this.functionSettingsService = functionSettingsService;
         this.pathService = pathService;
+        this.dependencyResolver = dependencyResolver;
         this.loggingService = loggingService;
         plugins = new List<IFunctionPlugin>();
     }
@@ -131,7 +131,7 @@ internal class PluginService : IPluginService
         {
             ConstructorInfo? constructor = pluginType.GetConstructors().FirstOrDefault();
             object?[] dependencies = constructor?.GetParameters().Where(parameter => parameter.ParameterType.GetCustomAttribute<PluginInjectableAttribute>() is not null)
-                                                                 .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
+                                                                 .Select(parameter => dependencyResolver.GetDependency(parameter.ParameterType))
                                                                  .ToArray();
 
             loggingService?.LogInformation($"Activation for plugin of type {pluginType.FullName} imminent");

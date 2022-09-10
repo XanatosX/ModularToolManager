@@ -1,5 +1,4 @@
 ﻿using ModularToolManagerPlugin.Plugin;
-using System.Collections.Generic;
 
 namespace ModularToolManagerModel.Services.Plugin;
 

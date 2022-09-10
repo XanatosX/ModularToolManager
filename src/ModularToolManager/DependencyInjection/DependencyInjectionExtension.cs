@@ -1,13 +1,14 @@
 ﻿using Avalonia.ReactiveUI;
 using Microsoft.Extensions.DependencyInjection;
+using ModularToolManager.Services.Dependencies;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
-using ModularToolManager.Services.Plugin;
 using ModularToolManager.Services.Serialization;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
+using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Language;
@@ -83,6 +84,7 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<ISerializationOptionFactory<JsonSerializerOptions>, JsonSerializationOptionFactory>()
                          .AddSingleton<ISerializeService, JsonSerializationService>()
                          .AddSingleton<IFunctionService, SerializedFunctionService>()
-                         .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>));
+                         .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>))
+                         .AddSingleton<IDependencyResolverService, SplatDepdendencyResolverWrapperService>();
     }
 }
