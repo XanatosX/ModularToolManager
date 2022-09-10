@@ -11,7 +11,7 @@ env:
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
   APPLICATION_PUBLISH_FOLDER: ./publish
-  PLUGIN_PUBLISH_FOLDER: ./publish/plugin
+  PLUGIN_PUBLISH_FOLDER: ./publish/plugins
   WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact_x64
   LINUX_ARTIFACT_NAME: LinuxBuildArtifact_x64
   RELEASE_ARTIFACT_FOLDER: artifacts
@@ -53,7 +53,7 @@ jobs:
     - name: Publish Application
       run: dotnet publish ${{ env.APPLICATION_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.APPLICATION_PUBLISH_FOLDER }}
     - name: Publish Plugin
-      run: dotnet publish ${{ env.APPLICATION_PLUGIN_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.PLUGIN_PUBLISH_FOLDER }}
+      run: dotnet publish ${{ env.APPLICATION_PLUGIN_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.PLUGIN_PUBLISH_FOLDER }} /p:DebugType=None /p:DebugSymbols=false
     - name: Show content for debug
       if: ${{ env.DEBUG == 'true' }}
       run: ls
@@ -86,7 +86,7 @@ jobs:
     - name: Publish Application
       run: dotnet publish $APPLICATION_PROJECT_PATH -r linux-x64 -c Release -o $APPLICATION_PUBLISH_FOLDER
     - name: Publish Plugin
-      run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r linux-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER
+      run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r linux-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER /p:DebugType=None /p:DebugSymbols=false
     - name: Show content for debug
       if: ${{ env.DEBUG == 'true' }}
       run: ls -la
