@@ -1,5 +1,4 @@
-﻿using Avalonia.ReactiveUI;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.Services.Dependencies;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
@@ -16,7 +15,6 @@ using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerModel.Services.Serialization;
 using ModularToolManagerPlugin.Services;
-using ReactiveUI;
 using System.Text.Json;
 
 namespace ModularToolManager.DependencyInjection;
@@ -34,8 +32,11 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddAvaloniaDefault(this IServiceCollection collection)
     {
+        return collection;
+        /**
         return collection.AddSingleton<IActivationForViewFetcher, AvaloniaActivationForViewFetcher>()
                          .AddSingleton<IPropertyBindingHook, AutoDataTemplateBindingHook>();
+        */
     }
 
     /// <summary>
@@ -49,7 +50,8 @@ internal static class DependencyInjectionExtension
                          .AddTransient<FunctionSelectionViewModel>()
                          .AddTransient<MainWindowViewModel>()
                          .AddTransient<ChangeLanguageViewModel>()
-                         .AddTransient<SettingsViewModel>();
+                         .AddTransient<SettingsViewModel>()
+                         .AddTransient<AppViewModel>();
     }
 
     /// <summary>
@@ -63,7 +65,7 @@ internal static class DependencyInjectionExtension
         {
             DataContext = resolver?.GetService<MainWindowViewModel>(),
         })
-                         .AddTransient<ModalWindow>();
+        .AddTransient<ModalWindow>();
     }
 
     /// <summary>
@@ -85,6 +87,7 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<ISerializeService, JsonSerializationService>()
                          .AddSingleton<IFunctionService, SerializedFunctionService>()
                          .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>))
-                         .AddSingleton<IDependencyResolverService, SplatDepdendencyResolverWrapperService>();
+                         .AddSingleton<IViewModelLocatorService, ViewModelLocator>()
+                         .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>();
     }
 }

@@ -6,15 +6,14 @@ using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.DependencyInjection;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Logging;
+using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Logging;
 using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Targets;
-using ReactiveUI;
-using Splat;
-using Splat.Microsoft.Extensions.DependencyInjection;
+using System;
 using System.IO;
 
 namespace ModularToolManager;
@@ -22,6 +21,9 @@ namespace ModularToolManager;
 /// <inheritdoc/>
 public class App : Application
 {
+    private IServiceProvider provider;
+
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -37,8 +39,8 @@ public class App : Application
                                       .AddViews()
                                       .AddLogging(config =>
                                       {
-                                          var pathService = Locator.Current.GetService<IPathService>() ?? new PathService();
-                                          string basePath = pathService?.GetSettingsFolderPathString() ?? Path.GetTempPath();
+                                          IPathService pathService = new PathService();
+                                          string basePath = pathService.GetSettingsFolderPathString() ?? Path.GetTempPath();
                                           string logFolder = Path.Combine(basePath, "logs");
 
                                           NLogConfiguration.AddTarget(new TraceTarget("trace-log"));
@@ -65,16 +67,17 @@ public class App : Application
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
-        BuildServiceCollection().UseMicrosoftDependencyResolver();
+        provider = BuildServiceCollection().BuildServiceProvider(); //.UseMicrosoftDependencyResolver();
 
 
-        Locator.CurrentMutable.InitializeSplat();
-        Locator.CurrentMutable.InitializeReactiveUI();
-        RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
+        //Locator.CurrentMutable.InitializeSplat();
+        //Locator.CurrentMutable.InitializeReactiveUI();
+        //RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = Locator.Current.GetService<MainWindow>();
+            desktop.MainWindow = provider.GetService<MainWindow>();
         }
+        DataContext = provider.GetService<AppViewModel>();
 
         base.OnFrameworkInitializationCompleted();
     }

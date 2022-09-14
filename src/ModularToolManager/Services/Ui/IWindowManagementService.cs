@@ -23,7 +23,7 @@ public interface IWindowManagementService
     /// <param name="modalData">Thhe modal data to be placed inside of the modal</param>
     /// <param name="parent">The parent of the modal</param>
     /// <returns>A awaitable task for the modal</returns>
-    Task ShowModalWindowAsync(ShowWindowModel modalData, Window parent);
+    Task ShowModalWindowAsync(ShowWindowModel modalData, Window? parent);
 
     /// <summary>
     /// Show a new open file dialog

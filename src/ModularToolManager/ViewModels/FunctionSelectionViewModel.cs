@@ -1,21 +1,21 @@
 ﻿using Avalonia.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
 using DynamicData;
 using DynamicData.Binding;
 using ModularToolManagerModel.Services.Functions;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace ModularToolManager.ViewModels;
 
 /// <summary>
 /// View model to select a function
 /// </summary>
-public class FunctionSelectionViewModel : ViewModelBase
+public partial class FunctionSelectionViewModel : ObservableObject
 {
     /// <summary>
     /// The service to use for function selection
@@ -23,14 +23,10 @@ public class FunctionSelectionViewModel : ViewModelBase
     private readonly IFunctionService? functionService;
 
     /// <summary>
-    /// All the possible functions currently available
-    /// </summary>
-    public ReadOnlyObservableCollection<FunctionButtonViewModel> AllFunctions => allFunctions;
-
-    /// <summary>
     /// Private all the possible functions currently available
     /// </summary>
-    private readonly ReadOnlyObservableCollection<FunctionButtonViewModel> allFunctions;
+    [ObservableProperty]
+    private ReadOnlyObservableCollection<FunctionButtonViewModel> allFunctions;
 
     /// <summary>
     /// Private all the possible functions currently available
@@ -40,8 +36,8 @@ public class FunctionSelectionViewModel : ViewModelBase
     /// <summary>
     /// The search text used for the filtering of the plugins
     /// </summary>
-    [Reactive]
-    public string? SearchText { get; set; }
+    [ObservableProperty]
+    public string? searchText;
 
     /// <summary>
     /// Create a new instance of this class
@@ -51,17 +47,17 @@ public class FunctionSelectionViewModel : ViewModelBase
         this.functionService = functionService;
         allAvailableFunctions = new SourceList<FunctionButtonViewModel>();
 
-        IObservable<Func<FunctionButtonViewModel, bool>> filter = this.WhenAnyValue(x => x.SearchText)
-                                                    .Throttle(TimeSpan.FromMilliseconds(200))
-                                                    .ObserveOn(RxApp.MainThreadScheduler)
-                                                    .Select(CreateFilter);
+        var subject = new Subject<FunctionButtonViewModel>();
+        var dymFilter = subject.Select(sub => (Func<FunctionButtonViewModel, bool>)(CreateFilter(SearchText)));
 
+
+        //@Note: Not updating ...
         allAvailableFunctions.Connect()
-                             .Filter(filter)
+                             //.Filter(dymFilter)
                              .Sort(SortExpressionComparer<FunctionButtonViewModel>.Ascending(g => g.SortId))
                              .ObserveOn(AvaloniaScheduler.Instance)
                              .Bind(out allFunctions)
-                             .AutoRefreshOnObservable(x => x.DeleteFunctionCommand)
+                             .AutoRefresh()
                              .Select(_ => allAvailableFunctions.Items.FirstOrDefault(item => !item.IsActive))
                              .Subscribe(inactive =>
                              {
@@ -75,6 +71,7 @@ public class FunctionSelectionViewModel : ViewModelBase
                                  {
                                      allAvailableFunctions.Remove(model);
                                  }
+                                 OnPropertyChanged(nameof(AllFunctions));
                              });
 
         ReloadFunctions();
@@ -109,7 +106,7 @@ public class FunctionSelectionViewModel : ViewModelBase
             {
                 continue;
             }
-            allAvailableFunctions!.Add(functionViewModel);
+            allAvailableFunctions.Add(functionViewModel);
         }
     }
 }

@@ -1,19 +1,19 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Avalonia.ReactiveUI;
 using Avalonia.Threading;
+using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
+using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
-using ReactiveUI;
 using System;
 using System.Linq;
 using System.Reactive;
 
 namespace ModularToolManager.Views;
 
-public partial class ModalWindow : ReactiveWindow<ModalWindowViewModel>
+public partial class ModalWindow : Window
 {
     public ModalWindow()
     {
@@ -21,9 +21,22 @@ public partial class ModalWindow : ReactiveWindow<ModalWindowViewModel>
 #if DEBUG
         this.AttachDevTools();
 #endif
-        this.WhenActivated(d => d(ViewModel!.CloseWindowInteraction.RegisterHandler(HandleWindowClose)));
+        WeakReferenceMessenger.Default.Register<CloseModalMessage>(this, (sender, data) =>
+        {
+            ModalWindowViewModel? viewModel = DataContext as ModalWindowViewModel;
+            if (viewModel is null || viewModel.ModalContent != data.ModalToClose)
+            {
+                return;
+            }
+            data.Reply(true);
+            WeakReferenceMessenger.Default.Unregister<CloseModalMessage>(this);
+            Close();
+
+        });
+        //this.WhenActivated(d => d(ViewModel!.CloseWindowInteraction.RegisterHandler(HandleWindowClose)));
     }
 
+    /**
     private async void HandleWindowClose(InteractionContext<Unit, Unit> obj)
     {
         obj.SetOutput(new Unit());
@@ -33,6 +46,7 @@ public partial class ModalWindow : ReactiveWindow<ModalWindowViewModel>
         });
 
     }
+    */
 
     private void InitializeComponent()
     {

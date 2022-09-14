@@ -1,10 +1,9 @@
 ﻿using Avalonia;
-using ModularToolManager.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ModularToolManager.ViewModels.Extenions;
 using ModularToolManagerModel.Data;
 using ModularToolManagerModel.Services.Language;
-using ReactiveUI;
-using Splat;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -16,7 +15,7 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// View model used to change the language
 /// </summary>
-public class ChangeLanguageViewModel : ViewModelBase, IModalWindowEvents
+public partial class ChangeLanguageViewModel : ObservableObject, IModalWindowEvents
 {
     /// <summary>
     /// The language service to use
@@ -29,17 +28,9 @@ public class ChangeLanguageViewModel : ViewModelBase, IModalWindowEvents
     public ObservableCollection<CultureInfoViewModel> Cultures { get; }
 
     /// <summary>
-    /// The currently selected culture
-    /// </summary>
-    public CultureInfoViewModel? SelectedCulture
-    {
-        get => selectedCulture;
-        set => this.RaiseAndSetIfChanged(ref selectedCulture, value);
-    }
-
-    /// <summary>
     /// The currently selected culture full field
     /// </summary>
+    [ObservableProperty]
     private CultureInfoViewModel? selectedCulture;
 
     /// <summary>
@@ -68,6 +59,6 @@ public class ChangeLanguageViewModel : ViewModelBase, IModalWindowEvents
         SelectedCulture = Cultures.FirstOrDefault(cultureViewModel => cultureViewModel.Culture == CultureInfo.CurrentCulture);
         SelectedCulture = SelectedCulture is null ? Cultures.First() : SelectedCulture;
 
-        AbortCommand = ReactiveCommand.Create(async () => Closing?.Invoke(this, EventArgs.Empty));
+        AbortCommand = new RelayCommand(() => Closing?.Invoke(this, EventArgs.Empty));
     }
 }

@@ -1,11 +1,12 @@
-﻿using ModularToolManagerPlugin.Plugin;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ModularToolManagerPlugin.Plugin;
 
 namespace ModularToolManager.ViewModels;
 
 /// <summary>
 /// View model for function plugin
 /// </summary>
-public class FunctionPluginViewModel : ViewModelBase
+public class FunctionPluginViewModel : ObservableObject
 {
     /// <summary>
     /// The function plugin to show
@@ -23,6 +24,6 @@ public class FunctionPluginViewModel : ViewModelBase
     /// <param name="functionPlugin">The function plugin to display</param>
     public FunctionPluginViewModel(IFunctionPlugin functionPlugin)
     {
-        this.Plugin = functionPlugin;
+        Plugin = functionPlugin;
     }
 }

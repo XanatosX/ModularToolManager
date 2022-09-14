@@ -1,5 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
+using CommunityToolkit.Mvvm.ComponentModel;
 using ModularToolManager.ViewModels;
 using System;
 
@@ -24,7 +25,7 @@ namespace ModularToolManager
 
         public bool Match(object data)
         {
-            return data is ViewModelBase;
+            return data is ObservableObject;
         }
     }
 }

@@ -3,7 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
 using ModularToolManager.Views;
-using Splat;
+using ModularToolManagerModel.Services.Dependency;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,10 +24,13 @@ internal class WindowManagementService : IWindowManagementService
     /// Create a new isntance of this class
     /// </summary>
     /// <param name="loggingService">The logging service to use</param>
-    public WindowManagementService(ILogger<WindowManagementService>? loggingService)
+    public WindowManagementService(ILogger<WindowManagementService>? loggingService, IDependencyResolverService dependencyResolverService)
     {
         this.loggingService = loggingService;
+        DependencyResolverService = dependencyResolverService;
     }
+
+    public IDependencyResolverService DependencyResolverService { get; }
 
     public IEnumerable<Window> GetAllActiveWindows()
     {
@@ -59,12 +62,18 @@ internal class WindowManagementService : IWindowManagementService
     }
 
     /// <inheritdoc/>
-    public async Task ShowModalWindowAsync(ShowWindowModel modalData, Window parent)
+    public async Task ShowModalWindowAsync(ShowWindowModel modalData, Window? parent)
     {
-        ModalWindow? window = Locator.Current.GetService<ModalWindow>();
+        ModalWindow? window = DependencyResolverService?.GetDependency<ModalWindow>();
+        parent = parent ?? GetMainWindow();
         if (window is null)
         {
-            loggingService?.LogError($"Could not get {typeof(ModalWindow).FullName}, abort opening modal");
+            loggingService?.LogError($"Could not get {typeof(ModalWindow).FullName}, abort opening modal!");
+            return;
+        }
+        if (parent is null)
+        {
+            loggingService?.LogError($"Could not get parent for modal window, abort opening modal!");
             return;
         }
         window.WindowStartupLocation = modalData.StartupLocation;

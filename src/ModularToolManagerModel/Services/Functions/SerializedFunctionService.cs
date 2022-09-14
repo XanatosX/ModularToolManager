@@ -83,8 +83,9 @@ public class SerializedFunctionService : IFunctionService
     /// <inheritdoc/>
     public void DeleteFunction(string identifier)
     {
-        var functions = GetAvailableFunctions().Where(function => function.UniqueIdentifier != identifier);
-        SaveFunctionsToDisc(functions.ToList());
+        cachedFunctions.Clear();
+        var newFunctions = GetAvailableFunctions().Where(function => function.UniqueIdentifier != identifier).ToList();
+        SaveFunctionsToDisc(newFunctions);
     }
 
     /// <inheritdoc/>

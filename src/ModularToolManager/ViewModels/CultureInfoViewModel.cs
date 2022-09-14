@@ -1,4 +1,5 @@
-﻿using ModularToolManagerModel.Data;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ModularToolManagerModel.Data;
 using System.Globalization;
 
 namespace ModularToolManager.ViewModels;
@@ -6,7 +7,7 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// View model for culture infor
 /// </summary>
-public class CultureInfoViewModel : ViewModelBase
+public class CultureInfoViewModel : ObservableObject
 {
     /// <summary>
     /// The culture info model to display
