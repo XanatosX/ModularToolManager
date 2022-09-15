@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
+using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManagerModel.Services.IO;
 using System.Threading.Tasks;
@@ -37,6 +38,7 @@ public class MainWindowViewModel : ObservableObject
     /// The current content model to show in the main view
     /// </summary>
     public ObservableObject MainContentModel { get; }
+    private readonly IStyleService styleService;
 
     /// <summary>
     /// Command to select a new language
@@ -76,12 +78,18 @@ public class MainWindowViewModel : ObservableObject
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    public MainWindowViewModel(FunctionSelectionViewModel mainContentModel, IViewModelLocatorService viewModelLocator, IWindowManagementService windowManagementService, IUrlOpenerService urlOpenerService)
+    public MainWindowViewModel(
+        FunctionSelectionViewModel mainContentModel,
+        IViewModelLocatorService viewModelLocator,
+        IWindowManagementService windowManagementService,
+        IStyleService styleService,
+        IUrlOpenerService urlOpenerService)
     {
         this.urlOpenerService = urlOpenerService;
         MainContentModel = mainContentModel;
         this.viewModelLocator = viewModelLocator;
         this.windowManagementService = windowManagementService;
+        this.styleService = styleService;
         ReportBugCommand = new RelayCommand(() => urlOpenerService?.OpenUrl(Properties.Properties.GithubUrl));
 
         ExitApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseApplicationMessage()));
@@ -101,7 +109,7 @@ public class MainWindowViewModel : ObservableObject
     /// <returns></returns>
     private Task OpenModalWindow(string title, string imagePath, string modalName)
     {
-        var modalWindow = new ModalWindowViewModel(title, imagePath, viewModelLocator.GetViewModel(modalName));
+        var modalWindow = new ModalWindowViewModel(title, imagePath, viewModelLocator.GetViewModel(modalName), styleService);
         ShowWindowModel modalWindowData = new ShowWindowModel(modalWindow, Avalonia.Controls.WindowStartupLocation.CenterScreen);
         if (windowManagementService is not null)
         {

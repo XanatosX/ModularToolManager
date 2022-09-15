@@ -7,7 +7,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ModularToolManager.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="ModularToolManager"
+        Title="{x:Static p:Resources.Application_Name}"
 		TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
@@ -46,7 +46,8 @@
 						<MenuItem Header="{x:Static p:Resources.Menu_ReportBug}" Command="{Binding ReportBugCommand}"/>
 					</Menu>
 					<Button Grid.Column="1" Margin="0,2,5,2" Command="{Binding HideApplicationCommand}">
-						<PathIcon Foreground="LightBlue" Data="{StaticResource eye_hide_regular}"></PathIcon>
+						<PathIcon Foreground="LightBlue" Data="{StaticResource eye_hide_regular}" ToolTip.Tip="{x:Static p:Resources.Tooltip_Hide}">
+						</PathIcon>
 					</Button>
 				</Grid>
 				<ContentControl Grid.Row="1" Content="{Binding MainContentModel}"/>

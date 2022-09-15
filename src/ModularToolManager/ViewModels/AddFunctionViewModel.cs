@@ -5,11 +5,11 @@ using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Ui;
-using ModularToolManager.ViewModels.Extenions;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.Plugin;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
@@ -19,7 +19,7 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// View model to add a new function to the application
 /// </summary>
-internal partial class AddFunctionViewModel : ObservableObject, IModalWindowEvents
+internal partial class AddFunctionViewModel : ObservableValidator
 {
     /// <summary>
     /// Service to use to manage plugins
@@ -42,6 +42,9 @@ internal partial class AddFunctionViewModel : ObservableObject, IModalWindowEven
     /// </summary>
     private readonly List<FunctionPluginViewModel> functionPlugins;
 
+    [Required]
+    [MinLength(5), MaxLength(25)]
+    [NotifyDataErrorInfo]
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(OkCommand))]
     private string? displayName;
@@ -89,11 +92,6 @@ internal partial class AddFunctionViewModel : ObservableObject, IModalWindowEven
     /// Command to use for opening a file
     /// </summary>
     public IRelayCommand OpenFunctionPathCommand { get; }
-
-    /// <summary>
-    /// Event if the window is getting a close requested
-    /// </summary>
-    public event EventHandler? Closing;
 
     /// <summary>
     /// Create a new instance of this class
@@ -175,5 +173,18 @@ internal partial class AddFunctionViewModel : ObservableObject, IModalWindowEven
             }
             SelectedPath = file;
         }, canOpenFile);
+
+        InitialValueSet();
+    }
+
+    /// <summary>
+    /// The method will set some values as initialization, this is required to kick off the field validation
+    /// </summary>
+    private void InitialValueSet()
+    {
+        DisplayName = string.Empty;
+        Description = string.Empty;
+        FunctionParameters = string.Empty;
+        SelectedPath = string.Empty;
     }
 }

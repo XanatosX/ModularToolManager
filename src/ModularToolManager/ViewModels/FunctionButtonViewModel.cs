@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
+using ModularToolManager.Models.Messages;
+using System.Drawing.Printing;
 using System.Reactive;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -18,7 +21,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     public string Identifier { get; }
 
     /// <summary>
-    /// THe display name of the function
+    /// The display name of the function
     /// </summary>
     [ObservableProperty]
     private string? displayName;
@@ -34,6 +37,10 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// </summary>
     [ObservableProperty]
     private string? description;
+
+    private string path;
+
+    private string arguments;
 
     /// <summary>
     /// The tool tip delay to use, a really high value is returned if no description is present
@@ -67,10 +74,13 @@ public partial class FunctionButtonViewModel : ObservableObject
         DisplayName = functionModel.DisplayName;
         Description = functionModel.Description;
         SortId = functionModel.SortOrder;
+
         ExecuteFunctionCommand = new AsyncRelayCommand(async () => await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path)));
 
-        //@Todo replace to something else!
-        DeleteFunctionCommand = new RelayCommand(() => IsActive = false);
-        //DeleteFunctionCommand = ReactiveCommand.Create(() => { IsActive = false; });
+        DeleteFunctionCommand = new RelayCommand(() =>
+        {
+            IsActive = false;
+            WeakReferenceMessenger.Default.Send(new DeleteFunctionMessage(functionModel));
+        });
     }
 }

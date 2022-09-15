@@ -1,11 +1,13 @@
 ﻿using Avalonia.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
-using DynamicData;
-using DynamicData.Binding;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ModularToolManager.Models.Messages;
 using ModularToolManagerModel.Services.Functions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -25,13 +27,10 @@ public partial class FunctionSelectionViewModel : ObservableObject
     /// <summary>
     /// Private all the possible functions currently available
     /// </summary>
-    [ObservableProperty]
-    private ReadOnlyObservableCollection<FunctionButtonViewModel> allFunctions;
+    private IList<FunctionButtonViewModel> functions;
 
-    /// <summary>
-    /// Private all the possible functions currently available
-    /// </summary>
-    private readonly SourceList<FunctionButtonViewModel> allAvailableFunctions;
+    [ObservableProperty]
+    private ObservableCollection<FunctionButtonViewModel> filteredFunctions;
 
     /// <summary>
     /// The search text used for the filtering of the plugins
@@ -45,50 +44,38 @@ public partial class FunctionSelectionViewModel : ObservableObject
     public FunctionSelectionViewModel(IFunctionService? functionService)
     {
         this.functionService = functionService;
-        allAvailableFunctions = new SourceList<FunctionButtonViewModel>();
-
-        var subject = new Subject<FunctionButtonViewModel>();
-        var dymFilter = subject.Select(sub => (Func<FunctionButtonViewModel, bool>)(CreateFilter(SearchText)));
-
-
-        //@Note: Not updating ...
-        allAvailableFunctions.Connect()
-                             //.Filter(dymFilter)
-                             .Sort(SortExpressionComparer<FunctionButtonViewModel>.Ascending(g => g.SortId))
-                             .ObserveOn(AvaloniaScheduler.Instance)
-                             .Bind(out allFunctions)
-                             .AutoRefresh()
-                             .Select(_ => allAvailableFunctions.Items.FirstOrDefault(item => !item.IsActive))
-                             .Subscribe(inactive =>
-                             {
-                                 if (inactive is null)
-                                 {
-                                     return;
-                                 }
-                                 functionService?.DeleteFunction(inactive.Identifier);
-                                 var deleted = allAvailableFunctions.Items.Where(x => functionService?.GetFunction(x.Identifier) is null).ToList();
-                                 foreach (var model in deleted)
-                                 {
-                                     allAvailableFunctions.Remove(model);
-                                 }
-                                 OnPropertyChanged(nameof(AllFunctions));
-                             });
+        functions = new List<FunctionButtonViewModel>();
+        filteredFunctions = new ObservableCollection<FunctionButtonViewModel>();
 
         ReloadFunctions();
+
+        WeakReferenceMessenger.Default.Register<DeleteFunctionMessage>(this, (_, e) =>
+        {
+            functionService?.DeleteFunction(e.Function.UniqueIdentifier);
+            ReloadFunctions();
+        });
     }
 
-    /// <summary>
-    /// Method to build the search text filter
-    /// </summary>
-    /// <param name="text">The text to search for</param>
-    /// <returns>A func which can be used for filtering</returns>
-    private Func<FunctionButtonViewModel, bool> CreateFilter(string text)
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
-        if (string.IsNullOrEmpty(text))
+        Action action = e.PropertyName switch
         {
-            return t => true;
+            nameof(SearchText) => () => FilterFunctionList(),
+            _ => () => { return; }
+        };
+        action();
+        base.OnPropertyChanged(e);
+    }
+
+    private void FilterFunctionList()
+    {
+        IEnumerable<FunctionButtonViewModel> tempFiltered = functions.Where(function => string.IsNullOrEmpty(SearchText) || (function.DisplayName ?? string.Empty).ToLower().Contains(SearchText.ToLower()));
+        FilteredFunctions.Clear();
+        foreach (var function in tempFiltered)
+        {
+            FilteredFunctions.Add(function);
         }
-        return t => t.DisplayName.Contains(text, StringComparison.OrdinalIgnoreCase);
+
     }
 
     /// <summary>
@@ -96,17 +83,19 @@ public partial class FunctionSelectionViewModel : ObservableObject
     /// </summary>
     public void ReloadFunctions()
     {
+        functions.Clear();
         foreach (FunctionButtonViewModel? functionViewModel in functionService?.GetAvailableFunctions().Select(function => new FunctionButtonViewModel(function)) ?? Enumerable.Empty<FunctionButtonViewModel?>())
         {
-            if (functionViewModel is null || allAvailableFunctions is null)
+            if (functionViewModel is null || functions is null)
             {
                 continue;
             }
-            if (allAvailableFunctions.Items.Select(item => item.Identifier).Contains(functionViewModel?.Identifier))
+            if (functions.Any(item => item.Identifier == functionViewModel?.Identifier))
             {
                 continue;
             }
-            allAvailableFunctions.Add(functionViewModel);
+            functions.Add(functionViewModel);
         }
+        FilterFunctionList();
     }
 }

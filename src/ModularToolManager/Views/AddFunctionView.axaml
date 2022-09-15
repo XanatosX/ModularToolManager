@@ -4,14 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:p="clr-namespace:ModularToolManager.Properties"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="ModularToolManager.Views.AddFunctionView"
-			 MaxWidth="400">
+             x:Class="ModularToolManager.Views.AddFunctionView">
 	<StackPanel>
 		<TextBox Watermark="{x:Static p:Resources.NewFunction_Name}" UseFloatingWatermark="true" Text="{Binding DisplayName}"/>
 		<TextBox AcceptsReturn="True" TextWrapping="Wrap"  Watermark="{x:Static p:Resources.NewFunction_Description}" UseFloatingWatermark="true" Text="{Binding Description}"/>
+		<DockPanel>
 		<ComboBox
+			HorizontalAlignment="Stretch"
 			Items="{Binding FunctionPlugins}"
 			SelectedItem="{Binding SelectedFunctionPlugin}"/>
+		</DockPanel>
 		<TextBox 
 			Watermark="{x:Static p:Resources.NewFunction_Parameters}"
 			UseFloatingWatermark="true"

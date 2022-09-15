@@ -1,5 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core;
+using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,6 +75,7 @@ public class App : Application
         //Locator.CurrentMutable.InitializeSplat();
         //Locator.CurrentMutable.InitializeReactiveUI();
         //RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
+        ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = provider.GetService<MainWindow>();

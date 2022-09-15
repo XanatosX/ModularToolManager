@@ -8,7 +8,8 @@
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
 		WindowStartupLocation="CenterOwner"
-		SizeToContent="WidthAndHeight">
+		SizeToContent="WidthAndHeight"
+		MinWidth="300">
 	<Panel>
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">
 			<ExperimentalAcrylicBorder.Material>
@@ -21,8 +22,8 @@
 		</ExperimentalAcrylicBorder>
 		<Grid RowDefinitions="40, Auto">
 			<Grid VerticalAlignment="Center" ColumnDefinitions="Auto, *" Margin="10,0,5,0">
-				<PathIcon Data="{Binding PathIcon}" IsVisible="{Binding PathIcon, Converter={x:Static ObjectConverters.IsNotNull}}"/>
-				<TextBlock Grid.Column="1" Text="{Binding Title}" Margin="10,0,0,0"/>
+				<PathIcon Data="{Binding PathIcon}" IsVisible="{Binding PathIcon, Converter={x:Static ObjectConverters.IsNotNull}}" Margin="0,0,10,0"/>
+				<TextBlock Grid.Column="1" Text="{Binding Title}"/>
 			</Grid>
 			<ContentControl Grid.Row="1" Content="{Binding ModalContent}" Margin="10,5,5,5"/>
 		</Grid>

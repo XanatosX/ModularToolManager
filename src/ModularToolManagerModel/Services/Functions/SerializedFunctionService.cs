@@ -83,7 +83,6 @@ public class SerializedFunctionService : IFunctionService
     /// <inheritdoc/>
     public void DeleteFunction(string identifier)
     {
-        cachedFunctions.Clear();
         var newFunctions = GetAvailableFunctions().Where(function => function.UniqueIdentifier != identifier).ToList();
         SaveFunctionsToDisc(newFunctions);
     }
@@ -144,6 +143,7 @@ public class SerializedFunctionService : IFunctionService
                     writer.Write(saveData);
                 }
             }
+            cachedFunctions.Clear();
             return true;
         }
         return false;

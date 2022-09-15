@@ -120,6 +120,9 @@
   <data name="AddFunction_FunctionPathWatermark" xml:space="preserve">
     <value>Path to function</value>
   </data>
+  <data name="Application_Name" xml:space="preserve">
+    <value>Modular Tool Manager</value>
+  </data>
   <data name="DefaultButton_Abort" xml:space="preserve">
     <value>Abort</value>
   </data>
@@ -173,5 +176,11 @@
   </data>
   <data name="SubMenu_Settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="Tooltip_Hide" xml:space="preserve">
+    <value>Hide the application</value>
+  </data>
+  <data name="Tooltip_Show" xml:space="preserve">
+    <value>Show the application</value>
   </data>
 </root>
