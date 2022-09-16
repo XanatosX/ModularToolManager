@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -109,8 +110,12 @@ public class MainWindowViewModel : ObservableObject
     /// <returns></returns>
     private Task OpenModalWindow(string title, string imagePath, string modalName)
     {
-        var modalWindow = new ModalWindowViewModel(title, imagePath, viewModelLocator.GetViewModel(modalName), styleService);
-        ShowWindowModel modalWindowData = new ShowWindowModel(modalWindow, Avalonia.Controls.WindowStartupLocation.CenterScreen);
+        var modalContent = viewModelLocator.GetViewModel(modalName);
+        if (modalContent is null)
+        {
+            return null;
+        }
+        ShowWindowModel modalWindowData = new ShowWindowModel(title, imagePath, viewModelLocator.GetViewModel(modalName), WindowStartupLocation.CenterScreen);
         if (windowManagementService is not null)
         {
             return windowManagementService?.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());

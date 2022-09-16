@@ -81,6 +81,12 @@ public class App : Application
             desktop.MainWindow = provider.GetService<MainWindow>();
         }
         DataContext = provider.GetService<AppViewModel>();
+        var locator = provider.GetService<ViewLocator>();
+        if (locator is not null)
+        {
+            DataTemplates.Add(locator);
+        }
+
 
         base.OnFrameworkInitializationCompleted();
     }

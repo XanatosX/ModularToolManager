@@ -56,6 +56,7 @@ public partial class FunctionSelectionViewModel : ObservableObject
         });
     }
 
+    /// <inheritdoc/>
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         Action action = e.PropertyName switch
@@ -67,15 +68,18 @@ public partial class FunctionSelectionViewModel : ObservableObject
         base.OnPropertyChanged(e);
     }
 
+    /// <summary>
+    /// Filter the function list for displaying
+    /// </summary>
     private void FilterFunctionList()
     {
-        IEnumerable<FunctionButtonViewModel> tempFiltered = functions.Where(function => string.IsNullOrEmpty(SearchText) || (function.DisplayName ?? string.Empty).ToLower().Contains(SearchText.ToLower()));
+        IEnumerable<FunctionButtonViewModel> tempFiltered = functions.Where(function => string.IsNullOrEmpty(SearchText) || (function.DisplayName ?? string.Empty).ToLower().Contains(SearchText.ToLower()))
+                                                                     .OrderBy(function => function.SortId);
         FilteredFunctions.Clear();
         foreach (var function in tempFiltered)
         {
             FilteredFunctions.Add(function);
         }
-
     }
 
     /// <summary>

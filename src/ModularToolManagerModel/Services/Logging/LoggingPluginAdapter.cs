@@ -7,7 +7,7 @@ namespace ModularToolManagerModel.Services.Logging;
 /// <summary>
 /// Adapter class to allow logging
 /// </summary>
-public class LoggingPluginAdapter<T> : IPluginLoggerService<T>
+public sealed class LoggingPluginAdapter<T> : IPluginLoggerService<T>
 {
     /// <summary>
     /// The real logging service to use
@@ -38,13 +38,13 @@ public class LoggingPluginAdapter<T> : IPluginLoggerService<T>
     {
         return severity switch
         {
-            LogSeverity.Trace => Microsoft.Extensions.Logging.LogLevel.Trace,
-            LogSeverity.Debug => Microsoft.Extensions.Logging.LogLevel.Debug,
-            LogSeverity.Information => Microsoft.Extensions.Logging.LogLevel.Information,
-            LogSeverity.Warning => Microsoft.Extensions.Logging.LogLevel.Warning,
-            LogSeverity.Error => Microsoft.Extensions.Logging.LogLevel.Error,
-            LogSeverity.Fatal => Microsoft.Extensions.Logging.LogLevel.Critical,
-            _ => Microsoft.Extensions.Logging.LogLevel.None
+            LogSeverity.Trace => LogLevel.Trace,
+            LogSeverity.Debug => LogLevel.Debug,
+            LogSeverity.Information => LogLevel.Information,
+            LogSeverity.Warning => LogLevel.Warning,
+            LogSeverity.Error => LogLevel.Error,
+            LogSeverity.Fatal => LogLevel.Critical,
+            _ => LogLevel.None
         };
     }
 

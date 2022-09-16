@@ -11,10 +11,22 @@ namespace ModularToolManager.Services.Ui;
 /// </summary>
 public interface IWindowManagementService
 {
+    /// <summary>
+    /// Get all the currently active windows
+    /// </summary>
+    /// <returns>All currently active windows</returns>
     IEnumerable<Window> GetAllActiveWindows();
 
+    /// <summary>
+    /// The the topmost window
+    /// </summary>
+    /// <returns>The topmost window</returns>
     Window? GetTopmostWindow();
 
+    /// <summary>
+    /// Get the main window of the application
+    /// </summary>
+    /// <returns></returns>
     Window? GetMainWindow();
 
     /// <summary>
@@ -24,6 +36,13 @@ public interface IWindowManagementService
     /// <param name="parent">The parent of the modal</param>
     /// <returns>A awaitable task for the modal</returns>
     Task ShowModalWindowAsync(ShowWindowModel modalData, Window? parent);
+
+    /// <summary>
+    /// Show modal window async unsig the main window as a parent
+    /// </summary>
+    /// <param name="modalData">The data to show</param>
+    /// <returns>The task to await until the window got closed</returns>
+    async Task ShowModalWindowAsync(ShowWindowModel modalData) => await ShowModalWindowAsync(modalData, GetMainWindow());
 
     /// <summary>
     /// Show a new open file dialog

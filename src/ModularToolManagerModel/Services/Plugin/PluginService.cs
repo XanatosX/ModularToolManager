@@ -11,7 +11,7 @@ namespace ModularToolManagerModel.Services.Plugin;
 /// <summary>
 /// Plugin service for loading plugins from dlls
 /// </summary>
-public class PluginService : IPluginService
+public sealed class PluginService : IPluginService
 {
     /// <summary>
     /// Service to get or load function settings
@@ -78,7 +78,7 @@ public class PluginService : IPluginService
     /// </summary>
     /// <param name="path">The path of the assembly to load</param>
     /// <returns>The assembly to load or null if loading failed</returns>
-    public Assembly? LoadAssemblySavely(string path)
+    private Assembly? LoadAssemblySavely(string path)
     {
         Assembly? assembly = null;
         try
@@ -99,7 +99,7 @@ public class PluginService : IPluginService
     /// </summary>
     /// <param name="assembly">The assembly to get the plugin types from</param>
     /// <returns>A list with all the types</returns>
-    public List<Type> GetValidPlugins(Assembly assembly)
+    private List<Type> GetValidPlugins(Assembly assembly)
     {
         return assembly.GetTypes().Where(type => type.IsVisible)
                                   .Where(type => type.GetInterfaces()
@@ -124,7 +124,7 @@ public class PluginService : IPluginService
     /// </summary>
     /// <param name="pluginType">The plugin type to activate and start</param>
     /// <returns>The newly created ready to use plugin</returns>
-    public IFunctionPlugin? ActivatePlugin(Type pluginType)
+    private IFunctionPlugin? ActivatePlugin(Type pluginType)
     {
         IFunctionPlugin? plugin = null;
         try

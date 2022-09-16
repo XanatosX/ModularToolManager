@@ -1,10 +1,6 @@
 ﻿using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Services;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -14,7 +10,7 @@ namespace ModularToolManagerModel.Services.Language;
 /// <summary>
 /// Plugin translation service to get translations inside of the plugins
 /// </summary>
-public class PluginTranslationService : IPluginTranslationService
+public sealed class PluginTranslationService : IPluginTranslationService
 {
     /// <summary>
     /// Regex to get the translation files from the resources

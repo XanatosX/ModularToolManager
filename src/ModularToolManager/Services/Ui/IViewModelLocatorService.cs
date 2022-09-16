@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.Ui;
+
+/// <summary>
+/// Service to locate view models by name
+/// </summary>
 public interface IViewModelLocatorService
 {
     /// <summary>

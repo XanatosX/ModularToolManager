@@ -36,12 +36,12 @@ internal class MicrosoftDepdencyResolverService : IDependencyResolverService
     /// <inheritdoc/>
     public T? GetDependency<T>()
     {
-        return serviceProvider.GetService<T>();
+        return serviceProvider.GetService<T>() ?? ActivatorUtilities.CreateInstance<T>(serviceProvider);
     }
 
     /// <inheritdoc/>
     public object? GetDependency(Type typeOf)
     {
-        return serviceProvider.GetService(typeOf);
+        return serviceProvider.GetService(typeOf) ?? ActivatorUtilities.CreateInstance(serviceProvider, typeOf);
     }
 }

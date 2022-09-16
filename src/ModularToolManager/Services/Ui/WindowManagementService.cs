@@ -2,8 +2,11 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
+using ModularToolManager.Services.Styling;
+using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.Dependency;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,17 +24,27 @@ internal class WindowManagementService : IWindowManagementService
     private readonly ILogger<WindowManagementService>? loggingService;
 
     /// <summary>
+    /// Service to use to load styles
+    /// </summary>
+    private readonly IStyleService styleService;
+
+    /// <summary>
+    /// Service to use to resolve dependencies
+    /// </summary>
+    private readonly IDependencyResolverService dependencyResolverService;
+
+    /// <summary>
     /// Create a new isntance of this class
     /// </summary>
     /// <param name="loggingService">The logging service to use</param>
-    public WindowManagementService(ILogger<WindowManagementService>? loggingService, IDependencyResolverService dependencyResolverService)
+    public WindowManagementService(ILogger<WindowManagementService>? loggingService, IDependencyResolverService dependencyResolverService, IStyleService styleService)
     {
         this.loggingService = loggingService;
-        DependencyResolverService = dependencyResolverService;
+        this.dependencyResolverService = dependencyResolverService;
+        this.styleService = styleService;
     }
 
-    public IDependencyResolverService DependencyResolverService { get; }
-
+    /// <inheritdoc/>
     public IEnumerable<Window> GetAllActiveWindows()
     {
         var desktop = Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
@@ -43,6 +56,7 @@ internal class WindowManagementService : IWindowManagementService
         return desktop.Windows;
     }
 
+    /// <inheritdoc/>
     public Window? GetMainWindow()
     {
         var desktop = Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
@@ -54,6 +68,7 @@ internal class WindowManagementService : IWindowManagementService
         return desktop!.MainWindow;
     }
 
+    /// <inheritdoc/>
     public Window? GetTopmostWindow()
     {
         IEnumerable<Window> windows = GetAllActiveWindows().Where(window => window.IsActive).Where(window => window.IsVisible);
@@ -64,7 +79,8 @@ internal class WindowManagementService : IWindowManagementService
     /// <inheritdoc/>
     public async Task ShowModalWindowAsync(ShowWindowModel modalData, Window? parent)
     {
-        ModalWindow? window = DependencyResolverService?.GetDependency<ModalWindow>();
+        ModalWindow? window = dependencyResolverService?.GetDependency<ModalWindow>();
+        var modalContent = new ModalWindowViewModel(modalData.Title, modalData.ImagePath, modalData.ModalContent, styleService);
         parent = parent ?? GetMainWindow();
         if (window is null)
         {
@@ -77,8 +93,13 @@ internal class WindowManagementService : IWindowManagementService
             return;
         }
         window.WindowStartupLocation = modalData.StartupLocation;
-        window.DataContext = modalData.ViewModel;
+        window.DataContext = modalContent;
         await window.ShowDialog(parent);
+        if (window.DataContext is ModalWindowViewModel modalWindowViewModel)
+        {
+            var data = modalWindowViewModel.ModalContent as IDisposable;
+            data?.Dispose();
+        }
     }
 
     /// <inheritdoc/>

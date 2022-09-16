@@ -3,8 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
-using System.Drawing.Printing;
-using System.Reactive;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -37,10 +35,6 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// </summary>
     [ObservableProperty]
     private string? description;
-
-    private string path;
-
-    private string arguments;
 
     /// <summary>
     /// The tool tip delay to use, a really high value is returned if no description is present

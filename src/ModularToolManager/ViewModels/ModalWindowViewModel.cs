@@ -29,11 +29,10 @@ public class ModalWindowViewModel : ObservableObject
     //@TODO: Change to proper type as soon as obsolete part removed
     public object ModalContent { get; }
 
-    public ModalWindowViewModel(string title, string pathName, ObservableObject modalContent, IStyleService styleService)
+    public ModalWindowViewModel(string title, string? pathName, ObservableObject modalContent, IStyleService styleService)
     {
         Title = title;
         ModalContent = modalContent;
-        IStyle? styles = styleService?.GetCurrentAppIncludeStyles().FirstOrDefault();
-        PathIcon = styleService?.GetStyleByName<StreamGeometry>(pathName) ?? null;
+        PathIcon = styleService?.GetStyleByName<StreamGeometry>(pathName ?? string.Empty) ?? null;
     }
 }

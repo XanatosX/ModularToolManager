@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Ui;
@@ -39,17 +40,14 @@ public partial class MainWindow : Window
             Topmost = false;
         });
 
-        PropertyChanged += (s, e) =>
-        {
-            if (e.Property.Name == "Height")
-            {
-                PositionWindow();
-            }
-        };
-
-
         PositionWindow();
         this.modalService = modalService;
+    }
+
+    public override void Render(DrawingContext context)
+    {
+        base.Render(context);
+        PositionWindow();
     }
 
     /// <summary>

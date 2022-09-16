@@ -23,6 +23,11 @@ public class SerializedFunctionService : IFunctionService
     private readonly IPathService? pathService;
 
     /// <summary>
+    /// Service to use for file system interactions
+    /// </summary>
+    public IFileSystemService FileSystemService { get; }
+
+    /// <summary>
     /// The logging service to use
     /// </summary>
     private readonly ILogger<SerializedFunctionService>? loggingService;
@@ -32,15 +37,21 @@ public class SerializedFunctionService : IFunctionService
     /// </summary>
     private readonly List<FunctionModel> cachedFunctions;
 
+
+
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="serializer">The serailzier class to use</param>
     /// <param name="pathService">The path service to use</param>
-    public SerializedFunctionService(ISerializeService? serializer, IPathService? pathService, ILogger<SerializedFunctionService>? loggingService)
+    public SerializedFunctionService(ISerializeService? serializer,
+                                     IPathService? pathService,
+                                     IFileSystemService fileSystemService,
+                                     ILogger<SerializedFunctionService>? loggingService)
     {
         this.serializer = serializer;
         this.pathService = pathService;
+        FileSystemService = fileSystemService;
         this.loggingService = loggingService;
 
         cachedFunctions = new List<FunctionModel>();
@@ -95,15 +106,15 @@ public class SerializedFunctionService : IFunctionService
             return cachedFunctions;
         }
         string functionFile = GetFunctionPath();
-        if (!File.Exists(functionFile))
-        {
-            return Enumerable.Empty<FunctionModel>().ToList();
-        }
         List<FunctionModel> returnData = Enumerable.Empty<FunctionModel>().ToList();
-        using (FileStream fileStream = new(functionFile, FileMode.Open, FileAccess.Read))
+        using (StreamReader? dataStream = FileSystemService?.GetReadStream(functionFile))
         {
-            returnData = serializer?.GetDeserialized<List<FunctionModel>>(fileStream) ?? Enumerable.Empty<FunctionModel>().ToList();
+            if (dataStream is not null)
+            {
+                returnData = serializer?.GetDeserialized<List<FunctionModel>>(dataStream.BaseStream) ?? Enumerable.Empty<FunctionModel>().ToList();
+            }
         }
+        returnData = returnData.Where(function => function.Plugin is not null).ToList();
         cachedFunctions.AddRange(returnData);
         return returnData!;
     }
@@ -133,15 +144,13 @@ public class SerializedFunctionService : IFunctionService
         {
             settingsFolder.Create();
         }
+
         string? saveData = serializer?.GetSerialized(dataToSave);
         if (!string.IsNullOrEmpty(saveData))
         {
-            using (FileStream fileStream = new(GetFunctionPath(), FileMode.Create, FileAccess.Write))
+            using (StreamWriter? writer = FileSystemService?.GetWriteStream(GetFunctionPath()))
             {
-                using (StreamWriter writer = new(fileStream))
-                {
-                    writer.Write(saveData);
-                }
+                writer?.Write(saveData);
             }
             cachedFunctions.Clear();
             return true;

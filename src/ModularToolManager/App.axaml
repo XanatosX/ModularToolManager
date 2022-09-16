@@ -3,9 +3,11 @@
              xmlns:local="using:ModularToolManager"
              x:Class="ModularToolManager.App"
 			 xmlns:p="clr-namespace:ModularToolManager.Properties">
+	<!--
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
+	-->
 
     <Application.Styles>
 		<FluentTheme Mode="Dark"/>

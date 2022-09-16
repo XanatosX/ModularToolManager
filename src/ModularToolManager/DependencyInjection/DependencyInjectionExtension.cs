@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Avalonia.Controls.Templates;
+using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.Services.Dependencies;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
@@ -33,10 +34,6 @@ internal static class DependencyInjectionExtension
     public static IServiceCollection AddAvaloniaDefault(this IServiceCollection collection)
     {
         return collection;
-        /**
-        return collection.AddSingleton<IActivationForViewFetcher, AvaloniaActivationForViewFetcher>()
-                         .AddSingleton<IPropertyBindingHook, AutoDataTemplateBindingHook>();
-        */
     }
 
     /// <summary>
@@ -88,6 +85,8 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<IFunctionService, SerializedFunctionService>()
                          .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>))
                          .AddSingleton<IViewModelLocatorService, ViewModelLocator>()
-                         .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>();
+                         .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>()
+                         .AddSingleton<IFileSystemService, FileSystemService>()
+                         .AddSingleton<ViewLocator>();
     }
 }

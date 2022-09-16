@@ -1,33 +1,45 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
 using ModularToolManagerModel.Services.Dependency;
+using NLog.LayoutRenderers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.Ui;
+
+/// <summary>
+/// Class to use for loacint views
+/// </summary>
 public class ViewModelLocator : IViewModelLocatorService
 {
+    /// <summary>
+    /// All the namespaces which are allowed for views to be stored in
+    /// </summary>
     private string[] allowedNamespaces = new string[] { "ModularToolManager.ViewModels" };
 
+    /// <summary>
+    /// Service used to resolve depedencies
+    /// </summary>
     private readonly IDependencyResolverService dependencyResolverService;
-    private readonly ILogger<ViewModelLocator> logger;
 
-    public ViewModelLocator(IDependencyResolverService dependencyResolverService, ILogger<ViewModelLocator> logger)
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="dependencyResolverService">The dependency resolver Service to use</param>
+    public ViewModelLocator(IDependencyResolverService dependencyResolverService)
     {
         this.dependencyResolverService = dependencyResolverService;
-        this.logger = logger;
     }
 
+    /// <inheritdoc/>
     public ObservableObject? GetViewModel(string name)
     {
         Type type = GetViewModelType(name);
         return type is null ? null : dependencyResolverService?.GetDependency(type) as ObservableObject;
     }
 
+    /// <inheritdoc/>
     public Type? GetViewModelType(string name)
     {
         return Assembly.GetEntryAssembly()!

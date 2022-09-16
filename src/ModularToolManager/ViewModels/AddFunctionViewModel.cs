@@ -22,17 +22,6 @@ namespace ModularToolManager.ViewModels;
 internal partial class AddFunctionViewModel : ObservableValidator
 {
     /// <summary>
-    /// Service to use to manage plugins
-    /// </summary>
-    private readonly IPluginService? pluginService;
-
-    /// <summary>
-    /// Service to use for loading functions
-    /// </summary>
-    private readonly IFunctionService? functionService;
-    private readonly IWindowManagementService windowManagmentService;
-
-    /// <summary>
     /// A list with all the function plugin possiblities
     /// </summary>
     public List<FunctionPluginViewModel> FunctionPlugins => functionPlugins;
@@ -42,6 +31,9 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// </summary>
     private readonly List<FunctionPluginViewModel> functionPlugins;
 
+    /// <summary>
+    /// The display name of the function
+    /// </summary>
     [Required]
     [MinLength(5), MaxLength(25)]
     [NotifyDataErrorInfo]
@@ -100,9 +92,6 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// <param name="functionService">The function service to use</param>
     public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService, IWindowManagementService windowManagmentService)
     {
-        this.pluginService = pluginService;
-        this.functionService = functionService;
-        this.windowManagmentService = windowManagmentService;
         functionPlugins = new();
         if (pluginService is not null)
         {
@@ -125,12 +114,6 @@ internal partial class AddFunctionViewModel : ObservableValidator
             return valid;
         };
         Func<bool> canOpenFile = () => SelectedFunctionPlugin is not null;
-
-
-        this.PropertyChanged += (_, changeEvent) =>
-        {
-            return;
-        };
 
         AbortCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseModalMessage(this)));
         OkCommand = new RelayCommand(() =>
