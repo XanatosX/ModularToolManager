@@ -1,0 +1,26 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:ModularToolManager"
+             x:Class="ModularToolManager.App"
+			 xmlns:p="clr-namespace:ModularToolManager.Properties">
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Styles>
+		<FluentTheme Mode="Dark"/>
+		<StyleInclude Source="avares://ModularToolManager/Icons.axaml"/>
+	</Application.Styles>
+
+	<TrayIcon.Icons>
+		<TrayIcons>
+			<TrayIcon Icon="/Assets/avalonia-logo.ico" Command="{Binding ShowApplicationCommand}" ToolTipText="Modular tool manager">
+				<TrayIcon.Menu>
+					<NativeMenu>
+						<NativeMenuItem Header="{x:Static p:Resources.SubMenu_Exit}" Command="{Binding ExitApplicationCommand}"/>
+					</NativeMenu>
+				</TrayIcon.Menu>
+			</TrayIcon>
+		</TrayIcons>
+	</TrayIcon.Icons>
+</Application>

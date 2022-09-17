@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Translations\de-DE.json" />
+    <None Remove="Translations\en-EN.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Translations\de-DE.json" />
+    <EmbeddedResource Include="Translations\en-EN.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj">
+		  <Private>false</Private>
+	  </ProjectReference>
+  </ItemGroup>
+
+
+
+	<Target Condition="'$(Configuration)' == 'Debug'" Name="CopyAfterBuild" AfterTargets="Build">
+		<Copy SourceFiles="$(OutDir)DefaultPlugins.dll" DestinationFolder="$(ProjectDir)../ModularToolManager/bin/$(Configuration)/net6.0/$(PlatformShortName)/plugins" SkipUnchangedFiles="false" />
+	</Target>
+</Project>
+ 
