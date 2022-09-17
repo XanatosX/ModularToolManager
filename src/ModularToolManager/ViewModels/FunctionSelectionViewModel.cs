@@ -10,15 +10,19 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
 
 namespace ModularToolManager.ViewModels;
 
 /// <summary>
 /// View model to select a function
 /// </summary>
-public partial class FunctionSelectionViewModel : ObservableObject
+public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
 {
+    /// <summary>
+    /// Was the class already disposed
+    /// </summary>
+    private bool isDisposed;
+
     /// <summary>
     /// The service to use for function selection
     /// </summary>
@@ -54,6 +58,8 @@ public partial class FunctionSelectionViewModel : ObservableObject
             functionService?.DeleteFunction(e.Function.UniqueIdentifier);
             ReloadFunctions();
         });
+
+        WeakReferenceMessenger.Default.Register<ReloadFunctionsMessage>(this, (_, _) => ReloadFunctions());
     }
 
     /// <inheritdoc/>
@@ -101,5 +107,23 @@ public partial class FunctionSelectionViewModel : ObservableObject
             functions.Add(functionViewModel);
         }
         FilterFunctionList();
+    }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        if (isDisposed)
+        {
+            return;
+        }
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+    }
+
+    /// <summary>
+    /// Finalizer to make sure to unregister all the message hooks
+    /// </summary>
+    ~FunctionSelectionViewModel()
+    {
+        Dispose();
     }
 }

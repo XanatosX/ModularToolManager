@@ -10,8 +10,11 @@ using ModularToolManagerModel.Services.Plugin;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ModularToolManager.ViewModels;
@@ -30,6 +33,12 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// Private list for all the function plugins
     /// </summary>
     private readonly List<FunctionPluginViewModel> functionPlugins;
+    private readonly IFunctionService? functionService;
+
+    /// <summary>
+    /// Service to use for opening windows or modals
+    /// </summary>
+    private readonly IWindowManagementService windowManagmentService;
 
     /// <summary>
     /// The display name of the function
@@ -71,21 +80,6 @@ internal partial class AddFunctionViewModel : ObservableValidator
     private string? selectedPath;
 
     /// <summary>
-    /// Command used to add the new function
-    /// </summary>
-    public IRelayCommand OkCommand { get; }
-
-    /// <summary>
-    /// Command used to abord the current changes or addition
-    /// </summary>
-    public ICommand AbortCommand { get; }
-
-    /// <summary>
-    /// Command to use for opening a file
-    /// </summary>
-    public IRelayCommand OpenFunctionPathCommand { get; }
-
-    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="pluginService">The plugin service to use</param>
@@ -93,69 +87,13 @@ internal partial class AddFunctionViewModel : ObservableValidator
     public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService, IWindowManagementService windowManagmentService)
     {
         functionPlugins = new();
+        this.functionService = functionService;
+        this.windowManagmentService = windowManagmentService;
         if (pluginService is not null)
         {
             functionPlugins.AddRange(pluginService!.GetAvailablePlugins()
                                                    .Select(plugin => new FunctionPluginViewModel(plugin)));
         }
-
-
-        Func<bool> canExecute = () =>
-        {
-            bool valid = DisplayName?.Length >= 5 && DisplayName?.Length <= 25;
-            valid &= SelectedFunctionPlugin is not null && SelectedFunctionPlugin.Plugin is not null;
-            valid &= File.Exists(SelectedPath);
-            if (valid)
-            {
-                FileInfo info = new FileInfo(SelectedPath ?? String.Empty);
-                valid &= SelectedFunctionPlugin!.Plugin!.GetAllowedFileEndings().Select(fileExtension => fileExtension.Extension.ToLower())
-                                                                                                               .Any(ending => ending == info.Extension.TrimStart('.').ToLowerInvariant());
-            }
-            return valid;
-        };
-        Func<bool> canOpenFile = () => SelectedFunctionPlugin is not null;
-
-        AbortCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseModalMessage(this)));
-        OkCommand = new RelayCommand(() =>
-        {
-            var functionModel = new FunctionModel
-            {
-                DisplayName = DisplayName!,
-                Description = Description,
-                Plugin = SelectedFunctionPlugin!.Plugin,
-                Parameters = FunctionParameters!,
-                Path = SelectedPath!,
-                SortOrder = 0
-
-            };
-            bool success = functionService?.AddFunction(functionModel) ?? false;
-            if (success)
-            {
-                AbortCommand.Execute(null);
-            }
-        }, canExecute);
-
-        OpenFunctionPathCommand = new AsyncRelayCommand(async () =>
-        {
-
-            var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter
-            {
-                Extensions = new List<string> { fileEnding.Extension },
-                Name = fileEnding.Name
-            }).ToList();
-            if (fileDialogs is null)
-            {
-                return;
-            }
-            ShowOpenFileDialogModel openConfig = new ShowOpenFileDialogModel(fileDialogs, null, false);
-            var files = await windowManagmentService?.ShowOpenFileDialogAsync(openConfig) ?? new string[0];
-            string file = files.FirstOrDefault(string.Empty);
-            if (string.IsNullOrEmpty(file))
-            {
-                return;
-            }
-            SelectedPath = file;
-        }, canOpenFile);
 
         InitialValueSet();
     }
@@ -169,5 +107,89 @@ internal partial class AddFunctionViewModel : ObservableValidator
         Description = string.Empty;
         FunctionParameters = string.Empty;
         SelectedPath = string.Empty;
+    }
+
+    /// <summary>
+    /// Command to close current modal window
+    /// </summary>
+    [RelayCommand]
+    private void Abort()
+    {
+        WeakReferenceMessenger.Default.Send(new CloseModalMessage(this));
+    }
+
+    /// <summary>
+    /// Command to save current function
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanExecuteOk))]
+    private void Ok()
+    {
+        var functionModel = new FunctionModel
+        {
+            DisplayName = DisplayName!,
+            Description = Description,
+            Plugin = SelectedFunctionPlugin!.Plugin,
+            Parameters = FunctionParameters!,
+            Path = SelectedPath!,
+            SortOrder = 0
+
+        };
+        bool success = functionService?.AddFunction(functionModel) ?? false;
+        if (success)
+        {
+            AbortCommand.Execute(null);
+        }
+    }
+
+    /// <summary>
+    /// Can the okay command be executed
+    /// </summary>
+    /// <returns>True if execution is possible</returns>
+    private bool CanExecuteOk()
+    {
+        bool valid = DisplayName?.Length >= 5 && DisplayName?.Length <= 25;
+        valid &= SelectedFunctionPlugin is not null && SelectedFunctionPlugin.Plugin is not null;
+        valid &= File.Exists(SelectedPath);
+        if (valid)
+        {
+            FileInfo info = new FileInfo(SelectedPath ?? String.Empty);
+            valid &= SelectedFunctionPlugin!.Plugin!.GetAllowedFileEndings().Select(fileExtension => fileExtension.Extension.ToLower())
+                                                                                                           .Any(ending => ending == info.Extension.TrimStart('.').ToLowerInvariant());
+        }
+        return valid;
+    }
+
+    /// <summary>
+    /// Command to open the allow selecting a path to execute by the function
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanOpenFunctionPath))]
+    private async void OpenFunctionPath()
+    {
+        var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter
+        {
+            Extensions = new List<string> { fileEnding.Extension },
+            Name = fileEnding.Name
+        }).ToList();
+        if (fileDialogs is null)
+        {
+            return;
+        }
+        ShowOpenFileDialogModel openConfig = new ShowOpenFileDialogModel(fileDialogs, null, false);
+        var files = await windowManagmentService?.ShowOpenFileDialogAsync(openConfig) ?? new string[0];
+        string file = files.FirstOrDefault(string.Empty);
+        if (string.IsNullOrEmpty(file))
+        {
+            return;
+        }
+        SelectedPath = file;
+    }
+
+    /// <summary>
+    /// Can the open function path command be called
+    /// </summary>
+    /// <returns>True if callable</returns>
+    private bool CanOpenFunctionPath()
+    {
+        return SelectedFunctionPlugin is not null;
     }
 }

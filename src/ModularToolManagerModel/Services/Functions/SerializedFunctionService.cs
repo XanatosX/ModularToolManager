@@ -71,7 +71,6 @@ public class SerializedFunctionService : IFunctionService
         loggingService?.LogTrace($"Adding succeeded for function {function.DisplayName} with unique id {function.UniqueIdentifier}");
         if (SaveFunctionsToDisc(currentData))
         {
-            cachedFunctions.Add(function);
             return true;
         }
         loggingService?.LogError("Something went wrong while saving the function data");

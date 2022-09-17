@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Styling;
@@ -17,7 +16,7 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// Main view model
 /// </summary>
-public class MainWindowViewModel : ObservableObject
+public partial class MainWindowViewModel : ObservableObject
 {
     /// <summary>
     /// Service to use for locating view models
@@ -50,11 +49,6 @@ public class MainWindowViewModel : ObservableObject
     /// Command to open the settings
     /// </summary>
     public ICommand OpenSettingsCommand { get; }
-
-    /// <summary>
-    /// Command to open the modal to add a new function
-    /// </summary>
-    public ICommand NewFunctionCommand { get; }
 
     /// <summary>
     /// Command to execture for bug reporting
@@ -96,9 +90,15 @@ public class MainWindowViewModel : ObservableObject
         ExitApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseApplicationMessage()));
         SelectLanguageCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Language, "flag_regular", nameof(ChangeLanguageViewModel)));
         OpenSettingsCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Settings, "settings_regular", nameof(SettingsViewModel)));
-        NewFunctionCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_NewFunction, "settings_regular", nameof(AddFunctionViewModel)));
         HideApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true)));
         ShowApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(false)));
+    }
+
+    [RelayCommand]
+    private async Task NewFunction()
+    {
+        await OpenModalWindow(Properties.Resources.SubMenu_NewFunction, "settings_regular", nameof(AddFunctionViewModel));
+        WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
     }
 
     /// <summary>
