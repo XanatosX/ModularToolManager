@@ -27,6 +27,11 @@ jobs:
       should_run: ${{ steps.should_run.outputs.should_run }}
     steps:
       - uses: actions/checkout@v3
+        if: ${{ env.DEBUG == 'true' }}
+        with:
+          ref: ${{ env.REF_CHECKOUT_BRANCH }}
+      - uses: actions/checkout@v3
+        if: ${{ env.DEBUG == 'false' }}
         with:
           ref: ${{ env.REF_CHECKOUT_BRANCH }}
       - name: print latest_commit
