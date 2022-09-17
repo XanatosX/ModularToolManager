@@ -1,6 +1,7 @@
 name: Recent develop build
 
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: 0 0 * * *
@@ -8,6 +9,7 @@ on:
 
 env:
   DEBUG: true
+  REF_CHECKOUT_BRANCH: develop
   RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
@@ -24,9 +26,11 @@ jobs:
     outputs:
       should_run: ${{ steps.should_run.outputs.should_run }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: print latest_commit
         run: echo ${{ github.sha }}
+        with:
+          ref: ${{ env.REF_CHECKOUT_BRANCH }}
       - id: should_run
         continue-on-error: true
         name: check latest commit is less than a day
@@ -39,6 +43,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
+        ref: ${{ env.REF_CHECKOUT_BRANCH }}
         lfs: true
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
@@ -58,6 +63,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
+        ref: ${{ env.REF_CHECKOUT_BRANCH }}
         lfs: true
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
@@ -91,6 +97,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
+        ref: ${{ env.REF_CHECKOUT_BRANCH }}
         lfs: true
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
