@@ -27,16 +27,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         if: ${{ env.DEBUG == 'true' }}
-      - name: Set should run to true
-        run: echo "::set-output name=should_run::true"  
       - uses: actions/checkout@v3
         if: ${{ env.DEBUG == 'false' }}
         with:
           ref: ${{ env.REF_CHECKOUT_BRANCH }}
       - name: get latest commit and check it
+        id: should_run
         continue-on-error: true
         if: ${{ env.DEBUG == 'true' }} || ${{ github.event_name == 'schedule' }}
         run: |
+           echo "::set-output name=should_run::true" 
            sha=$(git log -n 1 --pretty=format:"%H")
            echo $sha
            test -z $(git rev-list  --after="24 hours" $sha) && echo "::set-output name=should_run::false"
