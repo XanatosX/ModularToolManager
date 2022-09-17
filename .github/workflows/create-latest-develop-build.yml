@@ -39,7 +39,7 @@ jobs:
            echo "::set-output name=should_run::true" 
            sha=$(git log -n 1 --pretty=format:"%H")
            echo $sha
-           test -z $(git rev-list  --after="24 hours" $sha) && echo "::set-output name=should_run::false"
+           test -z $(git rev-list  --after="1 seconds" $sha) && echo "::set-output name=should_run::false"
   check-build:
     name: Check and Test build
     if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
