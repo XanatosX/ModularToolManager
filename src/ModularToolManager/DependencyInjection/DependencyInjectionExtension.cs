@@ -59,7 +59,7 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddViews(this IServiceCollection collection)
     {
-        return collection.AddTransient(resolver => new MainWindow(resolver?.GetService<IWindowManagementService>())
+        return collection.AddTransient(resolver => new MainWindow(resolver.GetRequiredService<IWindowManagementService>(), resolver.GetRequiredService<ISettingsService>())
         {
             DataContext = resolver?.GetService<MainWindowViewModel>(),
         })

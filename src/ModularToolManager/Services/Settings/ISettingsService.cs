@@ -5,7 +5,7 @@ namespace ModularToolManager.Services.Settings;
 /// <summary>
 /// interface for loading and saving application settings
 /// </summary>
-internal interface ISettingsService
+public interface ISettingsService
 {
     /// <summary>
     /// Load the application settings

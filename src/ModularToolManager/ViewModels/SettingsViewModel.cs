@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
@@ -43,6 +44,7 @@ internal partial class SettingsViewModel : ObservableObject
 		appSettings.AlwaysOnTop = topMost;
 		if (settingsService.SaveApplicationSettings(appSettings))
 		{
+			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<ApplicationSettings>(appSettings));
 			Abort();
 		}
 	}

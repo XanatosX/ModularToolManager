@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.DependencyInjection;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Logging;
+using ModularToolManager.Services.Settings;
+using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;
@@ -71,14 +73,15 @@ public class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = provider.GetService<MainWindow>();
+            DataContext = provider.GetService<AppViewModel>();
+
         }
-        DataContext = provider.GetService<AppViewModel>();
+
         var locator = provider.GetService<ViewLocator>();
         if (locator is not null)
         {
             DataTemplates.Add(locator);
         }
-
 
         base.OnFrameworkInitializationCompleted();
     }
