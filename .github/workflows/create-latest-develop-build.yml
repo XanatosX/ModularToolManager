@@ -3,7 +3,7 @@ name: Recent develop build
 on:
   schedule:
     - cron: 0 0 * * *
-    - cron: 5 11 * * *
+    - cron: 8 11 * * *
   workflow_dispatch:
 
 env:
