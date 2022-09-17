@@ -42,7 +42,7 @@ jobs:
         run: test -z $(git rev-list  --after="1 seconds"  ${{ github.sha }}) && echo "::set-output name=should_run::false"
   debug-show-changed-value:
     name: (Debug) Show changes value
-    if: ${{ env.DEBUG == 'true' }}
+    if: env.DEBUG == 'true'
     needs: [check-for-changes]
     runs-on: ubuntu-latest
     steps:
