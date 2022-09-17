@@ -27,10 +27,10 @@ jobs:
       should_run: ${{ steps.should_run.outputs.should_run }}
     steps:
       - uses: actions/checkout@v3
-      - name: print latest_commit
-        run: echo ${{ github.sha }}
         with:
           ref: ${{ env.REF_CHECKOUT_BRANCH }}
+      - name: print latest_commit
+        run: echo ${{ github.sha }}
       - id: should_run
         continue-on-error: true
         name: check latest commit is less than a day
