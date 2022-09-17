@@ -40,6 +40,14 @@ jobs:
         name: check latest commit is less than a day
         if: ${{ env.DEBUG == 'true' }} || ${{ github.event_name == 'schedule' }}
         run: test -z $(git rev-list  --after="1 seconds"  ${{ github.sha }}) && echo "::set-output name=should_run::false"
+  debug-show-changed-value:
+    name: (Debug) Show changes value
+    if: ${{ env.DEBUG == 'true' }}
+    needs: [check-for-changes]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show check for commits
+        run: echo  ${{ needs.check-for-changes.outputs.should_run == 'true' }}
   check-build:
     name: Check and Test build
     if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
