@@ -5,6 +5,7 @@ using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
 using System.Reflection;
+using System.Reflection.Metadata;
 
 namespace ModularToolManagerModel.Services.Plugin;
 
@@ -62,12 +63,15 @@ public sealed class PluginService : IPluginService
     {
         if (plugins.Count == 0)
         {
-            plugins.AddRange(GetPlugins().Select(pluginPath => LoadAssemblySavely(pluginPath))
-                                         .Where(assembly => assembly is not null)
-                                         .SelectMany(assembly => GetValidPlugins(assembly!))
-                                         .Select(pluginType => ActivatePlugin(pluginType))
-                                         .Where(plugin => plugin is not null)
-                                         .Where(plugin => plugin.IsOperationSystemValid()));
+            List<IFunctionPlugin> dataToAdd = GetPlugins().Select(pluginPath => LoadAssemblySavely(pluginPath))
+                                                          .Where(assembly => assembly is not null)
+                                                          .SelectMany(assembly => GetValidPlugins(assembly!))
+                                                          .Select(pluginType => ActivatePlugin(pluginType))
+                                                          .Where(plugin => plugin is not null)
+                                                          .Where(plugin => plugin!.IsOperationSystemValid())
+                                                          .OfType<IFunctionPlugin>()
+                                                          .ToList() ?? new();
+            plugins.AddRange(dataToAdd);
         }
 
         return plugins;
@@ -132,13 +136,15 @@ public sealed class PluginService : IPluginService
             ConstructorInfo? constructor = pluginType.GetConstructors().FirstOrDefault();
             object?[] dependencies = constructor?.GetParameters().Where(parameter => parameter.ParameterType.GetCustomAttribute<PluginInjectableAttribute>() is not null)
                                                                  .Select(parameter => dependencyResolver.GetDependency(parameter.ParameterType))
-                                                                 .ToArray();
+                                                                 .ToArray() ?? Array.Empty<object>();
 
             loggingService?.LogInformation($"Activation for plugin of type {pluginType.FullName} imminent");
 
-            var parameters = constructor.GetParameters().Select(parameter => parameter.ParameterType.FullName);
-            loggingService?.LogInformation($"Required parameters for constructor: {string.Join(",", parameters)}");
-            IEnumerable<string> objectInstances = dependencies?.Select(dependency => dependency?.GetType().FullName) ?? Enumerable.Empty<string>();
+            var parameters = constructor?.GetParameters().Select(parameter => parameter.ParameterType.FullName);
+            loggingService?.LogInformation($"Required parameters for constructor: {string.Join(",", parameters ?? Enumerable.Empty<string>())}");
+            IEnumerable<string> objectInstances = dependencies?.Select(dependency => dependency?.GetType().FullName)
+                                                               .Where(data => !string.IsNullOrEmpty(data))
+                                                               .OfType<string>() ?? Enumerable.Empty<string>();
             loggingService?.LogInformation($"Instances used for filling up: {string.Join(", ", objectInstances)}");
 
             //@NOTE: load settings of a plugin, this will be reuqired later on!

@@ -80,6 +80,11 @@ internal class WindowManagementService : IWindowManagementService
     public async Task ShowModalWindowAsync(ShowWindowModel modalData, Window? parent)
     {
         ModalWindow? window = dependencyResolverService?.GetDependency<ModalWindow>();
+        if (modalData.ModalContent is null)
+        {
+            loggingService?.LogError("No content for the modal was provided, cannot open the window");
+            return;
+        }
         var modalContent = new ModalWindowViewModel(modalData.Title, modalData.ImagePath, modalData.ModalContent, styleService);
         parent = parent ?? GetMainWindow();
         if (window is null)
@@ -89,7 +94,7 @@ internal class WindowManagementService : IWindowManagementService
         }
         if (parent is null)
         {
-            loggingService?.LogError($"Could not get parent for modal window, abort opening modal!");
+            loggingService?.LogError("Could not get parent for modal window, abort opening modal!");
             return;
         }
         window.WindowStartupLocation = modalData.StartupLocation;

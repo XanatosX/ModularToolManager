@@ -117,6 +117,7 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
             return;
         }
         WeakReferenceMessenger.Default.UnregisterAll(this);
+        isDisposed = true;
     }
 
     /// <summary>

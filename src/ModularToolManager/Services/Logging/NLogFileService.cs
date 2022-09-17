@@ -21,7 +21,7 @@ public class NLogFileService : ILogFileService
 
     public NLogFileService(LoggingConfiguration configuration)
     {
-        CreateLoggingFileList(configuration);
+        loggingFileModels = CreateLoggingFileList(configuration);
     }
 
     /// <summary>

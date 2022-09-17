@@ -3,7 +3,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.DependencyInjection;
 using ModularToolManager.Services.IO;
@@ -23,8 +22,7 @@ namespace ModularToolManager;
 /// <inheritdoc/>
 public class App : Application
 {
-    private IServiceProvider provider;
-
+    private IServiceProvider? provider;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -70,7 +68,6 @@ public class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         provider = BuildServiceCollection().BuildServiceProvider();
-
 
         ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

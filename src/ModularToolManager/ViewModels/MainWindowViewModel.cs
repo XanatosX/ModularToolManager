@@ -1,4 +1,3 @@
-using Avalonia;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -38,6 +37,10 @@ public partial class MainWindowViewModel : ObservableObject
     /// The current content model to show in the main view
     /// </summary>
     public ObservableObject MainContentModel { get; }
+
+    /// <summary>
+    /// The service to use for getting styles
+    /// </summary>
     private readonly IStyleService styleService;
 
     /// <summary>
@@ -85,8 +88,8 @@ public partial class MainWindowViewModel : ObservableObject
         this.viewModelLocator = viewModelLocator;
         this.windowManagementService = windowManagementService;
         this.styleService = styleService;
-        ReportBugCommand = new RelayCommand(() => urlOpenerService?.OpenUrl(Properties.Properties.GithubUrl));
 
+        ReportBugCommand = new RelayCommand(() => urlOpenerService?.OpenUrl(Properties.Properties.GithubUrl));
         ExitApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseApplicationMessage()));
         SelectLanguageCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Language, "flag_regular", nameof(ChangeLanguageViewModel)));
         OpenSettingsCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Settings, "settings_regular", nameof(SettingsViewModel)));
@@ -108,19 +111,18 @@ public partial class MainWindowViewModel : ObservableObject
     /// <param name="imagePath">The image path to show</param>
     /// <param name="modalName">The name of the modal to show</param>
     /// <returns></returns>
-    private Task OpenModalWindow(string title, string imagePath, string modalName)
+    private async Task OpenModalWindow(string title, string imagePath, string modalName)
     {
         var modalContent = viewModelLocator.GetViewModel(modalName);
         if (modalContent is null)
         {
-            return null;
+            return;
         }
         ShowWindowModel modalWindowData = new ShowWindowModel(title, imagePath, viewModelLocator.GetViewModel(modalName), WindowStartupLocation.CenterScreen);
         if (windowManagementService is not null)
         {
-            return windowManagementService?.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
+            await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
         }
-        return null;
     }
 
 

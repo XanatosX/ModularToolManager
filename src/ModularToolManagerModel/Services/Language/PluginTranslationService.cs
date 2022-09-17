@@ -20,7 +20,7 @@ public sealed class PluginTranslationService : IPluginTranslationService
     /// <inheritdoc/>
     public List<TranslationModel> GetAllTranslations(Assembly assemblyToUse)
     {
-        return GetTranslationsFromFile(assemblyToUse, GetTranslationResourceByCulture(assemblyToUse, GetCurrentCulture()));
+        return GetTranslationsFromFile(assemblyToUse, GetTranslationResourceByCulture(assemblyToUse, GetCurrentCulture()) ?? string.Empty);
     }
 
     /// <inheritdoc/>
@@ -140,7 +140,7 @@ public sealed class PluginTranslationService : IPluginTranslationService
     /// <returns>A list with all possible translations</returns>
     private List<TranslationModel> GetTranslationsFromFile(Assembly assembly, string cultureFile)
     {
-        return JsonSerializer.Deserialize<List<TranslationModel>>(LoadResourceData(assembly, cultureFile));
+        return JsonSerializer.Deserialize<List<TranslationModel>>(LoadResourceData(assembly, cultureFile)) ?? new();
     }
 
     /// <summary>
