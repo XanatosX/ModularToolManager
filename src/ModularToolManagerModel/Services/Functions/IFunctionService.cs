@@ -36,6 +36,13 @@ namespace ModularToolManagerModel.Services.Functions
         bool AddFunction(FunctionModel function);
 
         /// <summary>
+        /// Replace the function model with the save unique id with the new data set
+        /// </summary>
+        /// <param name="function">The new function to use</param>
+        /// <returns>True if replacement was successful</returns>
+        bool ReplaceFunction(FunctionModel function);
+
+        /// <summary>
         /// Delete a function from the pool
         /// </summary>
         /// <param name="function">The function to delete</param>

@@ -10,12 +10,9 @@ using ModularToolManagerModel.Services.Plugin;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace ModularToolManager.ViewModels;
 
@@ -80,6 +77,11 @@ internal partial class AddFunctionViewModel : ObservableValidator
     private string? selectedPath;
 
     /// <summary>
+    /// The identifier to use for the function
+    /// </summary>
+    private string? identifier;
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="pluginService">The plugin service to use</param>
@@ -96,6 +98,28 @@ internal partial class AddFunctionViewModel : ObservableValidator
         }
 
         InitialValueSet();
+    }
+
+    /// <summary>
+    /// Load on a function by the identifer to allow editing of the function
+    /// </summary>
+    /// <param name="identifier">The identifier of the function to edit</param>
+    /// <returns>True if editing was successful</returns>
+    public bool LoadInFunction(string identifier)
+    {
+        var function = functionService?.GetFunction(identifier);
+        if (function is null)
+        {
+            return false;
+        }
+        this.identifier = identifier;
+        DisplayName = function.DisplayName;
+        Description = function.Description;
+        SelectedFunctionPlugin = FunctionPlugins.FirstOrDefault(plugin => plugin.Plugin == function.Plugin);
+        FunctionParameters = function.Parameters;
+        SelectedPath = function.Path;
+
+        return true;
     }
 
     /// <summary>
@@ -124,7 +148,21 @@ internal partial class AddFunctionViewModel : ObservableValidator
     [RelayCommand(CanExecute = nameof(CanExecuteOk))]
     private void Ok()
     {
-        var functionModel = new FunctionModel
+        var functionModel = identifier is null ? CreateNewFunctionModel() : CreateEditedFunctionModel();
+        bool success = identifier is null ? functionService?.AddFunction(functionModel) ?? false : functionService?.ReplaceFunction(functionModel) ?? false;
+        if (success)
+        {
+            AbortCommand.Execute(null);
+        }
+    }
+
+    /// <summary>
+    /// Create a new function model with a new identifier
+    /// </summary>
+    /// <returns></returns>
+    private FunctionModel CreateNewFunctionModel()
+    {
+        return new FunctionModel
         {
             DisplayName = DisplayName!,
             Description = Description,
@@ -132,13 +170,25 @@ internal partial class AddFunctionViewModel : ObservableValidator
             Parameters = FunctionParameters!,
             Path = SelectedPath!,
             SortOrder = 0
-
         };
-        bool success = functionService?.AddFunction(functionModel) ?? false;
-        if (success)
+    }
+
+    /// <summary>
+    /// Create a edited function model with given identifier
+    /// </summary>
+    /// <returns>The edited function model</returns>
+    private FunctionModel CreateEditedFunctionModel()
+    {
+        return new FunctionModel
         {
-            AbortCommand.Execute(null);
-        }
+            UniqueIdentifier = identifier!,
+            DisplayName = DisplayName!,
+            Description = Description,
+            Plugin = SelectedFunctionPlugin!.Plugin,
+            Parameters = FunctionParameters!,
+            Path = SelectedPath!,
+            SortOrder = 0
+        };
     }
 
     /// <summary>

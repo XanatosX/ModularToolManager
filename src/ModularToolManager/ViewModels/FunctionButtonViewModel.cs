@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace ModularToolManager.ViewModels;
 
@@ -14,27 +13,29 @@ namespace ModularToolManager.ViewModels;
 public partial class FunctionButtonViewModel : ObservableObject
 {
     /// <summary>
+    /// The function model to display
+    /// </summary>
+    private readonly FunctionModel functionModel;
+
+    /// <summary>
     /// The identifier for this function button
     /// </summary>
-    public string Identifier { get; }
+    public string Identifier => functionModel.UniqueIdentifier;
 
     /// <summary>
     /// The display name of the function
     /// </summary>
-    [ObservableProperty]
-    private string? displayName;
+    public string? DisplayName => functionModel.DisplayName;
 
     /// <summary>
     /// The sort id to use for this function button
     /// </summary>
-    [ObservableProperty]
-    private int sortId;
+    public int SortId => functionModel.SortOrder;
 
     /// <summary>
     /// The description of the function
     /// </summary>
-    [ObservableProperty]
-    private string? description;
+    public string? Description => functionModel.Description;
 
     /// <summary>
     /// The tool tip delay to use, a really high value is returned if no description is present
@@ -48,33 +49,50 @@ public partial class FunctionButtonViewModel : ObservableObject
     private bool isActive;
 
     /// <summary>
-    /// The command to execute if function should run
-    /// </summary>
-    public ICommand ExecuteFunctionCommand { get; }
-
-    /// <summary>
-    /// Command to remove the entry
-    /// </summary>
-    public ICommand DeleteFunctionCommand { get; }
-
-    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="functionModel">The function model to use</param>
     public FunctionButtonViewModel(FunctionModel functionModel)
     {
         IsActive = true;
-        Identifier = functionModel.UniqueIdentifier;
-        DisplayName = functionModel.DisplayName;
-        Description = functionModel.Description;
-        SortId = functionModel.SortOrder;
+        this.functionModel = functionModel;
+    }
 
-        ExecuteFunctionCommand = new AsyncRelayCommand(async () => await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path)));
+    /// <summary>
+    /// Command to exetute the current function
+    /// </summary>
+    /// <returns>A empty task to await until execution is complete</returns>
+    [RelayCommand]
+    private async Task ExecuteFunction()
+    {
+        await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path));
+    }
 
-        DeleteFunctionCommand = new RelayCommand(() =>
+    /// <summary>
+    /// Command to edit the current function
+    /// </summary>
+    /// <returns>A waitable task</returns>
+    [RelayCommand]
+    private async Task EditFunction()
+    {
+        bool result = false;
+        try
         {
-            IsActive = false;
-            WeakReferenceMessenger.Default.Send(new DeleteFunctionMessage(functionModel));
-        });
+            result = await WeakReferenceMessenger.Default.Send(new EditFunctionMessage(functionModel));
+        }
+        catch (System.Exception)
+        {
+            //No result from the request returned!
+        }
+    }
+
+    /// <summary>
+    /// Command to delete the current function
+    /// </summary>
+    [RelayCommand]
+    private void DeleteFunction()
+    {
+        IsActive = false;
+        WeakReferenceMessenger.Default.Send(new DeleteFunctionMessage(functionModel));
     }
 }
