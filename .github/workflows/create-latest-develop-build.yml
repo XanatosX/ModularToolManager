@@ -39,6 +39,7 @@ jobs:
   check-build:
     name: Check and Test build
     if: github.event.pull_request.merged == true && ${{ needs.check_date.outputs.should_run != 'false' }}
+    needs: [check-for-changes]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
