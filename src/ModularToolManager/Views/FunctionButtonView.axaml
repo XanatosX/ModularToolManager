@@ -8,6 +8,7 @@
 	<Button x:Name="btn_function" HorizontalAlignment="Stretch" ToolTip.Tip="{Binding Description}" ToolTip.ShowDelay="{Binding ToolTipDelay}" HorizontalContentAlignment="Center" Content="{Binding DisplayName}" Command="{Binding ExecuteFunctionCommand}">
 		<Button.ContextMenu>
 			<ContextMenu>
+				<MenuItem Header="{x:Static p:Resources.Default_Edit}" Command="{Binding EditFunctionCommand}"/>
 				<MenuItem Header="{x:Static p:Resources.Default_Delete}" Command="{Binding DeleteFunctionCommand}"/>
 			</ContextMenu>
 		</Button.ContextMenu>

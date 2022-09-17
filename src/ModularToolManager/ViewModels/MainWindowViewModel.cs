@@ -95,6 +95,19 @@ public partial class MainWindowViewModel : ObservableObject
         OpenSettingsCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Settings, "settings_regular", nameof(SettingsViewModel)));
         HideApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true)));
         ShowApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(false)));
+
+        WeakReferenceMessenger.Default.Register<EditFunctionMessage>(this, async (_, e) =>
+        {
+            var editModal = viewModelLocator.GetViewModel(nameof(AddFunctionViewModel)) as AddFunctionViewModel;
+            if (editModal is not null && editModal.LoadInFunction(e.Identifier))
+            {
+                await OpenModalWindow(Properties.Resources.Window_EditFunction, "settings_regular", editModal);
+                e.Reply(true);
+                WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
+                return;
+            }
+            e.Reply(false);
+        });
     }
 
     [RelayCommand]
@@ -118,7 +131,27 @@ public partial class MainWindowViewModel : ObservableObject
         {
             return;
         }
-        ShowWindowModel modalWindowData = new ShowWindowModel(title, imagePath, viewModelLocator.GetViewModel(modalName), WindowStartupLocation.CenterScreen);
+        ShowWindowModel modalWindowData = new ShowWindowModel(title, imagePath, modalContent, WindowStartupLocation.CenterScreen);
+        if (windowManagementService is not null)
+        {
+            await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
+        }
+    }
+
+    /// <summary>
+    /// Method to open a modal window
+    /// </summary>
+    /// <param name="title">The title to use</param>
+    /// <param name="imagePath">The image path to show</param>
+    /// <param name="modal">The modal to show</param>
+    /// <returns></returns>
+    private async Task OpenModalWindow(string title, string imagePath, ObservableObject? modal)
+    {
+        if (modal is null)
+        {
+            return;
+        }
+        ShowWindowModel modalWindowData = new ShowWindowModel(title, imagePath, modal, WindowStartupLocation.CenterScreen);
         if (windowManagementService is not null)
         {
             await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
