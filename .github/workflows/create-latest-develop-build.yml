@@ -40,12 +40,9 @@ jobs:
         name: check latest commit is less than a day
         if: ${{ env.DEBUG == 'true' }} || ${{ github.event_name == 'schedule' }}
         run: test -z $(git rev-list  --after="1 seconds"  ${{ github.sha }}) && echo "::set-output name=should_run::false"
-      - name: Show result of should run check
-        if: ${{ env.DEBUG == 'true' }}
-        run: echo ${{ needs.check_date.outputs.should_run }}
   check-build:
     name: Check and Test build
-    if: ${{ needs.check_date.outputs.should_run != 'false' }}
+    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
     needs: [check-for-changes]
     runs-on: ubuntu-latest
     steps:
@@ -65,7 +62,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
   create-windows-build:
     name: Create Windows build
-    if: ${{ needs.check_date.outputs.should_run != 'false' }}
+    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
     needs: ["check-build"]
     runs-on: windows-latest
     steps:
@@ -99,7 +96,7 @@ jobs:
        if-no-files-found: error
   create-linux-build:
     name: Create Linux build
-    if: ${{ needs.check_date.outputs.should_run != 'false' }}
+    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
     needs: ["check-build"]
     runs-on: ubuntu-latest
     steps:
@@ -133,7 +130,7 @@ jobs:
        if-no-files-found: error
   create-release:
     name: Create GitHub Release
-    if: ${{ needs.check_date.outputs.should_run != 'false' }}
+    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
     needs: ["create-linux-build", "create-windows-build"]
     runs-on: ubuntu-latest
     steps:
