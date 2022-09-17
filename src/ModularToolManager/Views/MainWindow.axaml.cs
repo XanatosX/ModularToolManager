@@ -24,11 +24,11 @@ public partial class MainWindow : Window
         this.AttachDevTools();
 #endif
 
-        WeakReferenceMessenger.Default.Register<CloseApplicationMessage>(this, (s, e) =>
+        WeakReferenceMessenger.Default.Register<CloseApplicationMessage>(this, (_, _) =>
         {
             Close();
         });
-        WeakReferenceMessenger.Default.Register<ToggleApplicationVisibilityMessage>(this, (s, e) =>
+        WeakReferenceMessenger.Default.Register<ToggleApplicationVisibilityMessage>(this, (_, e) =>
         {
             if (e.Hide)
             {

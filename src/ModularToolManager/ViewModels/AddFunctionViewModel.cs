@@ -163,7 +163,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// Command to open the allow selecting a path to execute by the function
     /// </summary>
     [RelayCommand(CanExecute = nameof(CanOpenFunctionPath))]
-    private async void OpenFunctionPath()
+    private async Task OpenFunctionPath()
     {
         var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter
         {

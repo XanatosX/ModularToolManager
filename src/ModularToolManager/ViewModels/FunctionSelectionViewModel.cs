@@ -31,7 +31,7 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     /// <summary>
     /// Private all the possible functions currently available
     /// </summary>
-    private IList<FunctionButtonViewModel> functions;
+    private readonly IList<FunctionButtonViewModel> functions;
 
     [ObservableProperty]
     private ObservableCollection<FunctionButtonViewModel> filteredFunctions;
@@ -40,7 +40,7 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     /// The search text used for the filtering of the plugins
     /// </summary>
     [ObservableProperty]
-    public string? searchText;
+    private string? searchText;
 
     /// <summary>
     /// Create a new instance of this class
@@ -65,11 +65,7 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     /// <inheritdoc/>
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
-        Action action = e.PropertyName switch
-        {
-            nameof(SearchText) => () => FilterFunctionList(),
-            _ => () => { return; }
-        };
+        Action action = e.PropertyName == nameof(SearchText) ? () => FilterFunctionList() : () => { return; };
         action();
         base.OnPropertyChanged(e);
     }

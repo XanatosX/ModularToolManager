@@ -22,8 +22,6 @@ namespace ModularToolManager;
 /// <inheritdoc/>
 public class App : Application
 {
-    private IServiceProvider? provider;
-
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -67,7 +65,7 @@ public class App : Application
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
-        provider = BuildServiceCollection().BuildServiceProvider();
+        var provider = BuildServiceCollection().BuildServiceProvider();
 
         ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

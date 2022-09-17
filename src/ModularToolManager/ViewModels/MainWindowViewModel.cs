@@ -31,7 +31,7 @@ public partial class MainWindowViewModel : ObservableObject
     /// <summary>
     /// Service to use for opening urls
     /// </summary>
-    private IUrlOpenerService urlOpenerService;
+    private readonly IUrlOpenerService urlOpenerService;
 
     /// <summary>
     /// The current content model to show in the main view

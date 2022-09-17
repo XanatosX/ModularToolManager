@@ -15,7 +15,7 @@ public partial class ModalWindow : Window
 #if DEBUG
         this.AttachDevTools();
 #endif
-        WeakReferenceMessenger.Default.Register<CloseModalMessage>(this, (sender, data) =>
+        WeakReferenceMessenger.Default.Register<CloseModalMessage>(this, (_, data) =>
         {
             ModalWindowViewModel? viewModel = DataContext as ModalWindowViewModel;
             if (viewModel is null || viewModel.ModalContent != data.ModalToClose)

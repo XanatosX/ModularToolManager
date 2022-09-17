@@ -16,7 +16,7 @@ public class ViewModelLocator : IViewModelLocatorService
     /// <summary>
     /// All the namespaces which are allowed for views to be stored in
     /// </summary>
-    private string[] allowedNamespaces = new string[] { "ModularToolManager.ViewModels" };
+    private readonly string[] allowedNamespaces = new[] { "ModularToolManager.ViewModels" };
 
     /// <summary>
     /// Service used to resolve depedencies
