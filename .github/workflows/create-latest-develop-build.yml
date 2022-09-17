@@ -1,13 +1,13 @@
 name: Recent develop build
 
 on:
-  pull_request:
-    types: [closed]
-    branches: [ "develop" ]
+  schedule:
+    - 0 0 * * *
+    - 5 11 * * *
 
 env:
-  DEBUG: false
-  RELEASE_NAME: Recent develop build
+  DEBUG: true
+  RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
   APPLICATION_PUBLISH_FOLDER: ./publish
@@ -17,9 +17,23 @@ env:
   RELEASE_ARTIFACT_FOLDER: artifacts
 
 jobs:
+  check-for-changes:
+    runs-on: ubuntu-latest
+    name: Check for changes in last 24 hours
+    outputs:
+      should_run: ${{ steps.should_run.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: print latest_commit
+        run: echo ${{ github.sha }}
+      - id: should_run
+        continue-on-error: true
+        name: check latest commit is less than a day
+        if: ${{ github.event_name == 'schedule' }}
+        run: test -z $(git rev-list  --after="24 hours"  ${{ github.sha }}) && echo "::set-output name=should_run::false"
   check-build:
     name: Check and Test build
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && ${{ needs.check_date.outputs.should_run != 'false' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -37,7 +51,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
   create-windows-build:
     name: Create Windows build
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && ${{ needs.check_date.outputs.should_run != 'false' }}
     needs: ["check-build"]
     runs-on: windows-latest
     steps:
@@ -70,7 +84,7 @@ jobs:
        if-no-files-found: error
   create-linux-build:
     name: Create Linux build
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && ${{ needs.check_date.outputs.should_run != 'false' }}
     needs: ["check-build"]
     runs-on: ubuntu-latest
     steps:
@@ -103,7 +117,7 @@ jobs:
        if-no-files-found: error
   create-release:
     name: Create GitHub Release
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && ${{ needs.check_date.outputs.should_run != 'false' }}
     needs: ["create-linux-build", "create-windows-build"]
     runs-on: ubuntu-latest
     steps:
