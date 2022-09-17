@@ -53,7 +53,7 @@ If you are using any third party modules (Assembly files) be warned. Those could
 
 ## License
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager.svg?type=large)](https://app.fossa.com/projects
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager?ref=badge_large)
 
 
 [downloadPage]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/
