@@ -40,11 +40,6 @@ jobs:
            sha=$(git log -n 1 --pretty=format:"%H")
            echo $sha
            test -z $(git rev-list  --after="24 hours" $sha) && echo "::set-output name=should_run::false"
-
-      - id: should_run
-        name: check latest commit is less than a day
-        
-        run: 
   check-build:
     name: Check and Test build
     if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
