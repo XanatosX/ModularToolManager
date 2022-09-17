@@ -1,10 +1,10 @@
 name: Recent develop build
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: 0 0 * * *
     - cron: '*/5 * * * *'
-  workflow_dispatch:
 
 env:
   DEBUG: true
