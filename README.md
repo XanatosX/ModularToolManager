@@ -1,5 +1,6 @@
 # Modular tool manager 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a76b14fe59a54a9ab4d3e4f6afed53dc)](https://app.codacy.com/app/simonaberle/ModularToolManager?utm_source=github.com&utm_medium=referral&utm_content=XanatosX/ModularToolManager&utm_campaign=badger)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager?ref=badge_shield)
 
 ## Requirements
 
@@ -58,3 +59,7 @@ If you are using any third party modules (Assembly files) be warned. Those could
 [issuePage]: https://bitbucket.org/XanatosX/modulartoolmanager/issues
 
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager?ref=badge_large)
