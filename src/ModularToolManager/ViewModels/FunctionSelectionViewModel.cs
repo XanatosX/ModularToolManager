@@ -55,7 +55,7 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
 
         WeakReferenceMessenger.Default.Register<DeleteFunctionMessage>(this, (_, e) =>
         {
-            functionService?.DeleteFunction(e.Function.UniqueIdentifier);
+            functionService?.DeleteFunction(e.Identifier);
             ReloadFunctions();
         });
 

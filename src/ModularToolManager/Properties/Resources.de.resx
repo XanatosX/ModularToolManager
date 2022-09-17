@@ -129,6 +129,9 @@
   <data name="Default_Delete" xml:space="preserve">
     <value>Löschen</value>
   </data>
+  <data name="Default_Edit" xml:space="preserve">
+    <value>Editieren</value>
+  </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Nach Funktion suchen</value>
   </data>
@@ -176,5 +179,8 @@
   </data>
   <data name="Tooltip_Show" xml:space="preserve">
     <value>Application anzeigen</value>
+  </data>
+  <data name="Window_EditFunction" xml:space="preserve">
+    <value>Funktion anpassen</value>
   </data>
 </root>

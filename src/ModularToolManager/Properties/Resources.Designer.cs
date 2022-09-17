@@ -88,6 +88,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Default_Edit {
+            get {
+                return ResourceManager.GetString("Default_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abort.
         /// </summary>
         public static string DefaultButton_Abort {
@@ -255,6 +264,15 @@ namespace ModularToolManager.Properties {
         public static string Tooltip_Show {
             get {
                 return ResourceManager.GetString("Tooltip_Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit function.
+        /// </summary>
+        public static string Window_EditFunction {
+            get {
+                return ResourceManager.GetString("Window_EditFunction", resourceCulture);
             }
         }
     }
