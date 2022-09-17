@@ -1,7 +1,5 @@
-﻿using Avalonia.Threading;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ModularToolManager.Models.Messages;
 using ModularToolManagerModel.Services.Functions;
 using System;
