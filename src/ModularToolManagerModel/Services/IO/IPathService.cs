@@ -8,13 +8,25 @@ namespace ModularToolManagerModel.Services.IO;
 public interface IPathService
 {
     /// <summary>
-    /// Get the path to the application itself as a string
+    /// Get the path to the application executable as string
+    /// </summary>
+    /// <returns>The path to the application executable or an empty string if nothing found</returns>
+    string GetApplicationExecutableString() => GetApplicationExecutable()?.FullName ?? string.Empty;
+
+    /// <summary>
+    /// Get the path to the application executable
+    /// </summary>
+    /// <returns>The path to the application executable or null if nothing found</returns>
+    FileInfo? GetApplicationExecutable();
+
+    /// <summary>
+    /// Get the path to the application folder as a string
     /// </summary>
     /// <returns>The path to the application or empty string if not set</returns>
     public string GetApplicationPathString() => GetApplicationPath()?.FullName ?? string.Empty;
 
     /// <summary>
-    /// Get the path to the application itself
+    /// Get the path to the application folder
     /// </summary>
     /// <returns>The path to the application or null if not set</returns>
     DirectoryInfo? GetApplicationPath();
