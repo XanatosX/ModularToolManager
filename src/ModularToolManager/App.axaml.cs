@@ -1,20 +1,20 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core;
+using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.DependencyInjection;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Logging;
+using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Logging;
 using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Targets;
-using ReactiveUI;
-using Splat;
-using Splat.Microsoft.Extensions.DependencyInjection;
+using System;
 using System.IO;
 
 namespace ModularToolManager;
@@ -37,8 +37,8 @@ public class App : Application
                                       .AddViews()
                                       .AddLogging(config =>
                                       {
-                                          var pathService = Locator.Current.GetService<IPathService>() ?? new PathService();
-                                          string basePath = pathService?.GetSettingsFolderPathString() ?? Path.GetTempPath();
+                                          IPathService pathService = new PathService();
+                                          string basePath = pathService.GetSettingsFolderPathString() ?? Path.GetTempPath();
                                           string logFolder = Path.Combine(basePath, "logs");
 
                                           NLogConfiguration.AddTarget(new TraceTarget("trace-log"));
@@ -65,15 +65,20 @@ public class App : Application
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
-        BuildServiceCollection().UseMicrosoftDependencyResolver();
+        var provider = BuildServiceCollection().BuildServiceProvider();
 
-        Locator.CurrentMutable.InitializeSplat();
-        Locator.CurrentMutable.InitializeReactiveUI();
-        RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
+        ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = Locator.Current.GetService<MainWindow>();
+            desktop.MainWindow = provider.GetService<MainWindow>();
         }
+        DataContext = provider.GetService<AppViewModel>();
+        var locator = provider.GetService<ViewLocator>();
+        if (locator is not null)
+        {
+            DataTemplates.Add(locator);
+        }
+
 
         base.OnFrameworkInitializationCompleted();
     }

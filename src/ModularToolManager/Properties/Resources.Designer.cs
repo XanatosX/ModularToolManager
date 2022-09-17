@@ -70,6 +70,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modular Tool Manager.
+        /// </summary>
+        public static string Application_Name {
+            get {
+                return ResourceManager.GetString("Application_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Default_Delete {
@@ -228,6 +237,24 @@ namespace ModularToolManager.Properties {
         public static string SubMenu_Settings {
             get {
                 return ResourceManager.GetString("SubMenu_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide the application.
+        /// </summary>
+        public static string Tooltip_Hide {
+            get {
+                return ResourceManager.GetString("Tooltip_Hide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the application.
+        /// </summary>
+        public static string Tooltip_Show {
+            get {
+                return ResourceManager.GetString("Tooltip_Show", resourceCulture);
             }
         }
     }

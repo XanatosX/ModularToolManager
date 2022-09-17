@@ -6,10 +6,11 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.FunctionSelectionView"
 			 MaxHeight="450">
+
 	<Grid RowDefinitions="Auto, *">
 		<TextBox Watermark="{x:Static p:Resources.FunctionSelection_SearchForFunction}" IsVisible="{Binding FunctionsNotEmpty}" Text="{Binding SearchText}"/>
 		<DockPanel Grid.Row="1">
-		<ItemsControl Items="{Binding AllFunctions}" HorizontalAlignment="Stretch">
+		<ItemsControl Items="{Binding FilteredFunctions}" HorizontalAlignment="Stretch">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel Orientation="Vertical" HorizontalAlignment="Stretch"/>

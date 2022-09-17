@@ -1,10 +1,6 @@
 ﻿using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Services;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -14,7 +10,7 @@ namespace ModularToolManagerModel.Services.Language;
 /// <summary>
 /// Plugin translation service to get translations inside of the plugins
 /// </summary>
-public class PluginTranslationService : IPluginTranslationService
+public sealed class PluginTranslationService : IPluginTranslationService
 {
     /// <summary>
     /// Regex to get the translation files from the resources
@@ -24,7 +20,7 @@ public class PluginTranslationService : IPluginTranslationService
     /// <inheritdoc/>
     public List<TranslationModel> GetAllTranslations(Assembly assemblyToUse)
     {
-        return GetTranslationsFromFile(assemblyToUse, GetTranslationResourceByCulture(assemblyToUse, GetCurrentCulture()));
+        return GetTranslationsFromFile(assemblyToUse, GetTranslationResourceByCulture(assemblyToUse, GetCurrentCulture()) ?? string.Empty);
     }
 
     /// <inheritdoc/>
@@ -144,7 +140,7 @@ public class PluginTranslationService : IPluginTranslationService
     /// <returns>A list with all possible translations</returns>
     private List<TranslationModel> GetTranslationsFromFile(Assembly assembly, string cultureFile)
     {
-        return JsonSerializer.Deserialize<List<TranslationModel>>(LoadResourceData(assembly, cultureFile));
+        return JsonSerializer.Deserialize<List<TranslationModel>>(LoadResourceData(assembly, cultureFile)) ?? new();
     }
 
     /// <summary>

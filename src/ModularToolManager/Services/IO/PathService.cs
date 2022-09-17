@@ -11,17 +11,23 @@ namespace ModularToolManager.Services.IO;
 internal class PathService : IPathService
 {
     /// <inheritdoc/>
+    public FileInfo? GetApplicationExecutable()
+    {
+        return new FileInfo(Assembly.GetExecutingAssembly().Location);
+    }
+
+    /// <inheritdoc/>
     public DirectoryInfo? GetApplicationPath()
     {
-        FileInfo appLocation = new FileInfo(Assembly.GetExecutingAssembly().Location);
-        return appLocation.Directory;
+        FileInfo? appLocation = GetApplicationExecutable();
+        return appLocation?.Directory;
     }
 
     /// <inheritdoc/>
     public FileInfo? GetPluginPath()
     {
-        FileInfo executable = new FileInfo(Assembly.GetExecutingAssembly().Location);
-        string pluginPath = Path.Combine(executable.DirectoryName ?? Path.GetTempPath(), "plugins");
+        FileInfo? executable = GetApplicationExecutable();
+        string pluginPath = Path.Combine(executable?.DirectoryName ?? Path.GetTempPath(), "plugins");
         return new FileInfo(pluginPath);
     }
 

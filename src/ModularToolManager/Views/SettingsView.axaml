@@ -5,18 +5,24 @@
 			 xmlns:p="clr-namespace:ModularToolManager.Properties"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.SettingsView">
-	<StackPanel>
-		<CheckBox
-			Content="{x:Static p:Resources.Settings_KeepOnTop}"
-			IsChecked="{Binding TopMost}"
-			/>
-		<CheckBox
-			Content="{x:Static p:Resources.Settings_StartMinimized}"
-			IsChecked="{Binding StartMinimized}"
-			/>
-		<CheckBox
-			Content="{x:Static p:Resources.Settings_ShowInTaskbar}"
-			IsChecked="{Binding ShowInTaskbar}"
-			/>
-	</StackPanel>
+	<Grid RowDefinitions="Auto, Auto">
+		<StackPanel>
+			<CheckBox
+				Content="{x:Static p:Resources.Settings_KeepOnTop}"
+				IsChecked="{Binding TopMost}"
+				/>
+			<CheckBox
+				Content="{x:Static p:Resources.Settings_StartMinimized}"
+				IsChecked="{Binding StartMinimized}"
+				/>
+			<CheckBox
+				Content="{x:Static p:Resources.Settings_ShowInTaskbar}"
+				IsChecked="{Binding ShowInTaskbar}"
+				/>
+		</StackPanel>
+		<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
+			<Button Content="{x:Static p:Resources.DefaultButton_Ok}"/>
+			<Button Content="{x:Static p:Resources.DefaultButton_Abort}"/>
+		</StackPanel>
+	</Grid>
 </UserControl>

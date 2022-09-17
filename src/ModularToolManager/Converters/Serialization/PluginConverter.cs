@@ -1,5 +1,4 @@
-﻿using ModularToolManager.Services.Plugin;
-using ModularToolManagerModel.Services.Plugin;
+﻿using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerPlugin.Plugin;
 using System;
 using System.Linq;

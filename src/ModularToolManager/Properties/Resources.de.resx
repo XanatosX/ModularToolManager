@@ -171,4 +171,10 @@
   <data name="SubMenu_Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
+  <data name="Tooltip_Hide" xml:space="preserve">
+    <value>Application minimieren</value>
+  </data>
+  <data name="Tooltip_Show" xml:space="preserve">
+    <value>Application anzeigen</value>
+  </data>
 </root>

@@ -52,14 +52,11 @@ There will be a document how to create your own plugin later on. At the moment y
 
 If you are using any third party modules (Assembly files) be warned. Those could be infected by a virus or other software trying to damage your computer!
 
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager?ref=badge_large)
+
 
 [downloadPage]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/
 [lastUnstable]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/LastUnstable_ModularToolManager.zip
 [preSettings]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/ModularToolManager_release-preSettings.zip
 [issuePage]: https://bitbucket.org/XanatosX/modulartoolmanager/issues
-
-
-
-
-## License
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager?ref=badge_large)

@@ -1,10 +1,13 @@
-using Avalonia;
+using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
+using ModularToolManager.Models.Messages;
+using ModularToolManager.Services.Styling;
+using ModularToolManager.Services.Ui;
 using ModularToolManagerModel.Services.IO;
-using ReactiveUI;
-using Splat;
-using System.Reactive;
-using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ModularToolManager.ViewModels;
@@ -12,17 +15,33 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// Main view model
 /// </summary>
-public class MainWindowViewModel : ViewModelBase
+public partial class MainWindowViewModel : ObservableObject
 {
+    /// <summary>
+    /// Service to use for locating view models
+    /// </summary>
+    private readonly IViewModelLocatorService viewModelLocator;
+
+    /// <summary>
+    /// Service to use for managing windows
+    /// </summary>
+
+    private readonly IWindowManagementService windowManagementService;
+
     /// <summary>
     /// Service to use for opening urls
     /// </summary>
-    private IUrlOpenerService urlOpenerService;
+    private readonly IUrlOpenerService urlOpenerService;
 
     /// <summary>
     /// The current content model to show in the main view
     /// </summary>
-    public ViewModelBase MainContentModel { get; }
+    public ObservableObject MainContentModel { get; }
+
+    /// <summary>
+    /// The service to use for getting styles
+    /// </summary>
+    private readonly IStyleService styleService;
 
     /// <summary>
     /// Command to select a new language
@@ -33,11 +52,6 @@ public class MainWindowViewModel : ViewModelBase
     /// Command to open the settings
     /// </summary>
     public ICommand OpenSettingsCommand { get; }
-
-    /// <summary>
-    /// Command to open the modal to add a new function
-    /// </summary>
-    public ICommand NewFunctionCommand { get; }
 
     /// <summary>
     /// Command to execture for bug reporting
@@ -60,89 +74,56 @@ public class MainWindowViewModel : ViewModelBase
     private ICommand ShowApplicationCommand { get; }
 
     /// <summary>
-    /// Interaction to toggle the visibility of the window
-    /// </summary>
-    public Interaction<Unit, Unit> ToggleApplicationVisibilityInteraction { get; }
-
-    /// <summary>
-    /// Interaction to close thw window
-    /// </summary>
-    public Interaction<Unit, Unit> CloseWindowInteraction { get; }
-
-    /// <summary>
-    /// Interaction to show a model on top of the window
-    /// </summary>
-    public Interaction<ShowWindowModel, Unit> ShowModalWindowInteraction { get; }
-
-    /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    public MainWindowViewModel(FunctionSelectionViewModel mainContentModel, IUrlOpenerService urlOpenerService)
+    public MainWindowViewModel(
+        FunctionSelectionViewModel mainContentModel,
+        IViewModelLocatorService viewModelLocator,
+        IWindowManagementService windowManagementService,
+        IStyleService styleService,
+        IUrlOpenerService urlOpenerService)
     {
         this.urlOpenerService = urlOpenerService;
         MainContentModel = mainContentModel;
-        CloseWindowInteraction = new Interaction<Unit, Unit>();
-        ShowModalWindowInteraction = new Interaction<ShowWindowModel, Unit>();
-        ExitApplicationCommand = ReactiveCommand.Create(async () =>
-        {
-            _ = await CloseWindowInteraction?.Handle(new Unit());
-        });
+        this.viewModelLocator = viewModelLocator;
+        this.windowManagementService = windowManagementService;
+        this.styleService = styleService;
 
-        OpenSettingsCommand = ReactiveCommand.Create(async () =>
-        {
-            _ = await ShowModalWindowInteraction?.Handle(
-                new ShowWindowModel(
-                    new ModalWindowViewModel(Properties.Resources.SubMenu_Settings, "settings_regular", new SettingsViewModel()),
-                    Avalonia.Controls.WindowStartupLocation.CenterScreen
-                ));
-        });
-        NewFunctionCommand = ReactiveCommand.Create(async () =>
-        {
-            try
-            {
-                _ = await ShowModalWindowInteraction?.Handle(
-                                        new ShowWindowModel(
-                        new ModalWindowViewModel(Properties.Resources.SubMenu_NewFunction, "settings_regular", Locator.Current.GetService<AddFunctionViewModel>()),
-                        Avalonia.Controls.WindowStartupLocation.CenterScreen
-                    ));
-            }
-            catch (System.Exception)
-            {
-                //Not good but okay for now
-            }
-            finally
-            {
-                mainContentModel?.ReloadFunctions();
-            }
-        });
-        ToggleApplicationVisibilityInteraction = new Interaction<Unit, Unit>();
-        HideApplicationCommand = ReactiveCommand.Create(async () =>
-        {
-            _ = await ToggleApplicationVisibilityInteraction?.Handle(new());
-        });
-
-        ShowApplicationCommand = ReactiveCommand.Create(async () =>
-        {
-            _ = await ToggleApplicationVisibilityInteraction?.Handle(new());
-        });
-
-        ReportBugCommand = ReactiveCommand.Create(async () =>
-        {
-            if (urlOpenerService == null)
-            {
-                return;
-            }
-
-            urlOpenerService.OpenUrl(Properties.Properties.GithubUrl);
-        });
-
-        SelectLanguageCommand = ReactiveCommand.Create(async () =>
-        {
-            _ = await ShowModalWindowInteraction?.Handle(
-                        new ShowWindowModel(
-                        new ModalWindowViewModel(Properties.Resources.SubMenu_Language, "flag_regular", new ChangeLanguageViewModel()),
-                        Avalonia.Controls.WindowStartupLocation.CenterScreen
-                    ));
-        });
+        ReportBugCommand = new RelayCommand(() => urlOpenerService?.OpenUrl(Properties.Properties.GithubUrl));
+        ExitApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseApplicationMessage()));
+        SelectLanguageCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Language, "flag_regular", nameof(ChangeLanguageViewModel)));
+        OpenSettingsCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Settings, "settings_regular", nameof(SettingsViewModel)));
+        HideApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true)));
+        ShowApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(false)));
     }
+
+    [RelayCommand]
+    private async Task NewFunction()
+    {
+        await OpenModalWindow(Properties.Resources.SubMenu_NewFunction, "settings_regular", nameof(AddFunctionViewModel));
+        WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
+    }
+
+    /// <summary>
+    /// Method to open a modal window
+    /// </summary>
+    /// <param name="title">The title to use</param>
+    /// <param name="imagePath">The image path to show</param>
+    /// <param name="modalName">The name of the modal to show</param>
+    /// <returns></returns>
+    private async Task OpenModalWindow(string title, string imagePath, string modalName)
+    {
+        var modalContent = viewModelLocator.GetViewModel(modalName);
+        if (modalContent is null)
+        {
+            return;
+        }
+        ShowWindowModel modalWindowData = new ShowWindowModel(title, imagePath, viewModelLocator.GetViewModel(modalName), WindowStartupLocation.CenterScreen);
+        if (windowManagementService is not null)
+        {
+            await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
+        }
+    }
+
+
 }

@@ -1,17 +1,20 @@
 ﻿using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
+using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Ui;
-using ModularToolManager.ViewModels.Extenions;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.Plugin;
-using ModularToolManagerPlugin.Plugin;
-using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
-using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ModularToolManager.ViewModels;
@@ -19,19 +22,8 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// View model to add a new function to the application
 /// </summary>
-internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
+internal partial class AddFunctionViewModel : ObservableValidator
 {
-    /// <summary>
-    /// Service to use to manage plugins
-    /// </summary>
-    private readonly IPluginService? pluginService;
-
-    /// <summary>
-    /// Service to use for loading functions
-    /// </summary>
-    private readonly IFunctionService? functionService;
-    private readonly IWindowManagmentService windowManagmentService;
-
     /// <summary>
     /// A list with all the function plugin possiblities
     /// </summary>
@@ -41,185 +33,163 @@ internal class AddFunctionViewModel : ViewModelBase, IModalWindowEvents
     /// Private list for all the function plugins
     /// </summary>
     private readonly List<FunctionPluginViewModel> functionPlugins;
+    private readonly IFunctionService? functionService;
 
     /// <summary>
-    /// The current function model
+    /// Service to use for opening windows or modals
     /// </summary>
-    private FunctionModel functionModel;
+    private readonly IWindowManagementService windowManagmentService;
 
     /// <summary>
-    /// The display name of the new function
+    /// The display name of the function
     /// </summary>
+    [Required]
     [MinLength(5), MaxLength(25)]
-    public string DisplayName
-    {
-        get => functionModel.DisplayName;
-        set
-        {
-            functionModel.DisplayName = value;
-            this.RaisePropertyChanged(nameof(DisplayName));
-        }
-    }
+    [NotifyDataErrorInfo]
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(OkCommand))]
+    private string? displayName;
 
     /// <summary>
     /// The description of the function model
     /// </summary>
-    public string Description
-    {
-        get => functionModel?.Description ?? string.Empty;
-        set
-        {
-            functionModel.Description = value;
-            this.RaisePropertyChanged(nameof(Description));
-        }
-    }
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(OkCommand))]
+    private string? description;
 
     /// <summary>
     /// The currenctly selected plugin for the function
     /// </summary>
-    public FunctionPluginViewModel? SelectedFunctionPlugin
-    {
-        get => functionModel.Plugin is null ? null : new FunctionPluginViewModel(functionModel.Plugin!);
-        set
-        {
-            functionModel.Plugin = value?.Plugin;
-            this.RaisePropertyChanged(nameof(SelectedFunctionPlugin));
-        }
-    }
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(OkCommand))]
+    [NotifyCanExecuteChangedFor(nameof(OpenFunctionPathCommand))]
+    private FunctionPluginViewModel? selectedFunctionPlugin;
 
     /// <summary>
     /// The parameters for the function
     /// </summary>
-    public string FunctionParameters
-    {
-        get => functionModel.Parameters;
-        set
-        {
-            functionModel.Parameters = value;
-            this.RaisePropertyChanged(nameof(FunctionParameters));
-        }
-    }
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(OkCommand))]
+    private string? functionParameters;
 
     /// <summary>
     /// The currently selected path
     /// </summary>
-    public string SelectedPath
-    {
-        get => functionModel.Path;
-        set
-        {
-            functionModel.Path = value;
-            this.RaisePropertyChanged(nameof(SelectedPath));
-        }
-    }
-
-    /// <summary>
-    /// Command used to add the new function
-    /// </summary>
-    public ICommand OkCommand { get; }
-
-    /// <summary>
-    /// Command used to abord the current changes or addition
-    /// </summary>
-    public ICommand AbortCommand { get; }
-
-    /// <summary>
-    /// Command to use for opening a gile
-    /// </summary>
-    public ICommand OpenFunctionPathCommand { get; }
-
-    /// <summary>
-    /// Event if the window is getting a close requested
-    /// </summary>
-    public event EventHandler? Closing;
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(OkCommand))]
+    private string? selectedPath;
 
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="pluginService">The plugin service to use</param>
     /// <param name="functionService">The function service to use</param>
-    public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService, IWindowManagmentService windowManagmentService)
+    public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService, IWindowManagementService windowManagmentService)
     {
-        functionModel = new FunctionModel();
-        this.pluginService = pluginService;
+        functionPlugins = new();
         this.functionService = functionService;
         this.windowManagmentService = windowManagmentService;
-        functionPlugins = new();
         if (pluginService is not null)
         {
-            functionPlugins = pluginService.GetAvailablePlugins()
-                                            .Select(plugin => new FunctionPluginViewModel(plugin))
-                                            .ToList();
+            functionPlugins.AddRange(pluginService!.GetAvailablePlugins()
+                                                   .Select(plugin => new FunctionPluginViewModel(plugin)));
         }
 
-        this.WhenAnyValue(x => x.SelectedPath)
-            .Throttle(TimeSpan.FromSeconds(2))
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(path => SelectedPath = path.Trim());
+        InitialValueSet();
+    }
 
-        this.WhenAnyValue(x => x.FunctionParameters)
-            .Throttle(TimeSpan.FromSeconds(2))
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(parameters => FunctionParameters = parameters.Trim());
+    /// <summary>
+    /// The method will set some values as initialization, this is required to kick off the field validation
+    /// </summary>
+    private void InitialValueSet()
+    {
+        DisplayName = string.Empty;
+        Description = string.Empty;
+        FunctionParameters = string.Empty;
+        SelectedPath = string.Empty;
+    }
 
-        this.WhenAnyValue(x => x.DisplayName)
-            .Throttle(TimeSpan.FromSeconds(2))
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(displayName => DisplayName = displayName.Trim());
+    /// <summary>
+    /// Command to close current modal window
+    /// </summary>
+    [RelayCommand]
+    private void Abort()
+    {
+        WeakReferenceMessenger.Default.Send(new CloseModalMessage(this));
+    }
 
-        IObservable<bool> canSave = this.WhenAnyValue(x => x.DisplayName,
-                                                                x => x.SelectedFunctionPlugin,
-                                                                x => x.FunctionParameters,
-                                                                x => x.SelectedPath,
-                                                                (name, selectedFunction, parameters, path) =>
-                                                                {
-                                                                    IFunctionPlugin plugin = selectedFunction?.Plugin;
-                                                                    bool valid = name.Length >= 5 && name.Length <= 25;
-                                                                    valid &= plugin is not null;
-                                                                    valid &= File.Exists(SelectedPath);
-                                                                    if (valid)
-                                                                    {
-                                                                        FileInfo info = new FileInfo(SelectedPath);
-                                                                        valid &= plugin.GetAllowedFileEndings().Select(fileExtension => fileExtension.Extension.ToLower())
-                                                                                                               .Any(ending => ending == info.Extension.TrimStart('.').ToLowerInvariant());
-                                                                    }
-
-                                                                    return valid;
-                                                                });
-
-        AbortCommand = ReactiveCommand.Create(() => Closing?.Invoke(this, EventArgs.Empty));
-        OkCommand = ReactiveCommand.Create(() =>
+    /// <summary>
+    /// Command to save current function
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanExecuteOk))]
+    private void Ok()
+    {
+        var functionModel = new FunctionModel
         {
-            bool success = functionService?.AddFunction(functionModel) ?? false;
-            if (success)
-            {
-                Closing?.Invoke(this, EventArgs.Empty);
-            }
-        }, canSave);
+            DisplayName = DisplayName!,
+            Description = Description,
+            Plugin = SelectedFunctionPlugin!.Plugin,
+            Parameters = FunctionParameters!,
+            Path = SelectedPath!,
+            SortOrder = 0
 
-        IObservable<bool> canOpenFile = this.WhenAnyValue(x => x.SelectedFunctionPlugin,
-                                                          (FunctionPluginViewModel? plugin) => plugin is not null);
-
-        OpenFunctionPathCommand = ReactiveCommand.Create(async () =>
+        };
+        bool success = functionService?.AddFunction(functionModel) ?? false;
+        if (success)
         {
+            AbortCommand.Execute(null);
+        }
+    }
 
-            var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter
-            {
-                Extensions = new List<string> { fileEnding.Extension },
-                Name = fileEnding.Name
-            }).ToList();
-            if (fileDialogs is null)
-            {
-                return;
-            }
-            ShowOpenFileDialogModel openConfig = new ShowOpenFileDialogModel(fileDialogs, null, false);
-            var files = await windowManagmentService?.ShowOpenFileDialogAsync(openConfig) ?? new string[0];
-            string file = files.FirstOrDefault(string.Empty);
-            if (string.IsNullOrEmpty(file))
-            {
-                return;
-            }
-            SelectedPath = file;
-        }, canOpenFile);
+    /// <summary>
+    /// Can the okay command be executed
+    /// </summary>
+    /// <returns>True if execution is possible</returns>
+    private bool CanExecuteOk()
+    {
+        bool valid = DisplayName?.Length >= 5 && DisplayName?.Length <= 25;
+        valid &= SelectedFunctionPlugin is not null && SelectedFunctionPlugin.Plugin is not null;
+        valid &= File.Exists(SelectedPath);
+        if (valid)
+        {
+            FileInfo info = new FileInfo(SelectedPath ?? String.Empty);
+            valid &= SelectedFunctionPlugin!.Plugin!.GetAllowedFileEndings().Select(fileExtension => fileExtension.Extension.ToLower())
+                                                                                                           .Any(ending => ending == info.Extension.TrimStart('.').ToLowerInvariant());
+        }
+        return valid;
+    }
+
+    /// <summary>
+    /// Command to open the allow selecting a path to execute by the function
+    /// </summary>
+    [RelayCommand(CanExecute = nameof(CanOpenFunctionPath))]
+    private async Task OpenFunctionPath()
+    {
+        var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter
+        {
+            Extensions = new List<string> { fileEnding.Extension },
+            Name = fileEnding.Name
+        }).ToList();
+        if (fileDialogs is null)
+        {
+            return;
+        }
+        ShowOpenFileDialogModel openConfig = new ShowOpenFileDialogModel(fileDialogs, null, false);
+        var files = await windowManagmentService.ShowOpenFileDialogAsync(openConfig);
+        string file = files.FirstOrDefault(string.Empty);
+        if (string.IsNullOrEmpty(file))
+        {
+            return;
+        }
+        SelectedPath = file;
+    }
+
+    /// <summary>
+    /// Can the open function path command be called
+    /// </summary>
+    /// <returns>True if callable</returns>
+    private bool CanOpenFunctionPath()
+    {
+        return SelectedFunctionPlugin is not null;
     }
 }

@@ -1,12 +1,31 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using ModularToolManager.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
+using ModularToolManagerModel.Services.Dependency;
 using System;
 
 namespace ModularToolManager
 {
+    /// <summary>
+    /// Class to locate Views for given ViewModels
+    /// </summary>
     public class ViewLocator : IDataTemplate
     {
+        /// <summary>
+        /// The dependency resolver service to use
+        /// </summary>
+        private readonly IDependencyResolverService dependencyResolverService;
+
+        /// <summary>
+        /// Create a new instance of this class
+        /// </summary>
+        /// <param name="dependencyResolverService">The dependency resolver service to use</param>
+        public ViewLocator(IDependencyResolverService dependencyResolverService)
+        {
+            this.dependencyResolverService = dependencyResolverService;
+        }
+
+        /// <inheritdoc/>
         public IControl Build(object data)
         {
             var name = data.GetType().FullName!.Replace("ViewModel", "View");
@@ -14,7 +33,8 @@ namespace ModularToolManager
 
             if (type != null)
             {
-                return (Control)Activator.CreateInstance(type)!;
+                var control = dependencyResolverService is null ? (Control)Activator.CreateInstance(type)! : (Control)dependencyResolverService!.GetDependency(type)!;
+                return control ?? (Control)Activator.CreateInstance(type)!;
             }
             else
             {
@@ -22,9 +42,10 @@ namespace ModularToolManager
             }
         }
 
+        /// <inheritdoc/>
         public bool Match(object data)
         {
-            return data is ViewModelBase;
+            return data is ObservableObject;
         }
     }
 }

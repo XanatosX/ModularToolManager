@@ -1,13 +1,14 @@
-﻿using Avalonia.ReactiveUI;
+﻿using Avalonia.Controls.Templates;
 using Microsoft.Extensions.DependencyInjection;
+using ModularToolManager.Services.Dependencies;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
-using ModularToolManager.Services.Plugin;
 using ModularToolManager.Services.Serialization;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
+using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Language;
@@ -15,7 +16,6 @@ using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerModel.Services.Serialization;
 using ModularToolManagerPlugin.Services;
-using ReactiveUI;
 using System.Text.Json;
 
 namespace ModularToolManager.DependencyInjection;
@@ -33,8 +33,7 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddAvaloniaDefault(this IServiceCollection collection)
     {
-        return collection.AddSingleton<IActivationForViewFetcher, AvaloniaActivationForViewFetcher>()
-                         .AddSingleton<IPropertyBindingHook, AutoDataTemplateBindingHook>();
+        return collection;
     }
 
     /// <summary>
@@ -46,7 +45,10 @@ internal static class DependencyInjectionExtension
     {
         return collection.AddTransient<AddFunctionViewModel>()
                          .AddTransient<FunctionSelectionViewModel>()
-                         .AddTransient<MainWindowViewModel>();
+                         .AddTransient<MainWindowViewModel>()
+                         .AddTransient<ChangeLanguageViewModel>()
+                         .AddTransient<SettingsViewModel>()
+                         .AddTransient<AppViewModel>();
     }
 
     /// <summary>
@@ -56,11 +58,11 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddViews(this IServiceCollection collection)
     {
-        return collection.AddTransient(resolver => new MainWindow(resolver?.GetService<IWindowManagmentService>())
+        return collection.AddTransient(resolver => new MainWindow(resolver?.GetService<IWindowManagementService>())
         {
             DataContext = resolver?.GetService<MainWindowViewModel>(),
         })
-                         .AddTransient<ModalWindow>();
+        .AddTransient<ModalWindow>();
     }
 
     /// <summary>
@@ -76,11 +78,15 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<IFunctionSettingsService, FunctionSettingService>()
                          .AddSingleton<IUrlOpenerService, UrlOpenerService>()
                          .AddSingleton<ILanguageService, ResourceCultureService>()
-                         .AddSingleton<IWindowManagmentService, WindowManagementService>()
+                         .AddSingleton<IWindowManagementService, WindowManagementService>()
                          .AddSingleton<IPluginService, PluginService>()
                          .AddSingleton<ISerializationOptionFactory<JsonSerializerOptions>, JsonSerializationOptionFactory>()
                          .AddSingleton<ISerializeService, JsonSerializationService>()
                          .AddSingleton<IFunctionService, SerializedFunctionService>()
-                         .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>));
+                         .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>))
+                         .AddSingleton<IViewModelLocatorService, ViewModelLocator>()
+                         .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>()
+                         .AddSingleton<IFileSystemService, FileSystemService>()
+                         .AddSingleton<ViewLocator>();
     }
 }

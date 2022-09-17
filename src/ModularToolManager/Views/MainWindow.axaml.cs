@@ -1,59 +1,53 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Avalonia.ReactiveUI;
-using ModularToolManager.Models;
+using Avalonia.Media;
+using CommunityToolkit.Mvvm.Messaging;
+using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Ui;
-using ModularToolManager.ViewModels;
-using ReactiveUI;
-using System.Reactive;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Views;
 
-public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
+public partial class MainWindow : Window
 {
-    private readonly IWindowManagmentService? modalService;
+    private readonly IWindowManagementService? modalService;
 
     public MainWindow() : this(null)
     {
 
     }
 
-    public MainWindow(IWindowManagmentService? modalService)
+    public MainWindow(IWindowManagementService? modalService)
     {
         InitializeComponent();
 #if DEBUG
         this.AttachDevTools();
 #endif
-        this.WhenActivated(d => d(ViewModel!.CloseWindowInteraction.RegisterHandler(Close)));
-        this.WhenActivated(d => d(ViewModel!.ShowModalWindowInteraction.RegisterHandler(DoHandleShowModalWindow)));
-        this.WhenActivated(d => d(ViewModel!.ToggleApplicationVisibilityInteraction.RegisterHandler(DoToggleWindowVisibility)));
 
-        PropertyChanged += (s, e) =>
+        WeakReferenceMessenger.Default.Register<CloseApplicationMessage>(this, (_, _) =>
         {
-            if (e.Property.Name == "Height")
+            Close();
+        });
+        WeakReferenceMessenger.Default.Register<ToggleApplicationVisibilityMessage>(this, (_, e) =>
+        {
+            if (e.Hide)
             {
-                PositionWindow();
+                Hide();
+                return;
             }
-        };
-
+            Show();
+            Topmost = true;
+            Topmost = false;
+        });
 
         PositionWindow();
         this.modalService = modalService;
     }
 
-    /// <summary>
-    /// Method to toggle the window visibilty based on an interaction
-    /// </summary>
-    /// <param name="context">Empty context</param>
-    private void DoToggleWindowVisibility(InteractionContext<Unit, Unit> _)
+    public override void Render(DrawingContext context)
     {
-        if (IsVisible)
-        {
-            Hide();
-            return;
-        }
-        Show();
+        base.Render(context);
+        PositionWindow();
     }
 
     /// <summary>
@@ -65,16 +59,6 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         double newXPos = workingArea.X + workingArea.Width - Width;
         double newYPos = workingArea.Y + workingArea.Height - Height;
         Position = new PixelPoint((int)newXPos, (int)newYPos);
-    }
-
-    /// <summary>
-    /// Show the given modal
-    /// </summary>
-    /// <param name="context">The interaction context which tells us which modal to instantiate and show</param>
-    /// <returns>A reference to the new modal as task</returns>
-    private async Task DoHandleShowModalWindow(InteractionContext<ShowWindowModel, Unit> context)
-    {
-        await modalService?.ShowModalWindowAsync(context.Input, this);
     }
 
     private void InitializeComponent()

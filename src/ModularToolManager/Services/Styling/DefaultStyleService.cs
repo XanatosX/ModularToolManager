@@ -17,7 +17,7 @@ internal class DefaultStyleService : IStyleService
     /// <inheritdoc/>
     public IEnumerable<Style> GetAllStylesWithinResource(IStyle? style)
     {
-        List<IStyle> returnStyles = new List<IStyle>();
+        List<IStyle> returnStyles = new();
         if (style == null)
         {
             return new List<Style>();
@@ -31,15 +31,15 @@ internal class DefaultStyleService : IStyleService
             }
         }
 
-        return returnStyles.Where(style => style is Style and not null)
-                           .Select(style => style as Style)
-                           .Where(style => style.Resources.Count > 0);
+        return returnStyles.OfType<Style>()
+                           .Where(style => style!.Resources.Count > 0);
+
     }
 
     /// <inheritdoc/>
     public IEnumerable<IStyle> GetCurrentAppIncludeStyles()
     {
-        return App.Current.Styles.Where(style => style is StyleInclude);
+        return App.Current?.Styles.Where(style => style is StyleInclude) ?? Enumerable.Empty<IStyle>();
     }
 
     /// <inheritdoc/>

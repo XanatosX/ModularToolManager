@@ -1,12 +1,13 @@
 ﻿using Avalonia.Threading;
-using DynamicData;
-using DynamicData.Binding;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ModularToolManager.Models.Messages;
 using ModularToolManagerModel.Services.Functions;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
 
@@ -15,33 +16,31 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// View model to select a function
 /// </summary>
-public class FunctionSelectionViewModel : ViewModelBase
+public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
 {
+    /// <summary>
+    /// Was the class already disposed
+    /// </summary>
+    private bool isDisposed;
+
     /// <summary>
     /// The service to use for function selection
     /// </summary>
     private readonly IFunctionService? functionService;
 
     /// <summary>
-    /// All the possible functions currently available
-    /// </summary>
-    public ReadOnlyObservableCollection<FunctionButtonViewModel> AllFunctions => allFunctions;
-
-    /// <summary>
     /// Private all the possible functions currently available
     /// </summary>
-    private readonly ReadOnlyObservableCollection<FunctionButtonViewModel> allFunctions;
+    private readonly IList<FunctionButtonViewModel> functions;
 
-    /// <summary>
-    /// Private all the possible functions currently available
-    /// </summary>
-    private readonly SourceList<FunctionButtonViewModel> allAvailableFunctions;
+    [ObservableProperty]
+    private ObservableCollection<FunctionButtonViewModel> filteredFunctions;
 
     /// <summary>
     /// The search text used for the filtering of the plugins
     /// </summary>
-    [Reactive]
-    public string? SearchText { get; set; }
+    [ObservableProperty]
+    private string? searchText;
 
     /// <summary>
     /// Create a new instance of this class
@@ -49,49 +48,40 @@ public class FunctionSelectionViewModel : ViewModelBase
     public FunctionSelectionViewModel(IFunctionService? functionService)
     {
         this.functionService = functionService;
-        allAvailableFunctions = new SourceList<FunctionButtonViewModel>();
-
-        IObservable<Func<FunctionButtonViewModel, bool>> filter = this.WhenAnyValue(x => x.SearchText)
-                                                    .Throttle(TimeSpan.FromMilliseconds(200))
-                                                    .ObserveOn(RxApp.MainThreadScheduler)
-                                                    .Select(CreateFilter);
-
-        allAvailableFunctions.Connect()
-                             .Filter(filter)
-                             .Sort(SortExpressionComparer<FunctionButtonViewModel>.Ascending(g => g.SortId))
-                             .ObserveOn(AvaloniaScheduler.Instance)
-                             .Bind(out allFunctions)
-                             .AutoRefreshOnObservable(x => x.DeleteFunctionCommand)
-                             .Select(_ => allAvailableFunctions.Items.FirstOrDefault(item => !item.IsActive))
-                             .Subscribe(inactive =>
-                             {
-                                 if (inactive is null)
-                                 {
-                                     return;
-                                 }
-                                 functionService?.DeleteFunction(inactive.Identifier);
-                                 var deleted = allAvailableFunctions.Items.Where(x => functionService?.GetFunction(x.Identifier) is null).ToList();
-                                 foreach (var model in deleted)
-                                 {
-                                     allAvailableFunctions.Remove(model);
-                                 }
-                             });
+        functions = new List<FunctionButtonViewModel>();
+        filteredFunctions = new ObservableCollection<FunctionButtonViewModel>();
 
         ReloadFunctions();
+
+        WeakReferenceMessenger.Default.Register<DeleteFunctionMessage>(this, (_, e) =>
+        {
+            functionService?.DeleteFunction(e.Function.UniqueIdentifier);
+            ReloadFunctions();
+        });
+
+        WeakReferenceMessenger.Default.Register<ReloadFunctionsMessage>(this, (_, _) => ReloadFunctions());
+    }
+
+    /// <inheritdoc/>
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
+    {
+        Action action = e.PropertyName == nameof(SearchText) ? () => FilterFunctionList() : () => { return; };
+        action();
+        base.OnPropertyChanged(e);
     }
 
     /// <summary>
-    /// Method to build the search text filter
+    /// Filter the function list for displaying
     /// </summary>
-    /// <param name="text">The text to search for</param>
-    /// <returns>A func which can be used for filtering</returns>
-    private Func<FunctionButtonViewModel, bool> CreateFilter(string text)
+    private void FilterFunctionList()
     {
-        if (string.IsNullOrEmpty(text))
+        IEnumerable<FunctionButtonViewModel> tempFiltered = functions.Where(function => string.IsNullOrEmpty(SearchText) || (function.DisplayName ?? string.Empty).ToLower().Contains(SearchText.ToLower()))
+                                                                     .OrderBy(function => function.SortId);
+        FilteredFunctions.Clear();
+        foreach (var function in tempFiltered)
         {
-            return t => true;
+            FilteredFunctions.Add(function);
         }
-        return t => t.DisplayName.Contains(text, StringComparison.OrdinalIgnoreCase);
     }
 
     /// <summary>
@@ -99,17 +89,38 @@ public class FunctionSelectionViewModel : ViewModelBase
     /// </summary>
     public void ReloadFunctions()
     {
+        functions.Clear();
         foreach (FunctionButtonViewModel? functionViewModel in functionService?.GetAvailableFunctions().Select(function => new FunctionButtonViewModel(function)) ?? Enumerable.Empty<FunctionButtonViewModel?>())
         {
-            if (functionViewModel is null || allAvailableFunctions is null)
+            if (functionViewModel is null || functions is null)
             {
                 continue;
             }
-            if (allAvailableFunctions.Items.Select(item => item.Identifier).Contains(functionViewModel?.Identifier))
+            if (functions.Any(item => item.Identifier == functionViewModel?.Identifier))
             {
                 continue;
             }
-            allAvailableFunctions!.Add(functionViewModel);
+            functions.Add(functionViewModel);
         }
+        FilterFunctionList();
+    }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        if (isDisposed)
+        {
+            return;
+        }
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+        isDisposed = true;
+    }
+
+    /// <summary>
+    /// Finalizer to make sure to unregister all the message hooks
+    /// </summary>
+    ~FunctionSelectionViewModel()
+    {
+        Dispose();
     }
 }

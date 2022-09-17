@@ -1,6 +1,8 @@
-﻿using ModularToolManager.Models;
-using ReactiveUI;
-using System.Reactive;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using ModularToolManager.Models;
+using ModularToolManager.Models.Messages;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -9,57 +11,30 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// Class to use as a view model for a single function
 /// </summary>
-public class FunctionButtonViewModel : ViewModelBase
+public partial class FunctionButtonViewModel : ObservableObject
 {
-    /// <summary>
-    /// The function model to show
-    /// </summary>
-    private readonly FunctionModel functionModel;
-
     /// <summary>
     /// The identifier for this function button
     /// </summary>
-    public string Identifier => functionModel.UniqueIdentifier;
+    public string Identifier { get; }
 
     /// <summary>
-    /// THe display name of the function
+    /// The display name of the function
     /// </summary>
-    public string DisplayName
-    {
-        get => functionModel.DisplayName;
-        set
-        {
-            functionModel.DisplayName = value;
-            this.RaisePropertyChanged(nameof(DisplayName));
-        }
-    }
+    [ObservableProperty]
+    private string? displayName;
 
     /// <summary>
     /// The sort id to use for this function button
     /// </summary>
-    public int SortId
-    {
-        get => functionModel.SortOrder;
-        set
-        {
-            functionModel.SortOrder = value;
-            this.RaisePropertyChanged(nameof(SortId));
-        }
-    }
+    [ObservableProperty]
+    private int sortId;
 
     /// <summary>
     /// The description of the function
     /// </summary>
-    public string? Description
-    {
-        get => functionModel.Description;
-        set
-        {
-            this.RaisePropertyChanged(nameof(Description));
-            this.RaisePropertyChanged(nameof(ToolTipDelay));
-            functionModel.Description = value;
-        }
-    }
+    [ObservableProperty]
+    private string? description;
 
     /// <summary>
     /// The tool tip delay to use, a really high value is returned if no description is present
@@ -69,7 +44,8 @@ public class FunctionButtonViewModel : ViewModelBase
     /// <summary>
     /// Is the tooltip active right now
     /// </summary>
-    public bool IsActive { get; private set; }
+    [ObservableProperty]
+    private bool isActive;
 
     /// <summary>
     /// The command to execute if function should run
@@ -79,7 +55,7 @@ public class FunctionButtonViewModel : ViewModelBase
     /// <summary>
     /// Command to remove the entry
     /// </summary>
-    public ReactiveCommand<Unit, Unit> DeleteFunctionCommand { get; }
+    public ICommand DeleteFunctionCommand { get; }
 
     /// <summary>
     /// Create a new instance of this class
@@ -88,9 +64,17 @@ public class FunctionButtonViewModel : ViewModelBase
     public FunctionButtonViewModel(FunctionModel functionModel)
     {
         IsActive = true;
-        this.functionModel = functionModel;
-        ExecuteFunctionCommand = ReactiveCommand.Create(async () => await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path)));
+        Identifier = functionModel.UniqueIdentifier;
+        DisplayName = functionModel.DisplayName;
+        Description = functionModel.Description;
+        SortId = functionModel.SortOrder;
 
-        DeleteFunctionCommand = ReactiveCommand.CreateFromTask(async () => { IsActive = false; });
+        ExecuteFunctionCommand = new AsyncRelayCommand(async () => await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path)));
+
+        DeleteFunctionCommand = new RelayCommand(() =>
+        {
+            IsActive = false;
+            WeakReferenceMessenger.Default.Send(new DeleteFunctionMessage(functionModel));
+        });
     }
 }

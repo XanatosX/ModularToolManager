@@ -1,24 +1,18 @@
-﻿using Avalonia.Logging;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.IO;
-using ModularToolManagerModel.Services.Logging;
-using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
-using Splat;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
 
-namespace ModularToolManager.Services.Plugin;
+namespace ModularToolManagerModel.Services.Plugin;
 
 /// <summary>
 /// Plugin service for loading plugins from dlls
 /// </summary>
-internal class PluginService : IPluginService
+public sealed class PluginService : IPluginService
 {
     /// <summary>
     /// Service to get or load function settings
@@ -29,6 +23,11 @@ internal class PluginService : IPluginService
     /// Service for getting application paths
     /// </summary>
     private readonly IPathService? pathService;
+
+    /// <summary>
+    /// The dependency resolver to use
+    /// </summary>
+    private readonly IDependencyResolverService dependencyResolver;
 
     /// <summary>
     /// The logging service to use
@@ -48,11 +47,13 @@ internal class PluginService : IPluginService
     public PluginService(
         IFunctionSettingsService? functionSettingsService,
         IPathService? pathService,
+        IDependencyResolverService dependencyResolver,
         ILogger<PluginService>? loggingService
         )
     {
         this.functionSettingsService = functionSettingsService;
         this.pathService = pathService;
+        this.dependencyResolver = dependencyResolver;
         this.loggingService = loggingService;
         plugins = new List<IFunctionPlugin>();
     }
@@ -62,12 +63,15 @@ internal class PluginService : IPluginService
     {
         if (plugins.Count == 0)
         {
-            plugins.AddRange(GetPlugins().Select(pluginPath => LoadAssemblySavely(pluginPath))
-                                         .Where(assembly => assembly is not null)
-                                         .SelectMany(assembly => GetValidPlugins(assembly!))
-                                         .Select(pluginType => ActivatePlugin(pluginType))
-                                         .Where(plugin => plugin is not null)
-                                         .Where(plugin => plugin.IsOperationSystemValid()));
+            List<IFunctionPlugin> dataToAdd = GetPlugins().Select(pluginPath => LoadAssemblySavely(pluginPath))
+                                                          .Where(assembly => assembly is not null)
+                                                          .SelectMany(assembly => GetValidPlugins(assembly!))
+                                                          .Select(pluginType => ActivatePlugin(pluginType))
+                                                          .Where(plugin => plugin is not null)
+                                                          .Where(plugin => plugin!.IsOperationSystemValid())
+                                                          .OfType<IFunctionPlugin>()
+                                                          .ToList() ?? new();
+            plugins.AddRange(dataToAdd);
         }
 
         return plugins;
@@ -78,7 +82,7 @@ internal class PluginService : IPluginService
     /// </summary>
     /// <param name="path">The path of the assembly to load</param>
     /// <returns>The assembly to load or null if loading failed</returns>
-    public Assembly? LoadAssemblySavely(string path)
+    private Assembly? LoadAssemblySavely(string path)
     {
         Assembly? assembly = null;
         try
@@ -99,7 +103,7 @@ internal class PluginService : IPluginService
     /// </summary>
     /// <param name="assembly">The assembly to get the plugin types from</param>
     /// <returns>A list with all the types</returns>
-    public List<Type> GetValidPlugins(Assembly assembly)
+    private List<Type> GetValidPlugins(Assembly assembly)
     {
         return assembly.GetTypes().Where(type => type.IsVisible)
                                   .Where(type => type.GetInterfaces()
@@ -124,21 +128,23 @@ internal class PluginService : IPluginService
     /// </summary>
     /// <param name="pluginType">The plugin type to activate and start</param>
     /// <returns>The newly created ready to use plugin</returns>
-    public IFunctionPlugin? ActivatePlugin(Type pluginType)
+    private IFunctionPlugin? ActivatePlugin(Type pluginType)
     {
         IFunctionPlugin? plugin = null;
         try
         {
             ConstructorInfo? constructor = pluginType.GetConstructors().FirstOrDefault();
             object?[] dependencies = constructor?.GetParameters().Where(parameter => parameter.ParameterType.GetCustomAttribute<PluginInjectableAttribute>() is not null)
-                                                                 .Select(parameter => Locator.Current.GetService(parameter.ParameterType))
-                                                                 .ToArray();
+                                                                 .Select(parameter => dependencyResolver.GetDependency(parameter.ParameterType))
+                                                                 .ToArray() ?? Array.Empty<object>();
 
             loggingService?.LogInformation($"Activation for plugin of type {pluginType.FullName} imminent");
 
-            var parameters = constructor.GetParameters().Select(parameter => parameter.ParameterType.FullName);
-            loggingService?.LogInformation($"Required parameters for constructor: {string.Join(",", parameters)}");
-            IEnumerable<string> objectInstances = dependencies?.Select(dependency => dependency?.GetType().FullName) ?? Enumerable.Empty<string>();
+            var parameters = constructor?.GetParameters().Select(parameter => parameter.ParameterType.FullName);
+            loggingService?.LogInformation($"Required parameters for constructor: {string.Join(",", parameters ?? Enumerable.Empty<string>())}");
+            IEnumerable<string> objectInstances = dependencies?.Select(dependency => dependency?.GetType().FullName)
+                                                               .Where(data => !string.IsNullOrEmpty(data))
+                                                               .OfType<string>() ?? Enumerable.Empty<string>();
             loggingService?.LogInformation($"Instances used for filling up: {string.Join(", ", objectInstances)}");
 
             //@NOTE: load settings of a plugin, this will be reuqired later on!
@@ -161,7 +167,13 @@ internal class PluginService : IPluginService
     /// <returns>A list with all the plugins</returns>
     private List<string> GetPlugins()
     {
-        return Directory.GetFiles(pathService?.GetPluginPathString() ?? string.Empty)
+        string pluginDirectory = pathService?.GetPluginPathString() ?? string.Empty;
+        if (!Directory.Exists(pluginDirectory))
+        {
+            loggingService?.LogError($"Could not find plugin directory on path {pluginDirectory} nothing was loaded");
+            return Enumerable.Empty<string>().ToList();
+        }
+        return Directory.GetFiles(pluginDirectory)
                         .ToList()
                         .Select(file => new FileInfo(file))
                         .Where(file => file.Extension.ToLower() == ".dll")

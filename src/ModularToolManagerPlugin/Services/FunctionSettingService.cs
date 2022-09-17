@@ -18,7 +18,8 @@ public class FunctionSettingService : IFunctionSettingsService
         }
         return type.GetProperties().Select(property => property.GetCustomAttribute<SettingAttribute>())
                                    .Where(attribute => attribute is not null)
-                                   .DistinctBy(attribute => attribute.Key);
+                                   .DistinctBy(attribute => attribute!.Key)
+                                   .OfType<SettingAttribute>();
     }
 
     /// <inheritdoc/>

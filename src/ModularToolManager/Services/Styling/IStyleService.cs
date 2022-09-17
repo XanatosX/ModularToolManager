@@ -7,7 +7,7 @@ namespace ModularToolManager.Services.Styling;
 /// <summary>
 /// Service for getting styles from the avalonia application
 /// </summary>
-internal interface IStyleService
+public interface IStyleService
 {
     /// <summary>
     /// Get all the styles included in the current app
