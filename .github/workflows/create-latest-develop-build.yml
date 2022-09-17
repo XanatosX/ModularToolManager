@@ -27,19 +27,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         if: ${{ env.DEBUG == 'true' }}
+      - name: Set should run to true
+        run: echo "::set-output name=should_run::true"  
       - uses: actions/checkout@v3
         if: ${{ env.DEBUG == 'false' }}
         with:
           ref: ${{ env.REF_CHECKOUT_BRANCH }}
-      - name: print latest_commit
-        run: echo ${{ github.sha }}
-      - name: Set should run to true
-        run: echo "::set-output name=should_run::true"
-      - id: should_run
+      - name: get latest commit and check it
         continue-on-error: true
-        name: check latest commit is less than a day
         if: ${{ env.DEBUG == 'true' }} || ${{ github.event_name == 'schedule' }}
-        run: test -z $(git rev-list  --after="24 hours"  ${{ github.sha }}) && echo "::set-output name=should_run::false"
+        run: |
+           sha=$(git log -n 1 --pretty=format:"%H")
+           echo $sha
+           test -z $(git rev-list  --after="24 hours" $sha) && echo "::set-output name=should_run::false"
+
+      - id: should_run
+        name: check latest commit is less than a day
+        
+        run: 
   check-build:
     name: Check and Test build
     if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
