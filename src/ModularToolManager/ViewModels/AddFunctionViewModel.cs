@@ -175,7 +175,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
             return;
         }
         ShowOpenFileDialogModel openConfig = new ShowOpenFileDialogModel(fileDialogs, null, false);
-        var files = await windowManagmentService?.ShowOpenFileDialogAsync(openConfig) ?? Array.Empty<string>();
+        var files = await windowManagmentService.ShowOpenFileDialogAsync(openConfig);
         string file = files.FirstOrDefault(string.Empty);
         if (string.IsNullOrEmpty(file))
         {
