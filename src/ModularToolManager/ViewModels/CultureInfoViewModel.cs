@@ -12,7 +12,7 @@ public class CultureInfoViewModel : ObservableObject
     /// <summary>
     /// The culture info model to display
     /// </summary>
-    private CultureInfoModel CultureInfoModel;
+    private readonly CultureInfoModel CultureInfoModel;
 
     /// <summary>
     /// The culture information stored
