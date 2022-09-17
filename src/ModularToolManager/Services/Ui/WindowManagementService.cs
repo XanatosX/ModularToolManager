@@ -119,26 +119,27 @@ internal class WindowManagementService : IWindowManagementService
         {
             openFileDialog.Directory = fileDialogModel.InialDirectory;
         }
-        string[] files = await openFileDialog.ShowAsync(parent) ?? new string[0];
+        string[] files = await openFileDialog.ShowAsync(parent) ?? Array.Empty<string>();
         return files;
     }
 
     /// <inheritdoc/>
     public async Task<string[]> ShowOpenFileDialogAsync(ShowOpenFileDialogModel fileDialogModel)
     {
+        var returnValue = Array.Empty<string>();
         var desktop = Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
         if (desktop is null)
         {
-
-            return new string[0];
+            return returnValue;
         }
         Window? mainWindow = GetMainWindow();
         if (mainWindow is null)
         {
             loggingService?.LogError("Could not find main window to use a parent for open file dialog");
-            return new string[0];
+            return returnValue;
         }
-        return await ShowOpenFileDialogAsync(fileDialogModel, mainWindow!);
+        returnValue = await ShowOpenFileDialogAsync(fileDialogModel, mainWindow!);
+        return returnValue;
     }
 
     /// <inheritdoc/>
