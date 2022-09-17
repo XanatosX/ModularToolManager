@@ -1,0 +1,162 @@
+name: Recent develop build
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * *
+
+env:
+  DEBUG: false
+  REF_CHECKOUT_BRANCH: develop
+  RELEASE_NAME: Recent nightly build
+  APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
+  APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
+  APPLICATION_PUBLISH_FOLDER: ./publish
+  PLUGIN_PUBLISH_FOLDER: ./publish/plugins
+  WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact_x64
+  LINUX_ARTIFACT_NAME: LinuxBuildArtifact_x64
+  RELEASE_ARTIFACT_FOLDER: artifacts
+
+jobs:
+  check-for-changes:
+    runs-on: ubuntu-latest
+    name: Check for changes in last 24 hours
+    outputs:
+      should_run: ${{ steps.should_run.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v3
+        if: ${{ env.DEBUG == 'true' }}
+      - uses: actions/checkout@v3
+        if: ${{ env.DEBUG == 'false' }}
+        with:
+          ref: ${{ env.REF_CHECKOUT_BRANCH }}
+      - name: get latest commit and check it
+        id: should_run
+        continue-on-error: true
+        if: ${{ env.DEBUG == 'true' }} || ${{ github.event_name == 'schedule' }}
+        run: |
+           echo "::set-output name=should_run::true" 
+           sha=$(git log -n 1 --pretty=format:"%H")
+           echo $sha
+           test -z $(git rev-list  --after="24 hours" $sha) && echo "::set-output name=should_run::false"
+  check-build:
+    name: Check and Test build
+    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
+    needs: [check-for-changes]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ env.REF_CHECKOUT_BRANCH }}
+        lfs: true
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+  create-windows-build:
+    name: Create Windows build
+    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
+    needs: ["check-build"]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ env.REF_CHECKOUT_BRANCH }}
+        lfs: true
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Publish Application
+      run: dotnet publish ${{ env.APPLICATION_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.APPLICATION_PUBLISH_FOLDER }}
+    - name: Publish Plugin
+      run: dotnet publish ${{ env.APPLICATION_PLUGIN_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.PLUGIN_PUBLISH_FOLDER }} /p:DebugType=None /p:DebugSymbols=false
+    - name: Show content for debug
+      if: ${{ env.DEBUG == 'true' }}
+      run: ls
+    - name: Show content to publish
+      if: ${{ env.DEBUG == 'true' }}
+      run: |
+        cd ./publish
+        ls
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+       name: ${{ env.WINDOWS_ARTIFACT_NAME }}
+       path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
+       if-no-files-found: error
+  create-linux-build:
+    name: Create Linux build
+    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
+    needs: ["check-build"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ env.REF_CHECKOUT_BRANCH }}
+        lfs: true
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Publish Application
+      run: dotnet publish $APPLICATION_PROJECT_PATH -r linux-x64 -c Release -o $APPLICATION_PUBLISH_FOLDER
+    - name: Publish Plugin
+      run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r linux-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER /p:DebugType=None /p:DebugSymbols=false
+    - name: Show content for debug
+      if: ${{ env.DEBUG == 'true' }}
+      run: ls -la
+    - name: Show content to publish
+      if: ${{ env.DEBUG == 'true' }}
+      run: |
+        cd ./publish
+        ls -la
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+       name: ${{ env.LINUX_ARTIFACT_NAME }}
+       path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
+       if-no-files-found: error
+  create-release:
+    name: Create GitHub Release
+    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
+    needs: ["create-linux-build", "create-windows-build"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with: 
+          path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
+      - name: Zip Windows build
+        run: |
+          cd ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_ARTIFACT_NAME
+          zip -r $WINDOWS_ARTIFACT_NAME.zip ./*
+          mv $WINDOWS_ARTIFACT_NAME.zip ../
+      - name: Zip Linux build
+        run: |
+          cd ./$RELEASE_ARTIFACT_FOLDER/$LINUX_ARTIFACT_NAME
+          zip -r $LINUX_ARTIFACT_NAME.zip ./*
+          mv $LINUX_ARTIFACT_NAME.zip ../
+      - name: display artifacts folder content
+        if: ${{ env.DEBUG == 'true' }}
+        run: ls -la $RELEASE_ARTIFACT_FOLDER
+      - uses: ncipollo/release-action@v1
+        with:
+          name: ${{ env.RELEASE_NAME }} [${{ GITHUB.RUN_NUMBER }}]
+          tag: Develop-${{ GITHUB.RUN_NUMBER }}
+          generateReleaseNotes: true
+          body: Recent version of the develop branch, ready for testing
+          draft: ${{ env.DEBUG }}
+          prerelease: true
+          artifacts: ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.zip
+          artifactContentType: "application/zip"

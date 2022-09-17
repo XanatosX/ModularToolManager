@@ -1,7 +1,6 @@
 # Modular tool manager 
-
-[![Build status](https://ci.appveyor.com/api/projects/status/y81w82f44tsxyju4/branch/master?svg=true)](https://ci.appveyor.com/project/XanatosX/modulartoolmanager/branch/master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a76b14fe59a54a9ab4d3e4f6afed53dc)](https://app.codacy.com/app/simonaberle/ModularToolManager?utm_source=github.com&utm_medium=referral&utm_content=XanatosX/ModularToolManager&utm_campaign=badger)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager?ref=badge_shield)
 
 ## Requirements
 
@@ -53,10 +52,11 @@ There will be a document how to create your own plugin later on. At the moment y
 
 If you are using any third party modules (Assembly files) be warned. Those could be infected by a virus or other software trying to damage your computer!
 
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager?ref=badge_large)
+
 
 [downloadPage]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/
 [lastUnstable]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/LastUnstable_ModularToolManager.zip
 [preSettings]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/ModularToolManager_release-preSettings.zip
 [issuePage]: https://bitbucket.org/XanatosX/modulartoolmanager/issues
-
-
