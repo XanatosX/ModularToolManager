@@ -2,8 +2,8 @@ name: Recent develop build
 
 on:
   schedule:
-    - 0 0 * * *
-    - 5 11 * * *
+    - cron: 0 0 * * *
+    - cron: 5 11 * * *
 
 env:
   DEBUG: true
