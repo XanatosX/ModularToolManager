@@ -33,12 +33,14 @@ jobs:
           ref: ${{ env.REF_CHECKOUT_BRANCH }}
       - name: print latest_commit
         run: echo ${{ github.sha }}
+      - name: Set should run to true
+        run: echo "::set-output name=should_run::true"
       - id: should_run
         continue-on-error: true
         name: check latest commit is less than a day
         if: ${{ env.DEBUG == 'true' }} || ${{ github.event_name == 'schedule' }}
         run: test -z $(git rev-list  --after="1 seconds"  ${{ github.sha }}) && echo "::set-output name=should_run::false"
-      - name: check latest commit is less than a day
+      - name: Show result of should run check
         if: ${{ env.DEBUG == 'true' }}
         run: echo ${{ needs.check_date.outputs.should_run }}
   check-build:
