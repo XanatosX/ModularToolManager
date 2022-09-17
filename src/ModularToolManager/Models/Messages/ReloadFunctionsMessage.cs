@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Models.Messages;
+
+/// <summary>
+/// Message to reload the functions
+/// </summary>
 internal class ReloadFunctionsMessage : RequestMessage<bool>
 {
 }

@@ -17,6 +17,5 @@ namespace ModularToolManager
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace();
-        //.UseReactiveUI();
     }
 }

@@ -69,12 +69,9 @@ public class App : Application
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
-        provider = BuildServiceCollection().BuildServiceProvider(); //.UseMicrosoftDependencyResolver();
+        provider = BuildServiceCollection().BuildServiceProvider();
 
 
-        //Locator.CurrentMutable.InitializeSplat();
-        //Locator.CurrentMutable.InitializeReactiveUI();
-        //RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
         ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
