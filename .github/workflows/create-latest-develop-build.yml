@@ -7,7 +7,7 @@ on:
     - cron: 0 0 * * *
 
 env:
-  DEBUG: true
+  DEBUG: false
   REF_CHECKOUT_BRANCH: develop
   RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
