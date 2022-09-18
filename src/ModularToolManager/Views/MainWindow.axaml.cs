@@ -3,6 +3,8 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
+using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
@@ -24,6 +26,10 @@ public partial class MainWindow : Window
 
     public MainWindow(IWindowManagementService? modalService, ISettingsService? settingsService)
     {
+
+        this.modalService = modalService;
+        this.settingsService = settingsService;
+
         firstRender = true;
         InitializeComponent();
 #if DEBUG
@@ -36,6 +42,7 @@ public partial class MainWindow : Window
         });
         WeakReferenceMessenger.Default.Register<ToggleApplicationVisibilityMessage>(this, (_, e) =>
         {
+            bool alwaysTopMost = settingsService?.GetApplicationSettings().AlwaysOnTop ?? false;
             if (e.Hide)
             {
                 Hide();
@@ -43,12 +50,21 @@ public partial class MainWindow : Window
             }
             Show();
             Topmost = true;
-            Topmost = false;
-        });
+            if (!alwaysTopMost)
+            {
+                Topmost = false;
+            }
 
+        });
+        WeakReferenceMessenger.Default.Register<ValueChangedMessage<ApplicationSettings>>(this, (_, settings) =>
+        {
+            Topmost = settings.Value.AlwaysOnTop;
+        });
+        if (settingsService?.GetApplicationSettings().AlwaysOnTop ?? false)
+        {
+            Topmost = true;
+        }
         PositionWindow();
-        this.modalService = modalService;
-        this.settingsService = settingsService;
     }
 
     /// <inheritdoc/>
