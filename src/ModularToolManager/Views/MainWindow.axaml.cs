@@ -11,19 +11,39 @@ using ModularToolManager.Services.Ui;
 
 namespace ModularToolManager.Views;
 
+/// <summary>
+/// The main window of the application
+/// </summary>
 public partial class MainWindow : Window
 {
+    /// <summary>
+    /// The modal service to use
+    /// </summary>
     private readonly IWindowManagementService? modalService;
 
+    /// <summary>
+    /// Is this the first render of the application
+    /// </summary>
     private bool firstRender;
 
+    /// <summary>
+    /// The settings service to use
+    /// </summary>
     private readonly ISettingsService? settingsService;
 
+    /// <summary>
+    /// Create a new empty instance of this class
+    /// </summary>
     public MainWindow() : this(null, null)
     {
 
     }
 
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="modalService">The modal service to use</param>
+    /// <param name="settingsService">The settings service to use</param>
     public MainWindow(IWindowManagementService? modalService, ISettingsService? settingsService)
     {
 
@@ -95,6 +115,7 @@ public partial class MainWindow : Window
         Position = new PixelPoint((int)newXPos, (int)newYPos);
     }
 
+    /// <inheritdoc/>
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
