@@ -58,7 +58,10 @@ internal class SerializedSettingsService : ISettingsService
         {
             return cachedApplicationSettings;
         }
-        ApplicationSettings returnData = new ApplicationSettings();
+        ApplicationSettings returnData = new ApplicationSettings()
+        {
+            ShowInTaskbar = true
+        };
         var settingsFile = pathService.GetSettingsFilePathString();
 
         using (StreamReader? reader = fileSystemService.GetReadStream(settingsFile))
