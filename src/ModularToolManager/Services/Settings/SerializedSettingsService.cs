@@ -1,13 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using ModularToolManager.Models;
+﻿using ModularToolManager.Models;
 using ModularToolManager.Services.Serialization;
 using ModularToolManagerModel.Services.IO;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.Settings;
 
