@@ -1,4 +1,5 @@
-﻿using ModularToolManagerModel.Services.IO;
+﻿using Microsoft.Extensions.Logging;
+using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Language;
 using System.Collections.Generic;
 using System.Globalization;
@@ -23,18 +24,32 @@ internal class ResourceCultureService : ILanguageService
     /// </summary>
     private readonly IPathService pathService;
 
-    public ResourceCultureService(IPathService pathService)
+    /// <summary>
+    /// The logger to use
+    /// </summary>
+    private readonly ILogger<ResourceCultureService> logger;
+
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="pathService">The path service to use</param>
+    /// <param name="logger">The logger to use</param>
+    public ResourceCultureService(IPathService pathService, ILogger<ResourceCultureService> logger)
     {
         this.pathService = pathService;
+        this.logger = logger;
     }
 
     /// <inheritdoc/>
     public void ChangeLanguage(CultureInfo newCulture)
     {
+        logger.LogTrace($"Requesting language change to {newCulture.Name}");
         if (!ValidLanguage(newCulture))
         {
+            logger.LogTrace($"Requesting language is not valid!");
             return;
         }
+        logger.LogTrace($"Set new language!");
         Properties.Resources.Culture = newCulture;
         availableCultures = null;
     }
@@ -42,6 +57,7 @@ internal class ResourceCultureService : ILanguageService
     /// <inheritdoc/>
     public bool ValidLanguage(CultureInfo culture)
     {
+        logger.LogTrace($"Check if language {culture.Name} is valid");
         return availableCultures is null ? false : availableCultures.Contains(culture);
     }
 
@@ -50,9 +66,10 @@ internal class ResourceCultureService : ILanguageService
     {
         if (availableCultures != null)
         {
+            logger.LogTrace("Return cached cultures");
             return availableCultures;
         }
-
+        logger.LogTrace("Load available cultures from resources");
         string applicationLocation = pathService.GetApplicationExecutableString();
         string resoureFileName = Path.GetFileNameWithoutExtension(applicationLocation) + ".resources.dll";
         DirectoryInfo? rootDirectory = pathService.GetApplicationPath();
