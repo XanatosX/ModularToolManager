@@ -11,6 +11,4 @@ public class ApplicationSettings
 
     [JsonPropertyName("show_in_taskbar")]
     public bool ShowInTaskbar { get; set; }
-
-
 }
