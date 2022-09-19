@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Globalization;
+using System.Text.Json.Serialization;
 
 namespace ModularToolManager.Models;
 
@@ -24,4 +25,10 @@ public class ApplicationSettings
     /// </summary>
     [JsonPropertyName("show_in_taskbar")]
     public bool ShowInTaskbar { get; set; }
+
+    /// <summary>
+    /// The current language to use
+    /// </summary>
+    [JsonPropertyName("language")]
+    public CultureInfo? CurrentLanguage { get; set; }
 }

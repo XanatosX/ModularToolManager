@@ -62,7 +62,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
         loggingService?.LogTrace($"Execute plugin with path attribute '{path}' including the following parameters '{parameters}'");
         if (!File.Exists(path))
         {
-            string baseMessage = translationsService?.GetTranslationByKey("error_cant_find_script_file", fallbackCulture) ?? FALLBACK_SCRIPT_NOT_FOUND;
+            string baseMessage = translationsService?.GetTranslationByKey("error_cant_find_script_file") ?? FALLBACK_SCRIPT_NOT_FOUND;
             loggingService?.LogError(baseMessage, path);
             return false;
         }
@@ -80,7 +80,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     public override string GetDisplayName()
     {
         loggingService?.LogTrace($"Requested display name");
-        return translationsService?.GetTranslationByKey("script-displayname", fallbackCulture) ?? "Script Execution";
+        return translationsService?.GetTranslationByKey("script-displayname") ?? "Script Execution";
     }
 
     /// <inheritdoc/>
@@ -114,9 +114,9 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
         loggingService?.LogTrace($"Create windows extensions");
         return new List<FileExtension>
         {
-            new FileExtension(translationsService?.GetTranslationByKey("batch", fallbackCulture) ?? FALLBACK_TRANSLATION, "bat"),
-            new FileExtension(translationsService?.GetTranslationByKey("cmd", fallbackCulture) ?? FALLBACK_TRANSLATION, "cmd"),
-            new FileExtension(translationsService?.GetTranslationByKey("powershell", fallbackCulture) ?? FALLBACK_TRANSLATION, "ps")
+            new FileExtension(translationsService?.GetTranslationByKey("batch") ?? FALLBACK_TRANSLATION, "bat"),
+            new FileExtension(translationsService?.GetTranslationByKey("cmd") ?? FALLBACK_TRANSLATION, "cmd"),
+            new FileExtension(translationsService?.GetTranslationByKey("powershell") ?? FALLBACK_TRANSLATION, "ps")
         };
     }
 

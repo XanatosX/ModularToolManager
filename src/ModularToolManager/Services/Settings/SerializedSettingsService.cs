@@ -1,6 +1,8 @@
 ﻿using ModularToolManager.Models;
 using ModularToolManager.Services.Serialization;
 using ModularToolManagerModel.Services.IO;
+using System;
+using System.Globalization;
 using System.IO;
 
 namespace ModularToolManager.Services.Settings;
@@ -46,6 +48,18 @@ internal class SerializedSettingsService : ISettingsService
     }
 
     /// <inheritdoc/>
+    public bool ChangeSettings(Action<ApplicationSettings> changeSettings)
+    {
+        if (changeSettings is null)
+        {
+            return false;
+        }
+        ApplicationSettings settings = GetApplicationSettings();
+        changeSettings(settings);
+        return settings is not null ? SaveApplicationSettings(settings) : false;
+    }
+
+    /// <inheritdoc/>
     public ApplicationSettings GetApplicationSettings()
     {
         if (cachedApplicationSettings is not null)
@@ -54,7 +68,8 @@ internal class SerializedSettingsService : ISettingsService
         }
         ApplicationSettings returnData = new ApplicationSettings()
         {
-            ShowInTaskbar = true
+            ShowInTaskbar = true,
+            CurrentLanguage = CultureInfo.CurrentCulture
         };
         var settingsFile = pathService.GetSettingsFilePathString();
 
@@ -64,7 +79,6 @@ internal class SerializedSettingsService : ISettingsService
             {
                 returnData = serializer.GetDeserialized<ApplicationSettings>(reader.BaseStream) ?? returnData;
             }
-
         }
         cachedApplicationSettings = returnData;
         return returnData;

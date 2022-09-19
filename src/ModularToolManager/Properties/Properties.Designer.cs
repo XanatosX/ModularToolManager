@@ -70,6 +70,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to eng.
+        /// </summary>
+        internal static string FallbackLanguage {
+            get {
+                return ResourceManager.GetString("FallbackLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to functions.dat.
         /// </summary>
         internal static string FunctionsFile {
