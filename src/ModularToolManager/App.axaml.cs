@@ -9,6 +9,8 @@ using ModularToolManager.DependencyInjection;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Logging;
+using ModularToolManager.Services.Settings;
+using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;
@@ -103,6 +105,7 @@ public class App : Application
     {
         ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         DataContext = provider.GetService<AppViewModel>();
+
         var locator = provider.GetService<ViewLocator>();
         if (locator is not null)
         {
@@ -120,5 +123,7 @@ public class App : Application
         {
             desktop.MainWindow = provider.GetService<MainWindow>();
         }
+        
+        base.OnFrameworkInitializationCompleted();
     }
 }
