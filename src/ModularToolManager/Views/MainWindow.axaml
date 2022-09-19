@@ -15,7 +15,8 @@
 		Width="250"
 		MaxWidth="350"
 		HasSystemDecorations="False"
-		CanResize="False">
+		CanResize="False"
+		ShowInTaskbar="{Binding ShowInTaskbar}">
 
 	<!--
     <Design.DataContext>

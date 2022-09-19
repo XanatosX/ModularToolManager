@@ -4,6 +4,7 @@ using ModularToolManager.Services.Dependencies;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
 using ModularToolManager.Services.Serialization;
+using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
@@ -58,7 +59,7 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddViews(this IServiceCollection collection)
     {
-        return collection.AddTransient(resolver => new MainWindow(resolver?.GetService<IWindowManagementService>())
+        return collection.AddTransient(resolver => new MainWindow(resolver.GetRequiredService<IWindowManagementService>(), resolver.GetRequiredService<ISettingsService>())
         {
             DataContext = resolver?.GetService<MainWindowViewModel>(),
         })
@@ -87,6 +88,7 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<IViewModelLocatorService, ViewModelLocator>()
                          .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>()
                          .AddSingleton<IFileSystemService, FileSystemService>()
+                         .AddSingleton<ISettingsService, SerializedSettingsService>()
                          .AddSingleton<ViewLocator>();
     }
 }
