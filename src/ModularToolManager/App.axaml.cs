@@ -123,7 +123,5 @@ public class App : Application
         {
             desktop.MainWindow = provider.GetService<MainWindow>();
         }
-        
-        base.OnFrameworkInitializationCompleted();
     }
 }
