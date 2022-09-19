@@ -26,5 +26,9 @@
   {
     "key": "error_cant_find_script_file",
     "value": "Konnte das auszuführende Skript '{0}' nicht finden"
+  },
+  {
+    "key": "error_cant_find_binary_file",
+    "value": "Konnte ausführbare datei '{0}' nicht finden"
   }
 ]

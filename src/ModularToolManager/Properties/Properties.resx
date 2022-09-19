@@ -120,6 +120,9 @@
   <data name="ApplicationName" xml:space="preserve">
     <value>Modular Tool Manager</value>
   </data>
+  <data name="FallbackLanguage" xml:space="preserve">
+    <value>eng</value>
+  </data>
   <data name="FunctionsFile" xml:space="preserve">
     <value>functions.dat</value>
   </data>

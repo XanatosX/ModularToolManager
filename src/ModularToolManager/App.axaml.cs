@@ -10,15 +10,16 @@ using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Logging;
 using ModularToolManager.Services.Settings;
-using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;
+using ModularToolManagerModel.Services.Language;
 using ModularToolManagerModel.Services.Logging;
 using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Targets;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace ModularToolManager;
@@ -103,6 +104,10 @@ public class App : Application
     /// <param name="provider">The provider to use for getting class instances</param>
     private void SetupApplicationContainer(ServiceProvider provider)
     {
+        ILanguageService langService = provider.GetRequiredService<ILanguageService>();
+        ISettingsService settingsService = provider.GetRequiredService<ISettingsService>();
+        CultureInfo language = settingsService.GetApplicationSettings().CurrentLanguage ?? CultureInfo.CurrentCulture;
+        langService.ChangeLanguage(language);
         ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         DataContext = provider.GetService<AppViewModel>();
 

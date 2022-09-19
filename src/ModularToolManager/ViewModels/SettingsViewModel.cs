@@ -54,13 +54,15 @@ internal partial class SettingsViewModel : ObservableObject
 	[RelayCommand]
 	private void Ok()
 	{
-		ApplicationSettings appSettings = settingsService.GetApplicationSettings();
-		appSettings.StartMinimized = StartMinimized;
-		appSettings.ShowInTaskbar = ShowInTaskbar;
-		appSettings.AlwaysOnTop = topMost;
-		if (settingsService.SaveApplicationSettings(appSettings))
+		var changeResult = settingsService.ChangeSettings(settings =>
 		{
-			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<ApplicationSettings>(appSettings));
+			settings.StartMinimized = StartMinimized;
+			settings.ShowInTaskbar = ShowInTaskbar;
+			settings.AlwaysOnTop = topMost;
+		});
+		if (changeResult)
+		{
+			WeakReferenceMessenger.Default.Send(new ValueChangedMessage<ApplicationSettings>(settingsService.GetApplicationSettings()));
 			Abort();
 		}
 	}

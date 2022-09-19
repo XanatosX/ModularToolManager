@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models.Messages;
+using ModularToolManager.Services.Settings;
 using ModularToolManagerModel.Data;
 using ModularToolManagerModel.Services.Language;
 using System.Collections.ObjectModel;
@@ -21,6 +22,11 @@ public partial class ChangeLanguageViewModel : ObservableObject
     private readonly ILanguageService languageService;
 
     /// <summary>
+    /// The settings service to use
+    /// </summary>
+    private readonly ISettingsService settingsService;
+
+    /// <summary>
     /// A list with all the cultures available
     /// </summary>
     public ObservableCollection<CultureInfoViewModel> Cultures { get; }
@@ -35,12 +41,13 @@ public partial class ChangeLanguageViewModel : ObservableObject
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    public ChangeLanguageViewModel(ILanguageService languageService)
+    public ChangeLanguageViewModel(ILanguageService languageService, ISettingsService settingsService)
     {
         this.languageService = languageService;
+        this.settingsService = settingsService;
         Cultures = new ObservableCollection<CultureInfoViewModel>(languageService.GetAvailableCultures().Select(culture => new CultureInfoViewModel(new CultureInfoModel(culture.DisplayName, culture))));
 
-        SelectedCulture = Cultures.FirstOrDefault(cultureViewModel => cultureViewModel.Culture == CultureInfo.CurrentCulture);
+        SelectedCulture = Cultures.FirstOrDefault(cultureViewModel => cultureViewModel.Culture.ThreeLetterISOLanguageName == languageService.GetCurrentLanguage()?.ThreeLetterISOLanguageName);
         SelectedCulture = SelectedCulture is null ? Cultures.First() : SelectedCulture;
     }
 

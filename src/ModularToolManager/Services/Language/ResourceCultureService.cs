@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
+using ModularToolManager.Properties;
+using ModularToolManager.Services.Settings;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Language;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace ModularToolManager.Services.Language;
 
@@ -25,6 +26,11 @@ internal class ResourceCultureService : ILanguageService
     private readonly IPathService pathService;
 
     /// <summary>
+    /// The settings service used to save the data to
+    /// </summary>
+    private readonly ISettingsService settingsService;
+
+    /// <summary>
     /// The logger to use
     /// </summary>
     private readonly ILogger<ResourceCultureService> logger;
@@ -34,15 +40,21 @@ internal class ResourceCultureService : ILanguageService
     /// </summary>
     /// <param name="pathService">The path service to use</param>
     /// <param name="logger">The logger to use</param>
-    public ResourceCultureService(IPathService pathService, ILogger<ResourceCultureService> logger)
+    public ResourceCultureService(IPathService pathService, ISettingsService settingsService, ILogger<ResourceCultureService> logger)
     {
         this.pathService = pathService;
+        this.settingsService = settingsService;
         this.logger = logger;
     }
 
     /// <inheritdoc/>
-    public void ChangeLanguage(CultureInfo newCulture)
+    public void ChangeLanguage(CultureInfo? newCulture)
     {
+        if (newCulture is null)
+        {
+            logger.LogError("Trying to switch to new language of null!");
+            return;
+        }
         logger.LogTrace($"Requesting language change to {newCulture.Name}");
         if (!ValidLanguage(newCulture))
         {
@@ -51,6 +63,7 @@ internal class ResourceCultureService : ILanguageService
         }
         logger.LogTrace($"Set new language!");
         Properties.Resources.Culture = newCulture;
+        settingsService.ChangeSettings(settings => settings.CurrentLanguage = newCulture);
         availableCultures = null;
     }
 
@@ -58,7 +71,7 @@ internal class ResourceCultureService : ILanguageService
     public bool ValidLanguage(CultureInfo culture)
     {
         logger.LogTrace($"Check if language {culture.Name} is valid");
-        return availableCultures is null ? false : availableCultures.Contains(culture);
+        return GetAvailableCultures().Contains(culture);
     }
 
     /// <inheritdoc/>
@@ -78,11 +91,31 @@ internal class ResourceCultureService : ILanguageService
                                          .Where(dir => File.Exists(Path.Combine(dir.FullName, resoureFileName)))
                                          .Select(dir => CultureInfo.GetCultureInfo(dir.Name))
                                          .ToList() ?? new();
-        if (!availableCultures.Contains(CultureInfo.GetCultureInfo("en")))
+        if (!availableCultures.Contains(CultureInfo.GetCultureInfo(Properties.Properties.FallbackLanguage)))
         {
-            availableCultures.Add(CultureInfo.GetCultureInfo("en"));
+            availableCultures.Add(CultureInfo.GetCultureInfo(Properties.Properties.FallbackLanguage));
         }
         availableCultures.OrderBy(culture => culture.DisplayName);
         return availableCultures;
+    }
+
+    /// <inheritdoc/>
+    public CultureInfo? GetCurrentLanguage()
+    {
+        return settingsService.GetApplicationSettings().CurrentLanguage;
+    }
+
+    /// <inheritdoc/>
+    public CultureInfo? GetFallbackLanguage()
+    {
+        CultureInfo? returnCulture = null;
+        try
+        {
+            returnCulture = CultureInfo.GetCultureInfo(Properties.Properties.FallbackLanguage);
+        }
+        catch (System.Exception)
+        {
+        }
+        return returnCulture;
     }
 }

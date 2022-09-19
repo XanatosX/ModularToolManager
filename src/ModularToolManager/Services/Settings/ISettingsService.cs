@@ -1,4 +1,5 @@
 ﻿using ModularToolManager.Models;
+using System;
 
 namespace ModularToolManager.Services.Settings;
 
@@ -12,6 +13,13 @@ public interface ISettingsService
     /// </summary>
     /// <returns>An instance of the application settings class</returns>
     ApplicationSettings GetApplicationSettings();
+
+    /// <summary>
+    /// Change the application settings
+    /// </summary>
+    /// <param name="changeSettings">The current settings to change</param>
+    /// <returns>True if changing was successful</returns>
+    bool ChangeSettings(Action<ApplicationSettings> changeSettings);
 
     /// <summary>
     /// Save the application settings

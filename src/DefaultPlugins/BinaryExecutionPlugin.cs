@@ -43,7 +43,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     /// <param name="loggingService">The logger service to use</param>
     public BinaryExecutionPlugin(IPluginTranslationService translationService, IPluginLoggerService<BinaryExecutionPlugin> loggingService)
     {
-        fallbackCulture = CultureInfo.GetCultureInfo("en-EN");
+        fallbackCulture = translationService.GetFallbackLanguage();
         this.translationService = translationService;
         this.loggingService = loggingService;
     }
@@ -54,7 +54,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
         loggingService?.LogTrace($"Execute plugin with path attribute '{path}' including the following parameters '{parameters}'");
         if (!File.Exists(path))
         {
-            string baseMessage = translationService?.GetTranslationByKey("error_cant_find_binary_file", fallbackCulture) ?? FALLBACK_SCRIPT_NOT_FOUND;
+            string baseMessage = translationService?.GetTranslationByKey("error_cant_find_binary_file") ?? FALLBACK_SCRIPT_NOT_FOUND;
             loggingService?.LogError(baseMessage, path);
             return false;
         }
@@ -92,7 +92,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
         loggingService?.LogTrace($"Create windows extensions");
         return new List<FileExtension>
         {
-            new FileExtension(translationService?.GetTranslationByKey("executable", fallbackCulture) ?? FALLBACK_TRANSLATION, "exe"),
+            new FileExtension(translationService?.GetTranslationByKey("executable") ?? FALLBACK_TRANSLATION, "exe"),
 
         };
     }
@@ -101,7 +101,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     public override string GetDisplayName()
     {
         loggingService?.LogTrace($"Requested display name");
-        return translationService?.GetTranslationByKey("binary-displayname", fallbackCulture) ?? "Script Execution";
+        return translationService?.GetTranslationByKey("binary-displayname") ?? "Script Execution";
     }
 
     /// <inheritdoc/>
