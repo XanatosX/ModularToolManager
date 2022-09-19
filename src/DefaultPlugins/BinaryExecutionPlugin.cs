@@ -101,7 +101,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     public override string GetDisplayName()
     {
         loggingService?.LogTrace($"Requested display name");
-        return translationService?.GetTranslationByKey("binary-displayname") ?? "Script Execution";
+        return translationService?.GetTranslationByKey("binary-displayname") ?? "Start executable binary file";
     }
 
     /// <inheritdoc/>
