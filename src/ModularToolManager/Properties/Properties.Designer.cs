@@ -97,6 +97,51 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to edit_regular.
+        /// </summary>
+        internal static string Icon_edit_function {
+            get {
+                return ResourceManager.GetString("Icon_edit_function", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to eye_hide_regular.
+        /// </summary>
+        internal static string Icon_hide {
+            get {
+                return ResourceManager.GetString("Icon_hide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to flag_regular.
+        /// </summary>
+        internal static string Icon_language {
+            get {
+                return ResourceManager.GetString("Icon_language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to add_circle_regular.
+        /// </summary>
+        internal static string Icon_new_function {
+            get {
+                return ResourceManager.GetString("Icon_new_function", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings_regular.
+        /// </summary>
+        internal static string Icon_settings {
+            get {
+                return ResourceManager.GetString("Icon_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to settings.set.
         /// </summary>
         internal static string SettingsFile {

@@ -144,8 +144,8 @@
   <data name="Menu_File" xml:space="preserve">
     <value>File</value>
   </data>
-  <data name="Menu_ReportBug" xml:space="preserve">
-    <value>Report Bug</value>
+  <data name="Menu_Help" xml:space="preserve">
+    <value>Help</value>
   </data>
   <data name="NewFunction_Description" xml:space="preserve">
     <value>Function Description</value>
@@ -165,17 +165,26 @@
   <data name="Settings_StartMinimized" xml:space="preserve">
     <value>Start minimized</value>
   </data>
+  <data name="SubMenu_About" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="SubMenu_Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
   <data name="SubMenu_Hide" xml:space="preserve">
     <value>Hide</value>
   </data>
+  <data name="SubMenu_Hotkeys" xml:space="preserve">
+    <value>Hotkeys</value>
+  </data>
   <data name="SubMenu_Language" xml:space="preserve">
     <value>Language</value>
   </data>
   <data name="SubMenu_NewFunction" xml:space="preserve">
     <value>New Function</value>
+  </data>
+  <data name="SubMenu_ReportBug" xml:space="preserve">
+    <value>Report Bug</value>
   </data>
   <data name="SubMenu_Settings" xml:space="preserve">
     <value>Settings</value>

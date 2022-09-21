@@ -129,6 +129,21 @@
   <data name="GithubUrl" xml:space="preserve">
     <value>https://github.com/XanatosX/ModularToolManager/issues</value>
   </data>
+  <data name="Icon_edit_function" xml:space="preserve">
+    <value>edit_regular</value>
+  </data>
+  <data name="Icon_hide" xml:space="preserve">
+    <value>eye_hide_regular</value>
+  </data>
+  <data name="Icon_language" xml:space="preserve">
+    <value>flag_regular</value>
+  </data>
+  <data name="Icon_new_function" xml:space="preserve">
+    <value>add_circle_regular</value>
+  </data>
+  <data name="Icon_settings" xml:space="preserve">
+    <value>settings_regular</value>
+  </data>
   <data name="SettingsFile" xml:space="preserve">
     <value>settings.set</value>
   </data>

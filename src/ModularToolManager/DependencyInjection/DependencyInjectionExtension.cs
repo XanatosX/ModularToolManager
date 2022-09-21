@@ -76,18 +76,21 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<IStyleService, DefaultStyleService>()
                          .AddSingleton<IPluginTranslationService, PluginTranslationService>()
                          .AddSingleton<IFunctionSettingsService, FunctionSettingService>()
-                         .AddSingleton<IUrlOpenerService, UrlOpenerService>()
                          .AddSingleton<ILanguageService, ResourceCultureService>()
                          .AddSingleton<IWindowManagementService, WindowManagementService>()
                          .AddSingleton<IPluginService, PluginService>()
                          .AddSingleton<ISerializationOptionFactory<JsonSerializerOptions>, JsonSerializationOptionFactory>()
-                         .AddSingleton<ISerializeService, JsonSerializationService>()
                          .AddSingleton<IFunctionService, SerializedFunctionService>()
-                         .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>))
                          .AddSingleton<IViewModelLocatorService, ViewModelLocator>()
                          .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>()
-                         .AddSingleton<IFileSystemService, FileSystemService>()
                          .AddSingleton<ISettingsService, SerializedSettingsService>()
-                         .AddSingleton<ViewLocator>();
+                         .AddTransient<ViewLocator>()
+                         .AddTransient<ISerializeService, JsonSerializationService>()
+                         .AddTransient<IImageService, ImageService>()
+                         .AddTransient<IUrlOpenerService, UrlOpenerService>()
+                         .AddTransient<IFileSystemService, FileSystemService>()
+                         .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>));
+
+
     }
 }
