@@ -23,12 +23,11 @@ public class ImageService : IImageService
         };
         var pixelSize = new PixelSize((int)testImage.Size.Width, (int)testImage.Size.Height);
         Bitmap? returnImage = null;
-        using (MemoryStream memoryStream = new MemoryStream())
+        using (MemoryStream memoryStream = new())
         {
-
-            using (RenderTargetBitmap bitmap = new RenderTargetBitmap(pixelSize, new Vector(72, 72)))
+            using (RenderTargetBitmap bitmap = new(pixelSize, new Vector(72, 72)))
             {
-                using (DrawingContext ctx = new DrawingContext(bitmap.CreateDrawingContext(null)))
+                using (DrawingContext ctx = new(bitmap.CreateDrawingContext(null)))
                 {
                     testImage.Drawing.Draw(ctx);
                 }
