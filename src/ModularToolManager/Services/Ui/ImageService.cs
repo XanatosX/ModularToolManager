@@ -4,8 +4,13 @@ using Avalonia.Media.Imaging;
 using System.IO;
 
 namespace ModularToolManager.Services.Ui;
+
+/// <summary>
+/// Implementation of the image service interface
+/// </summary>
 public class ImageService : IImageService
 {
+    /// <inheritdoc/>
     public Bitmap? CreateBitmap(StreamGeometry streamGeometry, Brush brush)
     {
         var testImage = new DrawingImage
