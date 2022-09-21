@@ -183,6 +183,9 @@
   <data name="SubMenu_NewFunction" xml:space="preserve">
     <value>New Function</value>
   </data>
+  <data name="SubMenu_Plugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
   <data name="SubMenu_ReportBug" xml:space="preserve">
     <value>Report Bug</value>
   </data>

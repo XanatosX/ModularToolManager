@@ -47,6 +47,8 @@
 							<MenuItem Header="{x:Static p:Resources.SubMenu_Exit}" Command="{Binding ExitApplicationCommand}"/>
 						</MenuItem>
 						<MenuItem Header="{x:Static p:Resources.Menu_Help}">
+							<MenuItem Header="{x:Static p:Resources.SubMenu_Plugins}" Command="{Binding OpenPluginsCommand}"/>
+							<Separator/>
 							<MenuItem Header="{x:Static p:Resources.SubMenu_About}" Command="{Binding OpenAboutCommand}" HotKey="f1"/>
 							<MenuItem Header="{x:Static p:Resources.SubMenu_Hotkeys}" Command="{Binding OpenHotkeysCommand}"/>
 							<Separator/>

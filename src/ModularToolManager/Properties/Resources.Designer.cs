@@ -259,6 +259,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plugins.
+        /// </summary>
+        public static string SubMenu_Plugins {
+            get {
+                return ResourceManager.GetString("SubMenu_Plugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Report Bug.
         /// </summary>
         public static string SubMenu_ReportBug {

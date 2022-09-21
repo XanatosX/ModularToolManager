@@ -32,6 +32,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\AllPluginsView.axaml.cs">
+      <DependentUpon>AllPluginsView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Properties.resx">
