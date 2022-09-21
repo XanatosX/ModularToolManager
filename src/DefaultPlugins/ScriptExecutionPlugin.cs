@@ -83,13 +83,6 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     }
 
     /// <inheritdoc/>
-    public override Version GetVersion()
-    {
-        loggingService?.LogTrace($"Requested version");
-        return Version.Parse("0.1.0.0");
-    }
-
-    /// <inheritdoc/>
     public override bool IsOperationSystemValid()
     {
         loggingService?.LogTrace($"Checked if os is valid");

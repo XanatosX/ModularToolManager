@@ -28,13 +28,6 @@ public interface IFunctionPlugin : IDisposable
     string GetDisplayName();
 
     /// <summary>
-    /// Get the version of the plugin
-    /// </summary>
-    /// <returns>The current version of the plugin</returns>
-    [Obsolete]
-    Version GetVersion();
-
-    /// <summary>
     /// Get the information abour the plugin
     /// </summary>
     /// <returns>A plugin information object</returns>

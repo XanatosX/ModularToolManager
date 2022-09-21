@@ -34,8 +34,5 @@ public abstract class AbstractFunctionPlugin : IFunctionPlugin
     public abstract PluginInformation GetPluginInformation();
 
     /// <inheritdoc/>
-    public abstract Version GetVersion();
-
-    /// <inheritdoc/>
     public abstract bool IsOperationSystemValid();
 }
