@@ -4,8 +4,16 @@
     "value": "Skript ausführung"
   },
   {
+    "key": "script-description",
+    "value": "Diese Plugin erlaubt Ihnen Skript-Dateien mit dem Modular Tool Manager auszuführen"
+  },
+  {
     "key": "binary-displayname",
     "value": "Ausführbare Datei starten"
+  },
+  {
+    "key": "binary-description",
+    "value": "Diese Plugin erlaubt es Ihnen Binäre Dateien mit dem Modular Tool Manager auszuführen"
   },
   {
     "key": "batch",

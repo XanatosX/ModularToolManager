@@ -31,6 +31,8 @@ public abstract class AbstractFunctionPlugin : IFunctionPlugin
     /// <inheritdoc/>
     public abstract string GetDisplayName();
 
+    public abstract PluginInformation GetPluginInformation();
+
     /// <inheritdoc/>
     public abstract Version GetVersion();
 

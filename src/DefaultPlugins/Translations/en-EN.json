@@ -4,8 +4,16 @@
     "value": "Script execution"
   },
   {
+    "key": "script-description",
+    "value": "This plugin will allow you to run scrip files with the modular tool manager"
+  },
+  {
     "key": "binary-displayname",
     "value": "Start executable binary file"
+  },
+  {
+    "key": "binary-description",
+    "value": "This plugin will allow you to run binary executable with the modular tool manager"
   },
   {
     "key": "batch",
