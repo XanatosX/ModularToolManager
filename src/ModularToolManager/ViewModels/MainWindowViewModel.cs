@@ -104,7 +104,7 @@ public partial class MainWindowViewModel : ObservableObject
 
         ReportBugCommand = new RelayCommand(() => urlOpenerService?.OpenUrl(Properties.Properties.GithubUrl));
         ExitApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseApplicationMessage()));
-        SelectLanguageCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Language, "flag_regular", nameof(ChangeLanguageViewModel)));
+        SelectLanguageCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Language, Properties.Properties.Icon_language, nameof(ChangeLanguageViewModel)));
         HideApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true)));
         ShowApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(false)));
 
@@ -117,7 +117,7 @@ public partial class MainWindowViewModel : ObservableObject
             var editModal = viewModelLocator.GetViewModel(nameof(AddFunctionViewModel)) as AddFunctionViewModel;
             if (editModal is not null && editModal.LoadInFunction(e.Identifier))
             {
-                await OpenModalWindow(Properties.Resources.Window_EditFunction, "settings_regular", editModal);
+                await OpenModalWindow(Properties.Resources.Window_EditFunction, Properties.Properties.Icon_edit_function, editModal);
                 e.Reply(true);
                 WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
                 return;
@@ -141,7 +141,7 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private async Task NewFunction()
     {
-        await OpenModalWindow(Properties.Resources.SubMenu_NewFunction, "settings_regular", nameof(AddFunctionViewModel));
+        await OpenModalWindow(Properties.Resources.SubMenu_NewFunction, Properties.Properties.Icon_new_function, nameof(AddFunctionViewModel));
         WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
     }
 
@@ -152,7 +152,7 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private async Task OpenSettings()
     {
-        await OpenModalWindow(Properties.Resources.SubMenu_Settings, "settings_regular", nameof(SettingsViewModel));
+        await OpenModalWindow(Properties.Resources.SubMenu_Settings, Properties.Properties.Icon_settings, nameof(SettingsViewModel));
     }
 
     /// <summary>
