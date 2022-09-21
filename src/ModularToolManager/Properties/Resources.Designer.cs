@@ -142,11 +142,11 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Report Bug.
+        ///   Looks up a localized string similar to Help.
         /// </summary>
-        public static string Menu_ReportBug {
+        public static string Menu_Help {
             get {
-                return ResourceManager.GetString("Menu_ReportBug", resourceCulture);
+                return ResourceManager.GetString("Menu_Help", resourceCulture);
             }
         }
         
@@ -205,6 +205,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string SubMenu_About {
+            get {
+                return ResourceManager.GetString("SubMenu_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string SubMenu_Exit {
@@ -223,6 +232,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hotkeys.
+        /// </summary>
+        public static string SubMenu_Hotkeys {
+            get {
+                return ResourceManager.GetString("SubMenu_Hotkeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string SubMenu_Language {
@@ -237,6 +255,15 @@ namespace ModularToolManager.Properties {
         public static string SubMenu_NewFunction {
             get {
                 return ResourceManager.GetString("SubMenu_NewFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Bug.
+        /// </summary>
+        public static string SubMenu_ReportBug {
+            get {
+                return ResourceManager.GetString("SubMenu_ReportBug", resourceCulture);
             }
         }
         

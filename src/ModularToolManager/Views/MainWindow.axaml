@@ -17,7 +17,6 @@
 		HasSystemDecorations="False"
 		CanResize="False"
 		ShowInTaskbar="{Binding ShowInTaskbar}">
-
 	<!--
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -38,13 +37,21 @@
 				<Grid ColumnDefinitions="*, Auto">
 					<Menu>
 						<MenuItem Header="{x:Static p:Resources.Menu_File}">
-							<MenuItem Header="{x:Static p:Resources.SubMenu_Language}" Command="{Binding SelectLanguageCommand}"></MenuItem>
-							<MenuItem Header="{x:Static p:Resources.SubMenu_Settings}" Command="{Binding OpenSettingsCommand}"></MenuItem>
-							<MenuItem Header="{x:Static p:Resources.SubMenu_NewFunction}" Command="{Binding NewFunctionCommand}"></MenuItem>
-							<MenuItem Header="{x:Static p:Resources.SubMenu_Hide}" Command="{Binding HideApplicationCommand}"></MenuItem>
-							<MenuItem Header="{x:Static p:Resources.SubMenu_Exit}" Command="{Binding ExitApplicationCommand}"></MenuItem>
+							<MenuItem Header="{x:Static p:Resources.SubMenu_NewFunction}" Command="{Binding NewFunctionCommand}" HotKey="ctrl+n"/>
+							<Separator/>
+							<MenuItem Header="{x:Static p:Resources.SubMenu_Language}" Command="{Binding SelectLanguageCommand}" HotKey="ctrl+l"/>
+							<MenuItem Header="{x:Static p:Resources.SubMenu_Settings}" Command="{Binding OpenSettingsCommand}"/>
+							<Separator/>
+							<MenuItem Header="{x:Static p:Resources.SubMenu_Hide}" Command="{Binding HideApplicationCommand}" HotKey="ctrl+h"/>
+							<Separator/>
+							<MenuItem Header="{x:Static p:Resources.SubMenu_Exit}" Command="{Binding ExitApplicationCommand}"/>
 						</MenuItem>
-						<MenuItem Header="{x:Static p:Resources.Menu_ReportBug}" Command="{Binding ReportBugCommand}"/>
+						<MenuItem Header="{x:Static p:Resources.Menu_Help}">
+							<MenuItem Header="{x:Static p:Resources.SubMenu_About}" Command="{Binding OpenAboutCommand}" HotKey="f1"/>
+							<MenuItem Header="{x:Static p:Resources.SubMenu_Hotkeys}" Command="{Binding OpenHotkeysCommand}"/>
+							<Separator/>
+							<MenuItem Header="{x:Static p:Resources.SubMenu_ReportBug}" Command="{Binding ReportBugCommand}" HotKey="f12"/>
+						</MenuItem>
 					</Menu>
 					<Button Grid.Column="1" Margin="0,2,5,2" Command="{Binding HideApplicationCommand}">
 						<PathIcon Foreground="LightBlue" Data="{StaticResource eye_hide_regular}" ToolTip.Tip="{x:Static p:Resources.Tooltip_Hide}">
