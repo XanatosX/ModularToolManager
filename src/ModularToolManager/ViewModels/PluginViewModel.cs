@@ -26,6 +26,7 @@ internal partial class PluginViewModel : ObservableObject
 	private string? license;
 
 	[ObservableProperty]
+	[NotifyCanExecuteChangedFor(nameof(OpenProjectUrlCommand))]
 	private string? url;
 
 
@@ -66,6 +67,25 @@ internal partial class PluginViewModel : ObservableObject
 		try
 		{
 			var uri = new Uri(Url);
+		}
+		catch (Exception)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	[RelayCommand(CanExecute = nameof(CanExecuteOpenUrlCommand))]
+	private void OpenProjectUrl()
+	{
+		urlOpenerService?.OpenUrl(Url!);
+	}
+
+	private bool CanExecuteOpenProjectUrl()
+	{
+		try
+		{
+			Uri uri = new Uri(Url ?? String.Empty);
 		}
 		catch (Exception)
 		{

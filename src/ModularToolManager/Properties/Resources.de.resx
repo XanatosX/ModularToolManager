@@ -150,6 +150,21 @@
   <data name="NewFunction_Parameters" xml:space="preserve">
     <value>Funktions Parameter</value>
   </data>
+  <data name="Plugin_Authors_Colon" xml:space="preserve">
+    <value>Autoren:</value>
+  </data>
+  <data name="Plugin_Description_Colon" xml:space="preserve">
+    <value>Beschreibung:</value>
+  </data>
+  <data name="Plugin_DisplayName_Colon" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="Plugin_License_Colon" xml:space="preserve">
+    <value>Lizenz:</value>
+  </data>
+  <data name="Plugin_Url_Colon" xml:space="preserve">
+    <value>Project Link:</value>
+  </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>
   </data>
