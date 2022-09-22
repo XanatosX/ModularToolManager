@@ -7,6 +7,7 @@ using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerPlugin.Plugin;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,15 @@ internal partial class AllPluginsViewModel : ObservableObject
     /// </summary>
     private readonly IPluginService pluginService;
     private readonly IDependencyResolverService dependencyResolverService;
+
     [ObservableProperty]
-    private List<PluginViewModel> plugins;
+    private List<FunctionPluginViewModel> plugins;
+
+    [ObservableProperty]
+    private FunctionPluginViewModel? selectedEntry;
+
+    [ObservableProperty]
+    private ObservableObject? pluginView;
 
     public AllPluginsViewModel(IPluginService pluginService, IDependencyResolverService dependencyResolverService)
     {
@@ -28,18 +36,31 @@ internal partial class AllPluginsViewModel : ObservableObject
         this.dependencyResolverService = dependencyResolverService;
 
         Plugins = pluginService.GetAvailablePlugins()
-                               .Select(plugin => GetViewModel(plugin))
+                               .Select(plugin => new FunctionPluginViewModel(plugin))
                                .Where(pluginView => pluginView is not null)
-                               .OfType<PluginViewModel>()
+                               .OfType<FunctionPluginViewModel>()
                                .ToList();
     }
 
-    private PluginViewModel? GetViewModel(IFunctionPlugin functionPlugin)
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
-        PluginViewModel? pluginView = dependencyResolverService.GetDependency<PluginViewModel>();
-        pluginView?.SetPlugin(functionPlugin);
-        return pluginView;
+        base.OnPropertyChanged(e);
+        if (e.PropertyName == nameof(SelectedEntry))
+        {
+            if (PluginView is null)
+            {
+                PluginView = dependencyResolverService.GetDependency<PluginViewModel>();
+            }
+            if (SelectedEntry is not null && PluginView is PluginViewModel viewModel)
+            {
+                viewModel.SetPlugin(SelectedEntry.Plugin);
+            }
+
+
+        }
     }
+
+
 
     [RelayCommand]
     private void Abort()

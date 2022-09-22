@@ -5,11 +5,12 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.AllPluginsView">
 	<Grid RowDefinitions="*, Auto">
-		<Grid ColumnDefinitions="Auto, *">
-			<ItemsControl Items="{Binding Plugins}">
-				
-			</ItemsControl>
-		</Grid>
+			<Grid ColumnDefinitions="Auto, *">
+				<Border BorderThickness="0,0,2,0" MinWidth="40"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+					<ListBox Items="{Binding Plugins}" SelectedItem="{Binding SelectedEntry}"/>
+				</Border>
+				<ContentControl Grid.Column="1" Content="{Binding PluginView}"></ContentControl>
+			</Grid>
 		<Grid Grid.Row="1">
 			<StackPanel Orientation="Horizontal">
 				<Button Content="PLACEHOLDER" Command="{Binding AbortCommand}"/>
