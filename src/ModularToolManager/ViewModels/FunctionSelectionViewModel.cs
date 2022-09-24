@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models.Messages;
+using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.Functions;
 using System;
 using System.Collections.Generic;
@@ -41,11 +42,17 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     private string? searchText;
 
     /// <summary>
+    /// Service used to resolve dependencies
+    /// </summary>
+    private readonly IDependencyResolverService dependencyResolverService;
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    public FunctionSelectionViewModel(IFunctionService? functionService)
+    public FunctionSelectionViewModel(IFunctionService? functionService, IDependencyResolverService dependencyResolverService)
     {
         this.functionService = functionService;
+        this.dependencyResolverService = dependencyResolverService;
         functions = new List<FunctionButtonViewModel>();
         filteredFunctions = new ObservableCollection<FunctionButtonViewModel>();
 
@@ -88,7 +95,8 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     public void ReloadFunctions()
     {
         functions.Clear();
-        foreach (FunctionButtonViewModel? functionViewModel in functionService?.GetAvailableFunctions().Select(function => new FunctionButtonViewModel(function)) ?? Enumerable.Empty<FunctionButtonViewModel?>())
+        foreach (FunctionButtonViewModel? functionViewModel in functionService?.GetAvailableFunctions()
+                                                                               .Select(function => dependencyResolverService.GetDependency<FunctionButtonViewModel>(createdObject => createdObject?.SetFunctionModel(function))) ?? Enumerable.Empty<FunctionButtonViewModel?>())
         {
             if (functionViewModel is null || functions is null)
             {

@@ -61,6 +61,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
         ProcessStartInfo startInfo = new ProcessStartInfo
         {
             FileName = path,
+            Arguments = parameters
         };
         try
         {

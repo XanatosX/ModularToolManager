@@ -69,6 +69,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
         ProcessStartInfo startInfo = new ProcessStartInfo
         {
             FileName = path,
+            Arguments = parameters
         };
         Process.Start(startInfo);
         loggingService?.LogTrace($"Executing of plugin done");
