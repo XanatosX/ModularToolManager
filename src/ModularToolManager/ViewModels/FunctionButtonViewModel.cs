@@ -13,6 +13,9 @@ namespace ModularToolManager.ViewModels;
 /// </summary>
 public partial class FunctionButtonViewModel : ObservableObject
 {
+    /// <summary>
+    /// Message to use if function execution did fail
+    /// </summary>
     private const string FUNCTION_EXECUTION_FAILED_MESSAGE = "Could not execute function {1} with identifier {0} ";
 
     /// <summary>
