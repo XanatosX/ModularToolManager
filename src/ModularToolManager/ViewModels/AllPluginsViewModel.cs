@@ -15,10 +15,6 @@ using System.Threading.Tasks;
 namespace ModularToolManager.ViewModels;
 internal partial class AllPluginsViewModel : ObservableObject
 {
-    /// <summary>
-    /// Plugin Service to use
-    /// </summary>
-    private readonly IPluginService pluginService;
     private readonly IDependencyResolverService dependencyResolverService;
 
     [ObservableProperty]
@@ -35,6 +31,7 @@ internal partial class AllPluginsViewModel : ObservableObject
 
         this.dependencyResolverService = dependencyResolverService;
 
+        plugins = new();
         Plugins = pluginService.GetAvailablePlugins()
                                .Select(plugin => new FunctionPluginViewModel(plugin))
                                .Where(pluginView => pluginView is not null)
