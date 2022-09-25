@@ -17,6 +17,6 @@
 		<TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding License}" TextWrapping="Wrap"/>
 		<TextBlock Grid.Row="8" Text="{x:Static p:Resources.Plugin_Url_Colon}"/>
 		<TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Url}" TextWrapping="Wrap"/>
-		<Button Grid.Row="10" Grid.Column="2" Content="{x:Static p:Resources.Button_Open_Project}" Command="{Binding OpenProjectCommand}"/>
+		<Button Grid.Row="10" Grid.Column="2" Content="{x:Static p:Resources.Button_Open_Project}" Command="{Binding OpenProjectUrlCommand}"/>
 	</Grid>
 </UserControl>

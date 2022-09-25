@@ -120,6 +120,9 @@
   <data name="AddFunction_FunctionPathWatermark" xml:space="preserve">
     <value>Pfad zur Funktion</value>
   </data>
+  <data name="Button_Open_Project" xml:space="preserve">
+    <value>Öffne Website des Projectes</value>
+  </data>
   <data name="DefaultButton_Abort" xml:space="preserve">
     <value>Abbrechen</value>
   </data>

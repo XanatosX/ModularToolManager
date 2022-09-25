@@ -6,6 +6,10 @@ using ModularToolManagerPlugin.Plugin;
 using System;
 
 namespace ModularToolManager.ViewModels;
+
+/// <summary>
+/// View used to show a single plugin information data
+/// </summary>
 internal partial class PluginViewModel : ObservableObject
 {
 	/// <summary>
@@ -13,28 +17,50 @@ internal partial class PluginViewModel : ObservableObject
 	/// </summary>
 	private readonly IUrlOpenerService urlOpenerService;
 
+	/// <summary>
+	/// The name of the plugin
+	/// </summary>
 	[ObservableProperty]
 	private string name;
 
+	/// <summary>
+	/// The description of the plugin
+	/// </summary>
 	[ObservableProperty]
 	private string? description;
 
+	/// <summary>
+	/// All the authors of the plugin
+	/// </summary>
 	[ObservableProperty]
 	private string authors;
 
+	/// <summary>
+	/// The license of the plugin
+	/// </summary>
 	[ObservableProperty]
 	private string? license;
 
+	/// <summary>
+	/// The url of the plugin
+	/// </summary>
 	[ObservableProperty]
 	[NotifyCanExecuteChangedFor(nameof(OpenProjectUrlCommand))]
 	private string? url;
 
-
+	/// <summary>
+	/// Create a new instance of this class
+	/// </summary>
+	/// <param name="urlOpenerService">The service used to open up the url</param>
 	public PluginViewModel(IUrlOpenerService urlOpenerService)
 	{
 		this.urlOpenerService = urlOpenerService;
 	}
 
+	/// <summary>
+	/// Set the plugin for the view
+	/// </summary>
+	/// <param name="plugin">The plugin to display</param>
 	public void SetPlugin(IFunctionPlugin plugin)
 	{
 		PluginInformation pluginInformation = plugin.GetPluginInformation();
@@ -48,44 +74,21 @@ internal partial class PluginViewModel : ObservableObject
 	/// <summary>
 	/// Command to open the provided url
 	/// </summary>
-	[RelayCommand(CanExecute = nameof(CanExecuteOpenUrlCommand))]
-	private void OpenUrlCommand()
-	{
-		urlOpenerService.OpenUrl(Url!);
-	}
-
-	/// <summary>
-	/// Check if the url can be opened
-	/// </summary>
-	/// <returns>True if is a valid url</returns>
-	private bool CanExecuteOpenUrlCommand()
-	{
-		if (string.IsNullOrEmpty(Url))
-		{
-			return false;
-		}
-		try
-		{
-			var uri = new Uri(Url);
-		}
-		catch (Exception)
-		{
-			return false;
-		}
-		return true;
-	}
-
-	[RelayCommand(CanExecute = nameof(CanExecuteOpenUrlCommand))]
+	[RelayCommand(CanExecute = nameof(CanExecuteOpenProjectUrl))]
 	private void OpenProjectUrl()
 	{
 		urlOpenerService?.OpenUrl(Url!);
 	}
 
+	/// <summary>
+	/// Can the project url be opened
+	/// </summary>
+	/// <returns></returns>
 	private bool CanExecuteOpenProjectUrl()
 	{
 		try
 		{
-			Uri uri = new Uri(Url ?? String.Empty);
+			Uri uri = new Uri(Url ?? string.Empty);
 		}
 		catch (Exception)
 		{

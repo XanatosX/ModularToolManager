@@ -124,7 +124,7 @@
     <value>Modular Tool Manager</value>
   </data>
   <data name="Button_Open_Project" xml:space="preserve">
-    <value>Open project url</value>
+    <value>Open project website</value>
   </data>
   <data name="DefaultButton_Abort" xml:space="preserve">
     <value>Abort</value>

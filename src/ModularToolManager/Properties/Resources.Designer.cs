@@ -79,7 +79,7 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open project url.
+        ///   Looks up a localized string similar to Open project website.
         /// </summary>
         public static string Button_Open_Project {
             get {
