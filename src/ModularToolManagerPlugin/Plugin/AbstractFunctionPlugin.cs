@@ -31,8 +31,7 @@ public abstract class AbstractFunctionPlugin : IFunctionPlugin
     /// <inheritdoc/>
     public abstract string GetDisplayName();
 
-    /// <inheritdoc/>
-    public abstract Version GetVersion();
+    public abstract PluginInformation GetPluginInformation();
 
     /// <inheritdoc/>
     public abstract bool IsOperationSystemValid();

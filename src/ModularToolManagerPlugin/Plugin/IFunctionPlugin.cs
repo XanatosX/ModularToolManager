@@ -8,6 +8,7 @@ namespace ModularToolManagerPlugin.Plugin;
 /// </summary>
 public interface IFunctionPlugin : IDisposable
 {
+
     /// <summary>
     /// Event if the language of the main application was changed
     /// </summary>
@@ -27,10 +28,10 @@ public interface IFunctionPlugin : IDisposable
     string GetDisplayName();
 
     /// <summary>
-    /// Get the version of the plugin
+    /// Get the information abour the plugin
     /// </summary>
-    /// <returns>The current version of the plugin</returns>
-    Version GetVersion();
+    /// <returns>A plugin information object</returns>
+    PluginInformation GetPluginInformation();
 
     /// <summary>
     /// Run the plugin with a given path and parameters

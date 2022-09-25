@@ -79,6 +79,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open project website.
+        /// </summary>
+        public static string Button_Open_Project {
+            get {
+                return ResourceManager.GetString("Button_Open_Project", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Default_Delete {
@@ -178,6 +187,51 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authors:.
+        /// </summary>
+        public static string Plugin_Authors_Colon {
+            get {
+                return ResourceManager.GetString("Plugin_Authors_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        public static string Plugin_Description_Colon {
+            get {
+                return ResourceManager.GetString("Plugin_Description_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        public static string Plugin_DisplayName_Colon {
+            get {
+                return ResourceManager.GetString("Plugin_DisplayName_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License:.
+        /// </summary>
+        public static string Plugin_License_Colon {
+            get {
+                return ResourceManager.GetString("Plugin_License_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project url:.
+        /// </summary>
+        public static string Plugin_Url_Colon {
+            get {
+                return ResourceManager.GetString("Plugin_Url_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keep on Top.
         /// </summary>
         public static string Settings_KeepOnTop {
@@ -255,6 +309,15 @@ namespace ModularToolManager.Properties {
         public static string SubMenu_NewFunction {
             get {
                 return ResourceManager.GetString("SubMenu_NewFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins.
+        /// </summary>
+        public static string SubMenu_Plugins {
+            get {
+                return ResourceManager.GetString("SubMenu_Plugins", resourceCulture);
             }
         }
         

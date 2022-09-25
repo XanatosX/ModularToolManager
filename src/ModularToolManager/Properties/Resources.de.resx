@@ -120,6 +120,9 @@
   <data name="AddFunction_FunctionPathWatermark" xml:space="preserve">
     <value>Pfad zur Funktion</value>
   </data>
+  <data name="Button_Open_Project" xml:space="preserve">
+    <value>Öffne Website des Projectes</value>
+  </data>
   <data name="DefaultButton_Abort" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
@@ -149,6 +152,21 @@
   </data>
   <data name="NewFunction_Parameters" xml:space="preserve">
     <value>Funktions Parameter</value>
+  </data>
+  <data name="Plugin_Authors_Colon" xml:space="preserve">
+    <value>Autoren:</value>
+  </data>
+  <data name="Plugin_Description_Colon" xml:space="preserve">
+    <value>Beschreibung:</value>
+  </data>
+  <data name="Plugin_DisplayName_Colon" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="Plugin_License_Colon" xml:space="preserve">
+    <value>Lizenz:</value>
+  </data>
+  <data name="Plugin_Url_Colon" xml:space="preserve">
+    <value>Project Link:</value>
   </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>

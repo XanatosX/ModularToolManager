@@ -135,6 +135,16 @@ public partial class MainWindowViewModel : ObservableObject
     }
 
     /// <summary>
+    /// Command to open plugins view
+    /// </summary>
+    /// <returns>A awaitable task</returns>
+    [RelayCommand]
+    private async Task OpenPlugins()
+    {
+        await OpenModalWindow(Properties.Resources.SubMenu_Plugins, Properties.Properties.Icon_new_function, nameof(AllPluginsViewModel));
+    }
+
+    /// <summary>
     /// Open modal to allow adding a new function
     /// </summary>
     /// <returns>A awaitable task</returns>

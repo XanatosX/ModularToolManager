@@ -14,6 +14,14 @@ public interface IDependencyResolverService
     T? GetDependency<T>();
 
     /// <summary>
+    /// Get a dependecy of type T
+    /// </summary>
+    /// <typeparam name="T">The type of the dependency to get</typeparam>
+    /// <param name="furtherInitilization">Any further initalization with the created object</param>
+    /// <returns>An instance of type T or null if nothing found</returns>
+    T? GetDependency<T>(Action<T?>? furtherInitilization);
+
+    /// <summary>
     /// Get all dependencies of type T
     /// </summary>
     /// <typeparam name="T">The type of the dependencies to get</typeparam>

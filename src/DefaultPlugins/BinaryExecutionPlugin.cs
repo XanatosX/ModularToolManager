@@ -1,8 +1,8 @@
-﻿using ModularToolManagerPlugin.Models;
+﻿using DefaultPlugins.Information;
+using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
 using System.Diagnostics;
-using System.Globalization;
 
 namespace DefaultPlugins;
 
@@ -11,6 +11,11 @@ namespace DefaultPlugins;
 /// </summary>
 public class BinaryExecutionPlugin : AbstractFunctionPlugin
 {
+    /// <summary>
+    /// The plugin information
+    /// </summary>
+    private PluginInformation? pluginInformation;
+
     /// <summary>
     /// The translation service to use
     /// </summary>
@@ -32,18 +37,12 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     private const string FALLBACK_SCRIPT_NOT_FOUND = "Could not find binary file '{0}' to run";
 
     /// <summary>
-    /// The fallback language to use
-    /// </summary>
-    private readonly CultureInfo fallbackCulture;
-
-    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="translationService">The plugin translation service to use</param>
     /// <param name="loggingService">The logger service to use</param>
     public BinaryExecutionPlugin(IPluginTranslationService translationService, IPluginLoggerService<BinaryExecutionPlugin> loggingService)
     {
-        fallbackCulture = translationService.GetFallbackLanguage();
         this.translationService = translationService;
         this.loggingService = loggingService;
     }
@@ -62,6 +61,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
         ProcessStartInfo startInfo = new ProcessStartInfo
         {
             FileName = path,
+            Arguments = parameters
         };
         try
         {
@@ -105,13 +105,6 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     }
 
     /// <inheritdoc/>
-    public override Version GetVersion()
-    {
-        loggingService?.LogTrace($"Requested version");
-        return Version.Parse("0.1.0.0");
-    }
-
-    /// <inheritdoc/>
     public override bool IsOperationSystemValid()
     {
         loggingService?.LogTrace($"Checked if os is valid");
@@ -122,5 +115,12 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     public override void Dispose()
     {
         loggingService?.LogTrace("Dispose plugin");
+    }
+
+    /// <inheritdoc/>
+    public override PluginInformation GetPluginInformation()
+    {
+        pluginInformation = pluginInformation ?? PluginInformationFactory.Instance.GetPluginInformation(translationService?.GetTranslationByKey("binary-description") ?? FALLBACK_TRANSLATION);
+        return pluginInformation;
     }
 }
