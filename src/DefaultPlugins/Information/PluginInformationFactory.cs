@@ -1,8 +1,15 @@
 ﻿using ModularToolManagerPlugin.Models;
 
 namespace DefaultPlugins.Information;
+
+/// <summary>
+/// Class to use for getting the plugin information
+/// </summary>
 internal sealed class PluginInformationFactory
 {
+    /// <summary>
+    /// The instance to use
+    /// </summary>
     public static PluginInformationFactory Instance
     {
         get
@@ -15,12 +22,10 @@ internal sealed class PluginInformationFactory
         }
     }
 
+    /// <summary>
+    /// Private readonly baking field for the instance
+    /// </summary>
     private static PluginInformationFactory? instance;
-
-    private PluginInformationFactory()
-    {
-        instance = null;
-    }
 
     /// <summary>
     /// Create new plugin information

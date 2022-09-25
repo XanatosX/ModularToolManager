@@ -49,7 +49,8 @@ internal static class DependencyInjectionExtension
                          .AddTransient<ChangeLanguageViewModel>()
                          .AddTransient<SettingsViewModel>()
                          .AddTransient<AppViewModel>()
-                         .AddTransient<AllPluginsViewModel>();
+                         .AddTransient<AllPluginsViewModel>()
+                         .AddTransient<PluginViewModel>();
     }
 
     /// <summary>

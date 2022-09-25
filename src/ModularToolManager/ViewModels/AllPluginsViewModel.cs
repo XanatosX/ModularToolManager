@@ -4,28 +4,45 @@ using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models.Messages;
 using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.Plugin;
-using ModularToolManagerPlugin.Plugin;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.ViewModels;
+
+/// <summary>
+/// Class to use to show a list with all the plugins
+/// </summary>
 internal partial class AllPluginsViewModel : ObservableObject
 {
+    /// <summary>
+    /// The resolver to use for getting new instances of classes
+    /// </summary>
     private readonly IDependencyResolverService dependencyResolverService;
 
+    /// <summary>
+    /// All the possible plugins
+    /// </summary>
     [ObservableProperty]
     private List<FunctionPluginViewModel> plugins;
 
+    /// <summary>
+    /// The currently selected plugin
+    /// </summary>
     [ObservableProperty]
     private FunctionPluginViewModel? selectedEntry;
 
+    /// <summary>
+    /// The plugin view to use
+    /// </summary>
     [ObservableProperty]
     private ObservableObject? pluginView;
 
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="pluginService">The plugin service to use</param>
+    /// <param name="dependencyResolverService">The resolver to use for getting the plugins</param>
     public AllPluginsViewModel(IPluginService pluginService, IDependencyResolverService dependencyResolverService)
     {
 
@@ -39,6 +56,7 @@ internal partial class AllPluginsViewModel : ObservableObject
                                .ToList();
     }
 
+    /// <inheritdoc/>
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
@@ -57,8 +75,9 @@ internal partial class AllPluginsViewModel : ObservableObject
         }
     }
 
-
-
+    /// <summary>
+    /// Command to use to close the modal
+    /// </summary>
     [RelayCommand]
     private void Abort()
     {
