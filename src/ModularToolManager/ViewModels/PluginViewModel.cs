@@ -88,7 +88,7 @@ internal partial class PluginViewModel : ObservableObject
 	{
 		try
 		{
-			Uri uri = new Uri(Url ?? string.Empty);
+			_ = new Uri(Url ?? string.Empty);
 		}
 		catch (Exception)
 		{
