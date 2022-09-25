@@ -21,7 +21,7 @@ internal partial class PluginViewModel : ObservableObject
 	/// The name of the plugin
 	/// </summary>
 	[ObservableProperty]
-	private string name;
+	private string? name;
 
 	/// <summary>
 	/// The description of the plugin
@@ -33,7 +33,7 @@ internal partial class PluginViewModel : ObservableObject
 	/// All the authors of the plugin
 	/// </summary>
 	[ObservableProperty]
-	private string authors;
+	private string? authors;
 
 	/// <summary>
 	/// The license of the plugin
