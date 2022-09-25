@@ -60,6 +60,12 @@ To develop a plugin on your own please take a look at the [wiki] page
 Using plugins from any source can harm your machine. Always check if you trust the author of the plugin.
 Technicaly the plugin will run with the user rights you did start the application with allowing any plugin to execute harmful code.
 
+## Additional Screenshots
+![screenshot-1]  
+![screenshot-2]  
+![screenshot-3]
+
+
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager?ref=badge_large)
@@ -70,3 +76,6 @@ Technicaly the plugin will run with the user rights you did start the applicatio
 [image-main-view]: https://imgur.com/oswayay.png
 [downloadPage]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/
 [issuePage]: https://bitbucket.org/XanatosX/modulartoolmanager/issues
+[screenshot-1]: https://imgur.com/mr3Folx.png
+[screenshot-2]: https://imgur.com/UPURC5u.png
+[screenshot-3]: https://imgur.com/UKl60fA.png
