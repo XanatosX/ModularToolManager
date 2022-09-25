@@ -14,10 +14,7 @@ internal sealed class PluginInformationFactory
     {
         get
         {
-            if (instance is null)
-            {
-                instance = new PluginInformationFactory();
-            }
+            instance ??= new PluginInformationFactory();
             return instance;
         }
     }
