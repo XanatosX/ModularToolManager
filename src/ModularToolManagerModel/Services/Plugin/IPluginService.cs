@@ -12,4 +12,6 @@ public interface IPluginService
     /// </summary>
     /// <returns>A list with plugins for this application</returns>
     List<IFunctionPlugin> GetAvailablePlugins();
+
+
 }

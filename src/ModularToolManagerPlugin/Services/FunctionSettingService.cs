@@ -1,5 +1,8 @@
 ﻿using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Enums;
+using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
+using System.Linq;
 using System.Reflection;
 
 namespace ModularToolManagerPlugin.Services;
@@ -20,6 +23,35 @@ public class FunctionSettingService : IFunctionSettingsService
                                    .Where(attribute => attribute is not null)
                                    .DistinctBy(attribute => attribute!.Key)
                                    .OfType<SettingAttribute>();
+    }
+
+    public IEnumerable<SettingModel> GetPluginSettingsValues(IFunctionPlugin plugin)
+    {
+        IFunctionSettingsService local = this as IFunctionSettingsService;
+        return local.GetPluginSettings(plugin).Select(settings => GetSettingModel(settings, plugin));
+    }
+
+    private SettingModel GetSettingModel(SettingAttribute attribute, IFunctionPlugin plugin)
+    {
+        return new SettingModel
+        {
+            DisplayName = attribute.Key,
+            Key = attribute.Key,
+            Type = attribute.SettingType,
+            Value = GetSettingsData(attribute, plugin),
+        };
+    }
+
+    private object? GetSettingsData(SettingAttribute attribute, IFunctionPlugin plugin)
+    {
+        return attribute.SettingType switch
+        {
+            SettingType.String => GetSettingValue<string>(attribute, plugin) as object,
+            SettingType.Boolean => GetSettingValue<bool>(attribute, plugin) as object,
+            SettingType.Int => GetSettingValue<int>(attribute, plugin) as object,
+            SettingType.Float => GetSettingValue<float>(attribute, plugin) as object,
+            _ => null
+        };
     }
 
     /// <inheritdoc/>
