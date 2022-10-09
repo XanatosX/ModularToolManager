@@ -44,4 +44,21 @@ public class PersistantPluginSetting
 		}
 		return dataObject is null || dataObject.GetType() != typeof(T) ? default : (T?)dataObject;
 	}
+
+	public SettingModel GetSettingModel()
+	{
+		object? data = Type switch
+		{
+			SettingType.Boolean => GetValue<bool>(),
+			SettingType.Int => GetValue<int>(),
+			SettingType.Float => GetValue<float>(),
+			_ => GetValue<string>()
+		};
+		return new SettingModel(data)
+		{
+			DisplayName = Key,
+			Key = Key,
+			Type = Type
+		};
+	}
 }

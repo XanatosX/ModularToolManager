@@ -1,10 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
+using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Models;
+using ModularToolManagerPlugin.Services;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -53,6 +58,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// </summary>
     private readonly ILogger<FunctionButtonViewModel> logger;
     private readonly ISettingsService settingsService;
+    private readonly IFunctionSettingsService functionSettingsService;
 
     /// <summary>
     /// The tool tip delay to use, a really high value is returned if no description is present
@@ -69,11 +75,12 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// Create a new instance of this class
     /// </summary>
     /// <param name="functionModel">The function model to use</param>
-    public FunctionButtonViewModel(ILogger<FunctionButtonViewModel> logger, ISettingsService settingsService)
+    public FunctionButtonViewModel(ILogger<FunctionButtonViewModel> logger, ISettingsService settingsService, IFunctionSettingsService functionSettingsService)
     {
         IsActive = true;
         this.logger = logger;
         this.settingsService = settingsService;
+        this.functionSettingsService = functionSettingsService;
     }
 
     /// <summary>
@@ -94,14 +101,40 @@ public partial class FunctionButtonViewModel : ObservableObject
     {
         try
         {
-
             var plugin = functionModel?.Plugin;
             if (plugin is null)
             {
                 return;
             }
-            var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == functionModel?.Plugin?.GetType());
             plugin.ResetSettings();
+
+            List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(plugin).ToList() ?? new();
+            var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == functionModel?.Plugin?.GetType());
+            foreach (var test in settings?.Settings?.Select(setting => setting.GetSettingModel()) ?? Enumerable.Empty<SettingModel>())
+            {
+                var matchingAttribute = pluginSettings.FirstOrDefault(setting => setting.Key == test.Key);
+                if (matchingAttribute is null)
+                {
+                    continue;
+                }
+                switch (test.Type)
+                {
+                    case ModularToolManagerPlugin.Enums.SettingType.Boolean:
+                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, test.GetData<bool>());
+                        break;
+                    case ModularToolManagerPlugin.Enums.SettingType.String:
+                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, test.GetData<string>());
+                        break;
+                    case ModularToolManagerPlugin.Enums.SettingType.Int:
+                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, test.GetData<int>());
+                        break;
+                    case ModularToolManagerPlugin.Enums.SettingType.Float:
+                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, test.GetData<float>());
+                        break;
+                    default:
+                        break;
+                }
+            }
             await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path));
         }
         catch (System.Exception e)
@@ -109,6 +142,11 @@ public partial class FunctionButtonViewModel : ObservableObject
             logger.LogError(FUNCTION_EXECUTION_FAILED_MESSAGE, Identifier, DisplayName);
             logger.LogError(e, null);
         }
+    }
+
+    private void GetSettingModelFromDataSet()
+    {
+
     }
 
     /// <summary>

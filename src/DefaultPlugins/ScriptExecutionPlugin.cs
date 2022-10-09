@@ -41,7 +41,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// Sould the execution be hidden
     /// </summary>
     [Setting("hide", ModularToolManagerPlugin.Enums.SettingType.Boolean, false)]
-    public bool HideCmd { get; init; }
+    public bool HideCmd { get; set; }
 
     /// <summary>
     /// Create a new instance of this class
@@ -53,6 +53,13 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
         this.translationService = translationService;
         this.loggingService = loggingService;
         loggingService?.LogTrace($"Instance was created");
+    }
+
+    /// <inheritdoc/>
+    public override void ResetSettings()
+    {
+        loggingService?.LogTrace("Reset settings");
+        HideCmd = false;
     }
 
     /// <inheritdoc/>

@@ -45,7 +45,7 @@ public abstract class AbstractFunctionPlugin : IFunctionPlugin
     public abstract bool IsOperationSystemValid();
 
     /// <inheritdoc/>
-    public void ResetSettings()
+    public virtual void ResetSettings()
     {
         // Do nothing on default
     }
