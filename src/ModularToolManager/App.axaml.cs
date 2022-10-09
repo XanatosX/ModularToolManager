@@ -109,9 +109,6 @@ public class App : Application
         ISettingsService settingsService = provider.GetRequiredService<ISettingsService>();
         CultureInfo language = settingsService.GetApplicationSettings().CurrentLanguage ?? CultureInfo.CurrentCulture;
         var test = settingsService.GetApplicationSettings();
-        var firstSettings = test.PluginSettings.First();
-        var veryFirstSettings = firstSettings.Settings.First();
-        bool value = veryFirstSettings.GetValue<bool>();
         langService.ChangeLanguage(language);
         ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         DataContext = provider.GetService<AppViewModel>();

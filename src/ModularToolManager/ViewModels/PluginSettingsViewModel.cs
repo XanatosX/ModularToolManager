@@ -24,7 +24,7 @@ internal partial class PluginSettingsViewModel : ObservableObject
 	[ObservableProperty]
 	private List<IPluginSettingModel> pluginSettings;
 
-	private IFunctionPlugin currentPlugin;
+	private IFunctionPlugin? currentPlugin;
 
 	public PluginSettingsViewModel(IFunctionSettingsService settingsService, ISettingsService settingsSerializeService)
 	{

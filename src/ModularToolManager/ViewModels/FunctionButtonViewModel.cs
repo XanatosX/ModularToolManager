@@ -110,26 +110,26 @@ public partial class FunctionButtonViewModel : ObservableObject
 
             List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(plugin).ToList() ?? new();
             var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == functionModel?.Plugin?.GetType());
-            foreach (var test in settings?.Settings?.Select(setting => setting.GetSettingModel()) ?? Enumerable.Empty<SettingModel>())
+            foreach (var loadedPluginSetting in settings?.Settings?.Select(setting => setting.GetSettingModel()) ?? Enumerable.Empty<SettingModel>())
             {
-                var matchingAttribute = pluginSettings.FirstOrDefault(setting => setting.Key == test.Key);
+                var matchingAttribute = pluginSettings.FirstOrDefault(setting => setting.Key == loadedPluginSetting.Key);
                 if (matchingAttribute is null)
                 {
                     continue;
                 }
-                switch (test.Type)
+                switch (loadedPluginSetting.Type)
                 {
                     case ModularToolManagerPlugin.Enums.SettingType.Boolean:
-                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, test.GetData<bool>());
+                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<bool>());
                         break;
                     case ModularToolManagerPlugin.Enums.SettingType.String:
-                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, test.GetData<string>());
+                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<string>());
                         break;
                     case ModularToolManagerPlugin.Enums.SettingType.Int:
-                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, test.GetData<int>());
+                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<int>());
                         break;
                     case ModularToolManagerPlugin.Enums.SettingType.Float:
-                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, test.GetData<float>());
+                        functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<float>());
                         break;
                     default:
                         break;

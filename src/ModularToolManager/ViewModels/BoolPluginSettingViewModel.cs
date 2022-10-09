@@ -17,7 +17,7 @@ internal partial class BoolPluginSettingViewModel : ObservableObject, IPluginSet
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(DisplayName))]
-    private string translationKey;
+    private string? translationKey;
 
     [ObservableProperty]
     private bool isChecked;
