@@ -42,6 +42,11 @@ public interface IFunctionPlugin : IDisposable
     bool Execute(string parameters, string path);
 
     /// <summary>
+    /// Reset the plugin settings
+    /// </summary>
+    void ResetSettings();
+
+    /// <summary>
     /// Get a list with all the file endings this plugin can work with
     /// </summary>
     /// <returns>A list with all file extensions</returns>
