@@ -38,5 +38,9 @@
   {
     "key": "error_cant_find_binary_file",
     "value": "Could not find binary file '{0}' to run"
+  },
+  {
+    "key": "hide",
+    "value": "Hide command line"
   }
 ]

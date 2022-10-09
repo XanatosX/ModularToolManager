@@ -1,4 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using ModularToolManager.Models;
+using ModularToolManager.Services.Serialization;
+using ModularToolManager.Services.Settings;
+using ModularToolManager.ViewModels.Settings;
 using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Enums;
 using ModularToolManagerPlugin.Models;
@@ -15,34 +20,58 @@ namespace ModularToolManager.ViewModels;
 internal partial class PluginSettingsViewModel : ObservableObject
 {
 	private readonly IFunctionSettingsService settingsService;
-
+	private readonly ISettingsService settingsSerializeService;
 	[ObservableProperty]
-	private List<ObservableObject> pluginSettings;
+	private List<IPluginSettingModel> pluginSettings;
 
-	public PluginSettingsViewModel(IFunctionSettingsService settingsService)
+	private IFunctionPlugin currentPlugin;
+
+	public PluginSettingsViewModel(IFunctionSettingsService settingsService, ISettingsService settingsSerializeService)
 	{
 		this.settingsService = settingsService;
-		pluginSettings = new List<ObservableObject>();
+		this.settingsSerializeService = settingsSerializeService;
+		pluginSettings = new List<IPluginSettingModel>();
 	}
 
 	public void SetPlugin(IFunctionPlugin plugin)
 	{
-		List<ObservableObject> settings = settingsService.GetPluginSettingsValues(plugin)
+		currentPlugin = plugin;
+		List<IPluginSettingModel> settings = settingsService.GetPluginSettingsValues(plugin)
 												   .Select(setting => GetViewModel(setting))
 												   .Where(view => view is not null)
-												   .OfType<ObservableObject>()
+												   .OfType<IPluginSettingModel>()
 												   .ToList();
 		PluginSettings.Clear();
 		PluginSettings.AddRange(settings);
 
 	}
 
-	private ObservableObject? GetViewModel(SettingModel settingModel)
+	private IPluginSettingModel? GetViewModel(SettingModel settingModel)
 	{
 		return settingModel.Type switch
 		{
 			SettingType.Boolean => new BoolPluginSettingViewModel(settingModel),
 			_ => null
 		};
+	}
+
+	[RelayCommand]
+	private void SaveSettings()
+	{
+		List<PersistantPluginSetting> settingsToSave = PluginSettings.Select(setting => setting.GetSettingsModel())
+													.Select(model => new PersistantPluginSetting(model))
+													.Where(model => model.Key is not null)
+													.ToList();
+		PluginSettings pluginSettings = new PluginSettings()
+		{
+			Plugin = currentPlugin,
+			Settings = settingsToSave
+		};
+		settingsSerializeService.ChangeSettings(settings =>
+		{
+			settings.AddPluginSettings(pluginSettings);
+
+		});
+
 	}
 }

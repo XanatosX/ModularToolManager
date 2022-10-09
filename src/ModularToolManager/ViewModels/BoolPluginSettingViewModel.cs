@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ModularToolManager.ViewModels.Settings;
 using ModularToolManagerPlugin.Models;
 using System;
 using System.Collections.Generic;
@@ -8,12 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ModularToolManager.ViewModels;
-internal partial class BoolPluginSettingViewModel : ObservableObject
+internal partial class BoolPluginSettingViewModel : ObservableObject, IPluginSettingModel
 {
     private readonly SettingModel storedModel;
 
+    public string DisplayName => $"{TranslationKey}:";
+
     [ObservableProperty]
-    private string displayName;
+    [NotifyPropertyChangedFor(nameof(DisplayName))]
+    private string translationKey;
 
     [ObservableProperty]
     private bool isChecked;
@@ -21,7 +25,13 @@ internal partial class BoolPluginSettingViewModel : ObservableObject
     public BoolPluginSettingViewModel(SettingModel settingModel)
     {
         storedModel = settingModel;
-        DisplayName = settingModel.DisplayName ?? string.Empty;
+        TranslationKey = settingModel.DisplayName ?? string.Empty;
         IsChecked = settingModel.GetData<bool>();
+    }
+
+    public SettingModel GetSettingsModel()
+    {
+        storedModel.SetValue(IsChecked);
+        return storedModel;
     }
 }

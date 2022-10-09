@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace ModularToolManager.Models;
@@ -31,4 +33,27 @@ public class ApplicationSettings
     /// </summary>
     [JsonPropertyName("language")]
     public CultureInfo? CurrentLanguage { get; set; }
+
+    [JsonPropertyName("plugin_settings")]
+    public List<PluginSettings> PluginSettings { get; set; }
+
+    public ApplicationSettings()
+    {
+        PluginSettings = new();
+    }
+
+    public void AddPluginSettings(PluginSettings pluginSettings)
+    {
+
+        if (PluginSettings.Any(setting => setting.Plugin?.GetType() == pluginSettings.Plugin?.GetType()))
+        {
+            PluginSettings? settings = PluginSettings.FirstOrDefault(data => data.Plugin?.GetType() == pluginSettings.Plugin?.GetType());
+            if (settings is not null)
+            {
+                settings = pluginSettings;
+                return;
+            }
+        }
+        PluginSettings.Add(pluginSettings);
+    }
 }

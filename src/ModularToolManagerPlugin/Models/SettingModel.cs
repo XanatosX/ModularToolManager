@@ -1,9 +1,4 @@
 ﻿using ModularToolManagerPlugin.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManagerPlugin.Models;
 public class SettingModel
@@ -14,7 +9,14 @@ public class SettingModel
 
     public SettingType Type { get; init; }
 
-    public object? Value { get; init; }
+    public object? Value { get; private set; }
+
+    public SettingModel() : this(null) { }
+
+    public SettingModel(object? data)
+    {
+        Value = data;
+    }
 
     public T? GetData<T>()
     {
@@ -27,5 +29,15 @@ public class SettingModel
         {
         }
         return returnData;
+    }
+
+    public bool SetValue<T>(T? value)
+    {
+        if (value is null || value.GetType() != Value?.GetType())
+        {
+            return false;
+        }
+        Value = value;
+        return true;
     }
 }

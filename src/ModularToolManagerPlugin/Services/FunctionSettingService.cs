@@ -12,6 +12,13 @@ namespace ModularToolManagerPlugin.Services;
 /// </summary>
 public class FunctionSettingService : IFunctionSettingsService
 {
+    private readonly IPluginTranslationService pluginTranslationService;
+
+    public FunctionSettingService(IPluginTranslationService pluginTranslationService)
+    {
+        this.pluginTranslationService = pluginTranslationService;
+    }
+
     /// <inheritdoc/>
     public IEnumerable<SettingAttribute> GetPluginSettings(Type type)
     {
@@ -33,13 +40,19 @@ public class FunctionSettingService : IFunctionSettingsService
 
     private SettingModel GetSettingModel(SettingAttribute attribute, IFunctionPlugin plugin)
     {
-        return new SettingModel
+        Assembly? assembly = Assembly.GetAssembly(plugin.GetType());
+        string? translation = null;
+        if (assembly is not null)
         {
-            DisplayName = attribute.Key,
+            translation = pluginTranslationService.GetTranslationByKey(assembly, attribute.Key);
+        }
+        SettingModel returnModel = new SettingModel(GetSettingsData(attribute, plugin))
+        {
+            DisplayName = translation ?? attribute.Key,
             Key = attribute.Key,
-            Type = attribute.SettingType,
-            Value = GetSettingsData(attribute, plugin),
+            Type = attribute.SettingType
         };
+        return returnModel;
     }
 
     private object? GetSettingsData(SettingAttribute attribute, IFunctionPlugin plugin)
