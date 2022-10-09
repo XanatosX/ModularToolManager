@@ -42,5 +42,9 @@
   {
     "key": "hide",
     "value": "Terminal verstecken"
+  },
+  {
+    "key": "adminRequired",
+    "value": "Als Administrator ausführen"
   }
 ]

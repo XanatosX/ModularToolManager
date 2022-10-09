@@ -44,7 +44,6 @@ public class ApplicationSettings
 
     public void AddPluginSettings(PluginSettings pluginSettings)
     {
-
         if (PluginSettings.Any(setting => setting.Plugin?.GetType() == pluginSettings.Plugin?.GetType()))
         {
             PluginSettings.RemoveAll(entry => entry.Plugin?.GetType() == pluginSettings.Plugin?.GetType());

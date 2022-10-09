@@ -42,5 +42,9 @@
   {
     "key": "hide",
     "value": "Hide command line"
+  },
+  {
+    "key": "adminRequired",
+    "value": "Run as Administrator"
   }
 ]
