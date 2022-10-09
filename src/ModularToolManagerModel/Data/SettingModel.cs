@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ModularToolManagerModel.Data;
+
+[Obsolete]
 internal class SettingModel
 {
     public string? Key { get; init; }
