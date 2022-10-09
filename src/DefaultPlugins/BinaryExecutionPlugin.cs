@@ -1,4 +1,6 @@
 ﻿using DefaultPlugins.Information;
+using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Enums;
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
@@ -36,6 +38,9 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     /// </summary>
     private const string FALLBACK_SCRIPT_NOT_FOUND = "Could not find binary file '{0}' to run";
 
+    [Setting("adminRequired", SettingType.Boolean, false)]
+    public bool RunAsAdministrator { get; set; }
+
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
@@ -45,6 +50,11 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     {
         this.translationService = translationService;
         this.loggingService = loggingService;
+    }
+
+    public override void ResetSettings()
+    {
+        RunAsAdministrator = false;
     }
 
     /// <inheritdoc/>
@@ -63,6 +73,11 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
             FileName = path,
             Arguments = parameters
         };
+        if (RunAsAdministrator)
+        {
+            startInfo.Verb = "runas";
+            startInfo.UseShellExecute = true;
+        }
         try
         {
             Process.Start(startInfo);

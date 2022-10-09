@@ -47,12 +47,7 @@ public class ApplicationSettings
 
         if (PluginSettings.Any(setting => setting.Plugin?.GetType() == pluginSettings.Plugin?.GetType()))
         {
-            PluginSettings? settings = PluginSettings.FirstOrDefault(data => data.Plugin?.GetType() == pluginSettings.Plugin?.GetType());
-            if (settings is not null)
-            {
-                settings = pluginSettings;
-                return;
-            }
+            PluginSettings.RemoveAll(entry => entry.Plugin?.GetType() == pluginSettings.Plugin?.GetType());
         }
         PluginSettings.Add(pluginSettings);
     }

@@ -11,6 +11,7 @@ using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
@@ -21,8 +22,9 @@ internal partial class PluginSettingsViewModel : ObservableObject
 {
 	private readonly IFunctionSettingsService settingsService;
 	private readonly ISettingsService settingsSerializeService;
+
 	[ObservableProperty]
-	private List<IPluginSettingModel> pluginSettings;
+	private ObservableCollection<IPluginSettingModel> pluginSettings;
 
 	private IFunctionPlugin? currentPlugin;
 
@@ -30,24 +32,34 @@ internal partial class PluginSettingsViewModel : ObservableObject
 	{
 		this.settingsService = settingsService;
 		this.settingsSerializeService = settingsSerializeService;
-		pluginSettings = new List<IPluginSettingModel>();
+		pluginSettings = new ObservableCollection<IPluginSettingModel>();
 	}
 
 	public void SetPlugin(IFunctionPlugin plugin)
 	{
 		currentPlugin = plugin;
+		PluginSettings pluginSettings = settingsSerializeService.GetApplicationSettings()?.PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == plugin.GetType()) ?? new();
+		List<PersistantPluginSetting> persistantSettings = pluginSettings.Settings ?? new();
 		List<IPluginSettingModel> settings = settingsService.GetPluginSettingsValues(plugin)
-												   .Select(setting => GetViewModel(setting))
+												   .Select(setting => GetViewModel(setting, persistantSettings))
 												   .Where(view => view is not null)
 												   .OfType<IPluginSettingModel>()
 												   .ToList();
+
+
+
 		PluginSettings.Clear();
-		PluginSettings.AddRange(settings);
+		foreach (var setting in settings)
+		{
+			PluginSettings.Add(setting);
+		}
 
 	}
 
-	private IPluginSettingModel? GetViewModel(SettingModel settingModel)
+	private IPluginSettingModel? GetViewModel(SettingModel settingModel, List<PersistantPluginSetting> pluginSettings)
 	{
+		var matchingSetting = pluginSettings.FirstOrDefault(setting => setting.Key == settingModel.Key)?.GetSettingModel();
+		settingModel.SetValue(matchingSetting is not null ? matchingSetting.Value : settingModel.Value);
 		return settingModel.Type switch
 		{
 			SettingType.Boolean => new BoolPluginSettingViewModel(settingModel),
@@ -70,7 +82,6 @@ internal partial class PluginSettingsViewModel : ObservableObject
 		settingsSerializeService.ChangeSettings(settings =>
 		{
 			settings.AddPluginSettings(pluginSettings);
-
 		});
 
 	}
