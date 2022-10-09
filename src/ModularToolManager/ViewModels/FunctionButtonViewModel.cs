@@ -4,6 +4,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
+using ModularToolManager.Services.Settings;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ModularToolManager.ViewModels;
@@ -50,6 +52,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// The logger to use
     /// </summary>
     private readonly ILogger<FunctionButtonViewModel> logger;
+    private readonly ISettingsService settingsService;
 
     /// <summary>
     /// The tool tip delay to use, a really high value is returned if no description is present
@@ -66,10 +69,11 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// Create a new instance of this class
     /// </summary>
     /// <param name="functionModel">The function model to use</param>
-    public FunctionButtonViewModel(ILogger<FunctionButtonViewModel> logger)
+    public FunctionButtonViewModel(ILogger<FunctionButtonViewModel> logger, ISettingsService settingsService)
     {
         IsActive = true;
         this.logger = logger;
+        this.settingsService = settingsService;
     }
 
     /// <summary>
@@ -90,6 +94,14 @@ public partial class FunctionButtonViewModel : ObservableObject
     {
         try
         {
+
+            var plugin = functionModel?.Plugin;
+            if (plugin is null)
+            {
+                return;
+            }
+            var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == functionModel?.Plugin?.GetType());
+            plugin.ResetSettings();
             await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path));
         }
         catch (System.Exception e)
