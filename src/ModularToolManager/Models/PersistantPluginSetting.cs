@@ -4,24 +4,34 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ModularToolManagerPlugin.Models;
+
+/// <summary>
+/// Plugin settings ready to save on the disc
+/// </summary>
 public class PersistantPluginSetting
 {
+	/// <summary>
+	/// The key of the plugin settings
+	/// </summary>
 	[JsonPropertyName("key")]
 	public string? Key { get; set; }
 
+	/// <summary>
+	/// The type of the plugin settings
+	/// </summary>
 	[JsonPropertyName("type")]
 	public SettingType Type { get; set; }
 
+	/// <summary>
+	/// The value of the plugin setting
+	/// </summary>
 	[JsonPropertyName("value")]
 	public object? Value { get; set; }
 
-	public PersistantPluginSetting()
-	{
-		Key = null;
-		Value = null;
-		Type = SettingType.String;
-	}
-
+	/// <summary>
+	/// Create a new instance of this class
+	/// </summary>
+	/// <param name="settingModel">The settings model to use as a base</param>
 	public PersistantPluginSetting(SettingModel settingModel)
 	{
 		Key = settingModel.Key;
@@ -29,7 +39,12 @@ public class PersistantPluginSetting
 		Value = settingModel.Value;
 	}
 
-	public T? GetValue<T>()
+	/// <summary>
+	/// Get the value from the plugin setting
+	/// </summary>
+	/// <typeparam name="T">The type to convert the value to</typeparam>
+	/// <returns>The converted value or the default of T</returns>
+	private T? GetValue<T>()
 	{
 		object? dataObject = Value;
 		if (dataObject is JsonElement element)
@@ -45,6 +60,10 @@ public class PersistantPluginSetting
 		return dataObject is null || dataObject.GetType() != typeof(T) ? default : (T?)dataObject;
 	}
 
+	/// <summary>
+	/// Convert to a valid setting model
+	/// </summary>
+	/// <returns>A useable setting model</returns>
 	public SettingModel GetSettingModel()
 	{
 		object? data = Type switch

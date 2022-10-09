@@ -21,7 +21,6 @@ using NLog.Targets;
 using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 
 namespace ModularToolManager;
 
@@ -108,7 +107,6 @@ public class App : Application
         ILanguageService langService = provider.GetRequiredService<ILanguageService>();
         ISettingsService settingsService = provider.GetRequiredService<ISettingsService>();
         CultureInfo language = settingsService.GetApplicationSettings().CurrentLanguage ?? CultureInfo.CurrentCulture;
-        var test = settingsService.GetApplicationSettings();
         langService.ChangeLanguage(language);
         ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         DataContext = provider.GetService<AppViewModel>();

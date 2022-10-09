@@ -38,6 +38,9 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     /// </summary>
     private const string FALLBACK_SCRIPT_NOT_FOUND = "Could not find binary file '{0}' to run";
 
+    /// <summary>
+    /// Setting if the application should be startet as a administrator
+    /// </summary>
     [Setting("adminRequired", SettingType.Boolean, false)]
     public bool RunAsAdministrator { get; set; }
 
@@ -52,6 +55,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
         this.loggingService = loggingService;
     }
 
+    /// <inheritdoc/>
     public override void ResetSettings()
     {
         RunAsAdministrator = false;
