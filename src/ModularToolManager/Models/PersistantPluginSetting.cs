@@ -31,6 +31,17 @@ public class PersistantPluginSetting
 	/// <summary>
 	/// Create a new instance of this class
 	/// </summary>
+	public PersistantPluginSetting()
+	{
+		//Required empty constructor for json serializer
+		Type = SettingType.String;
+		Key = null;
+		Value = null;
+	}
+
+	/// <summary>
+	/// Create a new instance of this class
+	/// </summary>
 	/// <param name="settingModel">The settings model to use as a base</param>
 	public PersistantPluginSetting(SettingModel settingModel)
 	{
