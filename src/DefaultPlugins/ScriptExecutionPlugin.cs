@@ -10,7 +10,7 @@ namespace DefaultPlugins;
 /// <summary>
 /// Plugin to run scripts on windows maschines
 /// </summary>
-public class ScriptExecutionPlugin : AbstractFunctionPlugin
+public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
 {
     /// <summary>
     /// The plugin information

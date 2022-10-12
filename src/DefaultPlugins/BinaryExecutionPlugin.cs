@@ -11,7 +11,7 @@ namespace DefaultPlugins;
 /// <summary>
 /// Plugin for executing binaries on the system
 /// </summary>
-public class BinaryExecutionPlugin : AbstractFunctionPlugin
+public sealed class BinaryExecutionPlugin : AbstractFunctionPlugin
 {
     /// <summary>
     /// The plugin information
