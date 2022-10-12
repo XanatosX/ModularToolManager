@@ -4,9 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.BoolPluginSettingView">
-	<Grid ColumnDefinitions="200, *">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="{StaticResource PluginSettingName}"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
 		<TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding DisplayName}"/>
 		<CheckBox Grid.Column="1" IsChecked="{Binding IsChecked}"/>
-		
 	</Grid>
 </UserControl>

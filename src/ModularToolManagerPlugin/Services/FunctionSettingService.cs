@@ -2,7 +2,6 @@
 using ModularToolManagerPlugin.Enums;
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
-using System.Linq;
 using System.Reflection;
 
 namespace ModularToolManagerPlugin.Services;
@@ -12,8 +11,15 @@ namespace ModularToolManagerPlugin.Services;
 /// </summary>
 public class FunctionSettingService : IFunctionSettingsService
 {
+    /// <summary>
+    /// Service used to load translations from the plugin
+    /// </summary>
     private readonly IPluginTranslationService pluginTranslationService;
 
+    /// <summary>
+    /// Create a new instance of this service
+    /// </summary>
+    /// <param name="pluginTranslationService">The plugin translation service to use</param>
     public FunctionSettingService(IPluginTranslationService pluginTranslationService)
     {
         this.pluginTranslationService = pluginTranslationService;
@@ -32,12 +38,19 @@ public class FunctionSettingService : IFunctionSettingsService
                                    .OfType<SettingAttribute>();
     }
 
+    /// <inheritdoc/>
     public IEnumerable<SettingModel> GetPluginSettingsValues(IFunctionPlugin plugin)
     {
         IFunctionSettingsService local = this as IFunctionSettingsService;
         return local.GetPluginSettings(plugin).Select(settings => GetSettingModel(settings, plugin));
     }
 
+    /// <summary>
+    /// Get the setting model for a given attribute for a specific plugin
+    /// </summary>
+    /// <param name="attribute">The attribute to get the setting model for</param>
+    /// <param name="plugin">The plugin to create the setting model from</param>
+    /// <returns>A useable setting model</returns>
     private SettingModel GetSettingModel(SettingAttribute attribute, IFunctionPlugin plugin)
     {
         Assembly? assembly = Assembly.GetAssembly(plugin.GetType());
@@ -55,6 +68,12 @@ public class FunctionSettingService : IFunctionSettingsService
         return returnModel;
     }
 
+    /// <summary>
+    /// Get the settings data as object from a given plugin
+    /// </summary>
+    /// <param name="attribute">The plugin attribute to get the data from</param>
+    /// <param name="plugin">The plugin to read the data from</param>
+    /// <returns>A object if something was found otherwise null</returns>
     private object? GetSettingsData(SettingAttribute attribute, IFunctionPlugin plugin)
     {
         return attribute.SettingType switch

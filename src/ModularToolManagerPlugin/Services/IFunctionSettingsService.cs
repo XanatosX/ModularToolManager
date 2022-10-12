@@ -23,6 +23,11 @@ public interface IFunctionSettingsService
     /// <returns>A list with all the setting attributes</returns>
     IEnumerable<SettingAttribute> GetPluginSettings(IFunctionPlugin plugin) => GetPluginSettings(plugin.GetType());
 
+    /// <summary>
+    /// Get all the setting values from the given plugin
+    /// </summary>
+    /// <param name="plugin">The plugin to get all the settings values from</param>
+    /// <returns>A list with setting models for the plugin</returns>
     IEnumerable<SettingModel> GetPluginSettingsValues(IFunctionPlugin plugin);
 
     /// <summary>

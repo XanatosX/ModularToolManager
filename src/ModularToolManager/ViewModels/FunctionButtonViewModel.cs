@@ -57,7 +57,15 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// The logger to use
     /// </summary>
     private readonly ILogger<FunctionButtonViewModel> logger;
+
+    /// <summary>
+    /// Service used to load setting for the application
+    /// </summary>
     private readonly ISettingsService settingsService;
+
+    /// <summary>
+    /// Service used to set or load settings from plugins
+    /// </summary>
     private readonly IFunctionSettingsService functionSettingsService;
 
     /// <summary>
@@ -150,8 +158,6 @@ public partial class FunctionButtonViewModel : ObservableObject
                     break;
                 case ModularToolManagerPlugin.Enums.SettingType.Float:
                     functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<float>());
-                    break;
-                default:
                     break;
             }
         }
