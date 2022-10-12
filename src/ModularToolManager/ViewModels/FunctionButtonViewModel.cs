@@ -163,11 +163,6 @@ public partial class FunctionButtonViewModel : ObservableObject
         }
     }
 
-    private void GetSettingModelFromDataSet()
-    {
-
-    }
-
     /// <summary>
     /// Command to edit the current function
     /// </summary>

@@ -50,6 +50,7 @@ public class SettingModel
         }
         catch (Exception)
         {
+            // Something got wrong while parsing, whatever
         }
         return returnData;
     }

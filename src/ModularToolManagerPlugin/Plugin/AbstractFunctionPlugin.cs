@@ -16,7 +16,7 @@ public abstract class AbstractFunctionPlugin : IFunctionPlugin
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    public AbstractFunctionPlugin()
+    protected AbstractFunctionPlugin()
     {
         ResetSettings();
     }
@@ -45,8 +45,5 @@ public abstract class AbstractFunctionPlugin : IFunctionPlugin
     public abstract bool IsOperationSystemValid();
 
     /// <inheritdoc/>
-    public virtual void ResetSettings()
-    {
-        // Do nothing on default
-    }
+    public abstract void ResetSettings();
 }
