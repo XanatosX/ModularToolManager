@@ -89,6 +89,7 @@ internal partial class PluginSettingsViewModel : ObservableObject
 		return settingModel.Type switch
 		{
 			SettingType.Boolean => new BoolPluginSettingViewModel(settingModel),
+			SettingType.String => new StringPluginSettingViewModel(settingModel),
 			_ => null
 		};
 	}

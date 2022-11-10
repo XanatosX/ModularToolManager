@@ -65,6 +65,7 @@ public class PersistantPluginSetting
 				SettingType.Boolean => element.GetBoolean(),
 				SettingType.Int => element.GetInt32(),
 				SettingType.Float => (float)element.GetDecimal(),
+				SettingType.String => element.GetString(),
 				_ => element.GetRawText()
 			};
 		}
