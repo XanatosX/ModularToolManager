@@ -13,12 +13,12 @@
 				<ListBox Items="{Binding Plugins}" SelectedItem="{Binding SelectedEntry}"/>
 				</Border>
 				<TabControl  Grid.Column="1" Padding="5">
-					<TabItem Header="Information">
+					<TabItem Header="{x:Static p:Resources.AllPlugins_Header_Information}">
 						<Panel Margin="10,0,0,0">
 							<ContentControl HorizontalContentAlignment="Left"  Content="{Binding PluginView}"></ContentControl>
 						</Panel>
 					</TabItem>
-					<TabItem Header="Settings" IsEnabled="{Binding SettingsAvailable}">
+					<TabItem Header="{x:Static p:Resources.AllPlugins_Header_Settings}" IsEnabled="{Binding SettingsAvailable}">
 						<ContentControl HorizontalContentAlignment="Stretch"  Content="{Binding PluginSettingsView}"></ContentControl>
 					</TabItem>
 				</TabControl>

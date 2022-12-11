@@ -70,6 +70,24 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string AllPlugins_Header_Information {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string AllPlugins_Header_Settings {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modular Tool Manager.
         /// </summary>
         public static string Application_Name {
@@ -129,6 +147,15 @@ namespace ModularToolManager.Properties {
         public static string DefaultButton_OpenFile {
             get {
                 return ResourceManager.GetString("DefaultButton_OpenFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string DefaultButton_Save {
+            get {
+                return ResourceManager.GetString("DefaultButton_Save", resourceCulture);
             }
         }
         
