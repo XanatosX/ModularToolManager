@@ -16,15 +16,16 @@
 
 ## About the Project
 
-This tool is called "Modular Tool Manager" it is a plugin based GUI script executer. The default tool does deliver basic plugins for binary and script execution on windows.
+This tool is called "Modular Tool Manager" it is a plugin based GUI script executer. The default tool does deliver basic plugins for binary and script execution on Windows.
 
 ![Main view of the rogramp][image-main-view]
 
 The tool is getting tested on Windows and Linux Mint, since it is based on [AvaloniaUI][avaloniaui] it should run on mac as well.
 
+**Important:** I can only test it for Windows 10 so please check if the Avalonia variant is running on older systems as well.
 
 You can extend the functionality of the tool by writing your own plugins. Please take a look at the [Wiki] to find out how to do that.
-The application does support the following languages for now
+The application does support the following languages for now, feel free to extend it via Pull Request
 
 * German
 * Englisch
