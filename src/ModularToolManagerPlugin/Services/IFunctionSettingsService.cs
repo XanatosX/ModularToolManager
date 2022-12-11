@@ -28,7 +28,15 @@ public interface IFunctionSettingsService
     /// </summary>
     /// <param name="plugin">The plugin to get all the settings values from</param>
     /// <returns>A list with setting models for the plugin</returns>
-    IEnumerable<SettingModel> GetPluginSettingsValues(IFunctionPlugin plugin);
+    IEnumerable<SettingModel> GetPluginSettingsValues(IFunctionPlugin plugin) => GetPluginSettingsValues(plugin, true);
+
+    /// <summary>
+    /// Get all the setting values from the given plugin
+    /// </summary>
+    /// <param name="plugin">The plugin to get all the settings values from</param>
+    /// <param name="globalOnly">Show only global settings</param>
+    /// <returns>A list with setting models for the plugin</returns>
+    IEnumerable<SettingModel> GetPluginSettingsValues(IFunctionPlugin plugin, bool globalOnly);
 
     /// <summary>
     /// Does the plugin contain settings

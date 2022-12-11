@@ -7,6 +7,7 @@ using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Ui;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.Plugin;
+using ModularToolManagerPlugin.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,7 +31,13 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// Private list for all the function plugins
     /// </summary>
     private readonly List<FunctionPluginViewModel> functionPlugins;
+    private readonly IPluginService? pluginService;
+
+    /// <summary>
+    /// The function service to use
+    /// </summary>
     private readonly IFunctionService? functionService;
+    private readonly IFunctionSettingsService functionSettingsService;
 
     /// <summary>
     /// Service to use for opening windows or modals
@@ -63,6 +70,12 @@ internal partial class AddFunctionViewModel : ObservableValidator
     private FunctionPluginViewModel? selectedFunctionPlugin;
 
     /// <summary>
+    /// Are there any settings available for the plugin
+    /// </summary>
+    [ObservableProperty]
+    private bool settingsAvailable;
+
+    /// <summary>
     /// The parameters for the function
     /// </summary>
     [ObservableProperty]
@@ -86,10 +99,12 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// </summary>
     /// <param name="pluginService">The plugin service to use</param>
     /// <param name="functionService">The function service to use</param>
-    public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService, IWindowManagementService windowManagmentService)
+    public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService, IFunctionSettingsService functionSettingsService, IWindowManagementService windowManagmentService)
     {
         functionPlugins = new();
+        this.pluginService = pluginService;
         this.functionService = functionService;
+        this.functionSettingsService = functionSettingsService;
         this.windowManagmentService = windowManagmentService;
         if (pluginService is not null)
         {
@@ -97,7 +112,24 @@ internal partial class AddFunctionViewModel : ObservableValidator
                                                    .Select(plugin => new FunctionPluginViewModel(plugin)));
         }
 
+        PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(SelectedFunctionPlugin))
+            {
+                LoadPluginSettings();
+            }
+        };
+
         InitialValueSet();
+    }
+
+    private void LoadPluginSettings()
+    {
+        if (SelectedFunctionPlugin is null || SelectedFunctionPlugin.Plugin is null)
+        {
+            return;
+        }
+        var settings = functionSettingsService.GetPluginSettingsValues(SelectedFunctionPlugin.Plugin, false).ToList();
     }
 
     /// <summary>
