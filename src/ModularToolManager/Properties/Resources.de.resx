@@ -120,14 +120,23 @@
   <data name="AddFunction_FunctionPathWatermark" xml:space="preserve">
     <value>Pfad zur Funktion</value>
   </data>
+  <data name="AllPlugins_Header_Information" xml:space="preserve">
+    <value>Informationen</value>
+  </data>
+  <data name="AllPlugins_Header_Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
   <data name="Button_Open_Project" xml:space="preserve">
-    <value>Öffne Website des Projectes</value>
+    <value>Projekt Website im Browser öffnen</value>
   </data>
   <data name="DefaultButton_Abort" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
   <data name="DefaultButton_Ok" xml:space="preserve">
     <value>Ok</value>
+  </data>
+  <data name="DefaultButton_Save" xml:space="preserve">
+    <value>Speichern</value>
   </data>
   <data name="Default_Delete" xml:space="preserve">
     <value>Löschen</value>
@@ -166,7 +175,7 @@
     <value>Lizenz:</value>
   </data>
   <data name="Plugin_Url_Colon" xml:space="preserve">
-    <value>Project Link:</value>
+    <value>Projekt Link:</value>
   </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>

@@ -1,4 +1,6 @@
 ﻿using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Enums;
+using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using System.Reflection;
 
@@ -9,6 +11,20 @@ namespace ModularToolManagerPlugin.Services;
 /// </summary>
 public class FunctionSettingService : IFunctionSettingsService
 {
+    /// <summary>
+    /// Service used to load translations from the plugin
+    /// </summary>
+    private readonly IPluginTranslationService pluginTranslationService;
+
+    /// <summary>
+    /// Create a new instance of this service
+    /// </summary>
+    /// <param name="pluginTranslationService">The plugin translation service to use</param>
+    public FunctionSettingService(IPluginTranslationService pluginTranslationService)
+    {
+        this.pluginTranslationService = pluginTranslationService;
+    }
+
     /// <inheritdoc/>
     public IEnumerable<SettingAttribute> GetPluginSettings(Type type)
     {
@@ -20,6 +36,54 @@ public class FunctionSettingService : IFunctionSettingsService
                                    .Where(attribute => attribute is not null)
                                    .DistinctBy(attribute => attribute!.Key)
                                    .OfType<SettingAttribute>();
+    }
+
+    /// <inheritdoc/>
+    public IEnumerable<SettingModel> GetPluginSettingsValues(IFunctionPlugin plugin)
+    {
+        IFunctionSettingsService local = this as IFunctionSettingsService;
+        return local.GetPluginSettings(plugin).Select(settings => GetSettingModel(settings, plugin));
+    }
+
+    /// <summary>
+    /// Get the setting model for a given attribute for a specific plugin
+    /// </summary>
+    /// <param name="attribute">The attribute to get the setting model for</param>
+    /// <param name="plugin">The plugin to create the setting model from</param>
+    /// <returns>A useable setting model</returns>
+    private SettingModel GetSettingModel(SettingAttribute attribute, IFunctionPlugin plugin)
+    {
+        Assembly? assembly = Assembly.GetAssembly(plugin.GetType());
+        string? translation = null;
+        if (assembly is not null)
+        {
+            translation = pluginTranslationService.GetTranslationByKey(assembly, attribute.Key);
+        }
+        SettingModel returnModel = new SettingModel(GetSettingsData(attribute, plugin))
+        {
+            DisplayName = translation ?? attribute.Key,
+            Key = attribute.Key,
+            Type = attribute.SettingType
+        };
+        return returnModel;
+    }
+
+    /// <summary>
+    /// Get the settings data as object from a given plugin
+    /// </summary>
+    /// <param name="attribute">The plugin attribute to get the data from</param>
+    /// <param name="plugin">The plugin to read the data from</param>
+    /// <returns>A object if something was found otherwise null</returns>
+    private object? GetSettingsData(SettingAttribute attribute, IFunctionPlugin plugin)
+    {
+        return attribute.SettingType switch
+        {
+            SettingType.String => GetSettingValue<string>(attribute, plugin) as object,
+            SettingType.Boolean => GetSettingValue<bool>(attribute, plugin) as object,
+            SettingType.Int => GetSettingValue<int>(attribute, plugin) as object,
+            SettingType.Float => GetSettingValue<float>(attribute, plugin) as object,
+            _ => null
+        };
     }
 
     /// <inheritdoc/>

@@ -35,7 +35,7 @@ public class ViewModelLocator : IViewModelLocatorService
     /// <inheritdoc/>
     public ObservableObject? GetViewModel(string name)
     {
-        Type type = GetViewModelType(name);
+        Type? type = GetViewModelType(name);
         return type is null ? null : dependencyResolverService?.GetDependency(type) as ObservableObject;
     }
 

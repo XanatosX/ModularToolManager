@@ -1,4 +1,5 @@
 ﻿using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 
 namespace ModularToolManagerPlugin.Services;
@@ -14,6 +15,34 @@ public interface IFunctionSettingsService
     /// <param name="type">The type of plugin to get</param>
     /// <returns>A list with all the setting attributes</returns>
     IEnumerable<SettingAttribute> GetPluginSettings(Type type);
+
+    /// <summary>
+    /// Get all the settings from the plugin
+    /// </summary>
+    /// <param name="plugin">The plugin to get the settings from</param>
+    /// <returns>A list with all the setting attributes</returns>
+    IEnumerable<SettingAttribute> GetPluginSettings(IFunctionPlugin plugin) => GetPluginSettings(plugin.GetType());
+
+    /// <summary>
+    /// Get all the setting values from the given plugin
+    /// </summary>
+    /// <param name="plugin">The plugin to get all the settings values from</param>
+    /// <returns>A list with setting models for the plugin</returns>
+    IEnumerable<SettingModel> GetPluginSettingsValues(IFunctionPlugin plugin);
+
+    /// <summary>
+    /// Does the plugin contain settings
+    /// </summary>
+    /// <param name="type">The type of the plugin to check for settings</param>
+    /// <returns>True if settings where found</returns>
+    bool ContainsSettings(Type type) => GetPluginSettings(type).Count() > 0;
+
+    /// <summary>
+    /// Does the plugin contain settings
+    /// </summary>
+    /// <param name="plugin">The plugin to check for settings</param>
+    /// <returns>True if settings where found</returns>
+    bool ContainsSettings(IFunctionPlugin plugin) => GetPluginSettings(plugin).Count() > 0;
 
     /// <summary>
     /// Get all the settings from a given plugin of type T

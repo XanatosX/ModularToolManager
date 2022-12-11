@@ -90,6 +90,7 @@ internal class SerializedSettingsService : ISettingsService
         cachedApplicationSettings = null;
 
         var settingsFile = pathService.GetSettingsFilePathString();
+        newSettings.PluginSettings?.Sort((settingA, settingB) => settingA.Plugin?.GetType().ToString().CompareTo(settingB.Plugin?.GetType().ToString()) ?? 0);
         bool success = false;
         using (StreamWriter? writer = fileSystemService.GetWriteStream(settingsFile))
         {

@@ -4,6 +4,13 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
+using ModularToolManager.Services.Settings;
+using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Models;
+using ModularToolManagerPlugin.Plugin;
+using ModularToolManagerPlugin.Services;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ModularToolManager.ViewModels;
@@ -52,6 +59,16 @@ public partial class FunctionButtonViewModel : ObservableObject
     private readonly ILogger<FunctionButtonViewModel> logger;
 
     /// <summary>
+    /// Service used to load setting for the application
+    /// </summary>
+    private readonly ISettingsService settingsService;
+
+    /// <summary>
+    /// Service used to set or load settings from plugins
+    /// </summary>
+    private readonly IFunctionSettingsService functionSettingsService;
+
+    /// <summary>
     /// The tool tip delay to use, a really high value is returned if no description is present
     /// </summary>
     public int ToolTipDelay => string.IsNullOrEmpty(Description) ? int.MaxValue : 400;
@@ -66,10 +83,12 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// Create a new instance of this class
     /// </summary>
     /// <param name="functionModel">The function model to use</param>
-    public FunctionButtonViewModel(ILogger<FunctionButtonViewModel> logger)
+    public FunctionButtonViewModel(ILogger<FunctionButtonViewModel> logger, ISettingsService settingsService, IFunctionSettingsService functionSettingsService)
     {
         IsActive = true;
         this.logger = logger;
+        this.settingsService = settingsService;
+        this.functionSettingsService = functionSettingsService;
     }
 
     /// <summary>
@@ -90,12 +109,57 @@ public partial class FunctionButtonViewModel : ObservableObject
     {
         try
         {
+            var plugin = functionModel?.Plugin;
+            if (plugin is null)
+            {
+                return;
+            }
+            ApplyPluginSettings(plugin);
             await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path));
         }
         catch (System.Exception e)
         {
             logger.LogError(FUNCTION_EXECUTION_FAILED_MESSAGE, Identifier, DisplayName);
             logger.LogError(e, null);
+        }
+    }
+
+    /// <summary>
+    /// Method to apply the plugin settings
+    /// </summary>
+    /// <param name="plugin">The plugin to apply the settings for</param>
+    private void ApplyPluginSettings(IFunctionPlugin? plugin)
+    {
+        if (plugin is null)
+        {
+            return;
+        }
+        plugin.ResetSettings();
+
+        List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(plugin).ToList() ?? new();
+        var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == functionModel?.Plugin?.GetType());
+        foreach (var loadedPluginSetting in settings?.Settings?.Select(setting => setting.GetSettingModel()) ?? Enumerable.Empty<SettingModel>())
+        {
+            var matchingAttribute = pluginSettings.FirstOrDefault(setting => setting.Key == loadedPluginSetting.Key);
+            if (matchingAttribute is null)
+            {
+                continue;
+            }
+            switch (loadedPluginSetting.Type)
+            {
+                case ModularToolManagerPlugin.Enums.SettingType.Boolean:
+                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<bool>());
+                    break;
+                case ModularToolManagerPlugin.Enums.SettingType.String:
+                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<string>());
+                    break;
+                case ModularToolManagerPlugin.Enums.SettingType.Int:
+                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<int>());
+                    break;
+                case ModularToolManagerPlugin.Enums.SettingType.Float:
+                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<float>());
+                    break;
+            }
         }
     }
 

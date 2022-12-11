@@ -38,5 +38,13 @@
   {
     "key": "error_cant_find_binary_file",
     "value": "Konnte ausführbare datei '{0}' nicht finden"
+  },
+  {
+    "key": "hide",
+    "value": "Terminal verstecken"
+  },
+  {
+    "key": "adminRequired",
+    "value": "Als Administrator ausführen"
   }
 ]

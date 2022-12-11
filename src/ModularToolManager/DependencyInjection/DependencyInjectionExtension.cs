@@ -16,6 +16,7 @@ using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerModel.Services.Serialization;
 using ModularToolManagerPlugin.Services;
+using System;
 using System.Text.Json;
 
 namespace ModularToolManager.DependencyInjection;
@@ -31,6 +32,7 @@ internal static class DependencyInjectionExtension
     /// </summary>
     /// <param name="collection">The collection to extend</param>
     /// <returns>The extended collection</returns>
+    [Obsolete]
     public static IServiceCollection AddAvaloniaDefault(this IServiceCollection collection)
     {
         return collection;
@@ -50,7 +52,11 @@ internal static class DependencyInjectionExtension
                          .AddTransient<SettingsViewModel>()
                          .AddTransient<AppViewModel>()
                          .AddTransient<AllPluginsViewModel>()
-                         .AddTransient<PluginViewModel>();
+                         .AddTransient<PluginViewModel>()
+                         .AddTransient<BoolPluginSettingViewModel>()
+                         .AddTransient<StringPluginSettingViewModel>()
+                         .AddTransient<IntPluginSettingViewModel>()
+                         .AddTransient<FloatPluginSettingView>();
     }
 
     /// <summary>
@@ -92,7 +98,5 @@ internal static class DependencyInjectionExtension
                          .AddTransient<IUrlOpenerService, UrlOpenerService>()
                          .AddTransient<IFileSystemService, FileSystemService>()
                          .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>));
-
-
     }
 }

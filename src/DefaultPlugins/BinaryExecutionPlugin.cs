@@ -1,4 +1,6 @@
 ﻿using DefaultPlugins.Information;
+using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Enums;
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
@@ -9,7 +11,7 @@ namespace DefaultPlugins;
 /// <summary>
 /// Plugin for executing binaries on the system
 /// </summary>
-public class BinaryExecutionPlugin : AbstractFunctionPlugin
+public sealed class BinaryExecutionPlugin : AbstractFunctionPlugin
 {
     /// <summary>
     /// The plugin information
@@ -37,6 +39,12 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     private const string FALLBACK_SCRIPT_NOT_FOUND = "Could not find binary file '{0}' to run";
 
     /// <summary>
+    /// Setting if the application should be startet as a administrator
+    /// </summary>
+    [Setting("adminRequired", SettingType.Boolean, false)]
+    public bool RunAsAdministrator { get; set; }
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="translationService">The plugin translation service to use</param>
@@ -45,6 +53,12 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     {
         this.translationService = translationService;
         this.loggingService = loggingService;
+    }
+
+    /// <inheritdoc/>
+    public override void ResetSettings()
+    {
+        RunAsAdministrator = false;
     }
 
     /// <inheritdoc/>
@@ -63,6 +77,11 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
             FileName = path,
             Arguments = parameters
         };
+        if (RunAsAdministrator)
+        {
+            startInfo.Verb = "runas";
+            startInfo.UseShellExecute = true;
+        }
         try
         {
             Process.Start(startInfo);
