@@ -74,8 +74,8 @@ public partial class MainWindow : Window
             {
                 Topmost = false;
             }
-
         });
+        WeakReferenceMessenger.Default.Register<RequestApplicationVisiblity>(this, (_, e) => e.Reply(IsVisible));
         WeakReferenceMessenger.Default.Register<ValueChangedMessage<ApplicationSettings>>(this, (_, settings) =>
         {
             Topmost = settings.Value.AlwaysOnTop;
