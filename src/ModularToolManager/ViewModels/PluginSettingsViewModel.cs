@@ -106,14 +106,14 @@ internal partial class PluginSettingsViewModel : ObservableObject
 													.Select(model => new PersistantPluginSetting(model))
 													.Where(model => model.Key is not null)
 													.ToList();
-		PluginSettings pluginSettings = new()
+		PluginSettings newPluginSettings = new()
 		{
 			Plugin = currentPlugin,
 			Settings = settingsToSave
 		};
 		applicationSettingService.ChangeSettings(settings =>
 		{
-			settings.AddPluginSettings(pluginSettings);
+			settings.AddPluginSettings(newPluginSettings);
 		});
 	}
 }
