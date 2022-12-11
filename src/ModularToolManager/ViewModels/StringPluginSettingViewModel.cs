@@ -3,6 +3,9 @@ using ModularToolManagerPlugin.Models;
 
 namespace ModularToolManager.ViewModels;
 
+/// <summary>
+/// View model for a string plugin setting
+/// </summary>
 internal partial class StringPluginSettingViewModel : PluginSettingBaseViewModel
 {
     /// <summary>

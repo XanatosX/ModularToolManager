@@ -4,6 +4,9 @@ using ModularToolManagerPlugin.Models;
 
 namespace ModularToolManager.ViewModels;
 
+/// <summary>
+/// Base class for plugin settings
+/// </summary>
 internal abstract partial class PluginSettingBaseViewModel : ObservableObject, IPluginSettingModel
 {
     /// <summary>
