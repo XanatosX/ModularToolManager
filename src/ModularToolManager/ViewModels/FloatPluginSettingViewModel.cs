@@ -4,6 +4,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ModularToolManager.ViewModels;
+
+/// <summary>
+/// View model class for float based plugin settings
+/// </summary>
 internal partial class FloatPluginSettingViewModel : PluginSettingBaseViewModel
 {
     /// <summary>
