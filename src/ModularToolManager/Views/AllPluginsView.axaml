@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 xmlns:p="clr-namespace:ModularToolManager.Properties"
-             x:Class="ModularToolManager.Views.AllPluginsView" MinHeight="250" MinWidth="500">
+             x:Class="ModularToolManager.Views.AllPluginsView"
+			 MinHeight="250"
+			 MinWidth="500">
 	<Grid RowDefinitions="*, Auto">
 			<Grid ColumnDefinitions="Auto, *">
 				<Border BorderThickness="0,0,2,0" MinWidth="40"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -17,7 +19,7 @@
 						</Panel>
 					</TabItem>
 					<TabItem Header="Settings" IsEnabled="{Binding SettingsAvailable}">
-						<ContentControl HorizontalContentAlignment="Left"  Content="{Binding PluginSettingsView}"></ContentControl>
+						<ContentControl HorizontalContentAlignment="Stretch"  Content="{Binding PluginSettingsView}"></ContentControl>
 					</TabItem>
 				</TabControl>
 			</Grid>

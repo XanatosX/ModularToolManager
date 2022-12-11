@@ -90,6 +90,8 @@ internal partial class PluginSettingsViewModel : ObservableObject
 		{
 			SettingType.Boolean => new BoolPluginSettingViewModel(settingModel),
 			SettingType.String => new StringPluginSettingViewModel(settingModel),
+			SettingType.Float => new FloatPluginSettingViewModel(settingModel),
+			SettingType.Int => new IntPluginSettingViewModel(settingModel),
 			_ => null
 		};
 	}

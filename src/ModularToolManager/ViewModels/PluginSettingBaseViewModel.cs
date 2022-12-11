@@ -7,7 +7,7 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// Base class for plugin settings
 /// </summary>
-internal abstract partial class PluginSettingBaseViewModel : ObservableObject, IPluginSettingModel
+internal abstract partial class PluginSettingBaseViewModel : ObservableValidator, IPluginSettingModel
 {
     /// <summary>
     /// The model represented by the view

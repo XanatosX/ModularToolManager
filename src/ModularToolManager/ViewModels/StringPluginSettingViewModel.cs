@@ -12,7 +12,7 @@ internal partial class StringPluginSettingViewModel : PluginSettingBaseViewModel
     /// The text for this setting
     /// </summary>
     [ObservableProperty]
-    public string? settingText;
+    private string? settingText;
 
     /// <inheritdoc/>
     public StringPluginSettingViewModel(SettingModel settingModel) : base(settingModel)
