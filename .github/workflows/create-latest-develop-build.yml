@@ -157,7 +157,7 @@ jobs:
           generateReleaseNotes: true
           body: Recent version of the develop branch, ready for testing
           draft: ${{ env.DEBUG }}
-          makeLatest: "latest" 
+          makeLatest: true
           prerelease: true
           artifacts: ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.zip
           artifactContentType: "application/zip"
