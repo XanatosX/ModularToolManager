@@ -32,6 +32,7 @@ internal partial class IntPluginSettingViewModel : PluginSettingBaseViewModel
         return storedModel;
     }
 
+    /// <inheritdoc/>
     public override void UpdateValue(object? newData)
     {
         if (newData is int)

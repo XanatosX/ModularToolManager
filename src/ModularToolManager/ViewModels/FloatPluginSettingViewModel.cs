@@ -33,6 +33,8 @@ internal partial class FloatPluginSettingViewModel : PluginSettingBaseViewModel
         return storedModel;
     }
 
+    /// <inheritdoc/>
+
     public override void UpdateValue(object? newData)
     {
         if (newData is float)

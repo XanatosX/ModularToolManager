@@ -7,6 +7,10 @@ namespace ModularToolManager.ViewModels.Settings;
 /// </summary>
 internal interface IPluginSettingModel
 {
+    /// <summary>
+    /// Update the internal value from the outside
+    /// </summary>
+    /// <param name="newData">The new data to set</param>
     void UpdateValue(object? newData);
 
     /// <summary>

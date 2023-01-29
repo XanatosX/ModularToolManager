@@ -27,6 +27,7 @@ internal partial class BoolPluginSettingViewModel : PluginSettingBaseViewModel
         return storedModel;
     }
 
+    /// <inheritdoc/>
     public override void UpdateValue(object? newData)
     {
         if (newData is bool)
