@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
+using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels.Settings;
 using ModularToolManagerModel.Services.Functions;
@@ -53,6 +54,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// Service to use for opening windows or modals
     /// </summary>
     private readonly IWindowManagementService windowManagmentService;
+    private readonly ISettingsService settingsService;
     private readonly PluginSettingViewModelService pluginSettingView;
 
     /// <summary>
@@ -123,6 +125,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
                                 IFunctionService? functionService,
                                 IFunctionSettingsService functionSettingsService,
                                 IWindowManagementService windowManagmentService,
+                                ISettingsService settingsService,
                                 PluginSettingViewModelService pluginSettingView)
     {
         functionPlugins = new();
@@ -130,6 +133,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
         this.functionService = functionService;
         this.functionSettingsService = functionSettingsService;
         this.windowManagmentService = windowManagmentService;
+        this.settingsService = settingsService;
         this.pluginSettingView = pluginSettingView;
         if (pluginService is not null)
         {
@@ -158,11 +162,22 @@ internal partial class AddFunctionViewModel : ObservableValidator
             return;
         }
         SelectedFunctionPlugin.Plugin.ResetSettings();
-        PluginSettings = functionSettingsService.GetPluginSettingsValues(SelectedFunctionPlugin.Plugin, false)
+        List<IPluginSettingModel> settings = functionSettingsService.GetPluginSettingsValues(SelectedFunctionPlugin.Plugin, false)
                                                 .OfType<SettingModel>()
                                                 .Select(pluginSetting => pluginSettingView.GetViewModel(pluginSetting))
                                                 .OfType<IPluginSettingModel>()
                                                 .ToList();
+        var appPluginSettings = settingsService.GetApplicationSettings().PluginSettings
+                                  .FirstOrDefault(pSettings => pSettings.Plugin == SelectedFunctionPlugin.Plugin);
+        if (appPluginSettings is not null)
+        {
+            foreach (var setting in appPluginSettings.Settings ?? Enumerable.Empty<SettingModel>())
+            {
+                var matchingSettingView = settings.First(settingView => settingView.GetSettingsModel().Key == setting.Key);
+                matchingSettingView?.UpdateValue(setting.Value);
+            }
+        }
+        PluginSettings = settings;
     }
 
     /// <summary>
