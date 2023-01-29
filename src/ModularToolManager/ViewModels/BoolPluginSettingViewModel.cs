@@ -26,4 +26,13 @@ internal partial class BoolPluginSettingViewModel : PluginSettingBaseViewModel
         storedModel.SetValue(IsChecked);
         return storedModel;
     }
+
+    /// <inheritdoc/>
+    public override void UpdateValue(object? newData)
+    {
+        if (newData is bool)
+        {
+            IsChecked = (bool)newData;
+        }
+    }
 }

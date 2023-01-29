@@ -26,4 +26,13 @@ internal partial class StringPluginSettingViewModel : PluginSettingBaseViewModel
         storedModel.SetValue(SettingText);
         return storedModel;
     }
+
+    /// <inheritdoc/>
+    public override void UpdateValue(object? newData)
+    {
+        if (newData is string)
+        {
+            settingText = (string)newData;
+        }
+    }
 }
