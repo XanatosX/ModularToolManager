@@ -70,6 +70,24 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string AllPlugins_Header_Information {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string AllPlugins_Header_Settings {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modular Tool Manager.
         /// </summary>
         public static string Application_Name {
@@ -79,11 +97,29 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open project website.
+        /// </summary>
+        public static string Button_Open_Project {
+            get {
+                return ResourceManager.GetString("Button_Open_Project", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Default_Delete {
             get {
                 return ResourceManager.GetString("Default_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Default_Edit {
+            get {
+                return ResourceManager.GetString("Default_Edit", resourceCulture);
             }
         }
         
@@ -115,6 +151,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string DefaultButton_Save {
+            get {
+                return ResourceManager.GetString("DefaultButton_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for function.
         /// </summary>
         public static string FunctionSelection_SearchForFunction {
@@ -133,11 +178,11 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Report Bug.
+        ///   Looks up a localized string similar to Help.
         /// </summary>
-        public static string Menu_ReportBug {
+        public static string Menu_Help {
             get {
-                return ResourceManager.GetString("Menu_ReportBug", resourceCulture);
+                return ResourceManager.GetString("Menu_Help", resourceCulture);
             }
         }
         
@@ -169,6 +214,51 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authors:.
+        /// </summary>
+        public static string Plugin_Authors_Colon {
+            get {
+                return ResourceManager.GetString("Plugin_Authors_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        public static string Plugin_Description_Colon {
+            get {
+                return ResourceManager.GetString("Plugin_Description_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name:.
+        /// </summary>
+        public static string Plugin_DisplayName_Colon {
+            get {
+                return ResourceManager.GetString("Plugin_DisplayName_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License:.
+        /// </summary>
+        public static string Plugin_License_Colon {
+            get {
+                return ResourceManager.GetString("Plugin_License_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project url:.
+        /// </summary>
+        public static string Plugin_Url_Colon {
+            get {
+                return ResourceManager.GetString("Plugin_Url_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keep on Top.
         /// </summary>
         public static string Settings_KeepOnTop {
@@ -196,6 +286,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string SubMenu_About {
+            get {
+                return ResourceManager.GetString("SubMenu_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         public static string SubMenu_Exit {
@@ -214,6 +313,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hotkeys.
+        /// </summary>
+        public static string SubMenu_Hotkeys {
+            get {
+                return ResourceManager.GetString("SubMenu_Hotkeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string SubMenu_Language {
@@ -228,6 +336,24 @@ namespace ModularToolManager.Properties {
         public static string SubMenu_NewFunction {
             get {
                 return ResourceManager.GetString("SubMenu_NewFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins.
+        /// </summary>
+        public static string SubMenu_Plugins {
+            get {
+                return ResourceManager.GetString("SubMenu_Plugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Bug.
+        /// </summary>
+        public static string SubMenu_ReportBug {
+            get {
+                return ResourceManager.GetString("SubMenu_ReportBug", resourceCulture);
             }
         }
         
@@ -255,6 +381,15 @@ namespace ModularToolManager.Properties {
         public static string Tooltip_Show {
             get {
                 return ResourceManager.GetString("Tooltip_Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit function.
+        /// </summary>
+        public static string Window_EditFunction {
+            get {
+                return ResourceManager.GetString("Window_EditFunction", resourceCulture);
             }
         }
     }

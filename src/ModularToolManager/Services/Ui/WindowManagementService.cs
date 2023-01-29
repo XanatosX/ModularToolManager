@@ -27,6 +27,7 @@ internal class WindowManagementService : IWindowManagementService
     /// Service to use to load styles
     /// </summary>
     private readonly IStyleService styleService;
+    private readonly IImageService imageService;
 
     /// <summary>
     /// Service to use to resolve dependencies
@@ -37,11 +38,12 @@ internal class WindowManagementService : IWindowManagementService
     /// Create a new isntance of this class
     /// </summary>
     /// <param name="loggingService">The logging service to use</param>
-    public WindowManagementService(ILogger<WindowManagementService>? loggingService, IDependencyResolverService dependencyResolverService, IStyleService styleService)
+    public WindowManagementService(ILogger<WindowManagementService>? loggingService, IDependencyResolverService dependencyResolverService, IStyleService styleService, IImageService imageService)
     {
         this.loggingService = loggingService;
         this.dependencyResolverService = dependencyResolverService;
         this.styleService = styleService;
+        this.imageService = imageService;
     }
 
     /// <inheritdoc/>
@@ -85,7 +87,7 @@ internal class WindowManagementService : IWindowManagementService
             loggingService?.LogError("No content for the modal was provided, cannot open the window");
             return;
         }
-        var modalContent = new ModalWindowViewModel(modalData.Title, modalData.ImagePath, modalData.ModalContent, styleService);
+        var modalContent = new ModalWindowViewModel(modalData.Title, modalData.ImagePath, modalData.ModalContent, styleService, imageService);
         parent = parent ?? GetMainWindow();
         if (window is null)
         {

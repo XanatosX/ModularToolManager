@@ -1,17 +1,22 @@
-﻿using ModularToolManagerPlugin.Attributes;
+﻿using DefaultPlugins.Information;
+using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
 using System.Diagnostics;
-using System.Globalization;
 
 namespace DefaultPlugins;
 
 /// <summary>
 /// Plugin to run scripts on windows maschines
 /// </summary>
-public class ScriptExecutionPlugin : AbstractFunctionPlugin
+public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
 {
+    /// <summary>
+    /// The plugin information
+    /// </summary>
+    private PluginInformation? pluginInformation;
+
     /// <summary>
     /// Fallback text if a translation is missing
     /// </summary>
@@ -23,14 +28,9 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     private const string FALLBACK_SCRIPT_NOT_FOUND = "Could not find script '{0}' to execute";
 
     /// <summary>
-    /// The fallback language to use
-    /// </summary>
-    private readonly CultureInfo fallbackCulture;
-
-    /// <summary>
     /// Service to use for getting translation from this assembly
     /// </summary>
-    private readonly IPluginTranslationService? translationsService;
+    private readonly IPluginTranslationService? translationService;
 
     /// <summary>
     /// Logger service to use for logging purpose
@@ -41,7 +41,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// Sould the execution be hidden
     /// </summary>
     [Setting("hide", ModularToolManagerPlugin.Enums.SettingType.Boolean, false)]
-    public bool HideCmd { get; init; }
+    public bool HideCmd { get; set; }
 
     /// <summary>
     /// Create a new instance of this class
@@ -50,10 +50,16 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// <param name="loggingService">The logger service to use</param>
     public ScriptExecutionPlugin(IPluginTranslationService? translationService, IPluginLoggerService<ScriptExecutionPlugin>? loggingService)
     {
-        fallbackCulture = CultureInfo.GetCultureInfo("en-EN");
-        translationsService = translationService;
+        this.translationService = translationService;
         this.loggingService = loggingService;
         loggingService?.LogTrace($"Instance was created");
+    }
+
+    /// <inheritdoc/>
+    public override void ResetSettings()
+    {
+        loggingService?.LogTrace("Reset settings");
+        HideCmd = false;
     }
 
     /// <inheritdoc/>
@@ -62,7 +68,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
         loggingService?.LogTrace($"Execute plugin with path attribute '{path}' including the following parameters '{parameters}'");
         if (!File.Exists(path))
         {
-            string baseMessage = translationsService?.GetTranslationByKey("error_cant_find_script_file", fallbackCulture) ?? FALLBACK_SCRIPT_NOT_FOUND;
+            string baseMessage = translationService?.GetTranslationByKey("error_cant_find_script_file") ?? FALLBACK_SCRIPT_NOT_FOUND;
             loggingService?.LogError(baseMessage, path);
             return false;
         }
@@ -70,6 +76,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
         ProcessStartInfo startInfo = new ProcessStartInfo
         {
             FileName = path,
+            Arguments = parameters
         };
         Process.Start(startInfo);
         loggingService?.LogTrace($"Executing of plugin done");
@@ -80,14 +87,7 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     public override string GetDisplayName()
     {
         loggingService?.LogTrace($"Requested display name");
-        return translationsService?.GetTranslationByKey("script-displayname", fallbackCulture) ?? "Script Execution";
-    }
-
-    /// <inheritdoc/>
-    public override Version GetVersion()
-    {
-        loggingService?.LogTrace($"Requested version");
-        return Version.Parse("0.1.0.0");
+        return translationService?.GetTranslationByKey("script-displayname") ?? "Script Execution";
     }
 
     /// <inheritdoc/>
@@ -114,9 +114,9 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
         loggingService?.LogTrace($"Create windows extensions");
         return new List<FileExtension>
         {
-            new FileExtension(translationsService?.GetTranslationByKey("batch", fallbackCulture) ?? FALLBACK_TRANSLATION, "bat"),
-            new FileExtension(translationsService?.GetTranslationByKey("cmd", fallbackCulture) ?? FALLBACK_TRANSLATION, "cmd"),
-            new FileExtension(translationsService?.GetTranslationByKey("powershell", fallbackCulture) ?? FALLBACK_TRANSLATION, "ps")
+            new FileExtension(translationService?.GetTranslationByKey("batch") ?? FALLBACK_TRANSLATION, "bat"),
+            new FileExtension(translationService?.GetTranslationByKey("cmd") ?? FALLBACK_TRANSLATION, "cmd"),
+            new FileExtension(translationService?.GetTranslationByKey("powershell") ?? FALLBACK_TRANSLATION, "ps")
         };
     }
 
@@ -124,6 +124,12 @@ public class ScriptExecutionPlugin : AbstractFunctionPlugin
     public override void Dispose()
     {
         loggingService?.LogTrace("Dispose plugin");
-        //Nothing to dispose!
+    }
+
+    /// <inheritdoc/>
+    public override PluginInformation GetPluginInformation()
+    {
+        pluginInformation = pluginInformation ?? PluginInformationFactory.Instance.GetPluginInformation(translationService?.GetTranslationByKey("script-description") ?? FALLBACK_TRANSLATION);
+        return pluginInformation;
     }
 }

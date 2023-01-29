@@ -1,5 +1,6 @@
 ﻿using ModularToolManager.Converters.Serialization;
 using ModularToolManagerModel.Services.Plugin;
+using System.ComponentModel;
 using System.Text.Json;
 
 namespace ModularToolManagerModel.Services.Serialization;
@@ -28,6 +29,7 @@ internal class JsonSerializationOptionFactory : ISerializationOptionFactory<Json
     {
         JsonSerializerOptions options = new JsonSerializerOptions();
         options.Converters.Add(new PluginConverter(pluginService));
+        options.Converters.Add(new CultureInfoJsonConverter());
         return options;
     }
 }

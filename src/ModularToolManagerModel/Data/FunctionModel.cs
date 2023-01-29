@@ -1,4 +1,5 @@
-﻿using ModularToolManagerPlugin.Plugin;
+﻿using ModularToolManagerPlugin.Models;
+using ModularToolManagerPlugin.Plugin;
 
 namespace ModularToolManager.Models
 {
@@ -41,6 +42,11 @@ namespace ModularToolManager.Models
         /// The sort order of the function
         /// </summary>
         public int SortOrder { get; set; }
+
+        /// <summary>
+        /// The settings for this specific function
+        /// </summary>
+        public IEnumerable<SettingModel> Settings { get; set; }
 
         /// <summary>
         /// Create a new instance of ths class

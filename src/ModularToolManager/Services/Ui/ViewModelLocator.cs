@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
 using ModularToolManagerModel.Services.Dependency;
-using NLog.LayoutRenderers;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -35,7 +34,7 @@ public class ViewModelLocator : IViewModelLocatorService
     /// <inheritdoc/>
     public ObservableObject? GetViewModel(string name)
     {
-        Type type = GetViewModelType(name);
+        Type? type = GetViewModelType(name);
         return type is null ? null : dependencyResolverService?.GetDependency(type) as ObservableObject;
     }
 

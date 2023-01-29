@@ -1,16 +1,23 @@
-﻿using ModularToolManagerPlugin.Models;
+﻿using DefaultPlugins.Information;
+using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Enums;
+using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
 using System.Diagnostics;
-using System.Globalization;
 
 namespace DefaultPlugins;
 
 /// <summary>
 /// Plugin for executing binaries on the system
 /// </summary>
-public class BinaryExecutionPlugin : AbstractFunctionPlugin
+public sealed class BinaryExecutionPlugin : AbstractFunctionPlugin
 {
+    /// <summary>
+    /// The plugin information
+    /// </summary>
+    private PluginInformation? pluginInformation;
+
     /// <summary>
     /// The translation service to use
     /// </summary>
@@ -32,9 +39,10 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     private const string FALLBACK_SCRIPT_NOT_FOUND = "Could not find binary file '{0}' to run";
 
     /// <summary>
-    /// The fallback language to use
+    /// Setting if the application should be startet as a administrator
     /// </summary>
-    private readonly CultureInfo fallbackCulture;
+    [Setting("adminRequired", SettingType.Boolean, false)]
+    public bool RunAsAdministrator { get; set; }
 
     /// <summary>
     /// Create a new instance of this class
@@ -43,9 +51,14 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     /// <param name="loggingService">The logger service to use</param>
     public BinaryExecutionPlugin(IPluginTranslationService translationService, IPluginLoggerService<BinaryExecutionPlugin> loggingService)
     {
-        fallbackCulture = CultureInfo.GetCultureInfo("en-EN");
         this.translationService = translationService;
         this.loggingService = loggingService;
+    }
+
+    /// <inheritdoc/>
+    public override void ResetSettings()
+    {
+        RunAsAdministrator = false;
     }
 
     /// <inheritdoc/>
@@ -54,7 +67,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
         loggingService?.LogTrace($"Execute plugin with path attribute '{path}' including the following parameters '{parameters}'");
         if (!File.Exists(path))
         {
-            string baseMessage = translationService?.GetTranslationByKey("error_cant_find_binary_file", fallbackCulture) ?? FALLBACK_SCRIPT_NOT_FOUND;
+            string baseMessage = translationService?.GetTranslationByKey("error_cant_find_binary_file") ?? FALLBACK_SCRIPT_NOT_FOUND;
             loggingService?.LogError(baseMessage, path);
             return false;
         }
@@ -62,7 +75,13 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
         ProcessStartInfo startInfo = new ProcessStartInfo
         {
             FileName = path,
+            Arguments = parameters
         };
+        if (RunAsAdministrator)
+        {
+            startInfo.Verb = "runas";
+            startInfo.UseShellExecute = true;
+        }
         try
         {
             Process.Start(startInfo);
@@ -92,7 +111,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
         loggingService?.LogTrace($"Create windows extensions");
         return new List<FileExtension>
         {
-            new FileExtension(translationService?.GetTranslationByKey("executable", fallbackCulture) ?? FALLBACK_TRANSLATION, "exe"),
+            new FileExtension(translationService?.GetTranslationByKey("executable") ?? FALLBACK_TRANSLATION, "exe"),
 
         };
     }
@@ -101,14 +120,7 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     public override string GetDisplayName()
     {
         loggingService?.LogTrace($"Requested display name");
-        return translationService?.GetTranslationByKey("binary-displayname", fallbackCulture) ?? "Script Execution";
-    }
-
-    /// <inheritdoc/>
-    public override Version GetVersion()
-    {
-        loggingService?.LogTrace($"Requested version");
-        return Version.Parse("0.1.0.0");
+        return translationService?.GetTranslationByKey("binary-displayname") ?? "Start executable binary file";
     }
 
     /// <inheritdoc/>
@@ -122,5 +134,12 @@ public class BinaryExecutionPlugin : AbstractFunctionPlugin
     public override void Dispose()
     {
         loggingService?.LogTrace("Dispose plugin");
+    }
+
+    /// <inheritdoc/>
+    public override PluginInformation GetPluginInformation()
+    {
+        pluginInformation = pluginInformation ?? PluginInformationFactory.Instance.GetPluginInformation(translationService?.GetTranslationByKey("binary-description") ?? FALLBACK_TRANSLATION);
+        return pluginInformation;
     }
 }

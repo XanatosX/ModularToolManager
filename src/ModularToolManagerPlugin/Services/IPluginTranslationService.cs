@@ -40,18 +40,16 @@ public interface IPluginTranslationService
     /// Get the translation for a given key
     /// </summary>
     /// <param name="key">The key to request the translation from</param>
-    /// <param name="fallbackCulture">The fallback langauge to use if the translation could not be found</param>
     /// <returns>The translation for the given key or the fallback value</returns>
-    string? GetTranslationByKey(string key, CultureInfo fallbackCulture);
+    string? GetTranslationByKey(string key);
 
     /// <summary>
     /// Get the translation for a given key
     /// </summary>
     /// <param name="assembly">The assembly to get the translations from</param>
     /// <param name="key">The key to request the translation from</param>
-    /// <param name="fallbackCulture">The fallback langauge to use if the translation could not be found</param>
     /// <returns>The translation for the given key or the fallback value</returns>
-    string? GetTranslationByKey(Assembly assembly, string key, CultureInfo fallbackCulture);
+    string? GetTranslationByKey(Assembly assembly, string key);
 
     /// <summary>
     /// Get all the keys available in the translations

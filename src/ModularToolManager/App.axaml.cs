@@ -3,19 +3,24 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ModularToolManager.DependencyInjection;
+using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.IO;
-using ModularToolManager.Services.Logging;
+using ModularToolManager.Services.Settings;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;
+using ModularToolManagerModel.Services.Language;
 using ModularToolManagerModel.Services.Logging;
-using NLog.Config;
-using NLog.Extensions.Logging;
-using NLog.Targets;
+using Serilog;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace ModularToolManager;
 
@@ -28,58 +33,107 @@ public class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
+    /// <summary>
+    /// Build the service collection for dependency injection
+    /// </summary>
+    /// <returns>A usable service collection</returns>
     private IServiceCollection BuildServiceCollection()
     {
-        var NLogConfiguration = new LoggingConfiguration();
-        return new ServiceCollection().AddAvaloniaDefault()
-                                      .AddServices()
+        IServiceCollection collection = new ServiceCollection();
+        return collection.AddServices()
                                       .AddViewModels()
                                       .AddViews()
                                       .AddLogging(config =>
                                       {
-                                          IPathService pathService = new PathService();
-                                          string basePath = pathService.GetSettingsFolderPathString() ?? Path.GetTempPath();
-                                          string logFolder = Path.Combine(basePath, "logs");
+                                          config.AddSerilog(CreateLoggerConfig(collection));
+                                      });
+    }
 
-                                          NLogConfiguration.AddTarget(new TraceTarget("trace-log"));
-                                          NLogConfiguration.AddTarget(new FileTarget("default-file-log")
-                                          {
-                                              FileName = Path.Combine(logFolder, "application.log"),
-                                              ArchiveAboveSize = 5242880,
-                                              MaxArchiveFiles = 10
-                                          });
-                                          NLogConfiguration.AddTarget(new FileTarget("error-log")
-                                          {
-                                              FileName = Path.Combine(logFolder, "error.log"),
-                                              ArchiveAboveSize = 5242880,
-                                              MaxArchiveFiles = 5
-                                          });
-                                          NLogConfiguration.AddRule(NLog.LogLevel.Trace, NLog.LogLevel.Debug, "trace-log");
-                                          NLogConfiguration.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Warn, "default-file-log");
-                                          NLogConfiguration.AddRule(NLog.LogLevel.Error, NLog.LogLevel.Fatal, "error-log");
-                                          config.AddNLog(NLogConfiguration);
-                                      })
-                                      .AddSingleton<ILogFileService, NLogFileService>(provider => new NLogFileService(NLogConfiguration));
+    /// <summary>
+    /// Create logger configuration for the application
+    /// </summary>
+    /// <param name="collection"></param>
+    /// <returns></returns>
+    private Serilog.ILogger CreateLoggerConfig(IServiceCollection collection)
+    {
+        var provider = collection.BuildServiceProvider();
+        IPathService pathService = provider.GetRequiredService<IPathService>();
+        string basePath = pathService.GetSettingsFolderPathString() ?? Path.GetTempPath();
+        string logFolder = Path.Combine(basePath, "logs");
+
+        string fileTemplate = "{Timestamp} [{Level:w4}] [{SourceContext}] {Message:l}{NewLine}{Exception}";
+        return new LoggerConfiguration().MinimumLevel.Debug().WriteTo
+                                                                      .File(Path.Combine(logFolder, "application.log"),
+                                                                            outputTemplate: fileTemplate,
+                                                                            rollOnFileSizeLimit: true,
+                                                                            fileSizeLimitBytes: 5242880,
+                                                                            restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Debug)
+                                                                      .WriteTo.File(Path.Combine(logFolder, "error.log"),
+                                                                                    outputTemplate: fileTemplate,
+                                                                                    rollOnFileSizeLimit: true,
+                                                                                    fileSizeLimitBytes: 5242880,
+                                                                                    restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error)
+                                                                      .Enrich.FromLogContext()
+                                                                      .CreateLogger();
     }
 
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
         var provider = BuildServiceCollection().BuildServiceProvider();
-
-        ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        Microsoft.Extensions.Logging.ILogger<App> testing = provider.GetRequiredService<Microsoft.Extensions.Logging.ILogger<App>>();
+        testing.LogError("test");
+        WeakReferenceMessenger.Default.Register<RefreshMainWindow>(this, (_, e) =>
         {
-            desktop.MainWindow = provider.GetService<MainWindow>();
-        }
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.ShutdownMode = Avalonia.Controls.ShutdownMode.OnExplicitShutdown;
+                if (desktop.MainWindow is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+                desktop.MainWindow.Close();
+                SetupMainWindow(provider);
+                desktop.MainWindow.Show();
+                desktop.ShutdownMode = Avalonia.Controls.ShutdownMode.OnLastWindowClose;
+            }
+        });
+
+        SetupApplicationContainer(provider);
+        SetupMainWindow(provider);
+
+        base.OnFrameworkInitializationCompleted();
+    }
+
+    /// <summary>
+    /// Method to setup the application main container
+    /// </summary>
+    /// <param name="provider">The provider to use for getting class instances</param>
+    private void SetupApplicationContainer(ServiceProvider provider)
+    {
+        ILanguageService langService = provider.GetRequiredService<ILanguageService>();
+        ISettingsService settingsService = provider.GetRequiredService<ISettingsService>();
+        CultureInfo language = settingsService.GetApplicationSettings().CurrentLanguage ?? CultureInfo.CurrentCulture;
+        langService.ChangeLanguage(language);
+        ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         DataContext = provider.GetService<AppViewModel>();
+
         var locator = provider.GetService<ViewLocator>();
         if (locator is not null)
         {
             DataTemplates.Add(locator);
         }
+    }
 
-
-        base.OnFrameworkInitializationCompleted();
+    /// <summary>
+    /// Method to use for setting the main Window
+    /// </summary>
+    /// <param name="provider">The provider to use for creating the main window</param>
+    private void SetupMainWindow(ServiceProvider provider)
+    {
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow = provider.GetService<MainWindow>();
+        }
     }
 }

@@ -2,8 +2,6 @@
 using ModularToolManager.Models;
 using ModularToolManager.Services.Serialization;
 using ModularToolManagerModel.Services.IO;
-using ModularToolManagerModel.Services.Logging;
-using ModularToolManagerPlugin.Plugin;
 
 namespace ModularToolManagerModel.Services.Functions;
 
@@ -36,8 +34,6 @@ public class SerializedFunctionService : IFunctionService
     /// A list with all the cached functions
     /// </summary>
     private readonly List<FunctionModel> cachedFunctions;
-
-
 
     /// <summary>
     /// Create a new instance of this class
@@ -164,5 +160,22 @@ public class SerializedFunctionService : IFunctionService
     private string GetFunctionPath()
     {
         return Path.Combine(pathService?.GetSettingsFolderPathString() ?? Path.GetTempPath(), "functions.con");
+    }
+
+    /// <inheritdoc/>
+    public bool ReplaceFunction(FunctionModel function)
+    {
+        var storedFunction = cachedFunctions.FirstOrDefault(storedFunction => storedFunction.UniqueIdentifier == function.UniqueIdentifier);
+        if (storedFunction is null)
+        {
+            return false;
+        }
+        storedFunction.DisplayName = function.DisplayName;
+        storedFunction.Description = function.Description;
+        storedFunction.SortOrder = function.SortOrder;
+        storedFunction.Parameters = function.Parameters;
+        storedFunction.Settings = function.Settings;
+        storedFunction.Path = function.Path;
+        return SaveFunctionsToDisc(cachedFunctions);
     }
 }

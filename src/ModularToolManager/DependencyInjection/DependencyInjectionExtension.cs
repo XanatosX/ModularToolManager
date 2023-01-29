@@ -1,13 +1,14 @@
-﻿using Avalonia.Controls.Templates;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.Services.Dependencies;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Language;
 using ModularToolManager.Services.Serialization;
+using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
+using ModularToolManagerModel.DependencyInjection;
 using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.IO;
@@ -16,6 +17,7 @@ using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerModel.Services.Serialization;
 using ModularToolManagerPlugin.Services;
+using System;
 using System.Text.Json;
 
 namespace ModularToolManager.DependencyInjection;
@@ -31,6 +33,7 @@ internal static class DependencyInjectionExtension
     /// </summary>
     /// <param name="collection">The collection to extend</param>
     /// <returns>The extended collection</returns>
+    [Obsolete]
     public static IServiceCollection AddAvaloniaDefault(this IServiceCollection collection)
     {
         return collection;
@@ -48,7 +51,13 @@ internal static class DependencyInjectionExtension
                          .AddTransient<MainWindowViewModel>()
                          .AddTransient<ChangeLanguageViewModel>()
                          .AddTransient<SettingsViewModel>()
-                         .AddTransient<AppViewModel>();
+                         .AddTransient<AppViewModel>()
+                         .AddTransient<AllPluginsViewModel>()
+                         .AddTransient<PluginViewModel>()
+                         .AddTransient<BoolPluginSettingViewModel>()
+                         .AddTransient<StringPluginSettingViewModel>()
+                         .AddTransient<IntPluginSettingViewModel>()
+                         .AddTransient<FloatPluginSettingView>();
     }
 
     /// <summary>
@@ -58,7 +67,7 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddViews(this IServiceCollection collection)
     {
-        return collection.AddTransient(resolver => new MainWindow(resolver?.GetService<IWindowManagementService>())
+        return collection.AddTransient(resolver => new MainWindow(resolver.GetRequiredService<IWindowManagementService>(), resolver.GetRequiredService<ISettingsService>())
         {
             DataContext = resolver?.GetService<MainWindowViewModel>(),
         })
@@ -72,21 +81,20 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddServices(this IServiceCollection collection)
     {
-        return collection.AddSingleton<IPathService, PathService>()
+        return collection.AddAllModelDependencies()
+                         .AddSingleton<IPathService, PathService>()
                          .AddSingleton<IStyleService, DefaultStyleService>()
                          .AddSingleton<IPluginTranslationService, PluginTranslationService>()
                          .AddSingleton<IFunctionSettingsService, FunctionSettingService>()
-                         .AddSingleton<IUrlOpenerService, UrlOpenerService>()
                          .AddSingleton<ILanguageService, ResourceCultureService>()
                          .AddSingleton<IWindowManagementService, WindowManagementService>()
-                         .AddSingleton<IPluginService, PluginService>()
                          .AddSingleton<ISerializationOptionFactory<JsonSerializerOptions>, JsonSerializationOptionFactory>()
-                         .AddSingleton<ISerializeService, JsonSerializationService>()
                          .AddSingleton<IFunctionService, SerializedFunctionService>()
-                         .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>))
                          .AddSingleton<IViewModelLocatorService, ViewModelLocator>()
                          .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>()
-                         .AddSingleton<IFileSystemService, FileSystemService>()
-                         .AddSingleton<ViewLocator>();
+                         .AddSingleton<ISettingsService, SerializedSettingsService>()
+                         .AddTransient<ViewLocator>()
+                         .AddSingleton<PluginSettingViewModelService>()
+                         .AddTransient<IImageService, ImageService>();
     }
 }

@@ -14,6 +14,9 @@
 				Items="{Binding FunctionPlugins}"
 				SelectedItem="{Binding SelectedFunctionPlugin}"/>
 		</DockPanel>
+		<Expander  IsVisible="{Binding PluginSettingsFound}" Header="{x:Static p:Resources.AllPlugins_Header_Settings}">
+			<ItemsControl Items="{Binding PluginSettings}"/>
+		</Expander>
 		<TextBox 
 			Watermark="{x:Static p:Resources.NewFunction_Parameters}"
 			UseFloatingWatermark="true"
@@ -32,7 +35,7 @@
 		</DockPanel>
 		<StackPanel Margin="0,10,0,0" Spacing="10" HorizontalAlignment="Center" Orientation="Horizontal">
 			<Button Content="{x:Static p:Resources.DefaultButton_Ok}" Command="{Binding OkCommand}"/>
-			<Button Content="{x:Static p:Resources.DefaultButton_Abort}" Command="{Binding AbortCommand}"/>
+			<Button Content="{x:Static p:Resources.DefaultButton_Abort}" Command="{Binding AbortCommand}" HotKey="Escape"/>
 		</StackPanel>
 	</StackPanel>
 </UserControl>
