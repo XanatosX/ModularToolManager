@@ -1,4 +1,4 @@
-name: Recent develop build
+name: Nightly build
 
 on:
   workflow_dispatch:
