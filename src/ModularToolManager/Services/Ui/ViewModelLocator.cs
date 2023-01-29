@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
 using ModularToolManagerModel.Services.Dependency;
-using NLog.LayoutRenderers;
 using System;
 using System.Linq;
 using System.Reflection;
