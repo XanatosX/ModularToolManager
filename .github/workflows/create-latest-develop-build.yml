@@ -142,6 +142,9 @@ jobs:
     needs: ["create-linux-build", "create-windows-build"]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.REF_CHECKOUT_BRANCH }}
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with: 
