@@ -81,7 +81,7 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddServices(this IServiceCollection collection)
     {
-        return collection.AddAllModelDepdencies()
+        return collection.AddAllModelDependencies()
                          .AddSingleton<IPathService, PathService>()
                          .AddSingleton<IStyleService, DefaultStyleService>()
                          .AddSingleton<IPluginTranslationService, PluginTranslationService>()

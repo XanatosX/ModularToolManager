@@ -56,7 +56,7 @@ public static class ModelDependencyInjection
     /// </summary>
     /// <param name="collection">The collection to add the dependencies to</param>
     /// <returns>The collection with the additional dependencies</returns>
-    public static IServiceCollection AddAllModelDepdencies(this IServiceCollection collection)
+    public static IServiceCollection AddAllModelDependencies(this IServiceCollection collection)
     {
         return collection.AddModelDependencies()
                          .AddAdditionalDependencies();
