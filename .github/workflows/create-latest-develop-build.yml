@@ -25,23 +25,31 @@ jobs:
       should_run: ${{ steps.should_run.outputs.should_run }}
     steps:
       - uses: actions/checkout@v3
-        if: ${{ env.DEBUG == 'true' }}
-      - uses: actions/checkout@v3
-        if: ${{ env.DEBUG == 'false' }}
         with:
           ref: ${{ env.REF_CHECKOUT_BRANCH }}
       - name: get latest commit and check it
-        id: should_run
+        id: should-run
         continue-on-error: true
         if: ${{ env.DEBUG == 'true' }} || ${{ github.event_name == 'schedule' }}
+        # Based on https://stackoverflow.com/questions/63014786/how-to-schedule-a-github-actions-nightly-build-but-run-it-only-when-there-where
+        # @Note: Check the comments on the solution!
         run: |
-           echo "::set-output name=should_run::true" 
-           sha=$(git log -n 1 --pretty=format:"%H")
-           echo $sha
-           test -z $(git rev-list  --after="24 hours" $sha) && echo "::set-output name=should_run::false"
+          latest=$(git log -n 1 --pretty=format:"%H")
+          # For debug testing remove ${{ env.REF_CHECKOUT_BRANCH }}
+          sha=$(git rev-list ${{ env.REF_CHECKOUT_BRANCH }} --after="24 hours" $latest)
+          echo $sha
+          echo Do the check now
+          if test -z $sha
+          then
+            echo "Check failed"
+            echo "should-run=false" >> $GITHUB_OUTPUT
+          else
+            echo "Check successful"
+            echo "should-run=true" >> $GITHUB_OUTPUT
+          fi
   check-build:
     name: Check and Test build
-    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
+    if: needs.check-for-changes.outputs.should-run == 'true' 
     needs: [check-for-changes]
     runs-on: ubuntu-latest
     steps:
@@ -61,7 +69,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
   create-windows-build:
     name: Create Windows build
-    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
+    if: needs.check-for-changes.outputs.should-run == 'true' 
     needs: ["check-build"]
     runs-on: windows-latest
     steps:
@@ -95,7 +103,7 @@ jobs:
        if-no-files-found: error
   create-linux-build:
     name: Create Linux build
-    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
+    if: needs.check-for-changes.outputs.should-run == 'true' 
     needs: ["check-build"]
     runs-on: ubuntu-latest
     steps:
@@ -129,12 +137,12 @@ jobs:
        if-no-files-found: error
   create-release:
     name: Create GitHub Release
-    if: ${{ needs.check-for-changes.outputs.should_run == 'true' }}
+    if: needs.check-for-changes.outputs.should-run == 'true' 
     needs: ["create-linux-build", "create-windows-build"]
     runs-on: ubuntu-latest
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with: 
           path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
       - name: Zip Windows build
@@ -142,21 +150,37 @@ jobs:
           cd ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_ARTIFACT_NAME
           zip -r $WINDOWS_ARTIFACT_NAME.zip ./*
           mv $WINDOWS_ARTIFACT_NAME.zip ../
+          rm -rf ./../$WINDOWS_ARTIFACT_NAME
       - name: Zip Linux build
         run: |
           cd ./$RELEASE_ARTIFACT_FOLDER/$LINUX_ARTIFACT_NAME
           zip -r $LINUX_ARTIFACT_NAME.zip ./*
           mv $LINUX_ARTIFACT_NAME.zip ../
+          rm -rf ./../$LINUX_ARTIFACT_NAME
       - name: display artifacts folder content
         if: ${{ env.DEBUG == 'true' }}
         run: ls -la $RELEASE_ARTIFACT_FOLDER
-      - uses: ncipollo/release-action@v1
-        with:
-          name: ${{ env.RELEASE_NAME }} [${{ GITHUB.RUN_NUMBER }}]
-          tag: Develop-${{ GITHUB.RUN_NUMBER }}
-          generateReleaseNotes: true
-          body: Recent version of the develop branch, ready for testing
-          draft: ${{ env.DEBUG }}
-          prerelease: true
-          artifacts: ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.zip
-          artifactContentType: "application/zip"
+      - name: Create release and upload artifacts (DEBUG)
+        if:  ${{ env.DEBUG == 'true' }}
+        run: |
+          gh release create Develop-${{ GITHUB.RUN_NUMBER }} \
+            --title "${{ env.RELEASE_NAME }} [${{ GITHUB.RUN_NUMBER }}]" --target ${{ env.REF_CHECKOUT_BRANCH }} \
+            --generate-notes --prerelease ${parameters}  --notes "Recent version of the develop branch, ready for testing" \
+            -d ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.*
+      - name: Create release and upload artifacts
+        if:  ${{ env.DEBUG == 'false' }}
+        run: |
+          gh release create Develop-${{ GITHUB.RUN_NUMBER }} \
+            --title "${{ env.RELEASE_NAME }} [${{ GITHUB.RUN_NUMBER }}]" --target ${{ env.REF_CHECKOUT_BRANCH }} \
+            --generate-notes --prerelease ${parameters}  --notes "Recent version of the develop branch, ready for testing" \
+            ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.* --discussion-category "Releases"
+      #- uses: ncipollo/release-action@v1
+      #  with:
+      #    name: ${{ env.RELEASE_NAME }} [${{ GITHUB.RUN_NUMBER }}]
+      #    tag: Develop-${{ GITHUB.RUN_NUMBER }}
+      #    generateReleaseNotes: true
+      #    body: Recent version of the develop branch, ready for testing
+      #    draft: ${{ env.DEBUG }}
+      #    prerelease: true
+      #    artifacts: ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.zip
+      #    artifactContentType: "application/zip"
