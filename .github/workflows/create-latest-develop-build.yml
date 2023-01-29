@@ -4,10 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: 0 0 * * *
-  push:
 
 env:
-  DEBUG: true
+  DEBUG: false
   REF_CHECKOUT_BRANCH: develop
   RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
@@ -180,14 +179,3 @@ jobs:
             --title "${{ env.RELEASE_NAME }} [${{ GITHUB.RUN_NUMBER }}]" --target ${{ env.REF_CHECKOUT_BRANCH }} \
             --generate-notes --prerelease ${parameters}  --notes "Recent version of the develop branch, ready for testing" \
             ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.* --discussion-category "Releases"
-            
-      #- uses: ncipollo/release-action@v1
-      #  with:
-      #    name: ${{ env.RELEASE_NAME }} [${{ GITHUB.RUN_NUMBER }}]
-      #    tag: Develop-${{ GITHUB.RUN_NUMBER }}
-      #    generateReleaseNotes: true
-      #    body: Recent version of the develop branch, ready for testing
-      #    draft: ${{ env.DEBUG }}
-      #    prerelease: true
-      #    artifacts: ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.zip
-      #    artifactContentType: "application/zip"
