@@ -27,7 +27,9 @@ public class JsonSerializationService : ISerializeService
     /// <param name="serializationOptionFactory">The factory to use for creating the serialization options</param>
     /// /// <param name="loggingService">The logging service to use</param>
     /// <exception cref="NullReferenceException">A empty factory was recievend, the class cannot be used</exception>
-    public JsonSerializationService(ISerializationOptionFactory<JsonSerializerOptions>? serializationOptionFactory, ILogger<JsonSerializationService>? loggingService)
+    public JsonSerializationService(
+        ISerializationOptionFactory<JsonSerializerOptions>? serializationOptionFactory,
+        ILogger<JsonSerializationService>? loggingService)
     {
         jsonSerializerOptions = serializationOptionFactory?.CreateOptions() ?? throw new NullReferenceException();
         this.loggingService = loggingService;
