@@ -163,6 +163,8 @@ jobs:
         run: ls -la $RELEASE_ARTIFACT_FOLDER
       - name: Create release and upload artifacts (DEBUG)
         if:  ${{ env.DEBUG == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh release create Develop-${{ GITHUB.RUN_NUMBER }} \
             --title "${{ env.RELEASE_NAME }} [${{ GITHUB.RUN_NUMBER }}]" --target ${{ env.REF_CHECKOUT_BRANCH }} \
