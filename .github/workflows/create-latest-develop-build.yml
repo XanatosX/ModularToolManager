@@ -4,9 +4,10 @@ on:
   workflow_dispatch:
   schedule:
     - cron: 0 0 * * *
+  push:
 
 env:
-  DEBUG: false
+  DEBUG: true
   REF_CHECKOUT_BRANCH: develop
   RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
