@@ -173,7 +173,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
         {
             foreach (var setting in appPluginSettings.Settings ?? Enumerable.Empty<SettingModel>())
             {
-                var matchingSettingView = settings.First(settingView => settingView.GetSettingsModel().Key == setting.Key);
+                var matchingSettingView = settings.FirstOrDefault(settingView => settingView.GetSettingsModel().Key == setting.Key);
                 matchingSettingView?.UpdateValue(setting.Value);
             }
         }
