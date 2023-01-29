@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using ModularToolManagerPlugin.Enums;
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -8,6 +9,7 @@ namespace ModularToolManagerPlugin.Models;
 /// <summary>
 /// Plugin settings ready to save on the disc
 /// </summary>
+[Obsolete]
 public class PersistantPluginSetting
 {
 	/// <summary>
