@@ -8,7 +8,7 @@ namespace ModularToolManager.Services.Dependencies;
 /// <summary>
 /// Class to warp the microsoft services provider into a service
 /// </summary>
-internal class MicrosoftDepdencyResolverService : IDependencyResolverService
+internal sealed class MicrosoftDepdencyResolverService : IDependencyResolverService
 {
     private readonly IServiceProvider serviceProvider;
 
@@ -36,7 +36,18 @@ internal class MicrosoftDepdencyResolverService : IDependencyResolverService
     /// <inheritdoc/>
     public T? GetDependency<T>()
     {
-        return serviceProvider.GetService<T>() ?? ActivatorUtilities.CreateInstance<T>(serviceProvider);
+        return GetDependency<T>(null);
+    }
+
+    /// <inheritdoc/>
+    public T? GetDependency<T>(Action<T?>? furtherInitilization)
+    {
+        T? returnData = serviceProvider.GetService<T>() ?? ActivatorUtilities.CreateInstance<T>(serviceProvider);
+        if (furtherInitilization is not null)
+        {
+            furtherInitilization(returnData);
+        }
+        return returnData;
     }
 
     /// <inheritdoc/>

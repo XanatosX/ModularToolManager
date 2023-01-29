@@ -120,14 +120,29 @@
   <data name="AddFunction_FunctionPathWatermark" xml:space="preserve">
     <value>Pfad zur Funktion</value>
   </data>
+  <data name="AllPlugins_Header_Information" xml:space="preserve">
+    <value>Informationen</value>
+  </data>
+  <data name="AllPlugins_Header_Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="Button_Open_Project" xml:space="preserve">
+    <value>Projekt Website im Browser öffnen</value>
+  </data>
   <data name="DefaultButton_Abort" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
   <data name="DefaultButton_Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="DefaultButton_Save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
   <data name="Default_Delete" xml:space="preserve">
     <value>Löschen</value>
+  </data>
+  <data name="Default_Edit" xml:space="preserve">
+    <value>Editieren</value>
   </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Nach Funktion suchen</value>
@@ -135,8 +150,8 @@
   <data name="Menu_File" xml:space="preserve">
     <value>Datei</value>
   </data>
-  <data name="Menu_ReportBug" xml:space="preserve">
-    <value>Fehler Melden</value>
+  <data name="Menu_Help" xml:space="preserve">
+    <value>Hilfe</value>
   </data>
   <data name="NewFunction_Description" xml:space="preserve">
     <value>Funktionsbeschreibung</value>
@@ -147,6 +162,21 @@
   <data name="NewFunction_Parameters" xml:space="preserve">
     <value>Funktions Parameter</value>
   </data>
+  <data name="Plugin_Authors_Colon" xml:space="preserve">
+    <value>Autoren:</value>
+  </data>
+  <data name="Plugin_Description_Colon" xml:space="preserve">
+    <value>Beschreibung:</value>
+  </data>
+  <data name="Plugin_DisplayName_Colon" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="Plugin_License_Colon" xml:space="preserve">
+    <value>Lizenz:</value>
+  </data>
+  <data name="Plugin_Url_Colon" xml:space="preserve">
+    <value>Projekt Link:</value>
+  </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>
   </data>
@@ -156,17 +186,26 @@
   <data name="Settings_StartMinimized" xml:space="preserve">
     <value>Minimiert starten</value>
   </data>
+  <data name="SubMenu_About" xml:space="preserve">
+    <value>Über</value>
+  </data>
   <data name="SubMenu_Exit" xml:space="preserve">
     <value>Beenden</value>
   </data>
   <data name="SubMenu_Hide" xml:space="preserve">
     <value>Verstecken</value>
   </data>
+  <data name="SubMenu_Hotkeys" xml:space="preserve">
+    <value>Hotkeys</value>
+  </data>
   <data name="SubMenu_Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
   <data name="SubMenu_NewFunction" xml:space="preserve">
     <value>Neue Funktion</value>
+  </data>
+  <data name="SubMenu_ReportBug" xml:space="preserve">
+    <value>Fehler Melden</value>
   </data>
   <data name="SubMenu_Settings" xml:space="preserve">
     <value>Einstellungen</value>
@@ -176,5 +215,8 @@
   </data>
   <data name="Tooltip_Show" xml:space="preserve">
     <value>Application anzeigen</value>
+  </data>
+  <data name="Window_EditFunction" xml:space="preserve">
+    <value>Funktion anpassen</value>
   </data>
 </root>

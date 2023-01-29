@@ -8,9 +8,9 @@ namespace ModularToolManager.Models.Messages;
 internal class DeleteFunctionMessage : RequestMessage<bool>
 {
 	/// <summary>
-	/// The function which got deleted
+	/// The function Identifier to delete
 	/// </summary>
-	public FunctionModel Function { get; init; }
+	public string Identifier { get; init; }
 
 	/// <summary>
 	/// Create a new instance of this message
@@ -18,6 +18,6 @@ internal class DeleteFunctionMessage : RequestMessage<bool>
 	/// <param name="functionModel">The function to delete</param>
 	public DeleteFunctionMessage(FunctionModel functionModel)
 	{
-		Function = functionModel;
+		Identifier = functionModel.UniqueIdentifier;
 	}
 }

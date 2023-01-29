@@ -1,11 +1,17 @@
-﻿using ModularToolManagerPlugin.Models;
+﻿using Microsoft.Extensions.Logging;
+using ModularToolManagerModel.Services.Language;
+using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Services;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace ModularToolManagerModel.Services.Language;
+namespace ModularToolManager.Services.Language;
 
 /// <summary>
 /// Plugin translation service to get translations inside of the plugins
@@ -16,6 +22,27 @@ public sealed class PluginTranslationService : IPluginTranslationService
     /// Regex to get the translation files from the resources
     /// </summary>
     private const string JSON_TRANSLATION_REGEX = @"[a-zA-Z\.]*\.Translations\.([a-z]{2}-[A-Z]{2}.json)";
+
+    /// <summary>
+    /// The language service to use
+    /// </summary>
+    private readonly ILanguageService languageService;
+
+    /// <summary>
+    /// The logger to use
+    /// </summary>
+    private readonly ILogger<PluginTranslationService> logger;
+
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="languageService">The langauge service to use</param>
+    /// <param name="logger">The logger to use</param>
+    public PluginTranslationService(ILanguageService languageService, ILogger<PluginTranslationService> logger)
+    {
+        this.languageService = languageService;
+        this.logger = logger;
+    }
 
     /// <inheritdoc/>
     public List<TranslationModel> GetAllTranslations(Assembly assemblyToUse)
@@ -85,7 +112,7 @@ public sealed class PluginTranslationService : IPluginTranslationService
     /// <returns>A string with the filepath or null if nothing was found</returns>
     private string? GetTranslationResourceByCulture(Assembly assembly, CultureInfo culture)
     {
-        return GetTranslationManifests(assembly).FirstOrDefault(path => path.EndsWith(culture.Name + ".json"));
+        return GetTranslationManifests(assembly).FirstOrDefault(path => path.EndsWith(culture.Name.ToUpper() + ".json"));
     }
 
     /// <summary>
@@ -108,17 +135,17 @@ public sealed class PluginTranslationService : IPluginTranslationService
     }
 
     /// <inheritdoc/>
-    public string? GetTranslationByKey(string key, CultureInfo fallbackCulture)
+    public string? GetTranslationByKey(string key)
     {
-        return GetTranslationByKey(Assembly.GetCallingAssembly(), key, fallbackCulture);
+        return GetTranslationByKey(Assembly.GetCallingAssembly(), key);
 
     }
 
     /// <inheritdoc/>
-    public string? GetTranslationByKey(Assembly assembly, string key, CultureInfo fallbackCulture)
+    public string? GetTranslationByKey(Assembly assembly, string key)
     {
         string? translation = null;
-        string cultureFile = GetCultureTranslationFile(fallbackCulture, assembly);
+        string cultureFile = GetCultureTranslationFile(assembly);
         try
         {
             translation = GetTranslationsFromFile(assembly, cultureFile)?
@@ -127,7 +154,7 @@ public sealed class PluginTranslationService : IPluginTranslationService
         }
         catch (Exception)
         {
-            //No translation found, keep as null
+            logger.LogError($"Could not find a translation file in assemlby {assembly.FullName} with key {key}");
         }
         return translation;
     }
@@ -149,10 +176,9 @@ public sealed class PluginTranslationService : IPluginTranslationService
     /// <param name="fallbackCulture">The fallback culture to use if no translation for the current culture can be found</param>
     /// <param name="assembly">The assembly to search the translation file in</param>
     /// <returns>Get the path to translation file of the given culture</returns>
-    private string GetCultureTranslationFile(CultureInfo fallbackCulture, Assembly assembly)
+    private string GetCultureTranslationFile(Assembly assembly)
     {
-        string? cultureFile = GetTranslationResourceByCulture(assembly, GetCurrentCulture());
-        cultureFile = cultureFile ?? GetTranslationResourceByCulture(assembly, fallbackCulture);
+        string? cultureFile = GetTranslationResourceByCulture(assembly, GetCurrentCulture()) ?? GetTranslationResourceByCulture(assembly, GetFallbackLanguage());
         return cultureFile ?? string.Empty;
     }
 
@@ -189,15 +215,12 @@ public sealed class PluginTranslationService : IPluginTranslationService
     /// <returns>The current culture information of the main application</returns>
     private CultureInfo GetCurrentCulture()
     {
-        //@TODO use correct culture as soon as we save it!
-        CultureInfo culture = CultureInfo.CurrentUICulture;
-        return culture;
+        return languageService.GetCurrentLanguage() ?? CultureInfo.CurrentUICulture;
     }
 
     /// <inheritdoc/>
     public CultureInfo GetFallbackLanguage()
     {
-        //@Todo add fallback language logic here
-        return null;
+        return languageService.GetFallbackLanguage() ?? CultureInfo.GetCultureInfo("eng");
     }
 }

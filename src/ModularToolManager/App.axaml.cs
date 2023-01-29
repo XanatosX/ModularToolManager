@@ -3,18 +3,23 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.DependencyInjection;
+using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Logging;
+using ModularToolManager.Services.Settings;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;
+using ModularToolManagerModel.Services.Language;
 using ModularToolManagerModel.Services.Logging;
 using NLog.Config;
 using NLog.Extensions.Logging;
 using NLog.Targets;
 using System;
+using System.Globalization;
 using System.IO;
 
 namespace ModularToolManager;
@@ -28,6 +33,10 @@ public class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
+    /// <summary>
+    /// Build the service collection for dependency injection
+    /// </summary>
+    /// <returns>A usable service collection</returns>
     private IServiceCollection BuildServiceCollection()
     {
         var NLogConfiguration = new LoggingConfiguration();
@@ -67,19 +76,57 @@ public class App : Application
     {
         var provider = BuildServiceCollection().BuildServiceProvider();
 
-        ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        WeakReferenceMessenger.Default.Register<RefreshMainWindow>(this, (_, e) =>
         {
-            desktop.MainWindow = provider.GetService<MainWindow>();
-        }
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.ShutdownMode = Avalonia.Controls.ShutdownMode.OnExplicitShutdown;
+                if (desktop.MainWindow is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+                desktop.MainWindow.Close();
+                SetupMainWindow(provider);
+                desktop.MainWindow.Show();
+                desktop.ShutdownMode = Avalonia.Controls.ShutdownMode.OnLastWindowClose;
+            }
+        });
+
+        SetupApplicationContainer(provider);
+        SetupMainWindow(provider);
+
+        base.OnFrameworkInitializationCompleted();
+    }
+
+    /// <summary>
+    /// Method to setup the application main container
+    /// </summary>
+    /// <param name="provider">The provider to use for getting class instances</param>
+    private void SetupApplicationContainer(ServiceProvider provider)
+    {
+        ILanguageService langService = provider.GetRequiredService<ILanguageService>();
+        ISettingsService settingsService = provider.GetRequiredService<ISettingsService>();
+        CultureInfo language = settingsService.GetApplicationSettings().CurrentLanguage ?? CultureInfo.CurrentCulture;
+        langService.ChangeLanguage(language);
+        ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         DataContext = provider.GetService<AppViewModel>();
+
         var locator = provider.GetService<ViewLocator>();
         if (locator is not null)
         {
             DataTemplates.Add(locator);
         }
+    }
 
-
-        base.OnFrameworkInitializationCompleted();
+    /// <summary>
+    /// Method to use for setting the main Window
+    /// </summary>
+    /// <param name="provider">The provider to use for creating the main window</param>
+    private void SetupMainWindow(ServiceProvider provider)
+    {
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.MainWindow = provider.GetService<MainWindow>();
+        }
     }
 }

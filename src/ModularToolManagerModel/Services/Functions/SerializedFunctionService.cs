@@ -165,4 +165,20 @@ public class SerializedFunctionService : IFunctionService
     {
         return Path.Combine(pathService?.GetSettingsFolderPathString() ?? Path.GetTempPath(), "functions.con");
     }
+
+    /// <inheritdoc/>
+    public bool ReplaceFunction(FunctionModel function)
+    {
+        var storedFunction = cachedFunctions.FirstOrDefault(storedFunction => storedFunction.UniqueIdentifier == function.UniqueIdentifier);
+        if (storedFunction is null)
+        {
+            return false;
+        }
+        storedFunction.DisplayName = function.DisplayName;
+        storedFunction.Description = function.Description;
+        storedFunction.SortOrder = function.SortOrder;
+        storedFunction.Parameters = function.Parameters;
+        storedFunction.Path = function.Path;
+        return SaveFunctionsToDisc(cachedFunctions);
+    }
 }

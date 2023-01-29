@@ -13,6 +13,14 @@ public abstract class AbstractFunctionPlugin : IFunctionPlugin
     /// </summary>
     protected CultureInfo? currentCulture;
 
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    protected AbstractFunctionPlugin()
+    {
+        ResetSettings();
+    }
+
     /// <inheritdoc/>
     public void ChangeLanguage(CultureInfo culture)
     {
@@ -31,9 +39,11 @@ public abstract class AbstractFunctionPlugin : IFunctionPlugin
     /// <inheritdoc/>
     public abstract string GetDisplayName();
 
-    /// <inheritdoc/>
-    public abstract Version GetVersion();
+    public abstract PluginInformation GetPluginInformation();
 
     /// <inheritdoc/>
     public abstract bool IsOperationSystemValid();
+
+    /// <inheritdoc/>
+    public abstract void ResetSettings();
 }

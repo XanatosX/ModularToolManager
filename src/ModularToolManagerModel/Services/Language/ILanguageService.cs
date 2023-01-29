@@ -40,4 +40,16 @@ public interface ILanguageService
     /// <param name="culture">The culutre to check if it is valid</param>
     /// <returns>True if the provided culture is valid</returns>
     void ValidLanguage(CultureInfoModel newCulture) => ValidLanguage(newCulture.Culture);
+
+    /// <summary>
+    /// Get the current language
+    /// </summary>
+    /// <returns>The current culture info</returns>
+    CultureInfo? GetCurrentLanguage();
+
+    /// <summary>
+    /// Get the fallback language
+    /// </summary>
+    /// <returns>The fallback culture info</returns>
+    CultureInfo? GetFallbackLanguage();
 }

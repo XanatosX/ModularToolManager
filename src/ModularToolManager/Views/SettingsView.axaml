@@ -21,8 +21,8 @@
 				/>
 		</StackPanel>
 		<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
-			<Button Content="{x:Static p:Resources.DefaultButton_Ok}"/>
-			<Button Content="{x:Static p:Resources.DefaultButton_Abort}"/>
+			<Button Content="{x:Static p:Resources.DefaultButton_Ok}" Command="{Binding OkCommand}"/>
+			<Button Content="{x:Static p:Resources.DefaultButton_Abort}" Command="{Binding AbortCommand}" HotKey="Escape"/>
 		</StackPanel>
 	</Grid>
 </UserControl>
