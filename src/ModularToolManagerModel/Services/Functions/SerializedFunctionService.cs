@@ -174,6 +174,7 @@ public class SerializedFunctionService : IFunctionService
         storedFunction.Description = function.Description;
         storedFunction.SortOrder = function.SortOrder;
         storedFunction.Parameters = function.Parameters;
+        storedFunction.Settings = function.Settings;
         storedFunction.Path = function.Path;
         return SaveFunctionsToDisc(cachedFunctions);
     }

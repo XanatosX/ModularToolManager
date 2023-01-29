@@ -5,8 +5,10 @@ using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Ui;
+using ModularToolManager.ViewModels.Settings;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.Plugin;
+using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Services;
 using System;
 using System.Collections.Generic;
@@ -31,18 +33,27 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// Private list for all the function plugins
     /// </summary>
     private readonly List<FunctionPluginViewModel> functionPlugins;
+
+    /// <summary>
+    /// The service used to get plugins
+    /// </summary>
     private readonly IPluginService? pluginService;
+
+    /// <summary>
+    /// The service used to get the function settings
+    /// </summary>
+    private readonly IFunctionSettingsService functionSettingsService;
 
     /// <summary>
     /// The function service to use
     /// </summary>
     private readonly IFunctionService? functionService;
-    private readonly IFunctionSettingsService functionSettingsService;
 
     /// <summary>
     /// Service to use for opening windows or modals
     /// </summary>
     private readonly IWindowManagementService windowManagmentService;
+    private readonly PluginSettingViewModelService pluginSettingView;
 
     /// <summary>
     /// The display name of the function
@@ -89,6 +100,15 @@ internal partial class AddFunctionViewModel : ObservableValidator
     [NotifyCanExecuteChangedFor(nameof(OkCommand))]
     private string? selectedPath;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PluginSettingsFound))]
+    private List<IPluginSettingModel>? pluginSettings;
+
+    /// <summary>
+    /// Should the settings part be visible
+    /// </summary>
+    public bool PluginSettingsFound => PluginSettings?.Any() ?? false;
+
     /// <summary>
     /// The identifier to use for the function
     /// </summary>
@@ -99,13 +119,18 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// </summary>
     /// <param name="pluginService">The plugin service to use</param>
     /// <param name="functionService">The function service to use</param>
-    public AddFunctionViewModel(IPluginService? pluginService, IFunctionService? functionService, IFunctionSettingsService functionSettingsService, IWindowManagementService windowManagmentService)
+    public AddFunctionViewModel(IPluginService? pluginService,
+                                IFunctionService? functionService,
+                                IFunctionSettingsService functionSettingsService,
+                                IWindowManagementService windowManagmentService,
+                                PluginSettingViewModelService pluginSettingView)
     {
         functionPlugins = new();
         this.pluginService = pluginService;
         this.functionService = functionService;
         this.functionSettingsService = functionSettingsService;
         this.windowManagmentService = windowManagmentService;
+        this.pluginSettingView = pluginSettingView;
         if (pluginService is not null)
         {
             functionPlugins.AddRange(pluginService!.GetAvailablePlugins()
@@ -123,13 +148,21 @@ internal partial class AddFunctionViewModel : ObservableValidator
         InitialValueSet();
     }
 
+    /// <summary>
+    /// Load all the possible settings for the plugin
+    /// </summary>
     private void LoadPluginSettings()
     {
         if (SelectedFunctionPlugin is null || SelectedFunctionPlugin.Plugin is null)
         {
             return;
         }
-        var settings = functionSettingsService.GetPluginSettingsValues(SelectedFunctionPlugin.Plugin, false).ToList();
+        SelectedFunctionPlugin.Plugin.ResetSettings();
+        PluginSettings = functionSettingsService.GetPluginSettingsValues(SelectedFunctionPlugin.Plugin, false)
+                                                .OfType<SettingModel>()
+                                                .Select(pluginSetting => pluginSettingView.GetViewModel(pluginSetting))
+                                                .OfType<IPluginSettingModel>()
+                                                .ToList();
     }
 
     /// <summary>
@@ -148,6 +181,15 @@ internal partial class AddFunctionViewModel : ObservableValidator
         DisplayName = function.DisplayName;
         Description = function.Description;
         SelectedFunctionPlugin = FunctionPlugins.FirstOrDefault(plugin => plugin.Plugin == function.Plugin);
+        foreach (var setting in PluginSettings ?? Enumerable.Empty<IPluginSettingModel>())
+        {
+            var settingToUpdate = function.Settings.FirstOrDefault(pSetting => pSetting.Key == setting.GetSettingsModel().Key);
+            if (settingToUpdate is not null)
+            {
+                setting.UpdateValue(settingToUpdate.Value);
+            }
+
+        }
         FunctionParameters = function.Parameters;
         SelectedPath = function.Path;
 
@@ -200,9 +242,15 @@ internal partial class AddFunctionViewModel : ObservableValidator
             Description = Description,
             Plugin = SelectedFunctionPlugin!.Plugin,
             Parameters = FunctionParameters!,
+            Settings = GetPluginSettings(),
             Path = SelectedPath!,
             SortOrder = 0
         };
+    }
+
+    private IEnumerable<SettingModel> GetPluginSettings()
+    {
+        return PluginSettings?.Select(model => model.GetSettingsModel()) ?? Enumerable.Empty<SettingModel>();
     }
 
     /// <summary>
@@ -218,6 +266,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
             Description = Description,
             Plugin = SelectedFunctionPlugin!.Plugin,
             Parameters = FunctionParameters!,
+            Settings = GetPluginSettings(),
             Path = SelectedPath!,
             SortOrder = 0
         };

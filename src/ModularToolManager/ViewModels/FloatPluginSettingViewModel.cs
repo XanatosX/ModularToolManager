@@ -32,4 +32,12 @@ internal partial class FloatPluginSettingViewModel : PluginSettingBaseViewModel
         storedModel.SetValue(FloatNumber);
         return storedModel;
     }
+
+    public override void UpdateValue(object? newData)
+    {
+        if (newData is float)
+        {
+            FloatNumber = (float)newData;
+        }
+    }
 }

@@ -31,4 +31,12 @@ internal partial class IntPluginSettingViewModel : PluginSettingBaseViewModel
         storedModel.SetValue(IntergerNumber);
         return storedModel;
     }
+
+    public override void UpdateValue(object? newData)
+    {
+        if (newData is int)
+        {
+            intergerNumber = (int)newData;
+        }
+    }
 }
