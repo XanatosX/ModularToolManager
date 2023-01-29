@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using ModularToolManager.Models;
 using ModularToolManager.Services.Settings;
+using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels.Settings;
 using ModularToolManagerPlugin.Enums;
 using ModularToolManagerPlugin.Models;
@@ -29,6 +30,11 @@ internal partial class PluginSettingsViewModel : ObservableObject
 	private readonly ISettingsService applicationSettingService;
 
 	/// <summary>
+	/// Service to use to get correct view for settings model
+	/// </summary>
+	private readonly PluginSettingViewModelService pluginSettingView;
+
+	/// <summary>
 	/// The settings of the plugin
 	/// </summary>
 	[ObservableProperty]
@@ -44,10 +50,13 @@ internal partial class PluginSettingsViewModel : ObservableObject
 	/// </summary>
 	/// <param name="pluginSettingService">The plugin service to use for loading plugin settings</param>
 	/// <param name="applicationSettingService">The service used to load application settings and sync plugin settings with</param>
-	public PluginSettingsViewModel(IFunctionSettingsService pluginSettingService, ISettingsService applicationSettingService)
+	public PluginSettingsViewModel(IFunctionSettingsService pluginSettingService,
+		ISettingsService applicationSettingService,
+		PluginSettingViewModelService pluginSettingView)
 	{
 		this.pluginSettingService = pluginSettingService;
 		this.applicationSettingService = applicationSettingService;
+		this.pluginSettingView = pluginSettingView;
 		pluginSettings = new ObservableCollection<IPluginSettingModel>();
 	}
 
@@ -59,7 +68,7 @@ internal partial class PluginSettingsViewModel : ObservableObject
 	{
 		currentPlugin = plugin;
 		PluginSettings applicationPluginSettings = applicationSettingService.GetApplicationSettings()?.PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == plugin.GetType()) ?? new();
-		List<PersistantPluginSetting> persistantSettings = applicationPluginSettings.Settings ?? new();
+		List<SettingModel> persistantSettings = applicationPluginSettings.Settings ?? new();
 		List<IPluginSettingModel> settings = pluginSettingService.GetPluginSettingsValues(plugin)
 												   .Select(setting => GetViewModel(setting, persistantSettings))
 												   .Where(view => view is not null)
@@ -82,18 +91,11 @@ internal partial class PluginSettingsViewModel : ObservableObject
 	/// <param name="settingModel">The setting model to get the view from</param>
 	/// <param name="pluginSettings">The loaded plugin settings stored for the application</param>
 	/// <returns>A setting model for the setting model</returns>
-	private IPluginSettingModel? GetViewModel(SettingModel settingModel, List<PersistantPluginSetting> pluginSettings)
+	private IPluginSettingModel? GetViewModel(SettingModel settingModel, List<SettingModel> pluginSettings)
 	{
-		var matchingSetting = pluginSettings.FirstOrDefault(setting => setting.Key == settingModel.Key)?.GetSettingModel();
+		var matchingSetting = pluginSettings.FirstOrDefault(setting => setting.Key == settingModel.Key);
 		settingModel.SetValue(matchingSetting is not null ? matchingSetting.Value : settingModel.Value);
-		return settingModel.Type switch
-		{
-			SettingType.Boolean => new BoolPluginSettingViewModel(settingModel),
-			SettingType.String => new StringPluginSettingViewModel(settingModel),
-			SettingType.Float => new FloatPluginSettingViewModel(settingModel),
-			SettingType.Int => new IntPluginSettingViewModel(settingModel),
-			_ => null
-		};
+		return pluginSettingView.GetViewModel(settingModel);
 	}
 
 	/// <summary>
@@ -102,8 +104,8 @@ internal partial class PluginSettingsViewModel : ObservableObject
 	[RelayCommand]
 	private void SaveSettings()
 	{
-		List<PersistantPluginSetting> settingsToSave = PluginSettings.Select(setting => setting.GetSettingsModel())
-													.Select(model => new PersistantPluginSetting(model))
+		List<SettingModel> settingsToSave = PluginSettings.Select(setting => setting.GetSettingsModel())
+													.Select(model => new SettingModel(model.Value) { Key = model.Key, Type = model.Type })
 													.Where(model => model.Key is not null)
 													.ToList();
 		PluginSettings newPluginSettings = new()

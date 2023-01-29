@@ -38,13 +38,6 @@ public class FunctionSettingService : IFunctionSettingsService
                                    .OfType<SettingAttribute>();
     }
 
-    /// <inheritdoc/>
-    public IEnumerable<SettingModel> GetPluginSettingsValues(IFunctionPlugin plugin)
-    {
-        IFunctionSettingsService local = this as IFunctionSettingsService;
-        return local.GetPluginSettings(plugin).Select(settings => GetSettingModel(settings, plugin));
-    }
-
     /// <summary>
     /// Get the setting model for a given attribute for a specific plugin
     /// </summary>
@@ -124,5 +117,10 @@ public class FunctionSettingService : IFunctionSettingsService
         return attribute is not null && attribute.Key == searchedAttribute.Key;
     }
 
-
+    /// <inheritdoc/>
+    public IEnumerable<SettingModel> GetPluginSettingsValues(IFunctionPlugin plugin, bool globalOnly)
+    {
+        IFunctionSettingsService local = this as IFunctionSettingsService;
+        return local.GetPluginSettings(plugin).Where(plugin => globalOnly ? true : plugin.GlobalOnly == false).Select(settings => GetSettingModel(settings, plugin));
+    }
 }

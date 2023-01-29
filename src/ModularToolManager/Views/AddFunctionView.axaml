@@ -14,6 +14,9 @@
 				Items="{Binding FunctionPlugins}"
 				SelectedItem="{Binding SelectedFunctionPlugin}"/>
 		</DockPanel>
+		<Expander  IsVisible="{Binding PluginSettingsFound}" Header="{x:Static p:Resources.AllPlugins_Header_Settings}">
+			<ItemsControl Items="{Binding PluginSettings}"/>
+		</Expander>
 		<TextBox 
 			Watermark="{x:Static p:Resources.NewFunction_Parameters}"
 			UseFloatingWatermark="true"

@@ -39,5 +39,6 @@ internal abstract partial class PluginSettingBaseViewModel : ObservableValidator
     /// <inheritdoc/>
     public abstract SettingModel GetSettingsModel();
 
-
+    /// <inheritdoc/>
+    public abstract void UpdateValue(object? newData);
 }
