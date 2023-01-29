@@ -138,7 +138,7 @@ public partial class FunctionButtonViewModel : ObservableObject
 
         List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(plugin).ToList() ?? new();
         var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == functionModel?.Plugin?.GetType());
-        foreach (var loadedPluginSetting in settings?.Settings?.Select(setting => setting.GetSettingModel()) ?? Enumerable.Empty<SettingModel>())
+        foreach (var loadedPluginSetting in settings?.Settings ?? Enumerable.Empty<SettingModel>())
         {
             var matchingAttribute = pluginSettings.FirstOrDefault(setting => setting.Key == loadedPluginSetting.Key);
             if (matchingAttribute is null)

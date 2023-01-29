@@ -94,7 +94,7 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>()
                          .AddSingleton<ISettingsService, SerializedSettingsService>()
                          .AddTransient<ViewLocator>()
-
+                         .AddSingleton<PluginSettingViewModelService>()
                          .AddTransient<IImageService, ImageService>();
     }
 }

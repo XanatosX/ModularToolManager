@@ -20,5 +20,5 @@ public class PluginSettings
     /// The settings to persist for the plugin
     /// </summary>
     [JsonPropertyName("settings")]
-    public List<PersistantPluginSetting>? Settings { get; set; }
+    public List<SettingModel>? Settings { get; set; }
 }
