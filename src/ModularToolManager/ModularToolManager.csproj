@@ -7,6 +7,10 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Resources\LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LICENSE" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.18" />
