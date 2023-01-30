@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:p="clr-namespace:ModularToolManager.Properties"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="ModularToolManager.Views.AboutView">
+	<StackPanel>
+		<Grid ColumnDefinitions="Auto, *">
+			<TextBlock Grid.Column="0" Text="Version (Fixed):"/>
+			<TextBlock Grid.Column="1" Text="{Binding Version}"/>
+		</Grid>
+		<Expander Margin="0,10,0,0" Header="Dep">
+			
+		</Expander>
+		<Expander Margin="0,10,0,0" Header="{x:Static p:Resources.About_License}">
+			<TextBlock TextWrapping="Wrap" Text="{Binding License}"/>
+		</Expander>
+		
+	</StackPanel>
+</UserControl>

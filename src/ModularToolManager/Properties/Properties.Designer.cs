@@ -97,6 +97,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to question_circle_regular.
+        /// </summary>
+        internal static string Icon_About {
+            get {
+                return ResourceManager.GetString("Icon_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to edit_regular.
         /// </summary>
         internal static string Icon_edit_function {

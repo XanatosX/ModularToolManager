@@ -165,6 +165,17 @@ public partial class MainWindowViewModel : ObservableObject
         await OpenModalWindow(Properties.Resources.SubMenu_Settings, Properties.Properties.Icon_settings, nameof(SettingsViewModel));
     }
 
+
+    /// <summary>
+    /// Open the about window
+    /// </summary>
+    /// <returns>A awaitable task</returns>
+    [RelayCommand]
+    private async Task OpenAbout()
+    {
+        await OpenModalWindow(Properties.Resources.SubMenu_About, Properties.Properties.Icon_About, nameof(AboutViewModel));
+    }
+
     /// <summary>
     /// Method to open a modal window
     /// </summary>

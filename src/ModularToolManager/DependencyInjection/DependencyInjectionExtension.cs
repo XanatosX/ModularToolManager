@@ -57,7 +57,8 @@ internal static class DependencyInjectionExtension
                          .AddTransient<BoolPluginSettingViewModel>()
                          .AddTransient<StringPluginSettingViewModel>()
                          .AddTransient<IntPluginSettingViewModel>()
-                         .AddTransient<FloatPluginSettingView>();
+                         .AddTransient<FloatPluginSettingView>()
+                         .AddTransient<AboutViewModel>();
     }
 
     /// <summary>
@@ -95,6 +96,8 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<ISettingsService, SerializedSettingsService>()
                          .AddTransient<ViewLocator>()
                          .AddSingleton<PluginSettingViewModelService>()
-                         .AddTransient<IImageService, ImageService>();
+                         .AddTransient<IImageService, ImageService>()
+                         .AddTransient<ResourceReaderService>()
+                         .AddTransient<GetApplicationInformationService>();
     }
 }
