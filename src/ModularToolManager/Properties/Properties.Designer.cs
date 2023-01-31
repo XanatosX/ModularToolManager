@@ -90,9 +90,18 @@ namespace ModularToolManager.Properties {
         /// <summary>
         ///   Looks up a localized string similar to https://github.com/XanatosX/ModularToolManager/issues.
         /// </summary>
-        internal static string GithubUrl {
+        internal static string GithubIssueUrl {
             get {
-                return ResourceManager.GetString("GithubUrl", resourceCulture);
+                return ResourceManager.GetString("GithubIssueUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/XanatosX/ModularToolManager/.
+        /// </summary>
+        internal static string GitHubUrl {
+            get {
+                return ResourceManager.GetString("GitHubUrl", resourceCulture);
             }
         }
         

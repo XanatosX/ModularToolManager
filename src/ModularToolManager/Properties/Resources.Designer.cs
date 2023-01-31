@@ -79,6 +79,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Repository:.
+        /// </summary>
+        public static string About_Repository_Colon {
+            get {
+                return ResourceManager.GetString("About_Repository_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version:.
         /// </summary>
         public static string About_Version_Colon {

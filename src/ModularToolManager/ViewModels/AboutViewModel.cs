@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.Services.IO;
 using ModularToolManagerModel.Services.Dependency;
@@ -16,20 +17,22 @@ internal partial class AboutViewModel : ObservableObject
     private string license;
 
     [ObservableProperty]
-    private string gitHubUrl;
-
-    [ObservableProperty]
     private string version;
 
-    //@TODO: Add new view for this!
     [ObservableProperty]
     private List<DependencyViewModel> dependencies;
 
-    private readonly GetApplicationInformationService getApplicationInformationService;
+    public string GitHubUrl => Properties.Properties.GitHubUrl;
 
-    public AboutViewModel(GetApplicationInformationService getApplicationInformationService, IDependencyResolverService dependencyResolverService)
+    private readonly GetApplicationInformationService getApplicationInformationService;
+    private readonly IUrlOpenerService urlOpenerService;
+
+    public AboutViewModel(GetApplicationInformationService getApplicationInformationService,
+                          IDependencyResolverService dependencyResolverService,
+                          IUrlOpenerService urlOpenerService)
     {
         this.getApplicationInformationService = getApplicationInformationService;
+        this.urlOpenerService = urlOpenerService;
         License = getApplicationInformationService.GetLicense() ?? string.Empty;
         Version = getApplicationInformationService.GetVersion()?.ToString() ?? string.Empty;
         Dependencies = getApplicationInformationService.GetDependencies()
@@ -40,5 +43,11 @@ internal partial class AboutViewModel : ObservableObject
                                                        }))
                                                        .OfType<DependencyViewModel>()
                                                        .ToList();
+    }
+
+    [RelayCommand]
+    private void OpenUrl(string url)
+    {
+        urlOpenerService.OpenUrl(url);
     }
 }
