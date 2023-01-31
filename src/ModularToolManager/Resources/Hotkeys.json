@@ -1,0 +1,8 @@
+[
+  {
+    "Name": "AbortHotkey",
+    "Description": "AbortHotkeyDescription",
+    "WorkingOn": "AbortHotkeyWorkingOn",
+    "Keys": "AbortHotkeyKeys"
+  }
+]
