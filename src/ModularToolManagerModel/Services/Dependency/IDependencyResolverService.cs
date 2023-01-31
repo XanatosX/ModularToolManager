@@ -22,6 +22,14 @@ public interface IDependencyResolverService
     T? GetDependency<T>(Action<T?>? furtherInitilization);
 
     /// <summary>
+    /// Get a dependency of type T by object factory
+    /// </summary>
+    /// <typeparam name="T">The type of the dependency to get</typeparam>
+    /// <param name="objectFactory">The factory to use for object initialization</param>
+    /// <returns>>An instance of type T or null if nothing found</returns>
+    T? GetDependency<T>(Func<IServiceProvider, T?> objectFactory);
+
+    /// <summary>
     /// Get all dependencies of type T
     /// </summary>
     /// <typeparam name="T">The type of the dependencies to get</typeparam>

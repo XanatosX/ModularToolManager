@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About_Dependency" xml:space="preserve">
+    <value>Abhängigkeiten</value>
+  </data>
+  <data name="About_License" xml:space="preserve">
+    <value>Lizenz</value>
+  </data>
+  <data name="About_Repository_Colon" xml:space="preserve">
+    <value>Repository:</value>
+  </data>
+  <data name="About_Version_Colon" xml:space="preserve">
+    <value>Version:</value>
+  </data>
   <data name="AddFunction_FunctionPathWatermark" xml:space="preserve">
     <value>Pfad zur Funktion</value>
   </data>
@@ -176,6 +188,9 @@
   </data>
   <data name="Plugin_Url_Colon" xml:space="preserve">
     <value>Projekt Link:</value>
+  </data>
+  <data name="RunningWith" xml:space="preserve">
+    <value>Läuft mit Avalonia UI</value>
   </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>
