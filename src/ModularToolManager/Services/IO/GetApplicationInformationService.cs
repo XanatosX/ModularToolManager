@@ -1,10 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
+using ModularToolManager.Models;
+using ModularToolManager.Services.Dependencies;
+using ModularToolManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.IO;
@@ -58,5 +63,23 @@ internal class GetApplicationInformationService
         }
 
         return returnVersion;
+    }
+
+    /// <summary>
+    /// Get the dependencies for this application
+    /// </summary>
+    /// <returns>A list with all the dependencies</returns>
+    public IEnumerable<DependencyModel> GetDependencies()
+    {
+        IEnumerable<DependencyModel> returnDependencies = Enumerable.Empty<DependencyModel>();
+        using (Stream? stream = readerService.GetResourceStream("dependencies.json"))
+        {
+            if (stream is not null && stream != Stream.Null)
+            {
+                returnDependencies = JsonSerializer.Deserialize<IEnumerable<DependencyModel>>(stream) ?? returnDependencies;
+            }
+        }
+
+        return returnDependencies;
     }
 }

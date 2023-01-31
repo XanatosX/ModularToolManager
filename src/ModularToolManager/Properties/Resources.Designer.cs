@@ -61,11 +61,29 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dependencies.
+        /// </summary>
+        public static string About_Dependency {
+            get {
+                return ResourceManager.GetString("About_Dependency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to License.
         /// </summary>
         public static string About_License {
             get {
                 return ResourceManager.GetString("About_License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version:.
+        /// </summary>
+        public static string About_Version_Colon {
+            get {
+                return ResourceManager.GetString("About_Version_Colon", resourceCulture);
             }
         }
         
@@ -169,6 +187,24 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        public static string Dependency_License {
+            get {
+                return ResourceManager.GetString("Dependency_License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project.
+        /// </summary>
+        public static string Dependency_Project {
+            get {
+                return ResourceManager.GetString("Dependency_Project", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for function.
         /// </summary>
         public static string FunctionSelection_SearchForFunction {
@@ -264,6 +300,15 @@ namespace ModularToolManager.Properties {
         public static string Plugin_Url_Colon {
             get {
                 return ResourceManager.GetString("Plugin_Url_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Running with Avalonia UI.
+        /// </summary>
+        public static string RunningWith {
+            get {
+                return ResourceManager.GetString("RunningWith", resourceCulture);
             }
         }
         

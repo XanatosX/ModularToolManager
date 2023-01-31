@@ -1,0 +1,20 @@
+[
+  {
+    "Name": "Avalonia",
+    "Version": "0.10.18",
+    "ProjectUrl": "https://avaloniaui.net/",
+    "LicenseUrl": "https://licenses.nuget.org/MIT"
+  },
+  {
+    "Name": "Avalonia.Desktop",
+    "Version": "0.10.18",
+    "ProjectUrl": "https://avaloniaui.net/",
+    "LicenseUrl": "https://licenses.nuget.org/MIT"
+  },
+  {
+    "Name": "Avalonia.Diagnostics",
+    "Version": "0.10.18",
+    "ProjectUrl": "https://avaloniaui.net/",
+    "LicenseUrl": "https://licenses.nuget.org/MIT"
+  }
+]
