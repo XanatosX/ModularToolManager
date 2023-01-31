@@ -36,7 +36,7 @@ internal sealed class MicrosoftDepdencyResolverService : IDependencyResolverServ
     /// <inheritdoc/>
     public T? GetDependency<T>()
     {
-        return GetDependency<T>(null);
+        return GetDependency<T>(furtherInitilization: null);
     }
 
     /// <inheritdoc/>
@@ -48,6 +48,16 @@ internal sealed class MicrosoftDepdencyResolverService : IDependencyResolverServ
             furtherInitilization(returnData);
         }
         return returnData;
+    }
+
+    /// <inheritdoc/>
+    public T? GetDependency<T>(Func<IServiceProvider, T?> objectFactory)
+    {
+        if (objectFactory is null)
+        {
+            return default;
+        }
+        return objectFactory.Invoke(serviceProvider);
     }
 
     /// <inheritdoc/>

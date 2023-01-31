@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:p="clr-namespace:ModularToolManager.Properties"
+             x:Class="ModularToolManager.Views.DependencyView">
+
+	<Grid ColumnDefinitions="350, 60, 350, Auto">
+		<TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
+		<TextBlock VerticalAlignment="Center" Grid.Column="1" Text="{Binding Version}"/>
+		<Button Margin="5,0,15,0" Classes="link" Grid.Column="2" IsVisible="{Binding ProjectSet}" Content="{Binding ProjectUrl}" Command="{Binding OpenUrl}" CommandParameter="{Binding ProjectUrl}"/>
+		<Button Classes="link" Grid.Column="3" IsVisible="{Binding LicenseSet}" Content="{Binding LicenseUrl}" Command="{Binding OpenUrl}" CommandParameter="{Binding LicenseUrl}"/>
+	</Grid>
+</UserControl>

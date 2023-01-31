@@ -198,7 +198,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
         SelectedFunctionPlugin = FunctionPlugins.FirstOrDefault(plugin => plugin.Plugin == function.Plugin);
         foreach (var setting in PluginSettings ?? Enumerable.Empty<IPluginSettingModel>())
         {
-            var settingToUpdate = function.Settings.FirstOrDefault(pSetting => pSetting.Key == setting.GetSettingsModel().Key);
+            var settingToUpdate = function.Settings?.FirstOrDefault(pSetting => pSetting.Key == setting.GetSettingsModel().Key);
             if (settingToUpdate is not null)
             {
                 setting.UpdateValue(settingToUpdate.Value);
