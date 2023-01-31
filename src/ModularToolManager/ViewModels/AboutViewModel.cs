@@ -33,6 +33,7 @@ internal partial class AboutViewModel : ObservableObject
         License = getApplicationInformationService.GetLicense() ?? string.Empty;
         Version = getApplicationInformationService.GetVersion()?.ToString() ?? string.Empty;
         Dependencies = getApplicationInformationService.GetDependencies()
+                                                       .OrderBy(d => d.Name)
                                                        .Select(dep => dependencyResolverService.GetDependency(provider =>
                                                        {
                                                            return new DependencyViewModel(dep, provider.GetRequiredService<IUrlOpenerService>());

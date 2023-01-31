@@ -6,12 +6,10 @@
 			 xmlns:p="clr-namespace:ModularToolManager.Properties"
              x:Class="ModularToolManager.Views.DependencyView">
 
-	<Grid ColumnDefinitions="150, 100, Auto">
+	<Grid ColumnDefinitions="350, 60, 350, Auto">
 		<TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
 		<TextBlock VerticalAlignment="Center" Grid.Column="1" Text="{Binding Version}"/>
-		<StackPanel VerticalAlignment="Center" Grid.Column="2" Spacing="10" Orientation="Horizontal">
-			<Button Classes="link" IsVisible="{Binding ProjectSet}" Content="{Binding ProjectUrl}" Command="{Binding OpenUrl}" CommandParameter="{Binding ProjectUrl}"/>
-			<Button Classes="link" IsVisible="{Binding LicenseSet}" Content="{Binding LicenseUrl}" Command="{Binding OpenUrl}" CommandParameter="{Binding LicenseUrl}"/>
-		</StackPanel>
+		<Button Margin="5,0,15,0" Classes="link" Grid.Column="2" IsVisible="{Binding ProjectSet}" Content="{Binding ProjectUrl}" Command="{Binding OpenUrl}" CommandParameter="{Binding ProjectUrl}"/>
+		<Button Classes="link" Grid.Column="3" IsVisible="{Binding LicenseSet}" Content="{Binding LicenseUrl}" Command="{Binding OpenUrl}" CommandParameter="{Binding LicenseUrl}"/>
 	</Grid>
 </UserControl>
