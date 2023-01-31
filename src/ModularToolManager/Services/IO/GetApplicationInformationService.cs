@@ -1,27 +1,39 @@
 ﻿using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
-using ModularToolManager.Services.Dependencies;
-using ModularToolManager.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Services.IO;
 
-
+/// <summary>
+/// Class to get all the information about the application
+/// </summary>
 internal class GetApplicationInformationService
 {
+    /// <summary>
+    /// The service used to load data about the application
+    /// </summary>
     private readonly ResourceReaderService readerService;
+
+    /// <summary>
+    /// Logger to use to log any problems
+    /// </summary>
     private readonly ILogger<GetApplicationInformationService> logger;
+
+    /// <summary>
+    /// The file to load as a license
+    /// </summary>
     private const string LICENSE_FILE_NAME = "LICENSE";
 
-    private string? license;
+    /// <summary>
+    /// The cached license if already loaded
+    /// </summary>
+    private string? cachedLicense;
 
     /// <summary>
     /// Create a new instance of this class
@@ -39,8 +51,8 @@ internal class GetApplicationInformationService
     /// <returns>The license information</returns>
     public string? GetLicense()
     {
-        license ??= readerService.GetResourceData(LICENSE_FILE_NAME);
-        return license;
+        cachedLicense ??= readerService.GetResourceData(LICENSE_FILE_NAME);
+        return cachedLicense;
     }
 
     /// <summary>
@@ -82,4 +94,10 @@ internal class GetApplicationInformationService
 
         return returnDependencies;
     }
+
+    /// <summary>
+    /// Get the url to the github repository
+    /// </summary>
+    /// <returns>The link to the github repository</returns>
+    public string GetGithubUrl() => Properties.Properties.GitHubUrl;
 }

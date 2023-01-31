@@ -4,37 +4,59 @@ using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.Services.IO;
 using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.IO;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.ViewModels;
+
+/// <summary>
+/// View model for the about view
+/// </summary>
 internal partial class AboutViewModel : ObservableObject
 {
+    /// <summary>
+    /// The license string to show
+    /// </summary>
     [ObservableProperty]
-    private string license;
+    private string? license;
 
+    /// <summary>
+    /// The version string to show
+    /// </summary>
     [ObservableProperty]
-    private string version;
+    private string? version;
 
+    /// <summary>
+    /// The dependencies to show
+    /// </summary>
     [ObservableProperty]
-    private List<DependencyViewModel> dependencies;
+    private List<DependencyViewModel>? dependencies;
 
-    public string GitHubUrl => Properties.Properties.GitHubUrl;
+    /// <summary>
+    /// The github project url
+    /// </summary>
+    [ObservableProperty]
+    private string? gitHubUrl;
 
-    private readonly GetApplicationInformationService getApplicationInformationService;
+    /// <summary>
+    /// Service used to open url
+    /// </summary>
     private readonly IUrlOpenerService urlOpenerService;
 
+    /// <summary>
+    /// Create a new instance of this view model
+    /// </summary>
+    /// <param name="getApplicationInformationService">The service used to get application information</param>
+    /// <param name="dependencyResolverService">The service used to resolve dependencies</param>
+    /// <param name="urlOpenerService">The service used to open an url</param>
     public AboutViewModel(GetApplicationInformationService getApplicationInformationService,
                           IDependencyResolverService dependencyResolverService,
                           IUrlOpenerService urlOpenerService)
     {
-        this.getApplicationInformationService = getApplicationInformationService;
         this.urlOpenerService = urlOpenerService;
-        License = getApplicationInformationService.GetLicense() ?? string.Empty;
-        Version = getApplicationInformationService.GetVersion()?.ToString() ?? string.Empty;
+        License = getApplicationInformationService.GetLicense();
+        Version = getApplicationInformationService.GetVersion()?.ToString();
+        GitHubUrl = getApplicationInformationService.GetGithubUrl();
         Dependencies = getApplicationInformationService.GetDependencies()
                                                        .OrderBy(d => d.Name)
                                                        .Select(dep => dependencyResolverService.GetDependency(provider =>
@@ -45,6 +67,10 @@ internal partial class AboutViewModel : ObservableObject
                                                        .ToList();
     }
 
+    /// <summary>
+    /// Command to open url in browser
+    /// </summary>
+    /// <param name="url">The url to open</param>
     [RelayCommand]
     private void OpenUrl(string url)
     {
