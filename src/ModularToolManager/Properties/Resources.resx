@@ -171,6 +171,48 @@
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Search for function</value>
   </data>
+  <data name="Hotkey_Abort_Description" xml:space="preserve">
+    <value>Abort the current action or close the current modal</value>
+  </data>
+  <data name="Hotkey_Abort_Name" xml:space="preserve">
+    <value>Abort</value>
+  </data>
+  <data name="Hotkey_Abort_WorkingOn" xml:space="preserve">
+    <value>Change Language, Add/Edit Function, Settings</value>
+  </data>
+  <data name="Hotkey_Abort_WorkingOn_Prefix_Colon" xml:space="preserve">
+    <value>Working at the following places: </value>
+  </data>
+  <data name="Hotkey_Language_WorkingOn" xml:space="preserve">
+    <value>Main Window</value>
+  </data>
+  <data name="Hotkey_New" xml:space="preserve">
+    <value>New Function</value>
+  </data>
+  <data name="Hotkey_New_Description" xml:space="preserve">
+    <value>Create a new function</value>
+  </data>
+  <data name="Key_Ctrl" xml:space="preserve">
+    <value>ctrl</value>
+  </data>
+  <data name="Key_Esc" xml:space="preserve">
+    <value>Esc</value>
+  </data>
+  <data name="Key_F1" xml:space="preserve">
+    <value>F1</value>
+  </data>
+  <data name="Key_F12" xml:space="preserve">
+    <value>F12</value>
+  </data>
+  <data name="Key_H" xml:space="preserve">
+    <value>h</value>
+  </data>
+  <data name="Key_L" xml:space="preserve">
+    <value>l</value>
+  </data>
+  <data name="Key_N" xml:space="preserve">
+    <value>n</value>
+  </data>
   <data name="Menu_File" xml:space="preserve">
     <value>File</value>
   </data>

@@ -1,8 +1,53 @@
 [
   {
-    "Name": "AbortHotkey",
-    "Description": "AbortHotkeyDescription",
-    "WorkingOn": "AbortHotkeyWorkingOn",
-    "Keys": "AbortHotkeyKeys"
+    "Name": "Hotkey_Abort_Name",
+    "Description": "Hotkey_Abort_Description",
+    "WorkingOn": "Hotkey_Abort_WorkingOn",
+    "Keys": [
+      "Key_Esc"
+    ]
+  },
+  {
+    "Name": "Hotkey_New",
+    "Description": "Hotkey_New_Description",
+    "WorkingOn": "Hotkey_Language_WorkingOn",
+    "Keys": [
+      "Key_Ctrl",
+      "Key_N"
+    ]
+  },
+  {
+    "Name": "Hotkey_Language",
+    "Description": "Hotkey_Language_Description",
+    "WorkingOn": "Hotkey_Language_WorkingOn",
+    "Keys": [
+      "Key_Ctrl",
+      "Key_L"
+    ]
+  },
+  {
+    "Name": "Hotkey_Hide",
+    "Description": "Hotkey_Hide_Description",
+    "WorkingOn": "Hotkey_Hide_WorkingOn",
+    "Keys": [
+      "Key_Ctrl",
+      "Key_H"
+    ]
+  },
+  {
+    "Name": "Hotkey_About",
+    "Description": "Hotkey_About_Description",
+    "WorkingOn": "Hotkey_About_WorkingOn",
+    "Keys": [
+      "Key_F1"
+    ]
+  },
+  {
+    "Name": "Hotkey_Report_Bug",
+    "Description": "Hotkey_Report_Bug_Description",
+    "WorkingOn": "Hotkey_Report_Bug_WorkingOn",
+    "Keys": [
+      "Key_F12"
+    ]
   }
 ]

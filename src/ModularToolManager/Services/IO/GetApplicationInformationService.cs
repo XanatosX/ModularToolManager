@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace ModularToolManager.Services.IO;
@@ -100,4 +101,35 @@ internal class GetApplicationInformationService
     /// </summary>
     /// <returns>The link to the github repository</returns>
     public string GetGithubUrl() => Properties.Properties.GitHubUrl;
+
+    /// <summary>
+    /// Get all the hotkeys for the application
+    /// </summary>
+    /// <returns>A list with all the hotkeys</returns>
+    public IEnumerable<HotkeyModel> GetHotkeys()
+    {
+        IEnumerable<HotkeyModel> loadedHotkeys = Enumerable.Empty<HotkeyModel>();
+        using (Stream? stream = readerService.GetResourceStream("hotkeys.json"))
+        {
+            if (stream is not null && stream != Stream.Null)
+            {
+                loadedHotkeys = JsonSerializer.Deserialize<IEnumerable<HotkeyModel>>(stream) ?? loadedHotkeys;
+            }
+        }
+        List<HotkeyModel> returnHotkeys = new();
+        foreach (var hotkey in loadedHotkeys)
+        {
+            returnHotkeys.Add(new HotkeyModel
+            {
+                Name = Properties.Resources.ResourceManager.GetString(hotkey.Name ?? string.Empty),
+                Description = Properties.Resources.ResourceManager.GetString(hotkey.Description ?? string.Empty),
+                WorkingOn = Properties.Resources.ResourceManager.GetString(hotkey.WorkingOn ?? string.Empty),
+                Keys = hotkey.Keys?.Select(key => Properties.Resources.ResourceManager.GetString(key ?? string.Empty))
+                                  .OfType<string>()
+                                  .ToList() ?? new(),
+            });
+        }
+
+        return returnHotkeys;
+    }
 }

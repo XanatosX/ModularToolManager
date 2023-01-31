@@ -45,7 +45,7 @@
 							<MenuItem Header="{x:Static p:Resources.SubMenu_Plugins}" Command="{Binding OpenPluginsCommand}"/>
 							<Separator/>
 							<MenuItem Header="{x:Static p:Resources.SubMenu_About}" Command="{Binding OpenAboutCommand}" HotKey="f1"/>
-							<MenuItem Header="{x:Static p:Resources.SubMenu_Hotkeys}" Command="{Binding OpenHotkeysCommand}"/>
+							<MenuItem Header="{x:Static p:Resources.SubMenu_Hotkeys}" Command="{Binding OpenHotkeyCommand}"/>
 							<Separator/>
 							<MenuItem Header="{x:Static p:Resources.SubMenu_ReportBug}" Command="{Binding ReportBugCommand}" HotKey="f12"/>
 						</MenuItem>

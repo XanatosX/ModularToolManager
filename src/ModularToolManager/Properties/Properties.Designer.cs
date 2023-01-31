@@ -133,6 +133,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to keyboard_regular.
+        /// </summary>
+        internal static string Icon_Keyboard {
+            get {
+                return ResourceManager.GetString("Icon_Keyboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to flag_regular.
         /// </summary>
         internal static string Icon_language {
