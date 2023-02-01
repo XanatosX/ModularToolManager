@@ -11,7 +11,8 @@
 
     <Application.Styles>
 		<FluentTheme Mode="Dark"/>
-		<StyleInclude Source="avares://ModularToolManager/Icons.axaml"/>
+		<StyleInclude Source="avares://ModularToolManager/Resources/Icons.axaml"/>
+		<StyleInclude Source="avares://ModularToolManager/Resources/LinkButtonStyle.axaml"/>
 	</Application.Styles>
 
 	<Application.Resources>

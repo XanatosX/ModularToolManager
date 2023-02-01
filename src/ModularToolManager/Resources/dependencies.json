@@ -1,0 +1,50 @@
+[
+  {
+    "Name": "Avalonia",
+    "Version": "0.10.18",
+    "ProjectUrl": "https://avaloniaui.net/",
+    "LicenseUrl": "https://licenses.nuget.org/MIT"
+  },
+  {
+    "Name": "Avalonia.Desktop",
+    "Version": "0.10.18",
+    "ProjectUrl": "https://avaloniaui.net/",
+    "LicenseUrl": "https://licenses.nuget.org/MIT"
+  },
+  {
+    "Name": "Avalonia.Diagnostics",
+    "Version": "0.10.18",
+    "ProjectUrl": "https://avaloniaui.net/",
+    "LicenseUrl": "https://licenses.nuget.org/MIT"
+  },
+  {
+    "Name": "CommunityToolkit.Mvvm",
+    "Version": "8.0.0",
+    "ProjectUrl": "https://github.com/CommunityToolkit/dotnet",
+    "LicenseUrl": "https://licenses.nuget.org/MIT"
+  },
+  {
+    "Name": "Microsoft.Extensions.DependencyInjection",
+    "Version": "7.0.0",
+    "ProjectUrl": "https://dot.net",
+    "LicenseUrl": "https://licenses.nuget.org/MIT"
+  },
+  {
+    "Name": "Serilog",
+    "Version": "2.12.0",
+    "ProjectUrl": "https://serilog.net/",
+    "LicenseUrl": "https://licenses.nuget.org/Apache-2.0"
+  },
+  {
+    "Name": "Serilog.Extensions.Logging",
+    "Version": "3.1.0",
+    "ProjectUrl": "https://serilog.net/",
+    "LicenseUrl": "https://licenses.nuget.org/Apache-2.0"
+  },
+  {
+    "Name": "Serilog.Sinks.File",
+    "Version": "5.0.0",
+    "ProjectUrl": "https://serilog.net/",
+    "LicenseUrl": "https://licenses.nuget.org/Apache-2.0"
+  }
+]
