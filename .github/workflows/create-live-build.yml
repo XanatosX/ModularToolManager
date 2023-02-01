@@ -39,7 +39,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
   get-build-version:
     name: Get version for build
-    runs-on: windows-latest
+    runs-on: ubuntu-22.04
     outputs:
       build-version: ${{ steps.get-build-version.outputs.build-version }}
     steps:
@@ -48,12 +48,14 @@ jobs:
         run: |
          # Found at https://github.com/orgs/community/discussions/25713
          # Additional env fix found on https://github.com/actions/runner-images/issues/5251
-         if ( '${{ GITHUB.REF_TYPE }}' -eq 'branch' ) {
-             echo "BUILD_VERSION=0.0.0" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
-           }
-           else {
-             echo "BUILD_VERSION=${{ GITHUB.REF_NAME }}" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
-           }
+         if [ 'branch' == 'branch' ]
+            then
+                echo "Running on branch (Check successful)"
+                echo "build-version=${{ GITHUB.REF_NAME }}" >> $GITHUB_OUTPUT
+            else
+                echo "Is not running on branch (Check failed)"
+                echo "build-version=0.0.0" >> $GITHUB_OUTPUT
+         fi
   create-windows-build:
     name: Create Windows build
     needs: ["check-build", "get-build-version"]
