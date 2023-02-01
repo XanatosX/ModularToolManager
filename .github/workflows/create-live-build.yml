@@ -47,7 +47,7 @@ jobs:
         run: |
          # Found at https://github.com/orgs/community/discussions/25713
          # Additional env fix found on https://github.com/actions/runner-images/issues/5251
-         if [ '${{ GITHUB.REF_TYPE }} asd' == 'branch' ]
+         if [ '${{ GITHUB.REF_TYPE }}' == 'branch' ]
             then
                 echo "Running on branch (Check successful)"
                 echo "build-version=${{ GITHUB.REF_NAME }}" >> $GITHUB_OUTPUT
