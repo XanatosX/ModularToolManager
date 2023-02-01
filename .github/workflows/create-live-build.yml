@@ -37,14 +37,14 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-  get-build-version:
+  build-version:
     name: Get version for build
     runs-on: ubuntu-22.04
     outputs:
-      build-version: ${{ steps.get-build-version.outputs.build-version }}
+      build-version: ${{ steps.build-version.outputs.build-version }}
     steps:
       - name: Get release version
-        id: get-build-version
+        id: build-version
         run: |
          # Found at https://github.com/orgs/community/discussions/25713
          # Additional env fix found on https://github.com/actions/runner-images/issues/5251
@@ -58,7 +58,7 @@ jobs:
          fi
   create-windows-build:
     name: Create Windows build
-    needs: ["check-build", "get-build-version"]
+    needs: ["check-build", "build-version"]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
@@ -72,9 +72,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish Application
-      run: dotnet publish ${{ env.APPLICATION_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.APPLICATION_PUBLISH_FOLDER }} -p:Version=${{ steps.get-build-version.outputs.build-version }}
+      run: dotnet publish ${{ env.APPLICATION_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.APPLICATION_PUBLISH_FOLDER }} -p:Version=${{ steps.build-version.outputs.build-version }}
     - name: Publish Plugin
-      run: dotnet publish ${{ env.APPLICATION_PLUGIN_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.PLUGIN_PUBLISH_FOLDER }} /p:DebugType=None /p:DebugSymbols=false -p:Version=${{ steps.get-build-version.outputs.build-version }}
+      run: dotnet publish ${{ env.APPLICATION_PLUGIN_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.PLUGIN_PUBLISH_FOLDER }} /p:DebugType=None /p:DebugSymbols=false -p:Version=${{ steps.build-version.outputs.build-version }}
     - name: Show content for debug
       if: ${{ env.DEBUG == 'true' }}
       run: ls
@@ -91,7 +91,7 @@ jobs:
        if-no-files-found: error
   create-linux-build:
     name: Create Linux build
-    needs: ["check-build", "get-build-version"]
+    needs: ["check-build", "build-version"]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -105,9 +105,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish Application
-      run: dotnet publish $APPLICATION_PROJECT_PATH -r linux-x64 -c Release -o $APPLICATION_PUBLISH_FOLDER -p:Version=${{ steps.get-build-version.outputs.build-version }}
+      run: dotnet publish $APPLICATION_PROJECT_PATH -r linux-x64 -c Release -o $APPLICATION_PUBLISH_FOLDER -p:Version=${{ steps.build-version.outputs.build-version }}
     - name: Publish Plugin
-      run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r linux-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER /p:DebugType=None /p:DebugSymbols=false -p:Version=${{ steps.get-build-version.outputs.build-version }}
+      run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r linux-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER /p:DebugType=None /p:DebugSymbols=false -p:Version=${{ steps.build-version.outputs.build-version }}
     - name: Show content for debug
       if: ${{ env.DEBUG == 'true' }}
       run: ls -la
