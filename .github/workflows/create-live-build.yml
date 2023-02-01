@@ -71,10 +71,11 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
+      # Important for using outputs in other steps https://tech.europace.de/post/github-actions-output-variables-how-to/#get-output-values-between-steps
     - name: Publish Application
-      run: dotnet publish ${{ env.APPLICATION_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.APPLICATION_PUBLISH_FOLDER }} -p:Version=${{ steps.build-version.outputs.build-version }}
+      run: dotnet publish ${{ env.APPLICATION_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.APPLICATION_PUBLISH_FOLDER }} -p:Version=${{ needs.build-version.outputs.build-version }}
     - name: Publish Plugin
-      run: dotnet publish ${{ env.APPLICATION_PLUGIN_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.PLUGIN_PUBLISH_FOLDER }} /p:DebugType=None /p:DebugSymbols=false -p:Version=${{ steps.build-version.outputs.build-version }}
+      run: dotnet publish ${{ env.APPLICATION_PLUGIN_PROJECT_PATH }} -r win-x64 -c Release -o ${{ env.PLUGIN_PUBLISH_FOLDER }} /p:DebugType=None /p:DebugSymbols=false -p:Version=${{ needs.build-version.outputs.build-version }}
     - name: Show content for debug
       if: ${{ env.DEBUG == 'true' }}
       run: ls
@@ -105,9 +106,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish Application
-      run: dotnet publish $APPLICATION_PROJECT_PATH -r linux-x64 -c Release -o $APPLICATION_PUBLISH_FOLDER -p:Version=${{ steps.build-version.outputs.build-version }}
+      run: dotnet publish $APPLICATION_PROJECT_PATH -r linux-x64 -c Release -o $APPLICATION_PUBLISH_FOLDER -p:Version=${{ needs.build-version.outputs.build-version }}
     - name: Publish Plugin
-      run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r linux-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER /p:DebugType=None /p:DebugSymbols=false -p:Version=${{ steps.build-version.outputs.build-version }}
+      run: dotnet publish $APPLICATION_PLUGIN_PROJECT_PATH -r linux-x64 -c Release -o $PLUGIN_PUBLISH_FOLDER /p:DebugType=None /p:DebugSymbols=false -p:Version=${{ needs.build-version.outputs.build-version }}
     - name: Show content for debug
       if: ${{ env.DEBUG == 'true' }}
       run: ls -la
