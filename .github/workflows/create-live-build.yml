@@ -151,6 +151,8 @@ jobs:
         run: ls -la $RELEASE_ARTIFACT_FOLDER
       - name: Upload artifacts
         if: ${{ env.DEBUG == 'false' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           gh release upload ${{ GITHUB.REF_NAME }} ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.zip
           #gh release upload ${{ GITHUB.REF_NAME }} ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.nupkg
