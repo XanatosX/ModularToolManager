@@ -8,8 +8,8 @@ on:
 
 env:
   DEBUG: true
-  REF_CHECKOUT_BRANCH: develop
-  RELEASE_NAME: Recent nightly build
+  REF_CHECKOUT_BRANCH: main
+  #RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
   APPLICATION_PUBLISH_FOLDER: ./publish
