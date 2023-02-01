@@ -8,7 +8,7 @@
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="Resources\dependencies.json" />
-    <None Remove="Resources\Hotkeys.json" />
+    <None Remove="Resources\hotkeys.json" />
     <None Remove="Resources\LICENSE" />
   </ItemGroup>
   <ItemGroup>
