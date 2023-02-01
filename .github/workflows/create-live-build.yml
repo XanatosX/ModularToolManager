@@ -142,10 +142,12 @@ jobs:
           zip -r $WINDOWS_ARTIFACT_NAME.zip ./*
           mv $WINDOWS_ARTIFACT_NAME.zip ../
           rm -rf ./../$WINDOWS_ARTIFACT_NAME
-      - name: Move nuget tool
+      - name: Zip Linux build
         run: |
-          mv ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_NUGET_ARTIFACT_NAME/IL2CareerToolset*.nupkg ./$RELEASE_ARTIFACT_FOLDER
-          rm -rf ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_NUGET_ARTIFACT_NAME/
+          cd ./$RELEASE_ARTIFACT_FOLDER/$LINUX_ARTIFACT_NAME
+          zip -r $LINUX_ARTIFACT_NAME.zip ./*
+          mv $LINUX_ARTIFACT_NAME.zip ../
+          rm -rf ./../$LINUX_ARTIFACT_NAME
       - name: Display artifacts folder content
         if: ${{ env.DEBUG == 'true' }}
         run: ls -la $RELEASE_ARTIFACT_FOLDER
