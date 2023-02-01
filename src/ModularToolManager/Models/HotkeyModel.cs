@@ -30,4 +30,9 @@ internal class HotkeyModel
     /// The keys to press to trigger the hotkey
     /// </summary>
     public List<string>? Keys { get; init; }
+
+    /// <summary>
+    /// The order id for the hotkey
+    /// </summary>
+    public int OrderId { get; init; }
 }

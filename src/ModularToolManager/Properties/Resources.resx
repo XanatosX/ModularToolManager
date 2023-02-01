@@ -181,16 +181,40 @@
     <value>Change Language, Add/Edit Function, Settings</value>
   </data>
   <data name="Hotkey_Abort_WorkingOn_Prefix_Colon" xml:space="preserve">
-    <value>Working at the following places: </value>
+    <value>Working at the following places:</value>
   </data>
-  <data name="Hotkey_Language_WorkingOn" xml:space="preserve">
+  <data name="Hotkey_About_Description" xml:space="preserve">
+    <value>Open the about page of the application</value>
+  </data>
+  <data name="Hotkey_About_Name" xml:space="preserve">
+    <value>About page</value>
+  </data>
+  <data name="Hotkey_Hide_Description" xml:space="preserve">
+    <value>Hide the application into the system tray</value>
+  </data>
+  <data name="Hotkey_Hide_Name" xml:space="preserve">
+    <value>Hide Application</value>
+  </data>
+  <data name="Hotkey_Language_Description" xml:space="preserve">
+    <value>Open the change language dialog</value>
+  </data>
+  <data name="Hotkey_Language_Name" xml:space="preserve">
+    <value>Change Application language</value>
+  </data>
+  <data name="Hotkey_Main_Window_WorkinOn" xml:space="preserve">
     <value>Main Window</value>
-  </data>
-  <data name="Hotkey_New" xml:space="preserve">
-    <value>New Function</value>
   </data>
   <data name="Hotkey_New_Description" xml:space="preserve">
     <value>Create a new function</value>
+  </data>
+  <data name="Hotkey_New_Name" xml:space="preserve">
+    <value>New Function</value>
+  </data>
+  <data name="Hotkey_Report_Bug_Description" xml:space="preserve">
+    <value>Report a bug found within the application</value>
+  </data>
+  <data name="Hotkey_Report_Bug_Name" xml:space="preserve">
+    <value>Report bug</value>
   </data>
   <data name="Key_Ctrl" xml:space="preserve">
     <value>ctrl</value>

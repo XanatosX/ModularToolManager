@@ -21,7 +21,7 @@ internal partial class SingleHotkeyViewModel : ObservableObject
 
     public string? WorkingOn => hotkey?.WorkingOn;
 
-    public string? WorkingOnComplete => Properties.Resources.Hotkey_Abort_WorkingOn_Prefix_Colon + hotkey?.WorkingOn;
+    public string? WorkingOnComplete => $"{Properties.Resources.Hotkey_Abort_WorkingOn_Prefix_Colon} {hotkey?.WorkingOn}";
 
     public int ToolTipShowDelay => string.IsNullOrWhiteSpace(WorkingOn) ? int.MaxValue : 500;
 

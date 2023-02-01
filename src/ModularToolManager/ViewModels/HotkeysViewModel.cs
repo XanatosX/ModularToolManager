@@ -12,6 +12,7 @@ internal partial class HotkeysViewModel : ObservableObject
 	public HotkeysViewModel(GetApplicationInformationService applicationInformationService)
 	{
 		Hotkeys = applicationInformationService.GetHotkeys()
+										 .OrderBy(hotkey => hotkey.OrderId)
 										 .Select(hotkey => new SingleHotkeyViewModel(hotkey))
 										 .ToList();
 	}

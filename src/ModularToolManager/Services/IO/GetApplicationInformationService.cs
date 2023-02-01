@@ -127,6 +127,7 @@ internal class GetApplicationInformationService
                 Keys = hotkey.Keys?.Select(key => Properties.Resources.ResourceManager.GetString(key ?? string.Empty))
                                   .OfType<string>()
                                   .ToList() ?? new(),
+                OrderId = hotkey.OrderId,
             });
         }
 

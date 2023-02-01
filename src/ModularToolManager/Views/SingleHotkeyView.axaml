@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.SingleHotkeyView">
-		<Grid ColumnDefinitions="200, 400, 200" ToolTip.Tip="{Binding WorkingOnComplete}" ToolTip.ShowDelay="{Binding ToolTipShowDelay}">
+		<Grid ColumnDefinitions="350, 500, Auto" ToolTip.Tip="{Binding WorkingOnComplete}" ToolTip.ShowDelay="{Binding ToolTipShowDelay}">
 			<TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
 			<TextBlock Grid.Column="1" Text="{Binding Description}" VerticalAlignment="Center"/>
 			<ItemsControl Grid.Column="2" Items="{Binding Keys}">

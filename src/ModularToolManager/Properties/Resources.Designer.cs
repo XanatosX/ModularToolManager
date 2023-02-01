@@ -250,7 +250,7 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Working at the following places: .
+        ///   Looks up a localized string similar to Working at the following places:.
         /// </summary>
         public static string Hotkey_Abort_WorkingOn_Prefix_Colon {
             get {
@@ -259,20 +259,65 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main Window.
+        ///   Looks up a localized string similar to Open the about page of the application.
         /// </summary>
-        public static string Hotkey_Language_WorkingOn {
+        public static string Hotkey_About_Description {
             get {
-                return ResourceManager.GetString("Hotkey_Language_WorkingOn", resourceCulture);
+                return ResourceManager.GetString("Hotkey_About_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Function.
+        ///   Looks up a localized string similar to About page.
         /// </summary>
-        public static string Hotkey_New {
+        public static string Hotkey_About_Name {
             get {
-                return ResourceManager.GetString("Hotkey_New", resourceCulture);
+                return ResourceManager.GetString("Hotkey_About_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide the application into the system tray.
+        /// </summary>
+        public static string Hotkey_Hide_Description {
+            get {
+                return ResourceManager.GetString("Hotkey_Hide_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide Application.
+        /// </summary>
+        public static string Hotkey_Hide_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_Hide_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open the change language dialog.
+        /// </summary>
+        public static string Hotkey_Language_Description {
+            get {
+                return ResourceManager.GetString("Hotkey_Language_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Application language.
+        /// </summary>
+        public static string Hotkey_Language_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_Language_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main Window.
+        /// </summary>
+        public static string Hotkey_Main_Window_WorkinOn {
+            get {
+                return ResourceManager.GetString("Hotkey_Main_Window_WorkinOn", resourceCulture);
             }
         }
         
@@ -282,6 +327,33 @@ namespace ModularToolManager.Properties {
         public static string Hotkey_New_Description {
             get {
                 return ResourceManager.GetString("Hotkey_New_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Function.
+        /// </summary>
+        public static string Hotkey_New_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_New_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report a bug found within the application.
+        /// </summary>
+        public static string Hotkey_Report_Bug_Description {
+            get {
+                return ResourceManager.GetString("Hotkey_Report_Bug_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report bug.
+        /// </summary>
+        public static string Hotkey_Report_Bug_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_Report_Bug_Name", resourceCulture);
             }
         }
         
