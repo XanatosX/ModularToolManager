@@ -56,7 +56,6 @@ jobs:
            }
   create-windows-build:
     name: Create Windows build
-    if: needs.check-for-changes.outputs.should-run == 'true' 
     needs: ["check-build", "get-build-version"]
     runs-on: windows-latest
     steps:
@@ -90,7 +89,6 @@ jobs:
        if-no-files-found: error
   create-linux-build:
     name: Create Linux build
-    if: needs.check-for-changes.outputs.should-run == 'true' 
     needs: ["check-build", "get-build-version"]
     runs-on: ubuntu-latest
     steps:
