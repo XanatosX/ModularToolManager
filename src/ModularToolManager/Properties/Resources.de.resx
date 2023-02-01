@@ -159,6 +159,51 @@
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Nach Funktion suchen</value>
   </data>
+  <data name="Hotkey_Abort_Description" xml:space="preserve">
+    <value>Aktuelle aktion abbrechen</value>
+  </data>
+  <data name="Hotkey_Abort_Name" xml:space="preserve">
+    <value>Abbrechen des aktuellen vorgangs</value>
+  </data>
+  <data name="Hotkey_Abort_WorkingOn" xml:space="preserve">
+    <value>Sprache ändern, Funktion hinzufügen/Ändern, Einstellungs Fenster</value>
+  </data>
+  <data name="Hotkey_Abort_WorkingOn_Prefix_Colon" xml:space="preserve">
+    <value>Funktioniert an folgenden Stellen:</value>
+  </data>
+  <data name="Hotkey_About_Description" xml:space="preserve">
+    <value>Öffnen des "Über die Applikation" Fensters</value>
+  </data>
+  <data name="Hotkey_About_Name" xml:space="preserve">
+    <value>Über die Applikation</value>
+  </data>
+  <data name="Hotkey_Hide_Description" xml:space="preserve">
+    <value>Versteckt die Applikation im Infobereich</value>
+  </data>
+  <data name="Hotkey_Hide_Name" xml:space="preserve">
+    <value>Applikation verstecken</value>
+  </data>
+  <data name="Hotkey_Language_Description" xml:space="preserve">
+    <value>Öffnen der Spracheinstellungen der Applikation</value>
+  </data>
+  <data name="Hotkey_Language_Name" xml:space="preserve">
+    <value>Sprache der Anwendung ändern</value>
+  </data>
+  <data name="Hotkey_Main_Window_WorkinOn" xml:space="preserve">
+    <value>Hauptfenster</value>
+  </data>
+  <data name="Hotkey_New_Description" xml:space="preserve">
+    <value>Erstelle eine neue Funktion</value>
+  </data>
+  <data name="Hotkey_New_Name" xml:space="preserve">
+    <value>Neuer Funktion</value>
+  </data>
+  <data name="Hotkey_Report_Bug_Description" xml:space="preserve">
+    <value>Report a bug found within the application</value>
+  </data>
+  <data name="Hotkey_Report_Bug_Name" xml:space="preserve">
+    <value>Fehler melden</value>
+  </data>
   <data name="Menu_File" xml:space="preserve">
     <value>Datei</value>
   </data>

@@ -177,6 +177,16 @@ public partial class MainWindowViewModel : ObservableObject
     }
 
     /// <summary>
+    /// Open the hotkey window
+    /// </summary>
+    /// <returns>A awaitable task</returns>
+    [RelayCommand]
+    private async Task OpenHotkey()
+    {
+        await OpenModalWindow(Properties.Resources.SubMenu_Hotkeys, Properties.Properties.Icon_Keyboard, nameof(HotkeysViewModel));
+    }
+
+    /// <summary>
     /// Method to open a modal window
     /// </summary>
     /// <param name="title">The title to use</param>

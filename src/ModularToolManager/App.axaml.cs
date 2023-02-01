@@ -81,8 +81,6 @@ public class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         var provider = BuildServiceCollection().BuildServiceProvider();
-        Microsoft.Extensions.Logging.ILogger<App> testing = provider.GetRequiredService<Microsoft.Extensions.Logging.ILogger<App>>();
-        testing.LogError("test");
         WeakReferenceMessenger.Default.Register<RefreshMainWindow>(this, (_, e) =>
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

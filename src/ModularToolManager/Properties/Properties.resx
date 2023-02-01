@@ -141,6 +141,9 @@
   <data name="Icon_hide" xml:space="preserve">
     <value>eye_hide_regular</value>
   </data>
+  <data name="Icon_Keyboard" xml:space="preserve">
+    <value>keyboard_regular</value>
+  </data>
   <data name="Icon_language" xml:space="preserve">
     <value>flag_regular</value>
   </data>

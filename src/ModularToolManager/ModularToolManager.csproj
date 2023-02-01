@@ -8,10 +8,12 @@
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="Resources\dependencies.json" />
+    <None Remove="Resources\hotkeys.json" />
     <None Remove="Resources\LICENSE" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\dependencies.json" />
+    <EmbeddedResource Include="Resources\hotkeys.json" />
     <EmbeddedResource Include="Resources\LICENSE" />
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +44,9 @@
     </Compile>
     <Compile Update="Views\AllPluginsView.axaml.cs">
       <DependentUpon>AllPluginsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\HotkeysView.axaml.cs">
+      <DependentUpon>HotkeysView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
