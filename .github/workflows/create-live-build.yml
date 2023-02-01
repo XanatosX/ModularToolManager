@@ -57,7 +57,7 @@ jobs:
   create-windows-build:
     name: Create Windows build
     if: needs.check-for-changes.outputs.should-run == 'true' 
-    needs: ["check-build"]
+    needs: ["check-build", "get-build-version"]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
@@ -91,7 +91,7 @@ jobs:
   create-linux-build:
     name: Create Linux build
     if: needs.check-for-changes.outputs.should-run == 'true' 
-    needs: ["check-build"]
+    needs: ["check-build", "get-build-version"]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
