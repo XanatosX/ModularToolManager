@@ -49,11 +49,11 @@ jobs:
          # Additional env fix found on https://github.com/actions/runner-images/issues/5251
          if [ '${{ GITHUB.REF_TYPE }}' == 'branch' ]
             then
-                echo "Running on branch (Check successful)"
-                echo "build-version=${{ GITHUB.REF_NAME }}" >> $GITHUB_OUTPUT
-            else
                 echo "Is not running on branch (Check failed)"
                 echo "build-version=0.0.0" >> $GITHUB_OUTPUT
+            else
+                echo "Running on branch (Check successful)"
+                echo "build-version=${{ GITHUB.REF_NAME }}" >> $GITHUB_OUTPUT
          fi
   create-windows-build:
     name: Create Windows build
