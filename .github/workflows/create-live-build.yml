@@ -4,10 +4,9 @@ name: Live build
 on:
   release:
     types: [released]
-  push:
 
 env:
-  DEBUG: true
+  DEBUG: false
   REF_CHECKOUT_BRANCH: main
   #RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
