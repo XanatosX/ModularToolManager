@@ -16,13 +16,13 @@
 
 ## About the Project
 
-This tool is called "Modular Tool Manager" it is a plugin based GUI script executer. The default tool does deliver basic plugins for binary and script execution on Windows.
+This tool is called "Modular Tool Manager" it is a plugin based GUI script executer. The default tool does deliver basic plugins for binary and script execution on Windows. This is the main view you are getting presented with.
 
-![Main view of the rogramp][image-main-view]
+![Main view of the program][image-main-view]
 
-The tool is getting tested on Windows and Linux Mint, since it is based on [AvaloniaUI][avaloniaui] it should run on mac as well.
+The tool is getting tested on Windows and Linux Mint, since it is based on [AvaloniaUI][avaloniaui] it should run on mac as well. I will not provide a build for it.
 
-**Important:** I can only test it for Windows 10 so please check if the Avalonia variant is running on older systems as well.
+> :warning: **Important:** I can only test it for Windows 10 so please check if the Avalonia variant is running on older/newer systems as well.
 
 You can extend the functionality of the tool by writing your own plugins. Please take a look at the [Wiki] to find out how to do that.
 The application does support the following languages for now, feel free to extend it via Pull Request
@@ -30,17 +30,22 @@ The application does support the following languages for now, feel free to exten
 * German
 * Englisch
 
-To download the tool please head over to the [download page][downloadPage]. If you found a bug or need any help with the applcation please head over to the [issue][issuePage] area.
+To download the tool please head over to the [download page][downloadPage].
+Either use the latest develop build which is unstable or the latest tagged build.
 
-
+If you found a bug or need any help with the application please head over to the [issue][issuePage] area. As an alternative there is a menu entry in the application which will open the issue page as well.
 
 ## Installation
+
+Right now there is only a zip file you can extract somewhere to your disc. Just follow the instructions for the nighly build.
+
+I will try to add a windows installer later on.
 
 ### Latest nighlty build
 
 The latest nighlty build are self contained application builds which are getting packed into a zip folder.
 To install the application get the build for your operation system and extract the files to a folder on your disc.
-Start the "ModularToolManager.exe" or if you on a linux machine the "ModularToolManager" binary.
+Start the `ModularToolManager.exe` or if you on a linux machine the "ModularToolManager" binary.
 
 ## Downloads
 
@@ -54,14 +59,15 @@ Please head over to the  [issue page][issuePage].
 
 Plugins are getting installed by moving the dll files into the "plugins" folder inside of the root application. 
 If you freshly install the program you will see there is a defaultPlugins.dll. This will provide you with some basic functionality.
-To develop a plugin on your own please take a look at the [wiki] page
+To develop a plugin on your own please take a look at the [wiki] page.
 
-### Warning
+### :no_entry_sign: Warning :no_entry_sign:
 
 Using plugins from any source can harm your machine. Always check if you trust the author of the plugin.
-Technicaly the plugin will run with the user rights you did start the application with allowing any plugin to execute harmful code.
+Technically the plugin will run with the user rights you did start the application with allowing any plugin to execute harmful code.
 
 ## Additional Screenshots
+
 ![screenshot-1]  
 ![screenshot-2]  
 ![screenshot-3]
