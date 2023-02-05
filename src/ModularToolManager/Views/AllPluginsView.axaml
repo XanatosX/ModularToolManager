@@ -4,15 +4,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 xmlns:p="clr-namespace:ModularToolManager.Properties"
-             x:Class="ModularToolManager.Views.AllPluginsView" MinHeight="250" MinWidth="500">
+             x:Class="ModularToolManager.Views.AllPluginsView"
+			 MinHeight="250"
+			 MinWidth="500">
 	<Grid RowDefinitions="*, Auto">
 			<Grid ColumnDefinitions="Auto, *">
 				<Border BorderThickness="0,0,2,0" MinWidth="40"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 				<ListBox Items="{Binding Plugins}" SelectedItem="{Binding SelectedEntry}"/>
 				</Border>
-				<Panel Margin="10,0,0,0" Grid.Column="1">
-					<ContentControl HorizontalContentAlignment="Left"  Content="{Binding PluginView}"></ContentControl>
-				</Panel>
+				<TabControl  Grid.Column="1" Padding="5">
+					<TabItem Header="{x:Static p:Resources.AllPlugins_Header_Information}">
+						<Panel Margin="10,0,0,0">
+							<ContentControl HorizontalContentAlignment="Left"  Content="{Binding PluginView}"></ContentControl>
+						</Panel>
+					</TabItem>
+					<TabItem Header="{x:Static p:Resources.AllPlugins_Header_Settings}" IsEnabled="{Binding SettingsAvailable}">
+						<ContentControl HorizontalContentAlignment="Stretch"  Content="{Binding PluginSettingsView}"></ContentControl>
+					</TabItem>
+				</TabControl>
 			</Grid>
 		<Grid Grid.Row="1" Margin="0,5,0,0">
 			<StackPanel Orientation="Horizontal">

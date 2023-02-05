@@ -26,7 +26,13 @@ public class AppViewModel : ObservableObject
 	/// </summary>
 	public AppViewModel()
 	{
-		ShowApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(false)));
+		ShowApplicationCommand = new RelayCommand(() =>
+		{
+			var response = WeakReferenceMessenger.Default.Send(new RequestApplicationVisiblity());
+			bool toggleMode = response.HasReceivedResponse ? response.Response : false;
+			WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(toggleMode));
+
+		});
 		ExitApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseApplicationMessage()));
 	}
 }

@@ -61,11 +61,65 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dependencies.
+        /// </summary>
+        public static string About_Dependency {
+            get {
+                return ResourceManager.GetString("About_Dependency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        public static string About_License {
+            get {
+                return ResourceManager.GetString("About_License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repository:.
+        /// </summary>
+        public static string About_Repository_Colon {
+            get {
+                return ResourceManager.GetString("About_Repository_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version:.
+        /// </summary>
+        public static string About_Version_Colon {
+            get {
+                return ResourceManager.GetString("About_Version_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Path to function.
         /// </summary>
         public static string AddFunction_FunctionPathWatermark {
             get {
                 return ResourceManager.GetString("AddFunction_FunctionPathWatermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string AllPlugins_Header_Information {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string AllPlugins_Header_Settings {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_Settings", resourceCulture);
             }
         }
         
@@ -133,11 +187,236 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string DefaultButton_Save {
+            get {
+                return ResourceManager.GetString("DefaultButton_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License.
+        /// </summary>
+        public static string Dependency_License {
+            get {
+                return ResourceManager.GetString("Dependency_License", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project.
+        /// </summary>
+        public static string Dependency_Project {
+            get {
+                return ResourceManager.GetString("Dependency_Project", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for function.
         /// </summary>
         public static string FunctionSelection_SearchForFunction {
             get {
                 return ResourceManager.GetString("FunctionSelection_SearchForFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abort the current action or close the current modal.
+        /// </summary>
+        public static string Hotkey_Abort_Description {
+            get {
+                return ResourceManager.GetString("Hotkey_Abort_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abort.
+        /// </summary>
+        public static string Hotkey_Abort_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_Abort_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Language, Add/Edit Function, Settings.
+        /// </summary>
+        public static string Hotkey_Abort_WorkingOn {
+            get {
+                return ResourceManager.GetString("Hotkey_Abort_WorkingOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Working at the following places:.
+        /// </summary>
+        public static string Hotkey_Abort_WorkingOn_Prefix_Colon {
+            get {
+                return ResourceManager.GetString("Hotkey_Abort_WorkingOn_Prefix_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open the about page of the application.
+        /// </summary>
+        public static string Hotkey_About_Description {
+            get {
+                return ResourceManager.GetString("Hotkey_About_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About page.
+        /// </summary>
+        public static string Hotkey_About_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_About_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide the application into the system tray.
+        /// </summary>
+        public static string Hotkey_Hide_Description {
+            get {
+                return ResourceManager.GetString("Hotkey_Hide_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide Application.
+        /// </summary>
+        public static string Hotkey_Hide_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_Hide_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open the change language dialog.
+        /// </summary>
+        public static string Hotkey_Language_Description {
+            get {
+                return ResourceManager.GetString("Hotkey_Language_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Application language.
+        /// </summary>
+        public static string Hotkey_Language_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_Language_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main Window.
+        /// </summary>
+        public static string Hotkey_Main_Window_WorkinOn {
+            get {
+                return ResourceManager.GetString("Hotkey_Main_Window_WorkinOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new function.
+        /// </summary>
+        public static string Hotkey_New_Description {
+            get {
+                return ResourceManager.GetString("Hotkey_New_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Function.
+        /// </summary>
+        public static string Hotkey_New_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_New_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report a bug found within the application.
+        /// </summary>
+        public static string Hotkey_Report_Bug_Description {
+            get {
+                return ResourceManager.GetString("Hotkey_Report_Bug_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report bug.
+        /// </summary>
+        public static string Hotkey_Report_Bug_Name {
+            get {
+                return ResourceManager.GetString("Hotkey_Report_Bug_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ctrl.
+        /// </summary>
+        public static string Key_Ctrl {
+            get {
+                return ResourceManager.GetString("Key_Ctrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esc.
+        /// </summary>
+        public static string Key_Esc {
+            get {
+                return ResourceManager.GetString("Key_Esc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F1.
+        /// </summary>
+        public static string Key_F1 {
+            get {
+                return ResourceManager.GetString("Key_F1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F12.
+        /// </summary>
+        public static string Key_F12 {
+            get {
+                return ResourceManager.GetString("Key_F12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to h.
+        /// </summary>
+        public static string Key_H {
+            get {
+                return ResourceManager.GetString("Key_H", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to l.
+        /// </summary>
+        public static string Key_L {
+            get {
+                return ResourceManager.GetString("Key_L", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to n.
+        /// </summary>
+        public static string Key_N {
+            get {
+                return ResourceManager.GetString("Key_N", resourceCulture);
             }
         }
         
@@ -228,6 +507,15 @@ namespace ModularToolManager.Properties {
         public static string Plugin_Url_Colon {
             get {
                 return ResourceManager.GetString("Plugin_Url_Colon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Running with Avalonia UI.
+        /// </summary>
+        public static string RunningWith {
+            get {
+                return ResourceManager.GetString("RunningWith", resourceCulture);
             }
         }
         

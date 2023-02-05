@@ -117,17 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About_Dependency" xml:space="preserve">
+    <value>Abhängigkeiten</value>
+  </data>
+  <data name="About_License" xml:space="preserve">
+    <value>Lizenz</value>
+  </data>
+  <data name="About_Repository_Colon" xml:space="preserve">
+    <value>Repository:</value>
+  </data>
+  <data name="About_Version_Colon" xml:space="preserve">
+    <value>Version:</value>
+  </data>
   <data name="AddFunction_FunctionPathWatermark" xml:space="preserve">
     <value>Pfad zur Funktion</value>
   </data>
+  <data name="AllPlugins_Header_Information" xml:space="preserve">
+    <value>Informationen</value>
+  </data>
+  <data name="AllPlugins_Header_Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
   <data name="Button_Open_Project" xml:space="preserve">
-    <value>Öffne Website des Projectes</value>
+    <value>Projekt Website im Browser öffnen</value>
   </data>
   <data name="DefaultButton_Abort" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
   <data name="DefaultButton_Ok" xml:space="preserve">
     <value>Ok</value>
+  </data>
+  <data name="DefaultButton_Save" xml:space="preserve">
+    <value>Speichern</value>
   </data>
   <data name="Default_Delete" xml:space="preserve">
     <value>Löschen</value>
@@ -137,6 +158,51 @@
   </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Nach Funktion suchen</value>
+  </data>
+  <data name="Hotkey_Abort_Description" xml:space="preserve">
+    <value>Aktuelle aktion abbrechen</value>
+  </data>
+  <data name="Hotkey_Abort_Name" xml:space="preserve">
+    <value>Abbrechen des aktuellen vorgangs</value>
+  </data>
+  <data name="Hotkey_Abort_WorkingOn" xml:space="preserve">
+    <value>Sprache ändern, Funktion hinzufügen/Ändern, Einstellungs Fenster</value>
+  </data>
+  <data name="Hotkey_Abort_WorkingOn_Prefix_Colon" xml:space="preserve">
+    <value>Funktioniert an folgenden Stellen:</value>
+  </data>
+  <data name="Hotkey_About_Description" xml:space="preserve">
+    <value>Öffnen des "Über die Applikation" Fensters</value>
+  </data>
+  <data name="Hotkey_About_Name" xml:space="preserve">
+    <value>Über die Applikation</value>
+  </data>
+  <data name="Hotkey_Hide_Description" xml:space="preserve">
+    <value>Versteckt die Applikation im Infobereich</value>
+  </data>
+  <data name="Hotkey_Hide_Name" xml:space="preserve">
+    <value>Applikation verstecken</value>
+  </data>
+  <data name="Hotkey_Language_Description" xml:space="preserve">
+    <value>Öffnen der Spracheinstellungen der Applikation</value>
+  </data>
+  <data name="Hotkey_Language_Name" xml:space="preserve">
+    <value>Sprache der Anwendung ändern</value>
+  </data>
+  <data name="Hotkey_Main_Window_WorkinOn" xml:space="preserve">
+    <value>Hauptfenster</value>
+  </data>
+  <data name="Hotkey_New_Description" xml:space="preserve">
+    <value>Erstelle eine neue Funktion</value>
+  </data>
+  <data name="Hotkey_New_Name" xml:space="preserve">
+    <value>Neuer Funktion</value>
+  </data>
+  <data name="Hotkey_Report_Bug_Description" xml:space="preserve">
+    <value>Report a bug found within the application</value>
+  </data>
+  <data name="Hotkey_Report_Bug_Name" xml:space="preserve">
+    <value>Fehler melden</value>
   </data>
   <data name="Menu_File" xml:space="preserve">
     <value>Datei</value>
@@ -166,7 +232,10 @@
     <value>Lizenz:</value>
   </data>
   <data name="Plugin_Url_Colon" xml:space="preserve">
-    <value>Project Link:</value>
+    <value>Projekt Link:</value>
+  </data>
+  <data name="RunningWith" xml:space="preserve">
+    <value>Läuft mit Avalonia UI</value>
   </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>

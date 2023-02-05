@@ -5,6 +5,9 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE409F60-F5A2-4643-B028-F124F6CC151A}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.github\workflows\create-latest-develop-build.yml = .github\workflows\create-latest-develop-build.yml
+		.github\workflows\create-live-build.yml = .github\workflows\create-live-build.yml
 		README.md = README.md
 	EndProjectSection
 EndProject

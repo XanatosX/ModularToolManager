@@ -11,8 +11,17 @@
 
     <Application.Styles>
 		<FluentTheme Mode="Dark"/>
-		<StyleInclude Source="avares://ModularToolManager/Icons.axaml"/>
+		<StyleInclude Source="avares://ModularToolManager/Resources/Icons.axaml"/>
+		<StyleInclude Source="avares://ModularToolManager/Resources/LinkButtonStyle.axaml"/>
 	</Application.Styles>
+
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceInclude Source="avares://ModularToolManager/Resources/PluginSettingResource.axaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
 
 	<TrayIcon.Icons>
 		<TrayIcons>

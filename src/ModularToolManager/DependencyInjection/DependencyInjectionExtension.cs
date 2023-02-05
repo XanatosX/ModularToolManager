@@ -8,6 +8,7 @@ using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
+using ModularToolManagerModel.DependencyInjection;
 using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.IO;
@@ -16,6 +17,7 @@ using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
 using ModularToolManagerModel.Services.Serialization;
 using ModularToolManagerPlugin.Services;
+using System;
 using System.Text.Json;
 
 namespace ModularToolManager.DependencyInjection;
@@ -31,6 +33,7 @@ internal static class DependencyInjectionExtension
     /// </summary>
     /// <param name="collection">The collection to extend</param>
     /// <returns>The extended collection</returns>
+    [Obsolete]
     public static IServiceCollection AddAvaloniaDefault(this IServiceCollection collection)
     {
         return collection;
@@ -50,7 +53,12 @@ internal static class DependencyInjectionExtension
                          .AddTransient<SettingsViewModel>()
                          .AddTransient<AppViewModel>()
                          .AddTransient<AllPluginsViewModel>()
-                         .AddTransient<PluginViewModel>();
+                         .AddTransient<PluginViewModel>()
+                         .AddTransient<BoolPluginSettingViewModel>()
+                         .AddTransient<StringPluginSettingViewModel>()
+                         .AddTransient<IntPluginSettingViewModel>()
+                         .AddTransient<FloatPluginSettingView>()
+                         .AddTransient<AboutViewModel>();
     }
 
     /// <summary>
@@ -74,25 +82,22 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddServices(this IServiceCollection collection)
     {
-        return collection.AddSingleton<IPathService, PathService>()
+        return collection.AddAllModelDependencies()
+                         .AddSingleton<IPathService, PathService>()
                          .AddSingleton<IStyleService, DefaultStyleService>()
                          .AddSingleton<IPluginTranslationService, PluginTranslationService>()
                          .AddSingleton<IFunctionSettingsService, FunctionSettingService>()
                          .AddSingleton<ILanguageService, ResourceCultureService>()
                          .AddSingleton<IWindowManagementService, WindowManagementService>()
-                         .AddSingleton<IPluginService, PluginService>()
                          .AddSingleton<ISerializationOptionFactory<JsonSerializerOptions>, JsonSerializationOptionFactory>()
                          .AddSingleton<IFunctionService, SerializedFunctionService>()
                          .AddSingleton<IViewModelLocatorService, ViewModelLocator>()
                          .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>()
                          .AddSingleton<ISettingsService, SerializedSettingsService>()
                          .AddTransient<ViewLocator>()
-                         .AddTransient<ISerializeService, JsonSerializationService>()
+                         .AddSingleton<PluginSettingViewModelService>()
                          .AddTransient<IImageService, ImageService>()
-                         .AddTransient<IUrlOpenerService, UrlOpenerService>()
-                         .AddTransient<IFileSystemService, FileSystemService>()
-                         .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>));
-
-
+                         .AddTransient<ResourceReaderService>()
+                         .AddTransient<GetApplicationInformationService>();
     }
 }

@@ -126,14 +126,23 @@
   <data name="FunctionsFile" xml:space="preserve">
     <value>functions.dat</value>
   </data>
-  <data name="GithubUrl" xml:space="preserve">
+  <data name="GithubIssueUrl" xml:space="preserve">
     <value>https://github.com/XanatosX/ModularToolManager/issues</value>
+  </data>
+  <data name="GitHubUrl" xml:space="preserve">
+    <value>https://github.com/XanatosX/ModularToolManager/</value>
+  </data>
+  <data name="Icon_About" xml:space="preserve">
+    <value>question_circle_regular</value>
   </data>
   <data name="Icon_edit_function" xml:space="preserve">
     <value>edit_regular</value>
   </data>
   <data name="Icon_hide" xml:space="preserve">
     <value>eye_hide_regular</value>
+  </data>
+  <data name="Icon_Keyboard" xml:space="preserve">
+    <value>keyboard_regular</value>
   </data>
   <data name="Icon_language" xml:space="preserve">
     <value>flag_regular</value>
