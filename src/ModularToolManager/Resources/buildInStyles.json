@@ -9,7 +9,9 @@
       "R": 0,
       "G": 0,
       "B": 0
-    }
+    },
+    "material_opacity": 0.65,
+    "tint_opacity": 1
   },
   {
     "id": 1,
@@ -21,6 +23,8 @@
       "R": 255,
       "G": 255,
       "B": 255
-    }
+    },
+    "material_opacity": 0.65,
+    "tint_opacity": 1
   }
 ]

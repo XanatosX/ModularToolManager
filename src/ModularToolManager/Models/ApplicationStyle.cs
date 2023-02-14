@@ -9,7 +9,7 @@ public class ApplicationStyle
     public int Id { get; init; }
 
     [JsonPropertyName("resource_key")]
-    public string ResourceKey { get; init; }
+    public string? ResourceKey { get; init; }
 
     [JsonIgnore]
     public string? Name { get; set; }
@@ -22,4 +22,10 @@ public class ApplicationStyle
 
     [JsonPropertyName("tint_color")]
     public Color? TintColor { get; init; }
+
+    [JsonPropertyName("material_opacity")]
+    public float MaterialOpacity { get; init; }
+
+    [JsonPropertyName("tint_opacity")]
+    public float TintOpacity { get; init; }
 }
