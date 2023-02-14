@@ -10,6 +10,7 @@ using ModularToolManager.DependencyInjection;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Settings;
+using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;

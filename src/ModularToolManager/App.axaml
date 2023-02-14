@@ -15,12 +15,19 @@
 		<StyleInclude Source="avares://ModularToolManager/Resources/LinkButtonStyle.axaml"/>
 	</Application.Styles>
 
+	<!-- Custom control styles -->
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="avares://ModularToolManager/Resources/PluginSettingResource.axaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
+	</Application.Resources>
+
+	<!-- Themes -->
+	<Application.Resources>
+		<FluentTheme x:Key="DarkTheme" Mode="Dark"/>
+		<FluentTheme x:Key="LightTheme" Mode="Light"/>
 	</Application.Resources>
 
 	<TrayIcon.Icons>

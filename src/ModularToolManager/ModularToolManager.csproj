@@ -7,11 +7,13 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Resources\buildInStyles.json" />
     <None Remove="Resources\dependencies.json" />
     <None Remove="Resources\hotkeys.json" />
     <None Remove="Resources\LICENSE" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\buildInStyles.json" />
     <EmbeddedResource Include="Resources\dependencies.json" />
     <EmbeddedResource Include="Resources\hotkeys.json" />
     <EmbeddedResource Include="Resources\LICENSE" />

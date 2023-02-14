@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -6,10 +7,9 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
-using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManagerModel.Services.IO;
-using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -20,6 +20,9 @@ namespace ModularToolManager.ViewModels;
 /// </summary>
 public partial class MainWindowViewModel : ObservableObject
 {
+    [ObservableProperty]
+    public Color applicationTintColor;
+
     /// <summary>
     /// Service to use for locating view models
     /// </summary>
@@ -39,7 +42,10 @@ public partial class MainWindowViewModel : ObservableObject
     /// <summary>
     /// The settings service to use
     /// </summary>
-    private ISettingsService settingsService;
+    private readonly ISettingsService settingsService;
+
+
+    private readonly IThemeService themeService;
 
     /// <summary>
     /// The current content model to show in the main view
@@ -51,11 +57,6 @@ public partial class MainWindowViewModel : ObservableObject
     /// </summary>
     [ObservableProperty]
     private bool showInTaskbar;
-
-    /// <summary>
-    /// The service to use for getting styles
-    /// </summary>
-    private readonly IStyleService styleService;
 
     /// <summary>
     /// Command to select a new language
@@ -89,17 +90,19 @@ public partial class MainWindowViewModel : ObservableObject
         FunctionSelectionViewModel mainContentModel,
         IViewModelLocatorService viewModelLocator,
         IWindowManagementService windowManagementService,
-        IStyleService styleService,
         IUrlOpenerService urlOpenerService,
-        ISettingsService settingsService)
+        ISettingsService settingsService,
+        IThemeService themeService)
     {
         this.urlOpenerService = urlOpenerService;
         this.settingsService = settingsService;
+        this.themeService = themeService;
         MainContentModel = mainContentModel;
         this.viewModelLocator = viewModelLocator;
         this.windowManagementService = windowManagementService;
-        this.styleService = styleService;
 
+        ApplicationTintColor = themeService.GetAllStyles().FirstOrDefault()?.TintColor ?? Colors.Pink;
+        themeService.ChangeApplicationTheme(themeService.GetAllStyles().FirstOrDefault());
         UpdateShowInTaskbar();
 
         ReportBugCommand = new RelayCommand(() => urlOpenerService?.OpenUrl(Properties.Properties.GithubIssueUrl));
