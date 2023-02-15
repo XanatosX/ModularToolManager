@@ -10,6 +10,7 @@ using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
 using ModularToolManagerModel.Services.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -194,6 +195,7 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task OpenSettings()
     {
         await OpenModalWindow(Properties.Resources.SubMenu_Settings, Properties.Properties.Icon_settings, nameof(SettingsViewModel));
+        SwitchTheme();
     }
 
 
@@ -231,7 +233,7 @@ public partial class MainWindowViewModel : ObservableObject
         {
             return;
         }
-        ShowWindowModel modalWindowData = new ShowWindowModel(title, imagePath, modalContent, WindowStartupLocation.CenterScreen);
+        ShowWindowModel modalWindowData = new(title, imagePath, modalContent, WindowStartupLocation.CenterScreen);
         if (windowManagementService is not null)
         {
             await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
@@ -251,7 +253,7 @@ public partial class MainWindowViewModel : ObservableObject
         {
             return;
         }
-        ShowWindowModel modalWindowData = new ShowWindowModel(title, imagePath, modal, WindowStartupLocation.CenterScreen);
+        ShowWindowModel modalWindowData = new(title, imagePath, modal, WindowStartupLocation.CenterScreen);
         if (windowManagementService is not null)
         {
             await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());

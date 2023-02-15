@@ -1,4 +1,5 @@
 ﻿using Avalonia.Media;
+using Avalonia.Themes.Fluent;
 using System.Text.Json.Serialization;
 
 namespace ModularToolManager.Models;
@@ -8,9 +9,8 @@ public class ApplicationStyle
     [JsonPropertyName("id")]
     public int Id { get; init; }
 
-    [JsonPropertyName("resource_key")]
-    public string? ResourceKey { get; init; }
-
+    [JsonPropertyName("mode")]
+    public FluentThemeMode Mode { get; init; }
 
     [JsonPropertyName("name_translation_key")]
     public string? NameTranslationKey { get; init; }

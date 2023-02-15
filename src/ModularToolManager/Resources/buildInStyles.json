@@ -1,7 +1,7 @@
 ﻿[
   {
     "id": 0,
-    "resource_key": "DarkTheme",
+    "mode": 1,
     "name_translation_key": "App_Dark_Theme",
     "description_translation_key": "App_Dark_Theme_Description",
     "tint_color": {
@@ -15,8 +15,8 @@
   },
   {
     "id": 1,
+    "mode": 0,
     "name_translation_key": "App_Light_Theme",
-    "resource_key": "LightTheme",
     "description_translation_key": "App_Light_Theme_Description",
     "tint_color": {
       "A": 255,

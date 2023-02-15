@@ -6,6 +6,7 @@ using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -105,5 +106,7 @@ internal partial class SettingsViewModel : ObservableObject
 	private void Abort()
 	{
 		WeakReferenceMessenger.Default.Send(new CloseModalMessage(this));
+		AvailableThemes.Clear();
+		SelectedTheme = null;
 	}
 }

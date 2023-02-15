@@ -3,11 +3,6 @@
              xmlns:local="using:ModularToolManager"
              x:Class="ModularToolManager.App"
 			 xmlns:p="clr-namespace:ModularToolManager.Properties">
-	<!--
-    <Application.DataTemplates>
-        <local:ViewLocator/>
-    </Application.DataTemplates>
-	-->
 
     <Application.Styles>
 		<FluentTheme Mode="Dark"/>
@@ -22,12 +17,6 @@
 				<ResourceInclude Source="avares://ModularToolManager/Resources/PluginSettingResource.axaml"/>
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
-	</Application.Resources>
-
-	<!-- Themes -->
-	<Application.Resources>
-		<FluentTheme x:Key="DarkTheme" Mode="Dark"/>
-		<FluentTheme x:Key="LightTheme" Mode="Light"/>
 	</Application.Resources>
 
 	<TrayIcon.Icons>

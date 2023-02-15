@@ -57,16 +57,13 @@ internal class AvaloniaThemeService : IThemeService
 
     public void ChangeApplicationTheme(ApplicationStyle theme)
     {
-        var loadedPair = Application.Current?.Resources.FirstOrDefault(resource => resource.Key as string == theme.ResourceKey);
-        var fluentTheme = loadedPair?.Value as FluentTheme;
         var app = Application.Current;
-        if (fluentTheme is not null && app is not null)
+        if (app is not null)
         {
-            List<FluentTheme> themesToRemove = app.Styles.OfType<FluentTheme>().ToList();
-            if (themesToRemove.Count > 1 || themesToRemove.FirstOrDefault() != fluentTheme)
+            var loadedTheme = app.Styles.OfType<FluentTheme>().FirstOrDefault();
+            if (loadedTheme is not null)
             {
-                app.Styles.RemoveAll(themesToRemove);
-                app.Styles.Insert(0, fluentTheme);
+                loadedTheme.Mode = theme.Mode;
             }
         }
     }

@@ -25,7 +25,6 @@ public partial class ModalWindow : Window
             data.Reply(true);
             WeakReferenceMessenger.Default.Unregister<CloseModalMessage>(this);
             Close();
-
         });
     }
 
