@@ -20,8 +20,6 @@ namespace ModularToolManager.ViewModels;
 /// </summary>
 public partial class MainWindowViewModel : ObservableObject
 {
-    [ObservableProperty]
-    public Color applicationTintColor;
 
     /// <summary>
     /// Service to use for locating view models
@@ -51,6 +49,15 @@ public partial class MainWindowViewModel : ObservableObject
     /// The current content model to show in the main view
     /// </summary>
     public ObservableObject MainContentModel { get; }
+
+    [ObservableProperty]
+    public Color applicationTintColor;
+
+    [ObservableProperty]
+    public float tintOpacity;
+
+    [ObservableProperty]
+    public float materialOpacity;
 
     /// <summary>
     /// Should the window be shown in the taskbar
@@ -101,8 +108,7 @@ public partial class MainWindowViewModel : ObservableObject
         this.viewModelLocator = viewModelLocator;
         this.windowManagementService = windowManagementService;
 
-        ApplicationTintColor = themeService.GetAllStyles().FirstOrDefault()?.TintColor ?? Colors.Pink;
-        themeService.ChangeApplicationTheme(themeService.GetAllStyles().FirstOrDefault());
+        SwitchTheme();
         UpdateShowInTaskbar();
 
         ReportBugCommand = new RelayCommand(() => urlOpenerService?.OpenUrl(Properties.Properties.GithubIssueUrl));
@@ -115,6 +121,8 @@ public partial class MainWindowViewModel : ObservableObject
         {
             UpdateShowInTaskbar();
         });
+        //WeakReferenceMessenger.Default.Register<ApplicationThemeUpdated>(this, (_, e) => SwitchTheme(e.Value));
+
         WeakReferenceMessenger.Default.Register<EditFunctionMessage>(this, async (_, e) =>
         {
             var editModal = viewModelLocator.GetViewModel(nameof(AddFunctionViewModel)) as AddFunctionViewModel;
@@ -127,6 +135,26 @@ public partial class MainWindowViewModel : ObservableObject
             }
             e.Reply(false);
         });
+    }
+
+    private void SwitchTheme(int themeId)
+    {
+        var theme = themeService.GetStyleById(themeId);
+        theme ??= themeService.GetAllStyles().FirstOrDefault() ?? new ApplicationStyle { MaterialOpacity = 1, TintOpacity = 0.65f, TintColor = Colors.Pink };
+        if (theme is null)
+        {
+            return;
+        }
+        ApplicationTintColor = theme.TintColor ?? Colors.Pink;
+        MaterialOpacity = theme.MaterialOpacity;
+        TintOpacity = theme.TintOpacity;
+        themeService.ChangeApplicationTheme(theme);
+    }
+
+    private void SwitchTheme()
+    {
+        int themeId = settingsService.GetApplicationSettings().SelectedThemeId;
+        SwitchTheme(themeId);
     }
 
     /// <summary>

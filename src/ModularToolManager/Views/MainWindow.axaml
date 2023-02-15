@@ -23,8 +23,8 @@
 				<ExperimentalAcrylicMaterial
 					BackgroundSource="Digger"
 					TintColor="{Binding ApplicationTintColor}"
-					TintOpacity="1"
-					MaterialOpacity="0.65" />
+					TintOpacity="{Binding TintOpacity}"
+					MaterialOpacity="{Binding MaterialOpacity}" />
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
 		<Panel>

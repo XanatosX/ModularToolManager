@@ -124,6 +124,42 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark mode.
+        /// </summary>
+        public static string App_Dark_Theme {
+            get {
+                return ResourceManager.GetString("App_Dark_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark theme for the application.
+        /// </summary>
+        public static string App_Dark_Theme_Description {
+            get {
+                return ResourceManager.GetString("App_Dark_Theme_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light mode.
+        /// </summary>
+        public static string App_Light_Theme {
+            get {
+                return ResourceManager.GetString("App_Light_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light theme for the application.
+        /// </summary>
+        public static string App_Light_Theme_Description {
+            get {
+                return ResourceManager.GetString("App_Light_Theme_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modular Tool Manager.
         /// </summary>
         public static string Application_Name {

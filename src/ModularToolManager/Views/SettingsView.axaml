@@ -19,6 +19,7 @@
 				Content="{x:Static p:Resources.Settings_ShowInTaskbar}"
 				IsChecked="{Binding ShowInTaskbar}"
 				/>
+			<ComboBox Items="{Binding AvailableThemes}" SelectedItem="{Binding SelectedTheme}"/>
 		</StackPanel>
 		<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
 			<Button Content="{x:Static p:Resources.DefaultButton_Ok}" Command="{Binding OkCommand}"/>

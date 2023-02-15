@@ -10,6 +10,9 @@ namespace ModularToolManager.Models;
 /// </summary>
 public class ApplicationSettings
 {
+    [JsonPropertyName("selected_theme")]
+    public int SelectedThemeId { get; set; }
+
     /// <summary>
     /// Should the application be always on top of all others
     /// </summary>

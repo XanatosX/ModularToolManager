@@ -11,14 +11,18 @@ public class ApplicationStyle
     [JsonPropertyName("resource_key")]
     public string? ResourceKey { get; init; }
 
+
+    [JsonPropertyName("name_translation_key")]
+    public string? NameTranslationKey { get; init; }
+
+    [JsonPropertyName("description_translation_key")]
+    public string? DescriptionTranslationKey { get; init; }
+
     [JsonIgnore]
     public string? Name { get; set; }
 
-    [JsonPropertyName("translation_key")]
-    public string? Translation_Key { get; init; }
-
-    [JsonPropertyName("description")]
-    public string? Description { get; init; }
+    [JsonIgnore]
+    public string? Description { get; set; }
 
     [JsonPropertyName("tint_color")]
     public Color? TintColor { get; init; }

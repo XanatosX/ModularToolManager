@@ -2,8 +2,8 @@
   {
     "id": 0,
     "resource_key": "DarkTheme",
-    "translation_key": "App_Dark_Theme",
-    "description": "Dark theme for the application",
+    "name_translation_key": "App_Dark_Theme",
+    "description_translation_key": "App_Dark_Theme_Description",
     "tint_color": {
       "A": 255,
       "R": 0,
@@ -15,9 +15,9 @@
   },
   {
     "id": 1,
-    "translation_key": "App_Light_Theme",
+    "name_translation_key": "App_Light_Theme",
     "resource_key": "LightTheme",
-    "description": "Light theme for the application",
+    "description_translation_key": "App_Light_Theme_Description",
     "tint_color": {
       "A": 255,
       "R": 255,

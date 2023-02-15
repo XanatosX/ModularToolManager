@@ -34,7 +34,8 @@ internal class AvaloniaThemeService : IThemeService
             returnStyles = JsonSerializer.Deserialize<IEnumerable<ApplicationStyle>>(resourceReaderService.GetResourceStream("buildInStyles.json") ?? Stream.Null, options) ?? returnStyles;
             foreach (var style in returnStyles)
             {
-                style.Name = Properties.Resources.ResourceManager.GetString(style.Translation_Key ?? string.Empty) ?? style.Translation_Key;
+                style.Name = Properties.Resources.ResourceManager.GetString(style.NameTranslationKey ?? string.Empty) ?? style.NameTranslationKey;
+                style.Description = Properties.Resources.ResourceManager.GetString(style.DescriptionTranslationKey ?? string.Empty) ?? style.DescriptionTranslationKey;
             }
         }
         catch (Exception ex)
@@ -62,8 +63,11 @@ internal class AvaloniaThemeService : IThemeService
         if (fluentTheme is not null && app is not null)
         {
             List<FluentTheme> themesToRemove = app.Styles.OfType<FluentTheme>().ToList();
-            app.Styles.RemoveAll(themesToRemove);
-            app.Styles.Add(fluentTheme);
+            if (themesToRemove.Count > 1 || themesToRemove.FirstOrDefault() != fluentTheme)
+            {
+                app.Styles.RemoveAll(themesToRemove);
+                app.Styles.Insert(0, fluentTheme);
+            }
         }
     }
 }
