@@ -121,7 +121,7 @@ public partial class MainWindowViewModel : ObservableObject
         {
             UpdateShowInTaskbar();
         });
-        //WeakReferenceMessenger.Default.Register<ApplicationThemeUpdated>(this, (_, e) => SwitchTheme(e.Value));
+        WeakReferenceMessenger.Default.Register<ApplicationThemeUpdated>(this, (_, e) => SwitchTheme(e.Value));
 
         WeakReferenceMessenger.Default.Register<EditFunctionMessage>(this, async (_, e) =>
         {
