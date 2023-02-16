@@ -5,8 +5,8 @@
 			 xmlns:p="clr-namespace:ModularToolManager.Properties"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.SettingsView">
-	<Grid RowDefinitions="Auto, Auto">
-		<StackPanel>
+	<Grid RowDefinitions="Auto, Auto" HorizontalAlignment="Stretch">
+		<StackPanel Spacing="5" Margin="5">
 			<CheckBox
 				Content="{x:Static p:Resources.Settings_KeepOnTop}"
 				IsChecked="{Binding TopMost}"
@@ -19,11 +19,12 @@
 				Content="{x:Static p:Resources.Settings_ShowInTaskbar}"
 				IsChecked="{Binding ShowInTaskbar}"
 				/>
-			<ComboBox Items="{Binding AvailableThemes}" SelectedItem="{Binding SelectedTheme}"/>
+			<ComboBox HorizontalAlignment="Stretch" Items="{Binding AvailableThemes}" SelectedItem="{Binding SelectedTheme}"/>
 		</StackPanel>
-		<StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Row="1">
-			<Button Content="{x:Static p:Resources.DefaultButton_Ok}" Command="{Binding OkCommand}"/>
-			<Button Content="{x:Static p:Resources.DefaultButton_Abort}" Command="{Binding AbortCommand}" HotKey="Escape"/>
-		</StackPanel>
+		<DockPanel Grid.Row="1" Margin="5">
+			<Button Content="{x:Static p:Resources.DefaultButton_Ok}" Command="{Binding OkCommand}" DockPanel.Dock="Left"/>
+			<Button Content="{x:Static p:Resources.DefaultButton_Abort}" Command="{Binding AbortCommand}" HotKey="Escape" DockPanel.Dock="Right"/>
+			<TextBlock/>
+		</DockPanel>
 	</Grid>
 </UserControl>
