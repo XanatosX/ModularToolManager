@@ -11,6 +11,10 @@ using System.Linq;
 using System.Text.Json;
 
 namespace ModularToolManager.Services.Ui;
+
+/// <summary>
+/// Service used to switch themes for the application
+/// </summary>
 internal class AvaloniaThemeService : IThemeService
 {
     /// <summary>
