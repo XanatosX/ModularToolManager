@@ -1,0 +1,30 @@
+﻿[
+  {
+    "id": 0,
+    "mode": 1,
+    "name_translation_key": "App_Dark_Theme",
+    "description_translation_key": "App_Dark_Theme_Description",
+    "tint_color": {
+      "A": 255,
+      "R": 0,
+      "G": 0,
+      "B": 0
+    },
+    "material_opacity": 0.65,
+    "tint_opacity": 1
+  },
+  {
+    "id": 1,
+    "mode": 0,
+    "name_translation_key": "App_Light_Theme",
+    "description_translation_key": "App_Light_Theme_Description",
+    "tint_color": {
+      "A": 255,
+      "R": 255,
+      "G": 255,
+      "B": 255
+    },
+    "material_opacity": 0.65,
+    "tint_opacity": 1
+  }
+]

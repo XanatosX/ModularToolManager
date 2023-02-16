@@ -9,16 +9,16 @@
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
 		WindowStartupLocation="CenterOwner"
-		SizeToContent="WidthAndHeight"
+		SizeToContent="WidthAndHeight"		
 		MinWidth="300">
 	<Panel>
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">
 			<ExperimentalAcrylicBorder.Material>
 				<ExperimentalAcrylicMaterial
 					BackgroundSource="Digger"
-					TintColor="Black"
-					TintOpacity="1"
-					MaterialOpacity="0.65" />
+					TintColor="{Binding ApplicationTintColor}"
+					TintOpacity="{Binding TintOpacity}"
+					MaterialOpacity="{Binding MaterialOpacity}" />
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
 		<Grid RowDefinitions="40, Auto">

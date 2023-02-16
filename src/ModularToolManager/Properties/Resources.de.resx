@@ -138,6 +138,18 @@
   <data name="AllPlugins_Header_Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
+  <data name="App_Dark_Theme" xml:space="preserve">
+    <value>Dunkler Modus</value>
+  </data>
+  <data name="App_Dark_Theme_Description" xml:space="preserve">
+    <value>Dunkler Modus für die Applikation</value>
+  </data>
+  <data name="App_Light_Theme" xml:space="preserve">
+    <value>Heller Modus</value>
+  </data>
+  <data name="App_Light_Theme_Description" xml:space="preserve">
+    <value>Heller Modus für die Applikation</value>
+  </data>
   <data name="Button_Open_Project" xml:space="preserve">
     <value>Projekt Website im Browser öffnen</value>
   </data>
