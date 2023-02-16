@@ -1,15 +1,18 @@
 ﻿using Avalonia.Media;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace ModularToolManager.Converters.Serialization;
+
+/// <summary>
+/// Converter class to get avalonia colors correctly laoded/saved into a json
+/// </summary>
 internal class ColorConverter : JsonConverter<Color>
 {
+    /// <summary>
+    /// The current color mode for reading
+    /// </summary>
     internal enum CurrentColorMode
     {
         Unknown,
@@ -19,6 +22,7 @@ internal class ColorConverter : JsonConverter<Color>
         Blue
     }
 
+    /// <inheritdoc/>
     public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
 
@@ -72,6 +76,7 @@ internal class ColorConverter : JsonConverter<Color>
         return new Color(alpha, red, green, blue);
     }
 
+    /// <inheritdoc/>
     public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
     {
         writer.WriteStartObject();
