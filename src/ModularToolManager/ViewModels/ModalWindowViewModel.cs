@@ -30,19 +30,19 @@ public partial class ModalWindowViewModel : ObservableObject
     /// The property for the application tint color
     /// </summary>
     [ObservableProperty]
-    public Color applicationTintColor;
+    private Color applicationTintColor;
 
     /// <summary>
     /// The property for the application tint opacity
     /// </summary>
     [ObservableProperty]
-    public float tintOpacity;
+    private float tintOpacity;
 
     /// <summary>
     /// The property for the application material opacity
     /// </summary>
     [ObservableProperty]
-    public float materialOpacity;
+    private float materialOpacity;
 
     /// <summary>
     /// The service used to switch the application theme

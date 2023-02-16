@@ -57,19 +57,19 @@ public partial class MainWindowViewModel : ObservableObject
     /// The property for the application tint color
     /// </summary>
     [ObservableProperty]
-    public Color applicationTintColor;
+    private Color applicationTintColor;
 
     /// <summary>
     /// The property for the application tint opacity
     /// </summary>
     [ObservableProperty]
-    public float tintOpacity;
+    private float tintOpacity;
 
     /// <summary>
     /// The property for the application material opacity
     /// </summary>
     [ObservableProperty]
-    public float materialOpacity;
+    private float materialOpacity;
 
     /// <summary>
     /// Should the window be shown in the taskbar
