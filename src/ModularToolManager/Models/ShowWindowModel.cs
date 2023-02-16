@@ -11,4 +11,4 @@ namespace ModularToolManager.Models;
 /// <param name="ModalContent">The content of the modal</param>
 /// <param name="StartupLocation">The location where the modal should be positioned on startup</param>
 /// 
-public record ShowWindowModel(string Title, string? ImagePath, ObservableObject? ModalContent, WindowStartupLocation StartupLocation);
+public record ShowWindowModel(string Title, string? ImagePath, ObservableObject? ModalContent, WindowStartupLocation StartupLocation, bool CanResize = true);

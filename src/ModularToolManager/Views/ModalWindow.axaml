@@ -9,7 +9,7 @@
         Background="Transparent"
         ExtendClientAreaToDecorationsHint="True"
 		WindowStartupLocation="CenterOwner"
-		SizeToContent="WidthAndHeight"
+		SizeToContent="WidthAndHeight"		
 		MinWidth="300">
 	<Panel>
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">

@@ -43,7 +43,9 @@ public partial class MainWindowViewModel : ObservableObject
     /// </summary>
     private readonly ISettingsService settingsService;
 
-
+    /// <summary>
+    /// The service used to switch the application theme
+    /// </summary>
     private readonly IThemeService themeService;
 
     /// <summary>
@@ -51,12 +53,21 @@ public partial class MainWindowViewModel : ObservableObject
     /// </summary>
     public ObservableObject MainContentModel { get; }
 
+    /// <summary>
+    /// The property for the application tint color
+    /// </summary>
     [ObservableProperty]
     public Color applicationTintColor;
 
+    /// <summary>
+    /// The property for the application tint opacity
+    /// </summary>
     [ObservableProperty]
     public float tintOpacity;
 
+    /// <summary>
+    /// The property for the application material opacity
+    /// </summary>
     [ObservableProperty]
     public float materialOpacity;
 

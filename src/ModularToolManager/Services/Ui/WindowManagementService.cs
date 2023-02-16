@@ -28,8 +28,20 @@ internal class WindowManagementService : IWindowManagementService
     /// Service to use to load styles
     /// </summary>
     private readonly IStyleService styleService;
+
+    /// <summary>
+    /// The settings service to use
+    /// </summary>
     private readonly ISettingsService settingsService;
+
+    /// <summary>
+    /// The service used to load available themes
+    /// </summary>
     private readonly IThemeService themeService;
+
+    /// <summary>
+    /// The service used to load the window icons
+    /// </summary>
     private readonly IImageService imageService;
 
     /// <summary>
@@ -99,10 +111,11 @@ internal class WindowManagementService : IWindowManagementService
             return;
         }
         var modalContent = new ModalWindowViewModel(
-            settingsService.GetApplicationSettings().SelectedThemeId,
-            modalData.Title,
-            modalData.ImagePath,
-            modalData.ModalContent,
+            new ModalWindowInformation(settingsService.GetApplicationSettings().SelectedThemeId,
+                                       modalData.Title,
+                                       modalData.ModalContent,
+                                       modalData.ImagePath,
+                                       modalData.CanResize),
             styleService,
             themeService,
             imageService);

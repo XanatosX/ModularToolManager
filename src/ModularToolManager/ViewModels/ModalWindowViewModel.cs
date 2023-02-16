@@ -1,13 +1,9 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Styling;
-using Avalonia.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
-using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using System.Linq;
@@ -30,14 +26,27 @@ public partial class ModalWindowViewModel : ObservableObject
     /// </summary>
     public WindowIcon? WindowIcon { get; }
 
+    /// <summary>
+    /// The property for the application tint color
+    /// </summary>
     [ObservableProperty]
     public Color applicationTintColor;
 
+    /// <summary>
+    /// The property for the application tint opacity
+    /// </summary>
     [ObservableProperty]
     public float tintOpacity;
 
+    /// <summary>
+    /// The property for the application material opacity
+    /// </summary>
     [ObservableProperty]
     public float materialOpacity;
+
+    /// <summary>
+    /// The service used to switch the application theme
+    /// </summary>
     private readonly IThemeService themeService;
 
     /// <summary>
@@ -50,25 +59,29 @@ public partial class ModalWindowViewModel : ObservableObject
     /// </summary>
     public ObservableObject ModalContent { get; }
 
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="windowInformation">The information to create the window</param>
+    /// <param name="styleService">The style service to use</param>
+    /// <param name="themeService">The theme service to use</param>
+    /// <param name="imageService">The service used to get the window icon</param>
     public ModalWindowViewModel(
-        int themeId,
-        string title,
-        string? pathName,
-        ObservableObject modalContent,
+        ModalWindowInformation windowInformation,
         IStyleService styleService,
         IThemeService themeService,
         IImageService imageService)
     {
-        Title = title;
-        ModalContent = modalContent;
+        Title = windowInformation.Title;
+        ModalContent = windowInformation.modalContent;
         this.themeService = themeService;
-        PathIcon = styleService.GetStyleByName<StreamGeometry>(pathName ?? string.Empty) ?? null;
+        PathIcon = styleService.GetStyleByName<StreamGeometry>(windowInformation.IconName ?? string.Empty) ?? null;
         if (PathIcon is not null)
         {
             var image = imageService.CreateBitmap(PathIcon);
             WindowIcon = image is null ? null : new WindowIcon(image);
         }
-        SwitchTheme(themeId);
+        SwitchTheme(windowInformation.ThemeId);
 
         WeakReferenceMessenger.Default.Register<ApplicationThemeUpdated>(this, (_, e) => SwitchTheme(e.Value));
     }
