@@ -149,6 +149,10 @@ public partial class MainWindowViewModel : ObservableObject
         });
     }
 
+    /// <summary>
+    /// Switch the theme for the window
+    /// </summary>
+    /// <param name="themeId">The theme id to switch to</param>
     private void SwitchTheme(int themeId)
     {
         var theme = themeService.GetStyleById(themeId);
@@ -163,6 +167,9 @@ public partial class MainWindowViewModel : ObservableObject
         themeService.ChangeApplicationTheme(theme);
     }
 
+    /// <summary>
+    /// Switch the theme for the window based on the settings
+    /// </summary>
     private void SwitchTheme()
     {
         int themeId = settingsService.GetApplicationSettings().SelectedThemeId;
