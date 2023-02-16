@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using Avalonia.Media;
 using Avalonia.Themes.Fluent;
 using Microsoft.Extensions.Logging;
 using ModularToolManager.Converters.Serialization;
@@ -14,10 +13,26 @@ using System.Text.Json;
 namespace ModularToolManager.Services.Ui;
 internal class AvaloniaThemeService : IThemeService
 {
+    /// <summary>
+    /// The resource loader to get embedded resources
+    /// </summary>
     private readonly ResourceReaderService resourceReaderService;
+
+    /// <summary>
+    /// The logger to use
+    /// </summary>
     private readonly ILogger<AvaloniaThemeService> logger;
+
+    /// <summary>
+    /// The options used for serialization
+    /// </summary>
     private readonly JsonSerializerOptions options;
 
+    /// <summary>
+    /// Create a new instance of this object
+    /// </summary>
+    /// <param name="resourceReaderService">Service required to load embedded resources</param>
+    /// <param name="logger">The logger to use</param>
     public AvaloniaThemeService(ResourceReaderService resourceReaderService, ILogger<AvaloniaThemeService> logger)
     {
         this.resourceReaderService = resourceReaderService;
@@ -26,6 +41,10 @@ internal class AvaloniaThemeService : IThemeService
         options.Converters.Add(new ColorConverter());
     }
 
+    /// <summary>
+    /// Load all the styles from the embedded resources
+    /// </summary>
+    /// <returns></returns>
     private IEnumerable<ApplicationStyle> LoadAllStyles()
     {
         IEnumerable<ApplicationStyle> returnStyles = Enumerable.Empty<ApplicationStyle>();
@@ -45,16 +64,19 @@ internal class AvaloniaThemeService : IThemeService
         return returnStyles.DistinctBy(style => style.Id);
     }
 
+    /// <inheritdoc/>
     public IEnumerable<ApplicationStyle> GetAllStyles()
     {
         return LoadAllStyles().ToList();
     }
 
+    /// <inheritdoc/>
     public ApplicationStyle? GetStyleById(int id)
     {
         return LoadAllStyles().Where(style => style.Id == id).FirstOrDefault();
     }
 
+    /// <inheritdoc/>
     public void ChangeApplicationTheme(ApplicationStyle theme)
     {
         var app = Application.Current;
