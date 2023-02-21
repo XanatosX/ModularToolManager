@@ -5,23 +5,17 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using ModularToolManager.DependencyInjection;
 using ModularToolManager.Models.Messages;
-using ModularToolManager.Services.IO;
 using ModularToolManager.Services.Settings;
-using ModularToolManager.Services.Ui;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Language;
-using ModularToolManagerModel.Services.Logging;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 
 namespace ModularToolManager;
 
