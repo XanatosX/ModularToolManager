@@ -3,14 +3,19 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <ApplicationIcon>Assets\application-logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Assets\application-logo.ico" />
     <None Remove="Resources\buildInStyles.json" />
     <None Remove="Resources\dependencies.json" />
     <None Remove="Resources\hotkeys.json" />
     <None Remove="Resources\LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\application-logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\buildInStyles.json" />
