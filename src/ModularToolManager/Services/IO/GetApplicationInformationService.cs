@@ -46,6 +46,8 @@ internal class GetApplicationInformationService
     /// Create a new instance of this class
     /// </summary>
     /// <param name="readerService">The reader service to use</param>
+    /// <param name="logger">The logging instance to use</param>
+    /// <param name="languageService">The language service to use</param>
     public GetApplicationInformationService(ResourceReaderService readerService, ILogger<GetApplicationInformationService> logger, ILanguageService languageService)
     {
         this.readerService = readerService;

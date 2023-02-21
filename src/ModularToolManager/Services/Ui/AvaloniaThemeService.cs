@@ -43,6 +43,7 @@ internal class AvaloniaThemeService : IThemeService
     /// </summary>
     /// <param name="resourceReaderService">Service required to load embedded resources</param>
     /// <param name="logger">The logger to use</param>
+    /// <param name="languageService">The language service to use</param>
     public AvaloniaThemeService(ResourceReaderService resourceReaderService, ILogger<AvaloniaThemeService> logger, ILanguageService languageService)
     {
         this.resourceReaderService = resourceReaderService;
