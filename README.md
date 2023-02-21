@@ -19,6 +19,7 @@
 This tool is called "Modular Tool Manager" it is a plugin based GUI script executer. The default tool does deliver basic plugins for binary and script execution on Windows. This is the main view you are getting presented with.
 
 ![Main view of the program][image-main-view]
+![Main view of the program in light theme][image-main-view-light]
 
 The tool is getting tested on Windows and Linux Mint, since it is based on [AvaloniaUI][avaloniaui] it should run on mac as well. I will not provide a build for it.
 
@@ -68,10 +69,17 @@ Technically the plugin will run with the user rights you did start the applicati
 
 ## Additional Screenshots
 
-![screenshot-1]  
-![screenshot-2]  
-![screenshot-3]
+### Dark
 
+![screenshot-1-dark]  
+![screenshot-2-dark]
+![screenshot-3-dark]
+
+### Light
+
+![screenshot-1-light]
+![screenshot-2-light]
+![screenshot-3-light]
 
 
 ## License
@@ -81,8 +89,12 @@ Technically the plugin will run with the user rights you did start the applicati
 [dotnet6]: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 [avaloniaui]: https://avaloniaui.net/
 [image-main-view]: https://imgur.com/oswayay.png
+[image-main-view-light]: https://i.imgur.com/lqmlo5U.png
 [downloadPage]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/
 [issuePage]: https://bitbucket.org/XanatosX/modulartoolmanager/issues
-[screenshot-1]: https://imgur.com/mr3Folx.png
-[screenshot-2]: https://imgur.com/UPURC5u.png
-[screenshot-3]: https://imgur.com/UKl60fA.png
+[screenshot-1-dark]: https://imgur.com/mr3Folx.png
+[screenshot-1-light]: https://i.imgur.com/Fxgu18M.png
+[screenshot-2-dark]: https://i.imgur.com/LhMGcEx.png
+[screenshot-2-light]: https://i.imgur.com/5sukgHg.png
+[screenshot-3-dark]: https://i.imgur.com/UPURC5u.png
+[screenshot-3-light]: https://i.imgur.com/rye7J9U.png
