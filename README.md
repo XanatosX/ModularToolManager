@@ -28,7 +28,7 @@ You can extend the functionality of the tool by writing your own plugins. Please
 The application does support the following languages for now, feel free to extend it via Pull Request
 
 * German
-* Englisch
+* English
 
 To download the tool please head over to the [download page][downloadPage].
 Either use the latest develop build which is unstable or the latest tagged build.
@@ -37,13 +37,13 @@ If you found a bug or need any help with the application please head over to the
 
 ## Installation
 
-Right now there is only a zip file you can extract somewhere to your disc. Just follow the instructions for the nighly build.
+Right now there is only a zip file you can extract somewhere to your disc. Just follow the instructions for the nighty build.
 
 I will try to add a windows installer later on.
 
-### Latest nighlty build
+### Latest nightly build
 
-The latest nighlty build are self contained application builds which are getting packed into a zip folder.
+The latest nightly build are self contained application builds which are getting packed into a zip folder.
 To install the application get the build for your operation system and extract the files to a folder on your disc.
 Start the `ModularToolManager.exe` or if you on a linux machine the "ModularToolManager" binary.
 
