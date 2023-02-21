@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
+using ModularToolManagerModel.Services.Language;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,6 +28,11 @@ internal class GetApplicationInformationService
     private readonly ILogger<GetApplicationInformationService> logger;
 
     /// <summary>
+    /// The current language service
+    /// </summary>
+    private readonly ILanguageService languageService;
+
+    /// <summary>
     /// The file to load as a license
     /// </summary>
     private const string LICENSE_FILE_NAME = "LICENSE";
@@ -40,10 +46,13 @@ internal class GetApplicationInformationService
     /// Create a new instance of this class
     /// </summary>
     /// <param name="readerService">The reader service to use</param>
-    public GetApplicationInformationService(ResourceReaderService readerService, ILogger<GetApplicationInformationService> logger)
+    /// <param name="logger">The logging instance to use</param>
+    /// <param name="languageService">The language service to use</param>
+    public GetApplicationInformationService(ResourceReaderService readerService, ILogger<GetApplicationInformationService> logger, ILanguageService languageService)
     {
         this.readerService = readerService;
         this.logger = logger;
+        this.languageService = languageService;
     }
 
     /// <summary>
@@ -119,11 +128,12 @@ internal class GetApplicationInformationService
         List<HotkeyModel> returnHotkeys = new();
         foreach (var hotkey in loadedHotkeys)
         {
+            var currentLangauge = languageService.GetCurrentLanguage();
             returnHotkeys.Add(new HotkeyModel
             {
-                Name = Properties.Resources.ResourceManager.GetString(hotkey.Name ?? string.Empty),
-                Description = Properties.Resources.ResourceManager.GetString(hotkey.Description ?? string.Empty),
-                WorkingOn = Properties.Resources.ResourceManager.GetString(hotkey.WorkingOn ?? string.Empty),
+                Name = Properties.Resources.ResourceManager.GetString(hotkey.Name ?? string.Empty, currentLangauge),
+                Description = Properties.Resources.ResourceManager.GetString(hotkey.Description ?? string.Empty, currentLangauge),
+                WorkingOn = Properties.Resources.ResourceManager.GetString(hotkey.WorkingOn ?? string.Empty, currentLangauge),
                 Keys = hotkey.Keys?.Select(key => Properties.Resources.ResourceManager.GetString(key ?? string.Empty))
                                   .OfType<string>()
                                   .ToList() ?? new(),

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using ModularToolManager.Converters.Serialization;
 using ModularToolManager.Models;
 using ModularToolManager.Services.IO;
+using ModularToolManagerModel.Services.Language;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,6 +29,11 @@ internal class AvaloniaThemeService : IThemeService
     private readonly ILogger<AvaloniaThemeService> logger;
 
     /// <summary>
+    /// The language service to use
+    /// </summary>
+    private readonly ILanguageService languageService;
+
+    /// <summary>
     /// The options used for serialization
     /// </summary>
     private readonly JsonSerializerOptions options;
@@ -37,10 +43,12 @@ internal class AvaloniaThemeService : IThemeService
     /// </summary>
     /// <param name="resourceReaderService">Service required to load embedded resources</param>
     /// <param name="logger">The logger to use</param>
-    public AvaloniaThemeService(ResourceReaderService resourceReaderService, ILogger<AvaloniaThemeService> logger)
+    /// <param name="languageService">The language service to use</param>
+    public AvaloniaThemeService(ResourceReaderService resourceReaderService, ILogger<AvaloniaThemeService> logger, ILanguageService languageService)
     {
         this.resourceReaderService = resourceReaderService;
         this.logger = logger;
+        this.languageService = languageService;
         options = new();
         options.Converters.Add(new ColorConverter());
     }
@@ -54,11 +62,12 @@ internal class AvaloniaThemeService : IThemeService
         IEnumerable<ApplicationStyle> returnStyles = Enumerable.Empty<ApplicationStyle>();
         try
         {
+            var cultureInfo = languageService.GetCurrentLanguage();
             returnStyles = JsonSerializer.Deserialize<IEnumerable<ApplicationStyle>>(resourceReaderService.GetResourceStream("buildInStyles.json") ?? Stream.Null, options) ?? returnStyles;
             foreach (var style in returnStyles)
             {
-                style.Name = Properties.Resources.ResourceManager.GetString(style.NameTranslationKey ?? string.Empty) ?? style.NameTranslationKey;
-                style.Description = Properties.Resources.ResourceManager.GetString(style.DescriptionTranslationKey ?? string.Empty) ?? style.DescriptionTranslationKey;
+                style.Name = Properties.Resources.ResourceManager.GetString(style.NameTranslationKey ?? string.Empty, cultureInfo) ?? style.NameTranslationKey;
+                style.Description = Properties.Resources.ResourceManager.GetString(style.DescriptionTranslationKey ?? string.Empty, cultureInfo) ?? style.DescriptionTranslationKey;
             }
         }
         catch (Exception ex)
