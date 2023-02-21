@@ -20,27 +20,27 @@ internal partial class SingleHotkeyViewModel : ObservableObject
     [NotifyPropertyChangedFor(nameof(Keys))]
     [NotifyPropertyChangedFor(nameof(ToolTipShowDelay))]
     [NotifyPropertyChangedFor(nameof(WorkingOnComplete))]
-    private HotkeyModel hotkey;
+    private HotkeyModel? hotkey;
 
     /// <summary>
     /// The name of the hotkey
     /// </summary>
-    public string? Name => hotkey?.Name;
+    public string? Name => Hotkey?.Name;
 
     /// <summary>
     /// The description for the hotkey
     /// </summary>
-    public string? Description => hotkey?.Description;
+    public string? Description => Hotkey?.Description;
 
     /// <summary>
     /// Where does this hotkey work
     /// </summary>
-    public string? WorkingOn => hotkey?.WorkingOn;
+    public string? WorkingOn => Hotkey?.WorkingOn;
 
     /// <summary>
     /// Complete text for the "Where does the hotkey work to display in the ui"
     /// </summary>
-    public string? WorkingOnComplete => $"{Properties.Resources.Hotkey_Abort_WorkingOn_Prefix_Colon} {hotkey?.WorkingOn}";
+    public string? WorkingOnComplete => $"{Properties.Resources.Hotkey_Abort_WorkingOn_Prefix_Colon} {Hotkey?.WorkingOn}";
 
     /// <summary>
     /// The deplay for the tooltip, set to max if no WorkinOn text is provided
@@ -50,7 +50,7 @@ internal partial class SingleHotkeyViewModel : ObservableObject
     /// <summary>
     /// All the keys to show
     /// </summary>
-    public List<KeyboardKeyViewModel>? Keys => hotkey?.Keys?.Select((button, index) => new KeyboardKeyViewModel(button, index != 0 ? "+" : string.Empty, string.Empty))
+    public List<KeyboardKeyViewModel>? Keys => Hotkey?.Keys?.Select((button, index) => new KeyboardKeyViewModel(button, index != 0 ? "+" : string.Empty, string.Empty))
                                                             .ToList();
 
     /// <summary>

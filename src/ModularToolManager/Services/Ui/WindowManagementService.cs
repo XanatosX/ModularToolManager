@@ -2,6 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
+using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
@@ -27,6 +28,20 @@ internal class WindowManagementService : IWindowManagementService
     /// Service to use to load styles
     /// </summary>
     private readonly IStyleService styleService;
+
+    /// <summary>
+    /// The settings service to use
+    /// </summary>
+    private readonly ISettingsService settingsService;
+
+    /// <summary>
+    /// The service used to load available themes
+    /// </summary>
+    private readonly IThemeService themeService;
+
+    /// <summary>
+    /// The service used to load the window icons
+    /// </summary>
     private readonly IImageService imageService;
 
     /// <summary>
@@ -38,11 +53,19 @@ internal class WindowManagementService : IWindowManagementService
     /// Create a new isntance of this class
     /// </summary>
     /// <param name="loggingService">The logging service to use</param>
-    public WindowManagementService(ILogger<WindowManagementService>? loggingService, IDependencyResolverService dependencyResolverService, IStyleService styleService, IImageService imageService)
+    public WindowManagementService(
+        ILogger<WindowManagementService>? loggingService,
+        IDependencyResolverService dependencyResolverService,
+        IStyleService styleService,
+        ISettingsService settingsService,
+        IThemeService themeService,
+        IImageService imageService)
     {
         this.loggingService = loggingService;
         this.dependencyResolverService = dependencyResolverService;
         this.styleService = styleService;
+        this.settingsService = settingsService;
+        this.themeService = themeService;
         this.imageService = imageService;
     }
 
@@ -87,7 +110,15 @@ internal class WindowManagementService : IWindowManagementService
             loggingService?.LogError("No content for the modal was provided, cannot open the window");
             return;
         }
-        var modalContent = new ModalWindowViewModel(modalData.Title, modalData.ImagePath, modalData.ModalContent, styleService, imageService);
+        var modalContent = new ModalWindowViewModel(
+            new ModalWindowInformation(settingsService.GetApplicationSettings().SelectedThemeId,
+                                       modalData.Title,
+                                       modalData.ModalContent,
+                                       modalData.ImagePath,
+                                       modalData.CanResize),
+            styleService,
+            themeService,
+            imageService);
         parent = parent ?? GetMainWindow();
         if (window is null)
         {

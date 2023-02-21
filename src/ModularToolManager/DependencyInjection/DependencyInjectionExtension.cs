@@ -94,10 +94,11 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<IViewModelLocatorService, ViewModelLocator>()
                          .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>()
                          .AddSingleton<ISettingsService, SerializedSettingsService>()
-                         .AddTransient<ViewLocator>()
                          .AddSingleton<PluginSettingViewModelService>()
+                         .AddSingleton<IThemeService, AvaloniaThemeService>()
                          .AddTransient<IImageService, ImageService>()
                          .AddTransient<ResourceReaderService>()
-                         .AddTransient<GetApplicationInformationService>();
+                         .AddTransient<GetApplicationInformationService>()
+                         .AddTransient<ViewLocator>();
     }
 }

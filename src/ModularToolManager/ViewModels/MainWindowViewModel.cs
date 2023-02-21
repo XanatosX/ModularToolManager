@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -6,10 +7,10 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
-using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using ModularToolManagerModel.Services.IO;
-using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -20,6 +21,7 @@ namespace ModularToolManager.ViewModels;
 /// </summary>
 public partial class MainWindowViewModel : ObservableObject
 {
+
     /// <summary>
     /// Service to use for locating view models
     /// </summary>
@@ -39,7 +41,12 @@ public partial class MainWindowViewModel : ObservableObject
     /// <summary>
     /// The settings service to use
     /// </summary>
-    private ISettingsService settingsService;
+    private readonly ISettingsService settingsService;
+
+    /// <summary>
+    /// The service used to switch the application theme
+    /// </summary>
+    private readonly IThemeService themeService;
 
     /// <summary>
     /// The current content model to show in the main view
@@ -47,15 +54,28 @@ public partial class MainWindowViewModel : ObservableObject
     public ObservableObject MainContentModel { get; }
 
     /// <summary>
+    /// The property for the application tint color
+    /// </summary>
+    [ObservableProperty]
+    private Color applicationTintColor;
+
+    /// <summary>
+    /// The property for the application tint opacity
+    /// </summary>
+    [ObservableProperty]
+    private float tintOpacity;
+
+    /// <summary>
+    /// The property for the application material opacity
+    /// </summary>
+    [ObservableProperty]
+    private float materialOpacity;
+
+    /// <summary>
     /// Should the window be shown in the taskbar
     /// </summary>
     [ObservableProperty]
     private bool showInTaskbar;
-
-    /// <summary>
-    /// The service to use for getting styles
-    /// </summary>
-    private readonly IStyleService styleService;
 
     /// <summary>
     /// Command to select a new language
@@ -89,17 +109,18 @@ public partial class MainWindowViewModel : ObservableObject
         FunctionSelectionViewModel mainContentModel,
         IViewModelLocatorService viewModelLocator,
         IWindowManagementService windowManagementService,
-        IStyleService styleService,
         IUrlOpenerService urlOpenerService,
-        ISettingsService settingsService)
+        ISettingsService settingsService,
+        IThemeService themeService)
     {
         this.urlOpenerService = urlOpenerService;
         this.settingsService = settingsService;
+        this.themeService = themeService;
         MainContentModel = mainContentModel;
         this.viewModelLocator = viewModelLocator;
         this.windowManagementService = windowManagementService;
-        this.styleService = styleService;
 
+        SwitchTheme();
         UpdateShowInTaskbar();
 
         ReportBugCommand = new RelayCommand(() => urlOpenerService?.OpenUrl(Properties.Properties.GithubIssueUrl));
@@ -112,6 +133,8 @@ public partial class MainWindowViewModel : ObservableObject
         {
             UpdateShowInTaskbar();
         });
+        WeakReferenceMessenger.Default.Register<ApplicationThemeUpdated>(this, (_, e) => SwitchTheme(e.Value));
+
         WeakReferenceMessenger.Default.Register<EditFunctionMessage>(this, async (_, e) =>
         {
             var editModal = viewModelLocator.GetViewModel(nameof(AddFunctionViewModel)) as AddFunctionViewModel;
@@ -124,6 +147,33 @@ public partial class MainWindowViewModel : ObservableObject
             }
             e.Reply(false);
         });
+    }
+
+    /// <summary>
+    /// Switch the theme for the window
+    /// </summary>
+    /// <param name="themeId">The theme id to switch to</param>
+    private void SwitchTheme(int themeId)
+    {
+        var theme = themeService.GetStyleById(themeId);
+        theme ??= themeService.GetAllStyles().FirstOrDefault() ?? new ApplicationStyle { MaterialOpacity = 1, TintOpacity = 0.65f, TintColor = Colors.Pink };
+        if (theme is null)
+        {
+            return;
+        }
+        ApplicationTintColor = theme.TintColor ?? Colors.Pink;
+        MaterialOpacity = theme.MaterialOpacity;
+        TintOpacity = theme.TintOpacity;
+        themeService.ChangeApplicationTheme(theme);
+    }
+
+    /// <summary>
+    /// Switch the theme for the window based on the settings
+    /// </summary>
+    private void SwitchTheme()
+    {
+        int themeId = settingsService.GetApplicationSettings().SelectedThemeId;
+        SwitchTheme(themeId);
     }
 
     /// <summary>
@@ -163,6 +213,7 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task OpenSettings()
     {
         await OpenModalWindow(Properties.Resources.SubMenu_Settings, Properties.Properties.Icon_settings, nameof(SettingsViewModel));
+        SwitchTheme();
     }
 
 
@@ -200,7 +251,7 @@ public partial class MainWindowViewModel : ObservableObject
         {
             return;
         }
-        ShowWindowModel modalWindowData = new ShowWindowModel(title, imagePath, modalContent, WindowStartupLocation.CenterScreen);
+        ShowWindowModel modalWindowData = new(title, imagePath, modalContent, WindowStartupLocation.CenterScreen);
         if (windowManagementService is not null)
         {
             await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
@@ -220,7 +271,7 @@ public partial class MainWindowViewModel : ObservableObject
         {
             return;
         }
-        ShowWindowModel modalWindowData = new ShowWindowModel(title, imagePath, modal, WindowStartupLocation.CenterScreen);
+        ShowWindowModel modalWindowData = new(title, imagePath, modal, WindowStartupLocation.CenterScreen);
         if (windowManagementService is not null)
         {
             await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
