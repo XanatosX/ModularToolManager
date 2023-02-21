@@ -6,7 +6,7 @@
 		xmlns:p="clr-namespace:ModularToolManager.Properties"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ModularToolManager.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/application-logo.ico"
         Title="{x:Static p:Resources.Application_Name}"
 		TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
