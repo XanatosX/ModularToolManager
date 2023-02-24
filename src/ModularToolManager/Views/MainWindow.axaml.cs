@@ -8,14 +8,20 @@ using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
+using System;
 
 namespace ModularToolManager.Views;
 
 /// <summary>
 /// The main window of the application
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : Window, IDisposable
 {
+    /// <summary>
+    /// Was the class already disposed
+    /// </summary>
+    private bool isDisposed;
+
     /// <summary>
     /// The modal service to use
     /// </summary>
@@ -75,7 +81,13 @@ public partial class MainWindow : Window
                 Topmost = false;
             }
         });
-        WeakReferenceMessenger.Default.Register<RequestApplicationVisiblity>(this, (_, e) => e.Reply(IsVisible));
+        WeakReferenceMessenger.Default.Register<RequestApplicationVisiblity>(this, (_, e) =>
+        {
+            if (!e.HasReceivedResponse)
+            {
+                e.Reply(IsVisible);
+            }
+        });
         WeakReferenceMessenger.Default.Register<ValueChangedMessage<ApplicationSettings>>(this, (_, settings) =>
         {
             Topmost = settings.Value.AlwaysOnTop;
@@ -119,5 +131,24 @@ public partial class MainWindow : Window
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+    }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        if (isDisposed)
+        {
+            return;
+        }
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+        isDisposed = true;
+    }
+
+    /// <summary>
+    /// Deconstructor to ensure disposal on object desctruction
+    /// </summary>
+    ~MainWindow()
+    {
+        Dispose();
     }
 }
