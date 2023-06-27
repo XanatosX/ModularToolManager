@@ -10,6 +10,7 @@ using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,6 +35,12 @@ public partial class FunctionButtonViewModel : ObservableObject
     private FunctionModel? functionModel;
 
     /// <summary>
+    /// Can the function be executed
+    /// </summary>
+    [ObservableProperty]
+    private bool canExecute;
+
+    /// <summary>
     /// The identifier for this function button
     /// </summary>
     public string Identifier => functionModel?.UniqueIdentifier ?? string.Empty;
@@ -51,7 +58,9 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// <summary>
     /// The description of the function
     /// </summary>
-    public string? Description => functionModel?.Description;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ToolTipDelay))]
+    private string description;
 
     /// <summary>
     /// The logger to use
@@ -83,7 +92,10 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// Create a new instance of this class
     /// </summary>
     /// <param name="functionModel">The function model to use</param>
-    public FunctionButtonViewModel(ILogger<FunctionButtonViewModel> logger, ISettingsService settingsService, IFunctionSettingsService functionSettingsService)
+    public FunctionButtonViewModel(
+        ILogger<FunctionButtonViewModel> logger,
+        ISettingsService settingsService,
+        IFunctionSettingsService functionSettingsService)
     {
         IsActive = true;
         this.logger = logger;
@@ -98,6 +110,9 @@ public partial class FunctionButtonViewModel : ObservableObject
     public void SetFunctionModel(FunctionModel functionModel)
     {
         this.functionModel = functionModel;
+        Description = functionModel?.Description ?? string.Empty;
+
+        CheckIfCanExecute();
     }
 
     /// <summary>
@@ -109,6 +124,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     {
         try
         {
+            bool shouldMinimizeAfter = settingsService.GetApplicationSettings().CloseOnFunctionExecute;
             var plugin = functionModel?.Plugin;
             if (plugin is null)
             {
@@ -116,12 +132,38 @@ public partial class FunctionButtonViewModel : ObservableObject
             }
             ApplyPluginSettings(plugin);
             await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path));
+
+            if (shouldMinimizeAfter)
+            {
+                WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true));
+            }
         }
         catch (System.Exception e)
         {
             logger.LogError(FUNCTION_EXECUTION_FAILED_MESSAGE, Identifier, DisplayName);
             logger.LogError(e, null);
         }
+        CheckIfCanExecute();
+    }
+
+    private void CheckIfCanExecute()
+    {
+        if (FunctionModel is null)
+        {
+            CanExecute = false;
+        }
+        bool pathIsAvailable = File.Exists(FunctionModel.Path);
+        bool pluginAvailable = FunctionModel?.Plugin is not null;
+        bool extensionMatching = false;
+        if (pathIsAvailable)
+        {
+            var info = new FileInfo(FunctionModel.Path);
+            extensionMatching = FunctionModel.Plugin.GetAllowedFileEndings().Any(ending => ending.Extension == info.Extension.Replace(".", string.Empty));
+        }
+
+
+        CanExecute = pathIsAvailable && extensionMatching && pluginAvailable;
+        Description = CanExecute ? FunctionModel.Description : Properties.Resources.FunctionButton_Method_Error;
     }
 
     /// <summary>

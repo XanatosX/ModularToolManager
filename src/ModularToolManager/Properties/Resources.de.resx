@@ -192,6 +192,9 @@
   <data name="Default_Edit" xml:space="preserve">
     <value>Editieren</value>
   </data>
+  <data name="FunctionButton_Method_Error" xml:space="preserve">
+    <value>Entweder der Dateipfad ist falsch, die Dateiendung entspricht nicht der erwarteten oder das entsprechend Plugin wurde entfernt. Bitte editieren Sie die Funktion um den Fehler zu beheben.</value>
+  </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Nach Funktion suchen</value>
   </data>
@@ -272,6 +275,9 @@
   </data>
   <data name="RunningWith" xml:space="preserve">
     <value>Läuft mit Avalonia UI</value>
+  </data>
+  <data name="Settings_CloseOnFunctionExecute" xml:space="preserve">
+    <value>Applikation schließen nachdem Funktion ausgeführt wurde</value>
   </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>

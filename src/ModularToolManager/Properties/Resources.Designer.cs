@@ -322,6 +322,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Either the path saved on this function is missing, the extension is wrong or the plugin for execution was removed. Please edit the function to fix the error..
+        /// </summary>
+        public static string FunctionButton_Method_Error {
+            get {
+                return ResourceManager.GetString("FunctionButton_Method_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for function.
         /// </summary>
         public static string FunctionSelection_SearchForFunction {
@@ -624,6 +633,15 @@ namespace ModularToolManager.Properties {
         public static string RunningWith {
             get {
                 return ResourceManager.GetString("RunningWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close if a function was executed.
+        /// </summary>
+        public static string Settings_CloseOnFunctionExecute {
+            get {
+                return ResourceManager.GetString("Settings_CloseOnFunctionExecute", resourceCulture);
             }
         }
         

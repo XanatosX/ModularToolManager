@@ -20,6 +20,12 @@ public class ApplicationSettings
     public bool AlwaysOnTop { get; set; }
 
     /// <summary>
+    /// Should the application be closed if a function is getting pressed
+    /// </summary>
+    [JsonPropertyName("close_on_function_execute")]
+    public bool CloseOnFunctionExecute { get; set; }
+
+    /// <summary>
     /// Should the application be started minimized
     /// </summary>
     [JsonPropertyName("start_minimized")]

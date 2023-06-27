@@ -12,6 +12,10 @@
 				IsChecked="{Binding TopMost}"
 				/>
 			<CheckBox
+				Content="{x:Static p:Resources.Settings_CloseOnFunctionExecute}"
+				IsChecked="{Binding CloseOnFunctionExecute}"
+				/>
+			<CheckBox
 				Content="{x:Static p:Resources.Settings_StartMinimized}"
 				IsChecked="{Binding StartMinimized}"
 				/>
