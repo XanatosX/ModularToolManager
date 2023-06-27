@@ -5,27 +5,35 @@
 			 xmlns:p="clr-namespace:ModularToolManager.Properties"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.FunctionButtonView">
-	<Button x:Name="btn_function" HorizontalAlignment="Stretch" ToolTip.Tip="{Binding Description}" ToolTip.ShowDelay="{Binding ToolTipDelay}" HorizontalContentAlignment="Center" Content="{Binding DisplayName}" Command="{Binding ExecuteFunctionCommand}">
-		<Button.ContextMenu>
-			<ContextMenu>
-				<MenuItem Command="{Binding EditFunctionCommand}">
-					<MenuItem.Header>
-						<StackPanel Orientation="Horizontal" Spacing="7">
-							<PathIcon Data="{StaticResource edit_regular}" Width="15" Height="15"/>
-							<TextBlock Text="{x:Static p:Resources.Default_Edit}"/>
-						</StackPanel>
-					</MenuItem.Header>
-				</MenuItem>
-				<MenuItem Header="{x:Static p:Resources.Default_Delete}" Command="{Binding DeleteFunctionCommand}">
-					<MenuItem.Header>
-						<StackPanel Orientation="Horizontal" Spacing="7">
-							<PathIcon Data="{StaticResource delete_regular}" Width="15" Height="15"/>
-							<TextBlock Text="{x:Static p:Resources.Default_Delete}"/>
-						</StackPanel>
-					</MenuItem.Header>
-				</MenuItem>
-			</ContextMenu>
-		</Button.ContextMenu>
-	</Button>
+
+
+		<Button DockPanel.Dock="Left" x:Name="btn_function" HorizontalAlignment="Stretch" ToolTip.Tip="{Binding Description}" ToolTip.ShowDelay="{Binding ToolTipDelay}" HorizontalContentAlignment="Stretch" Command="{Binding ExecuteFunctionCommand}">
+			<Button.ContextMenu>
+				<ContextMenu>
+					<MenuItem Command="{Binding EditFunctionCommand}">
+						<MenuItem.Header>
+							<StackPanel Orientation="Horizontal" Spacing="7">
+								<PathIcon Data="{StaticResource edit_regular}" Width="15" Height="15"/>
+								<TextBlock Text="{x:Static p:Resources.Default_Edit}"/>
+							</StackPanel>
+						</MenuItem.Header>
+					</MenuItem>
+					<MenuItem Header="{x:Static p:Resources.Default_Delete}" Command="{Binding DeleteFunctionCommand}">
+						<MenuItem.Header>
+							<StackPanel Orientation="Horizontal" Spacing="7">
+								<PathIcon Data="{StaticResource delete_regular}" Width="15" Height="15"/>
+								<TextBlock Text="{x:Static p:Resources.Default_Delete}"/>
+							</StackPanel>
+						</MenuItem.Header>
+					</MenuItem>
+				</ContextMenu>
+			</Button.ContextMenu>
+			<DockPanel HorizontalAlignment="Stretch">
+				<PathIcon DockPanel.Dock="Right" Data="{StaticResource warning_regular}" IsVisible="{Binding !CanExecute}"/>
+				<PathIcon DockPanel.Dock="Left" Data="{StaticResource warning_regular}" IsVisible="{Binding !CanExecute}"/>
+				<TextBlock DockPanel.Dock="Left" Text="{Binding DisplayName}" HorizontalAlignment="Center"/>
+			</DockPanel>
+		</Button>
+	
 	
 </UserControl>
