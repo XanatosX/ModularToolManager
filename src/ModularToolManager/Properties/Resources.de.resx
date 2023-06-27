@@ -138,17 +138,41 @@
   <data name="AllPlugins_Header_Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
+  <data name="App_Blue_Theme" xml:space="preserve">
+    <value>Blaues Thema</value>
+  </data>
+  <data name="App_Blue_Theme_Description" xml:space="preserve">
+    <value>Ein Theme welches um die Farbe Blau aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
+  </data>
   <data name="App_Dark_Theme" xml:space="preserve">
     <value>Dunkler Modus</value>
   </data>
   <data name="App_Dark_Theme_Description" xml:space="preserve">
     <value>Dunkler Modus für die Applikation</value>
   </data>
+  <data name="App_Green_Theme" xml:space="preserve">
+    <value>Grünes Thema</value>
+  </data>
+  <data name="App_Green_Theme_Description" xml:space="preserve">
+    <value>Ein Theme welches um die Farbe Grün aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
+  </data>
   <data name="App_Light_Theme" xml:space="preserve">
     <value>Heller Modus</value>
   </data>
   <data name="App_Light_Theme_Description" xml:space="preserve">
     <value>Heller Modus für die Applikation</value>
+  </data>
+  <data name="App_Orange_Theme" xml:space="preserve">
+    <value>Orangenes Thema</value>
+  </data>
+  <data name="App_Orange_Theme_Description" xml:space="preserve">
+    <value>Ein Theme welches um die Farbe Orange aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
+  </data>
+  <data name="App_Red_Theme" xml:space="preserve">
+    <value>Rotes Thema</value>
+  </data>
+  <data name="App_Red_Theme_Description" xml:space="preserve">
+    <value>Ein Theme welches um die Farbe Rot aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
   </data>
   <data name="Button_Open_Project" xml:space="preserve">
     <value>Projekt Website im Browser öffnen</value>
