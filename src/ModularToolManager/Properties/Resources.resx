@@ -141,17 +141,41 @@
   <data name="Application_Name" xml:space="preserve">
     <value>Modular Tool Manager</value>
   </data>
+  <data name="App_Blue_Theme" xml:space="preserve">
+    <value>Blue Theme</value>
+  </data>
+  <data name="App_Blue_Theme_Description" xml:space="preserve">
+    <value>A Theme which mainly uses the color blue as a background</value>
+  </data>
   <data name="App_Dark_Theme" xml:space="preserve">
     <value>Dark mode</value>
   </data>
   <data name="App_Dark_Theme_Description" xml:space="preserve">
     <value>Dark theme for the application</value>
   </data>
+  <data name="App_Green_Theme" xml:space="preserve">
+    <value>Green Theme</value>
+  </data>
+  <data name="App_Green_Theme_Description" xml:space="preserve">
+    <value>A Theme which mainly uses the color green as a background</value>
+  </data>
   <data name="App_Light_Theme" xml:space="preserve">
     <value>Light mode</value>
   </data>
   <data name="App_Light_Theme_Description" xml:space="preserve">
     <value>Light theme for the application</value>
+  </data>
+  <data name="App_Orange_Theme" xml:space="preserve">
+    <value>Orange Theme</value>
+  </data>
+  <data name="App_Orange_Theme_Description" xml:space="preserve">
+    <value>A Theme which mainly uses the color orange as a background</value>
+  </data>
+  <data name="App_Red_Theme" xml:space="preserve">
+    <value>Red Theme</value>
+  </data>
+  <data name="App_Red_Theme_Description" xml:space="preserve">
+    <value>A Theme which mainly uses the color red as a background</value>
   </data>
   <data name="Button_Open_Project" xml:space="preserve">
     <value>Open project website</value>
