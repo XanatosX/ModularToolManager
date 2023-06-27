@@ -4,5 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.ApplicationStyleView">
-	<TextBlock Text="{Binding DisplayName}" ToolTip.Tip="{Binding Description}" ToolTip.ShowDelay="{Binding TooltipShowTime}"></TextBlock>
+	<DockPanel LastChildFill="False">
+		
+		<TextBlock Text="{Binding DisplayName}" ToolTip.Tip="{Binding Description}" ToolTip.ShowDelay="{Binding TooltipShowTime}"></TextBlock>
+		<Border DockPanel.Dock="Right" CornerRadius="3" Background="{Binding StyleColor}" Opacity="{Binding StyleOpacity}" Width="15" Height="15"/>
+	</DockPanel>
 </UserControl>

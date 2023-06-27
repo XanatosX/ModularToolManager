@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Media;
+using CommunityToolkit.Mvvm.ComponentModel;
 using ModularToolManager.Models;
 
 namespace ModularToolManager.ViewModels;
@@ -17,6 +18,22 @@ internal partial class ApplicationStyleViewModel : ObservableObject
     /// The id of the style 
     /// </summary>
     public int Id => applicationStyle.Id;
+
+    /// <summary>
+    /// The main color of the selected style
+    /// </summary>
+    [ObservableProperty]
+    private Brush? styleColor;
+
+    /// <summary>
+    /// The opacity for the loaded style
+    /// </summary>
+    public float StyleOpacity => applicationStyle.TintOpacity;
+
+    /// <summary>
+    /// The opacity for the material
+    /// </summary>
+    public float MaterialOpacity => applicationStyle.MaterialOpacity;
 
     /// <summary>
     /// The displayname of the style
@@ -44,6 +61,8 @@ internal partial class ApplicationStyleViewModel : ObservableObject
     {
         this.applicationStyle = applicationStyle;
         DisplayName = applicationStyle.Name ?? string.Empty;
-        description = applicationStyle.Description ?? string.Empty;
+        Description = applicationStyle.Description ?? string.Empty;
+        StyleColor = new SolidColorBrush(applicationStyle.TintColor ?? Colors.Transparent);
+
     }
 }
