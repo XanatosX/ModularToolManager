@@ -146,6 +146,9 @@ public partial class FunctionButtonViewModel : ObservableObject
         CheckIfCanExecute();
     }
 
+    /// <summary>
+    /// Check if this function can be executed and mark it correctly
+    /// </summary>
     private void CheckIfCanExecute()
     {
         if (FunctionModel is null)
