@@ -138,17 +138,41 @@
   <data name="AllPlugins_Header_Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
+  <data name="App_Blue_Theme" xml:space="preserve">
+    <value>Blaues Thema</value>
+  </data>
+  <data name="App_Blue_Theme_Description" xml:space="preserve">
+    <value>Ein Theme welches um die Farbe Blau aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
+  </data>
   <data name="App_Dark_Theme" xml:space="preserve">
     <value>Dunkler Modus</value>
   </data>
   <data name="App_Dark_Theme_Description" xml:space="preserve">
     <value>Dunkler Modus für die Applikation</value>
   </data>
+  <data name="App_Green_Theme" xml:space="preserve">
+    <value>Grünes Thema</value>
+  </data>
+  <data name="App_Green_Theme_Description" xml:space="preserve">
+    <value>Ein Theme welches um die Farbe Grün aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
+  </data>
   <data name="App_Light_Theme" xml:space="preserve">
     <value>Heller Modus</value>
   </data>
   <data name="App_Light_Theme_Description" xml:space="preserve">
     <value>Heller Modus für die Applikation</value>
+  </data>
+  <data name="App_Orange_Theme" xml:space="preserve">
+    <value>Orangenes Thema</value>
+  </data>
+  <data name="App_Orange_Theme_Description" xml:space="preserve">
+    <value>Ein Theme welches um die Farbe Orange aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
+  </data>
+  <data name="App_Red_Theme" xml:space="preserve">
+    <value>Rotes Thema</value>
+  </data>
+  <data name="App_Red_Theme_Description" xml:space="preserve">
+    <value>Ein Theme welches um die Farbe Rot aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
   </data>
   <data name="Button_Open_Project" xml:space="preserve">
     <value>Projekt Website im Browser öffnen</value>
@@ -167,6 +191,9 @@
   </data>
   <data name="Default_Edit" xml:space="preserve">
     <value>Editieren</value>
+  </data>
+  <data name="FunctionButton_Method_Error" xml:space="preserve">
+    <value>Entweder der Dateipfad ist falsch, die Dateiendung entspricht nicht der erwarteten oder das entsprechend Plugin wurde entfernt. Bitte editieren Sie die Funktion um den Fehler zu beheben.</value>
   </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Nach Funktion suchen</value>
@@ -248,6 +275,9 @@
   </data>
   <data name="RunningWith" xml:space="preserve">
     <value>Läuft mit Avalonia UI</value>
+  </data>
+  <data name="Settings_CloseOnFunctionExecute" xml:space="preserve">
+    <value>Applikation schließen nachdem Funktion ausgeführt wurde</value>
   </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>

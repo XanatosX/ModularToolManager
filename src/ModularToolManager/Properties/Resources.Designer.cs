@@ -124,6 +124,24 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blue Theme.
+        /// </summary>
+        public static string App_Blue_Theme {
+            get {
+                return ResourceManager.GetString("App_Blue_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A Theme which mainly uses the color blue as a background.
+        /// </summary>
+        public static string App_Blue_Theme_Description {
+            get {
+                return ResourceManager.GetString("App_Blue_Theme_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dark mode.
         /// </summary>
         public static string App_Dark_Theme {
@@ -142,6 +160,24 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Green Theme.
+        /// </summary>
+        public static string App_Green_Theme {
+            get {
+                return ResourceManager.GetString("App_Green_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A Theme which mainly uses the color green as a background.
+        /// </summary>
+        public static string App_Green_Theme_Description {
+            get {
+                return ResourceManager.GetString("App_Green_Theme_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light mode.
         /// </summary>
         public static string App_Light_Theme {
@@ -156,6 +192,42 @@ namespace ModularToolManager.Properties {
         public static string App_Light_Theme_Description {
             get {
                 return ResourceManager.GetString("App_Light_Theme_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orange Theme.
+        /// </summary>
+        public static string App_Orange_Theme {
+            get {
+                return ResourceManager.GetString("App_Orange_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A Theme which mainly uses the color orange as a background.
+        /// </summary>
+        public static string App_Orange_Theme_Description {
+            get {
+                return ResourceManager.GetString("App_Orange_Theme_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Theme.
+        /// </summary>
+        public static string App_Red_Theme {
+            get {
+                return ResourceManager.GetString("App_Red_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A Theme which mainly uses the color red as a background.
+        /// </summary>
+        public static string App_Red_Theme_Description {
+            get {
+                return ResourceManager.GetString("App_Red_Theme_Description", resourceCulture);
             }
         }
         
@@ -246,6 +318,15 @@ namespace ModularToolManager.Properties {
         public static string Dependency_Project {
             get {
                 return ResourceManager.GetString("Dependency_Project", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Either the path saved on this function is missing, the extension is wrong or the plugin for execution was removed. Please edit the function to fix the error..
+        /// </summary>
+        public static string FunctionButton_Method_Error {
+            get {
+                return ResourceManager.GetString("FunctionButton_Method_Error", resourceCulture);
             }
         }
         
@@ -552,6 +633,15 @@ namespace ModularToolManager.Properties {
         public static string RunningWith {
             get {
                 return ResourceManager.GetString("RunningWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close if a function was executed.
+        /// </summary>
+        public static string Settings_CloseOnFunctionExecute {
+            get {
+                return ResourceManager.GetString("Settings_CloseOnFunctionExecute", resourceCulture);
             }
         }
         
