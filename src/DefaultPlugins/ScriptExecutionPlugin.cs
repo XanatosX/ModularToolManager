@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using DefaultPlugins.Information;
+using DefaultPlugins.ProcessStartStrategies;
 using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
@@ -16,6 +17,11 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// The plugin information
     /// </summary>
     private PluginInformation? pluginInformation;
+
+    /// <summary>
+    /// The factory to use for creating starter objects
+    /// </summary>
+    private DefaultScriptStarterFactory starterFactory;
 
     /// <summary>
     /// Fallback text if a translation is missing
@@ -53,6 +59,7 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
         this.translationService = translationService;
         this.loggingService = loggingService;
         loggingService?.LogTrace($"Instance was created");
+        starterFactory = new DefaultScriptStarterFactory();
     }
 
     /// <inheritdoc/>
@@ -73,18 +80,11 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
             return false;
         }
 
-        FileInfo info = new FileInfo(path);
-
-        path = OperatingSystem.IsLinux() ? path.Replace("\"", "\\\"") : path;
-        //@TODO: Add window support again
-        ProcessStartInfo startInfo = new ProcessStartInfo
+        ProcessStartInfo? startInfo = starterFactory.CreateStartInfo(path)?.GetStartInfo(parameters, path);
+        if (startInfo is null)
         {
-            FileName = "/bin/bash",
-            Arguments = $"-c \"{path} {parameters}\""
-        };
-        if (OperatingSystem.IsLinux())
-        {
-            startInfo.WorkingDirectory = info.DirectoryName;
+            loggingService?.LogWarning("Could not get a starter for the operation system!");
+            return false;
         }
         Process.Start(startInfo);
         loggingService?.LogTrace($"Executing of plugin done");
