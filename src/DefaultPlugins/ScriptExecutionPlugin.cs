@@ -1,9 +1,9 @@
-﻿using DefaultPlugins.Information;
+﻿using System.Diagnostics;
+using DefaultPlugins.Information;
 using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
-using System.Diagnostics;
 
 namespace DefaultPlugins;
 
@@ -73,11 +73,19 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
             return false;
         }
 
+        FileInfo info = new FileInfo(path);
+
+        path = OperatingSystem.IsLinux() ? path.Replace("\"", "\\\"") : path;
+        //@TODO: Add window support again
         ProcessStartInfo startInfo = new ProcessStartInfo
         {
-            FileName = path,
-            Arguments = parameters
+            FileName = "/bin/bash",
+            Arguments = $"-c \"{path} {parameters}\""
         };
+        if (OperatingSystem.IsLinux())
+        {
+            startInfo.WorkingDirectory = info.DirectoryName;
+        }
         Process.Start(startInfo);
         loggingService?.LogTrace($"Executing of plugin done");
         return true;
@@ -94,13 +102,18 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
     public override bool IsOperationSystemValid()
     {
         loggingService?.LogTrace($"Checked if os is valid");
-        return OperatingSystem.IsWindows();
+        return OperatingSystem.IsWindows() || OperatingSystem.IsLinux(); 
     }
 
     /// <inheritdoc/>
     public override IEnumerable<FileExtension> GetAllowedFileEndings()
     {
         loggingService?.LogTrace($"Get allowed file extensions");
+        if (OperatingSystem.IsLinux())
+        {
+            return GetLinuxExtensions().Where(extension => !string.IsNullOrEmpty(extension.Name) && !string.IsNullOrEmpty(extension.Extension))
+                                       .OrderBy(item => item.Name);
+        }
         return GetWindowsExtensions().Where(extension => !string.IsNullOrEmpty(extension.Name) && !string.IsNullOrEmpty(extension.Extension))
                                      .OrderBy(item => item.Name);
     }
@@ -117,6 +130,14 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
             new FileExtension(translationService?.GetTranslationByKey("batch") ?? FALLBACK_TRANSLATION, "bat"),
             new FileExtension(translationService?.GetTranslationByKey("cmd") ?? FALLBACK_TRANSLATION, "cmd"),
             new FileExtension(translationService?.GetTranslationByKey("powershell") ?? FALLBACK_TRANSLATION, "ps")
+        };
+    }
+
+    private IEnumerable<FileExtension> GetLinuxExtensions()
+    {
+        loggingService.LogTrace("Create linux extensions");
+        return new List<FileExtension> {
+            new FileExtension("shell", "sh")
         };
     }
 
