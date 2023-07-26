@@ -51,6 +51,7 @@ internal class AvaloniaThemeService : IThemeService
         this.languageService = languageService;
         options = new();
         options.Converters.Add(new ColorConverter());
+        options.Converters.Add(new ThemeVariantConverter());
     }
 
     /// <summary>
