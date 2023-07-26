@@ -1,8 +1,10 @@
 ﻿using Avalonia;
 using Avalonia.Themes.Fluent;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
 using ModularToolManager.Converters.Serialization;
 using ModularToolManager.Models;
+using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.IO;
 using ModularToolManagerModel.Services.Language;
 using System;
@@ -93,17 +95,6 @@ internal class AvaloniaThemeService : IThemeService
     /// <inheritdoc/>
     public void ChangeApplicationTheme(ApplicationStyle theme)
     {
-        var app = Application.Current;
-        if (app is not null)
-        {
-            //@Todo fix this
-            /**
-            var loadedTheme = app.Styles.OfType<FluentTheme>().FirstOrDefault();
-            if (loadedTheme is not null)
-            {
-                loadedTheme.Mode = theme.Variant;
-            }
-            */
-        }
+        WeakReferenceMessenger.Default.Send(new ApplicationThemeUpdated(theme.Id));
     }
 }
