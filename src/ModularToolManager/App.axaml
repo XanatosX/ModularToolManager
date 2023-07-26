@@ -2,10 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:ModularToolManager"
              x:Class="ModularToolManager.App"
-			 xmlns:p="clr-namespace:ModularToolManager.Properties">
+			 xmlns:p="clr-namespace:ModularToolManager.Properties"
+			 RequestedThemeVariant="Default">
 
     <Application.Styles>
-		<FluentTheme Mode="Dark"/>
+		<!--<FluentTheme Mode="Dark"/>-->
 		<StyleInclude Source="avares://ModularToolManager/Resources/Icons.axaml"/>
 		<StyleInclude Source="avares://ModularToolManager/Resources/LinkButtonStyle.axaml"/>
 	</Application.Styles>

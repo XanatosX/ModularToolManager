@@ -15,10 +15,4 @@ public partial class FloatPluginSettingView : UserControl
     {
         InitializeComponent();
     }
-
-    /// <inheritdoc/>
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
 }

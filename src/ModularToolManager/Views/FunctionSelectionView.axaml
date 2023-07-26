@@ -10,7 +10,7 @@
 	<Grid RowDefinitions="Auto, *">
 		<TextBox Watermark="{x:Static p:Resources.FunctionSelection_SearchForFunction}" IsVisible="{Binding FunctionsNotEmpty}" Text="{Binding SearchText}"/>
 		<DockPanel Grid.Row="1">
-		<ItemsControl Items="{Binding FilteredFunctions}" HorizontalAlignment="Stretch">
+		<ItemsControl ItemsSource="{Binding FilteredFunctions}" HorizontalAlignment="Stretch">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<StackPanel Orientation="Vertical" HorizontalAlignment="Stretch"/>

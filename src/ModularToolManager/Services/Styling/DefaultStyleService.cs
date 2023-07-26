@@ -43,10 +43,10 @@ internal class DefaultStyleService : IStyleService
     }
 
     /// <inheritdoc/>
-    public T? GetStyleByName<T>(string name) where T : IAvaloniaObject => GetStyleByName<T>(GetCurrentAppIncludeStyles().FirstOrDefault(), name);
+    public T? GetStyleByName<T>(string name) where T : AvaloniaObject => GetStyleByName<T>(GetCurrentAppIncludeStyles().FirstOrDefault(), name);
 
     /// <inheritdoc/>
-    public T? GetStyleByName<T>(IStyle? style, string name) where T : IAvaloniaObject
+    public T? GetStyleByName<T>(IStyle? style, string name) where T : AvaloniaObject
     {
         return GetAllStylesWithinResource(style)
                .Where(style => style.Resources.Count > 0)

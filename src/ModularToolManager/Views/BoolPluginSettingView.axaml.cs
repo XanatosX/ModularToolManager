@@ -8,10 +8,4 @@ public partial class BoolPluginSettingView : UserControl
     {
         InitializeComponent();
     }
-
-    /// <inheritdoc/>
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
 }

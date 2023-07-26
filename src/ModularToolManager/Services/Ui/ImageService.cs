@@ -13,6 +13,8 @@ public class ImageService : IImageService
     /// <inheritdoc/>
     public Bitmap? CreateBitmap(StreamGeometry streamGeometry, Brush brush)
     {
+        //@TODO: Fix this method!
+        return null;
         var testImage = new DrawingImage
         {
             Drawing = new GeometryDrawing
@@ -27,11 +29,13 @@ public class ImageService : IImageService
         {
             using (RenderTargetBitmap bitmap = new(pixelSize, new Vector(72, 72)))
             {
+                /**
                 using (DrawingContext ctx = new(bitmap.CreateDrawingContext(null)))
                 {
                     testImage.Drawing.Draw(ctx);
                 }
                 bitmap.Save(memoryStream);
+                */
             }
             memoryStream.Seek(0, SeekOrigin.Begin);
             returnImage = new Bitmap(memoryStream);

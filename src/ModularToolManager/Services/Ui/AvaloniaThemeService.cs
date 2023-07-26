@@ -95,11 +95,14 @@ internal class AvaloniaThemeService : IThemeService
         var app = Application.Current;
         if (app is not null)
         {
+            //@Todo fix this
+            /**
             var loadedTheme = app.Styles.OfType<FluentTheme>().FirstOrDefault();
             if (loadedTheme is not null)
             {
-                loadedTheme.Mode = theme.Mode;
+                loadedTheme.Mode = theme.Variant;
             }
+            */
         }
     }
 }

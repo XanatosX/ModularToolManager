@@ -13,10 +13,4 @@ public partial class FunctionButtonView : UserControl
     {
         InitializeComponent();
     }
-
-    /// <inheritdoc/>
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
 }

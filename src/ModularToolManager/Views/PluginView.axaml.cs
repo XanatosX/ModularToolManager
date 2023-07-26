@@ -15,10 +15,4 @@ public partial class PluginView : UserControl
     {
         InitializeComponent();
     }
-
-    /// <inheritdoc/>
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
 }

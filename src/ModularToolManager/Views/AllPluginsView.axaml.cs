@@ -9,9 +9,4 @@ public partial class AllPluginsView : UserControl
         InitializeComponent();
     }
 
-    /// <inheritdoc/>
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
 }

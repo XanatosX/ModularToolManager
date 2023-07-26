@@ -108,7 +108,7 @@ public class App : Application
         ISettingsService settingsService = provider.GetRequiredService<ISettingsService>();
         CultureInfo language = settingsService.GetApplicationSettings().CurrentLanguage ?? CultureInfo.CurrentCulture;
         langService.ChangeLanguage(language);
-        ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
+        //ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         DataContext = provider.GetService<AppViewModel>();
 
         var locator = provider.GetService<ViewLocator>();

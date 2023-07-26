@@ -8,8 +8,4 @@ public partial class DependencyView : UserControl
     {
         InitializeComponent();
     }
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
 }

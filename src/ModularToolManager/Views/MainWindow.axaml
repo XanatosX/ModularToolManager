@@ -14,10 +14,12 @@
 		SizeToContent="Height"
 		Width="250"
 		MaxWidth="350"
-		HasSystemDecorations="False"
+		
 		CanResize="False"
 		ShowInTaskbar="{Binding ShowInTaskbar}">
+	<!-- HasSystemDecorations="False" -->
 	<Panel>
+		<!--
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">
 			<ExperimentalAcrylicBorder.Material>
 				<ExperimentalAcrylicMaterial
@@ -27,6 +29,7 @@
 					MaterialOpacity="{Binding MaterialOpacity}" />
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
+		-->
 		<Panel>
 			<Grid RowDefinitions="40, Auto">
 				<Grid ColumnDefinitions="*, Auto">
