@@ -6,7 +6,7 @@
 			 RequestedThemeVariant="Default">
 
     <Application.Styles>
-		<!--<FluentTheme Mode="Dark"/>-->
+		<FluentTheme/>
 		<StyleInclude Source="avares://ModularToolManager/Resources/Icons.axaml"/>
 		<StyleInclude Source="avares://ModularToolManager/Resources/LinkButtonStyle.axaml"/>
 	</Application.Styles>
