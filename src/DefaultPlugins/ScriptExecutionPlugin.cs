@@ -1,6 +1,7 @@
 ﻿using DefaultPlugins.Information;
 using DefaultPlugins.ProcessStartStrategies;
 using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Enums;
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
@@ -59,7 +60,7 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
         this.translationService = translationService;
         this.loggingService = loggingService;
         loggingService?.LogTrace($"Instance was created");
-        starterFactory = new DefaultScriptStarterFactory();
+        starterFactory = new DefaultScriptStarterFactory((severity, message) => loggingService?.Log(severity, message, string.Empty);
     }
 
     /// <inheritdoc/>
