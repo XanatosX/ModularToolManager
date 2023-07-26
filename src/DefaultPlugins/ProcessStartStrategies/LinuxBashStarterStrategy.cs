@@ -2,6 +2,9 @@ using System.Diagnostics;
 
 namespace DefaultPlugins.ProcessStartStrategies;
 
+/// <summary>
+/// Strategy to start a linux bash script
+/// </summary>
 class LinuxBashStarterStrategy : IProcessStartStrategy
 {
     /// <inheritdoc/>

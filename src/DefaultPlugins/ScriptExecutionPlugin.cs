@@ -1,10 +1,10 @@
-﻿using System.Diagnostics;
-using DefaultPlugins.Information;
+﻿using DefaultPlugins.Information;
 using DefaultPlugins.ProcessStartStrategies;
 using ModularToolManagerPlugin.Attributes;
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
+using System.Diagnostics;
 
 namespace DefaultPlugins;
 
@@ -102,7 +102,7 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
     public override bool IsOperationSystemValid()
     {
         loggingService?.LogTrace($"Checked if os is valid");
-        return OperatingSystem.IsWindows() || OperatingSystem.IsLinux(); 
+        return OperatingSystem.IsWindows() || OperatingSystem.IsLinux();
     }
 
     /// <inheritdoc/>

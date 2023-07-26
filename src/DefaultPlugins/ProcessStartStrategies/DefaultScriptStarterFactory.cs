@@ -1,3 +1,5 @@
+using ModularToolManagerPlugin.Enums;
+
 namespace DefaultPlugins.ProcessStartStrategies;
 
 /// <summary>
@@ -8,15 +10,28 @@ internal sealed class DefaultScriptStarterFactory
     /// <summary>
     /// Strategy cache
     /// </summary>
-    List<IProcessStartStrategy> strategies;
+    private readonly List<IProcessStartStrategy> strategies;
+
+    /// <summary>
+    /// The action used for logging
+    /// </summary>
+    private readonly Action<LogSeverity, string>? loggingAction;
 
     /// <summary>
     /// Create a new instance of this class
+    /// <paramref name="loggingAction">The action used for logging messages</paramref>>
     /// </summary>
-    public DefaultScriptStarterFactory()
+    public DefaultScriptStarterFactory(Action<LogSeverity, string>? loggingAction)
     {
         strategies = new();
+        this.loggingAction = loggingAction;
     }
+
+    /// <summary>
+    /// Create a new instance of this class
+    /// Logging is disabled with this constructor
+    /// </summary>
+    public DefaultScriptStarterFactory() : this(null) { }
 
     /// <summary>
     /// Create the correct start info for the current operation system
@@ -41,7 +56,7 @@ internal sealed class DefaultScriptStarterFactory
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         string? line;
-                        while((line = reader.ReadLine()) is not null)
+                        while ((line = reader.ReadLine()) is not null)
                         {
                             if (line.StartsWith("#!"))
                             {
@@ -52,13 +67,16 @@ internal sealed class DefaultScriptStarterFactory
                     }
                 }
             }
-            catch (System.Exception)
+            catch (Exception e)
             {
-            
+                if (loggingAction is not null)
+                {
+                    loggingAction(LogSeverity.Warning, e.Message);
+                }
             }
-            info = terminalApp switch 
+            info = terminalApp switch
             {
-                "/bin/bash" => GetStrategy<LinuxBashStarterStrategy>( () => new LinuxBashStarterStrategy()),
+                "/bin/bash" => GetStrategy<LinuxBashStarterStrategy>(() => new LinuxBashStarterStrategy()),
                 _ => null
             };
         }
