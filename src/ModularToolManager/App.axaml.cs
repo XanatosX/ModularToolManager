@@ -1,7 +1,5 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
@@ -108,7 +106,6 @@ public class App : Application
         ISettingsService settingsService = provider.GetRequiredService<ISettingsService>();
         CultureInfo language = settingsService.GetApplicationSettings().CurrentLanguage ?? CultureInfo.CurrentCulture;
         langService.ChangeLanguage(language);
-        //ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
         DataContext = provider.GetService<AppViewModel>();
 
         var locator = provider.GetService<ViewLocator>();

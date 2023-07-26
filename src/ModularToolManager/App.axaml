@@ -3,7 +3,7 @@
              xmlns:local="using:ModularToolManager"
              x:Class="ModularToolManager.App"
 			 xmlns:p="clr-namespace:ModularToolManager.Properties"
-			 RequestedThemeVariant="Default">
+			 RequestedThemeVariant="{Binding ThemeVariant}">
 
     <Application.Styles>
 		<FluentTheme/>

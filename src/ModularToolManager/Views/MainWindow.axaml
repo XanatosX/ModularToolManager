@@ -11,18 +11,13 @@
 		SizeToContent="Height"
 		Width="250"
 		MaxWidth="350"
-		
+		ExtendClientAreaToDecorationsHint="True"
+		TransparencyLevelHint="AcrylicBlur"
+		SystemDecorations="None"
+		Background="Transparent"
 		CanResize="False"
 		ShowInTaskbar="{Binding ShowInTaskbar}">
-	<!-- 
-	
-	TransparencyLevelHint="AcrylicBlur"
-    Background="Transparent"
-    ExtendClientAreaToDecorationsHint="True"
-	HasSystemDecorations="False"
-	-->
 	<Panel>
-		<!--
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">
 			<ExperimentalAcrylicBorder.Material>
 				<ExperimentalAcrylicMaterial
@@ -32,7 +27,6 @@
 					MaterialOpacity="{Binding MaterialOpacity}" />
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
-		-->
 		<Panel>
 			<Grid RowDefinitions="40, Auto">
 				<Grid ColumnDefinitions="*, Auto">
