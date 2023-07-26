@@ -60,7 +60,7 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
         this.translationService = translationService;
         this.loggingService = loggingService;
         loggingService?.LogTrace($"Instance was created");
-        starterFactory = new DefaultScriptStarterFactory((severity, message) => loggingService?.Log(severity, message, string.Empty);
+        starterFactory = new DefaultScriptStarterFactory((severity, message) => loggingService?.Log(severity, message, string.Empty));
     }
 
     /// <inheritdoc/>
