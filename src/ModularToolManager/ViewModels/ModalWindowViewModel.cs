@@ -96,6 +96,5 @@ public partial class ModalWindowViewModel : ObservableObject
         ApplicationTintColor = theme.TintColor ?? Colors.Pink;
         MaterialOpacity = theme.MaterialOpacity;
         TintOpacity = theme.TintOpacity;
-        themeService.ChangeApplicationTheme(theme);
     }
 }

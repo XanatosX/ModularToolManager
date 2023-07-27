@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,8 +13,10 @@ using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Language;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace ModularToolManager;
 
@@ -106,6 +109,12 @@ public class App : Application
         ISettingsService settingsService = provider.GetRequiredService<ISettingsService>();
         CultureInfo language = settingsService.GetApplicationSettings().CurrentLanguage ?? CultureInfo.CurrentCulture;
         langService.ChangeLanguage(language);
+
+        List<IDataValidationPlugin> validatorsToRemove = BindingPlugins.DataValidators.Where(item => item is DataAnnotationsValidationPlugin).ToList();
+        foreach (var item in validatorsToRemove)
+        {
+            BindingPlugins.DataValidators.Remove(item);
+        }
         DataContext = provider.GetService<AppViewModel>();
 
         var locator = provider.GetService<ViewLocator>();
