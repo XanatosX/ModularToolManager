@@ -6,7 +6,7 @@
 			 xmlns:p="clr-namespace:ModularToolManager.Properties"
              x:Class="ModularToolManager.Views.PluginSettingsView">
 	<Grid RowDefinitions="*, Auto">
-		<ItemsControl Items="{Binding PluginSettings}"/>
+		<ItemsControl ItemsSource="{Binding PluginSettings}"/>
 		<StackPanel Grid.Row="1">
 			<Button Content="{x:Static p:Resources.DefaultButton_Save}" Command="{Binding SaveSettingsCommand}"/>
 		</StackPanel>

@@ -164,7 +164,6 @@ public partial class MainWindowViewModel : ObservableObject
         ApplicationTintColor = theme.TintColor ?? Colors.Pink;
         MaterialOpacity = theme.MaterialOpacity;
         TintOpacity = theme.TintOpacity;
-        themeService.ChangeApplicationTheme(theme);
     }
 
     /// <summary>

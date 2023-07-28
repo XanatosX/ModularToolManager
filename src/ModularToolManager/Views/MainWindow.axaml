@@ -8,13 +8,13 @@
         x:Class="ModularToolManager.Views.MainWindow"
         Icon="/Assets/application-logo.ico"
         Title="{x:Static p:Resources.Application_Name}"
-		TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent"
-        ExtendClientAreaToDecorationsHint="True"
 		SizeToContent="Height"
 		Width="250"
 		MaxWidth="350"
-		HasSystemDecorations="False"
+		ExtendClientAreaToDecorationsHint="True"
+		TransparencyLevelHint="AcrylicBlur"
+		SystemDecorations="None"
+		Background="Transparent"
 		CanResize="False"
 		ShowInTaskbar="{Binding ShowInTaskbar}">
 	<Panel>

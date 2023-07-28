@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -25,7 +25,7 @@
 
 
 	<Target Condition="'$(Configuration)' == 'Debug'" Name="CopyAfterBuild" AfterTargets="Build">
-		<Copy SourceFiles="$(OutDir)DefaultPlugins.dll" DestinationFolder="$(ProjectDir)../ModularToolManager/bin/$(Configuration)/net6.0/$(PlatformShortName)/plugins" SkipUnchangedFiles="false" />
+		<Copy SourceFiles="$(OutDir)DefaultPlugins.dll" DestinationFolder="$(ProjectDir)../ModularToolManager/bin/$(Configuration)/$(TargetFramework)/$(PlatformShortName)/plugins" SkipUnchangedFiles="false" />
 	</Target>
 </Project>
  

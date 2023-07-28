@@ -13,7 +13,7 @@ public class ImageService : IImageService
     /// <inheritdoc/>
     public Bitmap? CreateBitmap(StreamGeometry streamGeometry, Brush brush)
     {
-        var testImage = new DrawingImage
+        var internalImage = new DrawingImage
         {
             Drawing = new GeometryDrawing
             {
@@ -21,15 +21,15 @@ public class ImageService : IImageService
                 Brush = brush
             }
         };
-        var pixelSize = new PixelSize((int)testImage.Size.Width, (int)testImage.Size.Height);
+        var pixelSize = new PixelSize((int)internalImage.Size.Width, (int)internalImage.Size.Height);
         Bitmap? returnImage = null;
         using (MemoryStream memoryStream = new())
         {
             using (RenderTargetBitmap bitmap = new(pixelSize, new Vector(72, 72)))
             {
-                using (DrawingContext ctx = new(bitmap.CreateDrawingContext(null)))
+                using (DrawingContext ctx = bitmap.CreateDrawingContext())
                 {
-                    testImage.Drawing.Draw(ctx);
+                    internalImage.Drawing.Draw(ctx);
                 }
                 bitmap.Save(memoryStream);
             }

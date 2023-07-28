@@ -7,7 +7,6 @@ using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Styling;
 using ModularToolManager.Services.Ui;
 using System.Linq;
-using System.Reactive.Linq;
 
 namespace ModularToolManager.ViewModels;
 
@@ -97,6 +96,5 @@ public partial class ModalWindowViewModel : ObservableObject
         ApplicationTintColor = theme.TintColor ?? Colors.Pink;
         MaterialOpacity = theme.MaterialOpacity;
         TintOpacity = theme.TintOpacity;
-        themeService.ChangeApplicationTheme(theme);
     }
 }

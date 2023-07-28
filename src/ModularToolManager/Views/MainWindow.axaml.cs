@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -58,9 +57,6 @@ public partial class MainWindow : Window, IDisposable
 
         firstRender = true;
         InitializeComponent();
-#if DEBUG
-        this.AttachDevTools();
-#endif
 
         WeakReferenceMessenger.Default.Register<CloseApplicationMessage>(this, (_, _) =>
         {
@@ -125,12 +121,6 @@ public partial class MainWindow : Window, IDisposable
         double newXPos = workingArea.X + workingArea.Width - Width;
         double newYPos = workingArea.Y + workingArea.Height - Height;
         Position = new PixelPoint((int)newXPos, (int)newYPos);
-    }
-
-    /// <inheritdoc/>
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
     }
 
     /// <inheritdoc/>

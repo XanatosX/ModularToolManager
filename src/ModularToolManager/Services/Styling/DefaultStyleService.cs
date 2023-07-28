@@ -20,7 +20,7 @@ internal class DefaultStyleService : IStyleService
         List<IStyle> returnStyles = new();
         if (style == null)
         {
-            return new List<Style>();
+            return Enumerable.Empty<Style>();
         }
         foreach (IStyle cStyle in style.Children)
         {
@@ -39,15 +39,18 @@ internal class DefaultStyleService : IStyleService
     /// <inheritdoc/>
     public IEnumerable<IStyle> GetCurrentAppIncludeStyles()
     {
-        return App.Current?.Styles.Where(style => style is StyleInclude) ?? Enumerable.Empty<IStyle>();
+        var styles = App.Current.Styles.Where(style => style.GetType() == typeof(Styles)).ToList(); ;
+        var types = styles.Select(style => style.GetType());
+        return App.Current?.Styles.Where(style => style.GetType() == typeof(Styles)) ?? Enumerable.Empty<IStyle>();
     }
 
     /// <inheritdoc/>
-    public T? GetStyleByName<T>(string name) where T : IAvaloniaObject => GetStyleByName<T>(GetCurrentAppIncludeStyles().FirstOrDefault(), name);
+    public T? GetStyleByName<T>(string name) where T : AvaloniaObject => GetStyleByName<T>(GetCurrentAppIncludeStyles().FirstOrDefault(), name);
 
     /// <inheritdoc/>
-    public T? GetStyleByName<T>(IStyle? style, string name) where T : IAvaloniaObject
+    public T? GetStyleByName<T>(IStyle? style, string name) where T : AvaloniaObject
     {
+        var test = GetCurrentAppIncludeStyles();
         return GetAllStylesWithinResource(style)
                .Where(style => style.Resources.Count > 0)
                .Where(style => style.Resources.ContainsKey(name))

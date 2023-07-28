@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 
 namespace ModularToolManager.Views;
 public partial class AllPluginsView : UserControl
@@ -9,9 +8,4 @@ public partial class AllPluginsView : UserControl
         InitializeComponent();
     }
 
-    /// <inheritdoc/>
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
 }
