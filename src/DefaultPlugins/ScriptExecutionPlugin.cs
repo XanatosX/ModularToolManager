@@ -1,5 +1,7 @@
 ﻿using DefaultPlugins.Information;
+using DefaultPlugins.ProcessStartStrategies;
 using ModularToolManagerPlugin.Attributes;
+using ModularToolManagerPlugin.Enums;
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
@@ -16,6 +18,11 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// The plugin information
     /// </summary>
     private PluginInformation? pluginInformation;
+
+    /// <summary>
+    /// The factory to use for creating starter objects
+    /// </summary>
+    private DefaultScriptStarterFactory starterFactory;
 
     /// <summary>
     /// Fallback text if a translation is missing
@@ -53,6 +60,7 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
         this.translationService = translationService;
         this.loggingService = loggingService;
         loggingService?.LogTrace($"Instance was created");
+        starterFactory = new DefaultScriptStarterFactory((severity, message) => loggingService?.Log(severity, message, string.Empty));
     }
 
     /// <inheritdoc/>
@@ -73,11 +81,12 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
             return false;
         }
 
-        ProcessStartInfo startInfo = new ProcessStartInfo
+        ProcessStartInfo? startInfo = starterFactory.CreateStartInfo(path)?.GetStartInfo(parameters, path);
+        if (startInfo is null)
         {
-            FileName = path,
-            Arguments = parameters
-        };
+            loggingService?.LogWarning("Could not get a starter for the operation system!");
+            return false;
+        }
         Process.Start(startInfo);
         loggingService?.LogTrace($"Executing of plugin done");
         return true;
@@ -94,13 +103,18 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
     public override bool IsOperationSystemValid()
     {
         loggingService?.LogTrace($"Checked if os is valid");
-        return OperatingSystem.IsWindows();
+        return OperatingSystem.IsWindows() || OperatingSystem.IsLinux();
     }
 
     /// <inheritdoc/>
     public override IEnumerable<FileExtension> GetAllowedFileEndings()
     {
         loggingService?.LogTrace($"Get allowed file extensions");
+        if (OperatingSystem.IsLinux())
+        {
+            return GetLinuxExtensions().Where(extension => !string.IsNullOrEmpty(extension.Name) && !string.IsNullOrEmpty(extension.Extension))
+                                       .OrderBy(item => item.Name);
+        }
         return GetWindowsExtensions().Where(extension => !string.IsNullOrEmpty(extension.Name) && !string.IsNullOrEmpty(extension.Extension))
                                      .OrderBy(item => item.Name);
     }
@@ -117,6 +131,14 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
             new FileExtension(translationService?.GetTranslationByKey("batch") ?? FALLBACK_TRANSLATION, "bat"),
             new FileExtension(translationService?.GetTranslationByKey("cmd") ?? FALLBACK_TRANSLATION, "cmd"),
             new FileExtension(translationService?.GetTranslationByKey("powershell") ?? FALLBACK_TRANSLATION, "ps")
+        };
+    }
+
+    private IEnumerable<FileExtension> GetLinuxExtensions()
+    {
+        loggingService?.LogTrace("Create linux extensions");
+        return new List<FileExtension> {
+            new FileExtension("shell", "sh")
         };
     }
 

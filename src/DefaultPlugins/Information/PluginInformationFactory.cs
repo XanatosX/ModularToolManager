@@ -37,7 +37,7 @@ internal sealed class PluginInformationFactory
             Description = description,
             License = "MIT",
             ProjectUrl = "https://github.com/XanatosX/ModularToolManager",
-            Version = new Version("1.0.0.0")
+            Version = new Version("1.0.1.0")
 
         };
     }
