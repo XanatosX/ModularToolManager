@@ -136,7 +136,7 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
 
     private IEnumerable<FileExtension> GetLinuxExtensions()
     {
-        loggingService.LogTrace("Create linux extensions");
+        loggingService?.LogTrace("Create linux extensions");
         return new List<FileExtension> {
             new FileExtension("shell", "sh")
         };
