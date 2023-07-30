@@ -38,8 +38,7 @@ public static class ModelDependencyInjection
                              return new GenericJsonRepository<FunctionModel, string>(
                                  path,
                                  fileService,
-                                 serializeService,
-                                 provider.GetRequiredService<ILogger<GenericJsonRepository<FunctionModel, string>>>());
+                                 serializeService);
                          })
                          .AddSingleton<IFileSystemService, FileSystemService>()
                          .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>))

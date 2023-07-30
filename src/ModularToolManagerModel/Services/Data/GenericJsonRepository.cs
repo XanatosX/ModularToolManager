@@ -5,33 +5,50 @@ using ModularToolManagerModel.Services.IO;
 
 namespace ModularToolManager.Services.Data;
 
+/// <summary>
+/// Generic implementation of the IRepository interface
+/// </summary>
+/// <typeparam name="T">The type of data to be stored in the repository</typeparam>
+/// <typeparam name="I">The type of the id for the given repository data type 'T'</typeparam>
 internal class GenericJsonRepository<T, I> : IRepository<T, I> where T : IRepositoryDataSet<I>
 {
+    /// <summary>
+    /// The path to the file where the repository is stored
+    /// </summary>
     private readonly string repositoryFilePath;
-    private readonly IFileSystemService fileSystemService;
-    private readonly ISerializeService serializeService;
-    private readonly ILogger<GenericJsonRepository<T, I>> logger;
 
+    /// <summary>
+    /// The service used for interactions with the file system
+    /// </summary>
+    private readonly IFileSystemService fileSystemService;
+
+    /// <summary>
+    /// The service used to serialize the data for the file system
+    /// </summary>
+    private readonly ISerializeService serializeService;
+
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="pathService">The path service to use</param>
+    /// <param name="fileSystemService">The file system service to use</param>
+    /// <param name="serializeService">The serialize service to use</param>
     public GenericJsonRepository(IPathService pathService,
                                  IFileSystemService fileSystemService,
-                                 ISerializeService serializeService,
-                                 ILogger<GenericJsonRepository<T, I>> logger) : this(Path.Combine(pathService.GetSettingsFolderPathString(), $"{typeof(T).Name}.json"),
+                                 ISerializeService serializeService) : this(Path.Combine(pathService.GetSettingsFolderPathString(), $"{typeof(T).Name}.json"),
                                                                                      fileSystemService,
-                                                                                     serializeService,
-                                                                                     logger)
+                                                                                     serializeService)
     {
     }
 
     public GenericJsonRepository(
         string fileName,
         IFileSystemService fileSystemService,
-        ISerializeService serializeService,
-        ILogger<GenericJsonRepository<T, I>> logger)
+        ISerializeService serializeService)
     {
         this.repositoryFilePath = fileName;
         this.fileSystemService = fileSystemService;
         this.serializeService = serializeService;
-        this.logger = logger;
     }
 
     public bool Delete(T entity)
