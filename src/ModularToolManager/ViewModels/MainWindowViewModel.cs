@@ -9,6 +9,7 @@ using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
 using ModularToolManagerModel.Services.IO;
+using System.Dynamic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,6 +79,12 @@ public partial class MainWindowViewModel : ObservableObject
     private bool showInTaskbar;
 
     /// <summary>
+    /// Is the application in order mode
+    /// </summary>
+    [ObservableProperty]
+    private bool inOrderMode;
+
+    /// <summary>
     /// Command to select a new language
     /// </summary>
     public ICommand SelectLanguageCommand { get; }
@@ -96,11 +103,6 @@ public partial class MainWindowViewModel : ObservableObject
     /// Command to hide the application
     /// </summary>
     public ICommand HideApplicationCommand { get; }
-
-    /// <summary>
-    /// Command to show the application
-    /// </summary>
-    private ICommand ShowApplicationCommand { get; }
 
     /// <summary>
     /// Create a new instance of this class
@@ -127,7 +129,6 @@ public partial class MainWindowViewModel : ObservableObject
         ExitApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseApplicationMessage()));
         SelectLanguageCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Language, Properties.Properties.Icon_language, nameof(ChangeLanguageViewModel)));
         HideApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true)));
-        ShowApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(false)));
 
         WeakReferenceMessenger.Default.Register<ValueChangedMessage<ApplicationSettings>>(this, (_, e) =>
         {
@@ -234,6 +235,39 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task OpenHotkey()
     {
         await OpenModalWindow(Properties.Resources.SubMenu_Hotkeys, Properties.Properties.Icon_Keyboard, nameof(HotkeysViewModel));
+    }
+
+    /// <summary>
+    /// Toggle the order mode
+    /// </summary>
+    /// <param name="newState">The state to set the order mode to</param>
+    [RelayCommand]
+    private void ToggleOrderMode(bool newState)
+    {
+        InOrderMode = newState;
+        WeakReferenceMessenger.Default.Send(new ToggleOrderModeMessage(InOrderMode));
+    }
+
+    /// <summary>
+    /// Save the new order for the functions
+    /// </summary>
+    [RelayCommand]
+    private void SaveOrderMode()
+    {
+        try
+        {
+            bool result = WeakReferenceMessenger.Default.Send(new SaveFunctionsOrderMessage());
+            if (result)
+            {
+                WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
+            }
+        }
+        catch (System.Exception)
+        {
+            //No response from save order message
+        }
+
+        ToggleOrderMode(false);
     }
 
     /// <summary>

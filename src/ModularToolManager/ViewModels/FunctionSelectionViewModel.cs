@@ -43,6 +43,12 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     private string? searchText;
 
     /// <summary>
+    /// Is the application in the order mode
+    /// </summary>
+    [ObservableProperty]
+    private bool inOrderMode;
+
+    /// <summary>
     /// Service used to resolve dependencies
     /// </summary>
     private readonly IDependencyResolverService dependencyResolverService;
@@ -72,8 +78,34 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
                 SearchText = string.Empty;
             }
         });
-
+        WeakReferenceMessenger.Default.Register<ToggleOrderModeMessage>(this, (_, e) =>
+        {
+            if (e.Value)
+            {
+                SearchText = string.Empty;
+            }
+            InOrderMode = e.Value;
+        });
+        WeakReferenceMessenger.Default.Register<SaveFunctionsOrderMessage>(this, (_, saveFunctionMessage) => SaveFunctionsOrder(saveFunctionMessage));
         WeakReferenceMessenger.Default.Register<ReloadFunctionsMessage>(this, (_, _) => ReloadFunctions());
+    }
+
+    /// <summary>
+    /// Save the order for the functions to the function service
+    /// </summary>
+    /// <param name="saveFunctionMessage">The message to save the functions</param>
+    private void SaveFunctionsOrder(SaveFunctionsOrderMessage saveFunctionMessage)
+    {
+        if (saveFunctionMessage.HasReceivedResponse)
+        {
+            return;
+        }
+        foreach (var functionView in functions)
+        {
+            functionService?.UpdateFunction(functionView.Identifier, function => function.SortOrder = functionView.SortId);
+        }
+
+        saveFunctionMessage.Reply(true);
     }
 
     /// <inheritdoc/>
