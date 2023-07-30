@@ -276,7 +276,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
     {
         return new FunctionModel
         {
-            UniqueIdentifier = identifier!,
+            Id = identifier!,
             DisplayName = DisplayName!,
             Description = Description,
             Plugin = SelectedFunctionPlugin!.Plugin,

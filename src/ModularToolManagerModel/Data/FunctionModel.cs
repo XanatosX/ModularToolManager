@@ -1,17 +1,24 @@
-﻿using ModularToolManagerPlugin.Models;
+﻿using ModularToolManagerModel.Services.Data;
+using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
+using System.Text.Json.Serialization;
 
 namespace ModularToolManager.Models
 {
     /// <summary>
     /// Model for a Function stored by the user
     /// </summary>
-    public class FunctionModel
+    public class FunctionModel : IRepositoryDataSet<string>
     {
+        [JsonPropertyName("UniqueIdentifier")]
+        public string Id { get; init; }
+
         /// <summary>
         /// Unique identifier for the function model
         /// </summary>
-        public string UniqueIdentifier { get; init; }
+        [JsonIgnore]
+        [Obsolete("Please use the Id field instead")]
+        public string UniqueIdentifier => Id;
 
         /// <summary>
         /// The name of the function to display
@@ -65,7 +72,7 @@ namespace ModularToolManager.Models
         /// <param name="sortOrder">The sort order of the function</param>
         public FunctionModel(string displayName, IFunctionPlugin? plugin, string path, string parameters, int sortOrder)
         {
-            UniqueIdentifier = Guid.NewGuid().ToString().Replace("-", string.Empty);
+            Id = Guid.NewGuid().ToString().Replace("-", string.Empty);
             DisplayName = displayName;
             Description = null;
             Plugin = plugin;

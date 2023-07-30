@@ -8,6 +8,7 @@ namespace ModularToolManagerModel.Services.Functions;
 /// <summary>
 /// Service to save the function to the disc
 /// </summary>
+[Obsolete("Please use 'GenericJsonRepository' instead")]
 public class SerializedFunctionService : IFunctionService
 {
     /// <summary>
@@ -40,7 +41,8 @@ public class SerializedFunctionService : IFunctionService
     /// </summary>
     /// <param name="serializer">The serailzier class to use</param>
     /// <param name="pathService">The path service to use</param>
-    public SerializedFunctionService(ISerializeService? serializer,
+    public SerializedFunctionService(
+                                     ISerializeService? serializer,
                                      IPathService? pathService,
                                      IFileSystemService fileSystemService,
                                      ILogger<SerializedFunctionService>? loggingService)
