@@ -41,6 +41,12 @@ public partial class FunctionButtonViewModel : ObservableObject
     private bool canExecute;
 
     /// <summary>
+    /// Is the button in order mode
+    /// </summary>
+    [ObservableProperty]
+    private bool orderMode;
+
+    /// <summary>
     /// The identifier for this function button
     /// </summary>
     public string Identifier => FunctionModel?.UniqueIdentifier ?? string.Empty;
@@ -251,5 +257,13 @@ public partial class FunctionButtonViewModel : ObservableObject
     private bool CanEditOrDeleteFunction()
     {
         return FunctionModel is not null;
+    }
+
+    /// <summary>
+    /// Deconstructore to ensure message unsubscribe
+    /// </summary>
+    ~FunctionButtonViewModel()
+    {
+        WeakReferenceMessenger.Default.UnregisterAll(this);
     }
 }

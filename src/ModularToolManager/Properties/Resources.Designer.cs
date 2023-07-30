@@ -331,6 +331,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sorting Order.
+        /// </summary>
+        public static string FunctionButton_Sort_Watermark {
+            get {
+                return ResourceManager.GetString("FunctionButton_Sort_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for function.
         /// </summary>
         public static string FunctionSelection_SearchForFunction {

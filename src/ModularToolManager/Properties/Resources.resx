@@ -207,6 +207,9 @@
   <data name="FunctionButton_Method_Error" xml:space="preserve">
     <value>Either the path saved on this function is missing, the extension is wrong or the plugin for execution was removed. Please edit the function to fix the error.</value>
   </data>
+  <data name="FunctionButton_Sort_Watermark" xml:space="preserve">
+    <value>Sorting Order</value>
+  </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Search for function</value>
   </data>

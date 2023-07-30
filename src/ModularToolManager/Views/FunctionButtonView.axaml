@@ -30,8 +30,9 @@
 			</Button.ContextMenu>
 			<DockPanel HorizontalAlignment="Stretch">
 				<PathIcon DockPanel.Dock="Right" Data="{StaticResource warning_regular}" IsVisible="{Binding !CanExecute}"/>
+				<TextBox DockPanel.Dock="Right" Margin="5,0,5,0" Text="{Binding SortId}" Watermark="{x:Static p:Resources.FunctionButton_Sort_Watermark}" MinWidth="120" IsVisible="{Binding OrderMode}" />
 				<PathIcon DockPanel.Dock="Left" Data="{StaticResource warning_regular}" IsVisible="{Binding !CanExecute}"/>
-				<TextBlock DockPanel.Dock="Left" Text="{Binding DisplayName}" HorizontalAlignment="Center"/>
+				<TextBlock DockPanel.Dock="Left" Text="{Binding DisplayName}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 			</DockPanel>
 		</Button>
 	

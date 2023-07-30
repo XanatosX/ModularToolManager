@@ -78,6 +78,12 @@ public partial class MainWindowViewModel : ObservableObject
     private bool showInTaskbar;
 
     /// <summary>
+    /// Is the application in order mode
+    /// </summary>
+    [ObservableProperty]
+    private bool inOrderMode;
+
+    /// <summary>
     /// Command to select a new language
     /// </summary>
     public ICommand SelectLanguageCommand { get; }
@@ -98,9 +104,9 @@ public partial class MainWindowViewModel : ObservableObject
     public ICommand HideApplicationCommand { get; }
 
     /// <summary>
-    /// Command to show the application
+    /// Toggle the application into the order mode
     /// </summary>
-    private ICommand ShowApplicationCommand { get; }
+    private ICommand ToggleOrderModeCommand { get; }
 
     /// <summary>
     /// Create a new instance of this class
@@ -127,7 +133,11 @@ public partial class MainWindowViewModel : ObservableObject
         ExitApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseApplicationMessage()));
         SelectLanguageCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Language, Properties.Properties.Icon_language, nameof(ChangeLanguageViewModel)));
         HideApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true)));
-        ShowApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(false)));
+        ToggleOrderModeCommand = new RelayCommand(() =>
+        {
+            InOrderMode = !InOrderMode;
+            WeakReferenceMessenger.Default.Send(new ToggleOrderModeMessage(InOrderMode));
+        });
 
         WeakReferenceMessenger.Default.Register<ValueChangedMessage<ApplicationSettings>>(this, (_, e) =>
         {
