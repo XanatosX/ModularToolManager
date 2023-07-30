@@ -86,13 +86,17 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
             }
             InOrderMode = e.Value;
         });
-        WeakReferenceMessenger.Default.Register<SaveFunctionsOrderMessage>(this, (_, e) => SaveFunctionsOrder(e));
+        WeakReferenceMessenger.Default.Register<SaveFunctionsOrderMessage>(this, (_, saveFunctionMessage) => SaveFunctionsOrder(saveFunctionMessage));
         WeakReferenceMessenger.Default.Register<ReloadFunctionsMessage>(this, (_, _) => ReloadFunctions());
     }
 
-    private void SaveFunctionsOrder(SaveFunctionsOrderMessage e)
+    /// <summary>
+    /// Save the order for the functions to the function service
+    /// </summary>
+    /// <param name="saveFunctionMessage">The message to save the functions</param>
+    private void SaveFunctionsOrder(SaveFunctionsOrderMessage saveFunctionMessage)
     {
-        if (e.HasReceivedResponse)
+        if (saveFunctionMessage.HasReceivedResponse)
         {
             return;
         }
@@ -101,7 +105,7 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
             functionService?.UpdateFunction(functionView.Identifier, function => function.SortOrder = functionView.SortId);
         }
 
-        e.Reply(true);
+        saveFunctionMessage.Reply(true);
     }
 
     /// <inheritdoc/>
