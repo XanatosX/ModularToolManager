@@ -28,6 +28,8 @@
 				IsChecked="{Binding ShowInTaskbar}"
 				/>
 			<ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding AvailableThemes}" SelectedItem="{Binding SelectedTheme}"/>
+			<Separator Margin="0,5,0,5"/>
+			<CheckBox Content="{x:Static p:Resources.Settings_AllowAutocompleteForFunctionSearch}" IsChecked="{Binding EnableAutocompleteForFunctionSearch}"/>
 		</StackPanel>
 		<DockPanel Grid.Row="1" Margin="5">
 			<Button Content="{x:Static p:Resources.DefaultButton_Ok}" Command="{Binding OkCommand}" DockPanel.Dock="Left"/>

@@ -294,6 +294,9 @@
   <data name="RunningWith" xml:space="preserve">
     <value>Läuft mit Avalonia UI</value>
   </data>
+  <data name="Settings_AllowAutocompleteForFunctionSearch" xml:space="preserve">
+    <value>Automatische vervollständigung für Funktionsfilter aktivieren</value>
+  </data>
   <data name="Settings_ClearSearchAfterFunctionExecute" xml:space="preserve">
     <value>Suche löschen nachdem eine Funktion ausgeführt wurde</value>
   </data>

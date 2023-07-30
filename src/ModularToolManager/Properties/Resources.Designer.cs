@@ -700,6 +700,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable Autocomplete for function search.
+        /// </summary>
+        public static string Settings_AllowAutocompleteForFunctionSearch {
+            get {
+                return ResourceManager.GetString("Settings_AllowAutocompleteForFunctionSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear function search if function was executed.
         /// </summary>
         public static string Settings_ClearSearchAfterFunctionExecute {
