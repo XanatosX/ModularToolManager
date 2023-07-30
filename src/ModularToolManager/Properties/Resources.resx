@@ -309,6 +309,9 @@
   <data name="RunningWith" xml:space="preserve">
     <value>Running with Avalonia UI</value>
   </data>
+  <data name="Settings_ClearSearchAfterFunctionExecute" xml:space="preserve">
+    <value>Clear function search if function was executed</value>
+  </data>
   <data name="Settings_CloseOnFunctionExecute" xml:space="preserve">
     <value>Close if a function was executed</value>
   </data>

@@ -35,6 +35,12 @@ internal partial class SettingsViewModel : ObservableObject
     private bool closeOnFunctionExecute;
 
     /// <summary>
+    /// Baking field if the search should be cleard if a function was executed
+    /// </summary>
+    [ObservableProperty]
+    private bool clearSearchAfterFunctionExecute;
+
+    /// <summary>
     /// Baking field if should be started minimitzed
     /// </summary>
     [ObservableProperty]
@@ -69,6 +75,7 @@ internal partial class SettingsViewModel : ObservableObject
         TopMost = appSettings.AlwaysOnTop;
         CloseOnFunctionExecute = appSettings.MinimizeOnFunctionExecute;
         StartMinimized = appSettings.StartMinimized;
+        ClearSearchAfterFunctionExecute = appSettings.ClearSearchAfterFunctionExecute;
         ShowInTaskbar = appSettings.ShowInTaskbar;
         AvailableThemes = themeService.GetAllStyles()
                                 .OrderBy(style => style.Name)
@@ -98,6 +105,7 @@ internal partial class SettingsViewModel : ObservableObject
             settings.ShowInTaskbar = ShowInTaskbar;
             settings.AlwaysOnTop = TopMost;
             settings.MinimizeOnFunctionExecute = CloseOnFunctionExecute;
+            settings.ClearSearchAfterFunctionExecute = ClearSearchAfterFunctionExecute;
             settings.SelectedThemeId = SelectedTheme?.Id ?? 0;
         });
         if (changeResult)

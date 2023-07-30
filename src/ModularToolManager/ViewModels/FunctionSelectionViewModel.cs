@@ -90,7 +90,8 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     private void FilterFunctionList()
     {
         IEnumerable<FunctionButtonViewModel> tempFiltered = functions.Where(function => string.IsNullOrEmpty(SearchText) || (function.DisplayName ?? string.Empty).ToLower().Contains(SearchText.ToLower()))
-                                                                     .OrderBy(function => function.SortId);
+                                                                     .OrderBy(function => function.SortId)
+                                                                     .ThenBy(function => function.DisplayName);
         FilteredFunctions.Clear();
         foreach (var function in tempFiltered)
         {

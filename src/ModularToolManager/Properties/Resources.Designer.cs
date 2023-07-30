@@ -637,6 +637,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear function search if function was executed.
+        /// </summary>
+        public static string Settings_ClearSearchAfterFunctionExecute {
+            get {
+                return ResourceManager.GetString("Settings_ClearSearchAfterFunctionExecute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close if a function was executed.
         /// </summary>
         public static string Settings_CloseOnFunctionExecute {
