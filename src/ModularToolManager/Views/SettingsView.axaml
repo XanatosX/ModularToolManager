@@ -16,6 +16,10 @@
 				IsChecked="{Binding CloseOnFunctionExecute}"
 				/>
 			<CheckBox
+				Content="{x:Static p:Resources.Settings_ClearSearchAfterFunctionExecute}"
+				IsChecked="{Binding ClearSearchAfterFunctionExecute}"
+				/>
+			<CheckBox
 				Content="{x:Static p:Resources.Settings_StartMinimized}"
 				IsChecked="{Binding StartMinimized}"
 				/>

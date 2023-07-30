@@ -43,24 +43,24 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// <summary>
     /// The identifier for this function button
     /// </summary>
-    public string Identifier => functionModel?.UniqueIdentifier ?? string.Empty;
+    public string Identifier => FunctionModel?.UniqueIdentifier ?? string.Empty;
 
     /// <summary>
     /// The display name of the function
     /// </summary>
-    public string? DisplayName => functionModel?.DisplayName;
+    public string? DisplayName => FunctionModel?.DisplayName;
 
     /// <summary>
     /// The sort id to use for this function button
     /// </summary>
-    public int SortId => functionModel?.SortOrder ?? 0;
+    public int SortId => FunctionModel?.SortOrder ?? 0;
 
     /// <summary>
     /// The description of the function
     /// </summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ToolTipDelay))]
-    private string description;
+    private string? description;
 
     /// <summary>
     /// The logger to use
@@ -109,7 +109,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// <param name="functionModel">The function model to use</param>
     public void SetFunctionModel(FunctionModel functionModel)
     {
-        this.functionModel = functionModel;
+        FunctionModel = functionModel;
         Description = functionModel?.Description ?? string.Empty;
 
         CheckIfCanExecute();
@@ -124,19 +124,21 @@ public partial class FunctionButtonViewModel : ObservableObject
     {
         try
         {
-            bool shouldMinimizeAfter = settingsService.GetApplicationSettings().CloseOnFunctionExecute;
-            var plugin = functionModel?.Plugin;
+            bool shouldMinimizeAfter = settingsService.GetApplicationSettings().MinimizeOnFunctionExecute;
+            var plugin = FunctionModel?.Plugin;
             if (plugin is null)
             {
                 return;
             }
             ApplyPluginSettings(plugin);
-            await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path));
+            bool status = await Task.Run(() => FunctionModel?.Plugin?.Execute(FunctionModel.Parameters, FunctionModel.Path)) ?? false;
 
             if (shouldMinimizeAfter)
             {
                 WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true));
             }
+            WeakReferenceMessenger.Default.Send(new FunctionExecutedMessage(status));
+
         }
         catch (System.Exception e)
         {
@@ -151,11 +153,12 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// </summary>
     private void CheckIfCanExecute()
     {
-        if (FunctionModel is null)
+        if (FunctionModel is null || FunctionModel.Plugin is null || FunctionModel.Path is null)
         {
             CanExecute = false;
+            return;
         }
-        bool pathIsAvailable = File.Exists(FunctionModel.Path);
+        bool pathIsAvailable = File.Exists(FunctionModel?.Path);
         bool pluginAvailable = FunctionModel?.Plugin is not null;
         bool extensionMatching = false;
         if (pathIsAvailable)
@@ -182,10 +185,10 @@ public partial class FunctionButtonViewModel : ObservableObject
         plugin.ResetSettings();
 
         List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(plugin).ToList() ?? new();
-        var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == functionModel?.Plugin?.GetType());
+        var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == FunctionModel?.Plugin?.GetType());
         foreach (var loadedPluginSetting in settings?.Settings ?? Enumerable.Empty<SettingModel>())
         {
-            var specificSettings = functionModel?.Settings.FirstOrDefault(setting => setting.Key == loadedPluginSetting.Key);
+            var specificSettings = FunctionModel?.Settings.FirstOrDefault(setting => setting.Key == loadedPluginSetting.Key);
             if (specificSettings is not null)
             {
                 loadedPluginSetting.SetValue(specificSettings.Value);
@@ -247,6 +250,6 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// <returns>True if model is present</returns>
     private bool CanEditOrDeleteFunction()
     {
-        return functionModel is not null;
+        return FunctionModel is not null;
     }
 }

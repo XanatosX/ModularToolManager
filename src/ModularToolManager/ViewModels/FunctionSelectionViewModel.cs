@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
+using ModularToolManager.Services.Settings;
 using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.Functions;
 using System;
@@ -48,7 +50,7 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    public FunctionSelectionViewModel(IFunctionService? functionService, IDependencyResolverService dependencyResolverService)
+    public FunctionSelectionViewModel(IFunctionService? functionService, IDependencyResolverService dependencyResolverService, ISettingsService settingsService)
     {
         this.functionService = functionService;
         this.dependencyResolverService = dependencyResolverService;
@@ -61,6 +63,14 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
         {
             functionService?.DeleteFunction(e.Identifier);
             ReloadFunctions();
+        });
+        WeakReferenceMessenger.Default.Register<FunctionExecutedMessage>(this, (_, e) =>
+        {
+            ApplicationSettings settings = settingsService.GetApplicationSettings();
+            if (e.Value && settings.ClearSearchAfterFunctionExecute)
+            {
+                SearchText = string.Empty;
+            }
         });
 
         WeakReferenceMessenger.Default.Register<ReloadFunctionsMessage>(this, (_, _) => ReloadFunctions());
@@ -80,7 +90,8 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     private void FilterFunctionList()
     {
         IEnumerable<FunctionButtonViewModel> tempFiltered = functions.Where(function => string.IsNullOrEmpty(SearchText) || (function.DisplayName ?? string.Empty).ToLower().Contains(SearchText.ToLower()))
-                                                                     .OrderBy(function => function.SortId);
+                                                                     .OrderBy(function => function.SortId)
+                                                                     .ThenBy(function => function.DisplayName);
         FilteredFunctions.Clear();
         foreach (var function in tempFiltered)
         {

@@ -276,6 +276,9 @@
   <data name="RunningWith" xml:space="preserve">
     <value>Läuft mit Avalonia UI</value>
   </data>
+  <data name="Settings_ClearSearchAfterFunctionExecute" xml:space="preserve">
+    <value>Suche löschen nachdem eine Funktion ausgeführt wurde</value>
+  </data>
   <data name="Settings_CloseOnFunctionExecute" xml:space="preserve">
     <value>Applikation schließen nachdem Funktion ausgeführt wurde</value>
   </data>
