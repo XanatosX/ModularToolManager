@@ -65,6 +65,12 @@ internal partial class SettingsViewModel : ObservableObject
     private ApplicationStyleViewModel? selectedTheme;
 
     /// <summary>
+    /// Enable autocomplete for the function search
+    /// </summary>
+    [ObservableProperty]
+    private bool enableAutocompleteForFunctionSearch;
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="settingsService">The settings service to use</param>
@@ -83,6 +89,7 @@ internal partial class SettingsViewModel : ObservableObject
                                 .Select(style => new ApplicationStyleViewModel(style))
                                 .ToList();
         SelectedTheme = AvailableThemes.Where(theme => theme.Id == appSettings.SelectedThemeId).FirstOrDefault() ?? AvailableThemes.FirstOrDefault();
+        EnableAutocompleteForFunctionSearch = appSettings.EnableAutocompleteForFunctionSearch;
 
         PropertyChanged += (_, e) =>
         {
@@ -107,6 +114,7 @@ internal partial class SettingsViewModel : ObservableObject
             settings.MinimizeOnFunctionExecute = CloseOnFunctionExecute;
             settings.ClearSearchAfterFunctionExecute = ClearSearchAfterFunctionExecute;
             settings.SelectedThemeId = SelectedTheme?.Id ?? 0;
+            settings.EnableAutocompleteForFunctionSearch = EnableAutocompleteForFunctionSearch;
         });
         if (changeResult)
         {

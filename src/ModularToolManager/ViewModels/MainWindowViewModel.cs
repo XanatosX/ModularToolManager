@@ -213,6 +213,7 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task OpenSettings()
     {
         await OpenModalWindow(Properties.Resources.SubMenu_Settings, Properties.Properties.Icon_settings, nameof(SettingsViewModel));
+        WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
         SwitchTheme();
     }
 

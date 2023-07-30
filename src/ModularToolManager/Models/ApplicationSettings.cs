@@ -56,6 +56,12 @@ public class ApplicationSettings
     public List<PluginSettings> PluginSettings { get; set; }
 
     /// <summary>
+    /// Setting for allowing to use autocomplete on the search
+    /// </summary>
+    [JsonPropertyName("search_autocomplete")]
+    public bool EnableAutocompleteForFunctionSearch { get; set; }
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     public ApplicationSettings()
