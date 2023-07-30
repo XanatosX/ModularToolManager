@@ -67,7 +67,7 @@ internal partial class SettingsViewModel : ObservableObject
         this.settingsService = settingsService;
         ApplicationSettings appSettings = settingsService.GetApplicationSettings();
         TopMost = appSettings.AlwaysOnTop;
-        CloseOnFunctionExecute = appSettings.CloseOnFunctionExecute;
+        CloseOnFunctionExecute = appSettings.MinimizeOnFunctionExecute;
         StartMinimized = appSettings.StartMinimized;
         ShowInTaskbar = appSettings.ShowInTaskbar;
         AvailableThemes = themeService.GetAllStyles()
@@ -97,7 +97,7 @@ internal partial class SettingsViewModel : ObservableObject
             settings.StartMinimized = StartMinimized;
             settings.ShowInTaskbar = ShowInTaskbar;
             settings.AlwaysOnTop = TopMost;
-            settings.CloseOnFunctionExecute = CloseOnFunctionExecute;
+            settings.MinimizeOnFunctionExecute = CloseOnFunctionExecute;
             settings.SelectedThemeId = SelectedTheme?.Id ?? 0;
         });
         if (changeResult)
