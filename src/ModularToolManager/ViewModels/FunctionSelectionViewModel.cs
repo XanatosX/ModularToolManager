@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ModularToolManager.ViewModels;
 
