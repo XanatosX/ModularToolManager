@@ -8,7 +8,7 @@
 			 MaxHeight="450">
 
 	<Grid RowDefinitions="Auto, *">
-		<TextBox Watermark="{x:Static p:Resources.FunctionSelection_SearchForFunction}" IsVisible="{Binding FunctionsNotEmpty}" Text="{Binding SearchText}"/>
+		<TextBox Watermark="{x:Static p:Resources.FunctionSelection_SearchForFunction}" IsVisible="{Binding FunctionsNotEmpty}" Text="{Binding SearchText}" IsEnabled="{Binding !InOrderMode}"/>
 		<DockPanel Grid.Row="1">
 		<ItemsControl ItemsSource="{Binding FilteredFunctions}" HorizontalAlignment="Stretch">
 			<ItemsControl.ItemsPanel>

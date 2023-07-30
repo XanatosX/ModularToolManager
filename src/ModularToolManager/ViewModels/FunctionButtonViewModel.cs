@@ -44,7 +44,8 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// Is the button in order mode
     /// </summary>
     [ObservableProperty]
-    private bool orderMode;
+    [NotifyCanExecuteChangedFor(nameof(ExecuteFunctionCommand))]
+    private bool isOrderMode;
 
     /// <summary>
     /// The identifier for this function button
@@ -59,7 +60,8 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// <summary>
     /// The sort id to use for this function button
     /// </summary>
-    public int SortId => FunctionModel?.SortOrder ?? 0;
+    [ObservableProperty]
+    private int sortId;
 
     /// <summary>
     /// The description of the function
@@ -107,6 +109,9 @@ public partial class FunctionButtonViewModel : ObservableObject
         this.logger = logger;
         this.settingsService = settingsService;
         this.functionSettingsService = functionSettingsService;
+        SortId = 0;
+
+        WeakReferenceMessenger.Default.Register<ToggleOrderModeMessage>(this, (_, e) => IsOrderMode = e.Value);
     }
 
     /// <summary>
@@ -117,6 +122,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     {
         FunctionModel = functionModel;
         Description = functionModel?.Description ?? string.Empty;
+        SortId = functionModel?.SortOrder ?? 0;
 
         CheckIfCanExecute();
     }
@@ -125,7 +131,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// Command to exetute the current function
     /// </summary>
     /// <returns>A empty task to await until execution is complete</returns>
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanExecuteFunction))]
     private async Task ExecuteFunction()
     {
         try
@@ -152,6 +158,15 @@ public partial class FunctionButtonViewModel : ObservableObject
             logger.LogError(e, null);
         }
         CheckIfCanExecute();
+    }
+
+    /// <summary>
+    /// Check if a function can be executed
+    /// </summary>
+    /// <returns></returns>
+    private bool CanExecuteFunction()
+    {
+        return !IsOrderMode;
     }
 
     /// <summary>

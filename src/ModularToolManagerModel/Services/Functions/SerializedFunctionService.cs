@@ -178,4 +178,27 @@ public class SerializedFunctionService : IFunctionService
         storedFunction.Path = function.Path;
         return SaveFunctionsToDisc(cachedFunctions);
     }
+
+    /// <inheritdoc/>
+    public bool UpdateFunction(string identifier, Action<FunctionModel> updateMethod)
+    {
+        var function = GetFunction(identifier);
+        if (function is null)
+        {
+            return false;
+        }
+        updateMethod?.Invoke(function);
+        return ReplaceFunction(function);
+    }
+
+    /// <inheritdoc/>
+    public IEnumerable<bool> UpdateFunction(IEnumerable<string> identifiers, Action<FunctionModel> updateMethod)
+    {
+        List<bool> result = new();
+        foreach (var identifier in identifiers)
+        {
+            result.Add(UpdateFunction(identifier, updateMethod));
+        }
+        return result;
+    }
 }

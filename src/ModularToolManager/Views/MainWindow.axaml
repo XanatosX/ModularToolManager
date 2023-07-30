@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:p="clr-namespace:ModularToolManager.Properties"
+		xmlns:s="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ModularToolManager.Views.MainWindow"
         Icon="/Assets/application-logo.ico"
@@ -17,6 +18,10 @@
 		Background="Transparent"
 		CanResize="False"
 		ShowInTaskbar="{Binding ShowInTaskbar}">
+	<Window.Resources>
+		<s:Boolean x:Key="FalseValue">False</s:Boolean>
+		<s:Boolean x:Key="TrueValue">True</s:Boolean>
+	</Window.Resources>
 	<Panel>
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">
 			<ExperimentalAcrylicBorder.Material>
@@ -28,11 +33,15 @@
 			</ExperimentalAcrylicBorder.Material>
 		</ExperimentalAcrylicBorder>
 		<Panel>
-			<Grid RowDefinitions="40, Auto">
+			<Grid RowDefinitions="40, Auto, Auto">
 				<Grid ColumnDefinitions="*, Auto">
 					<Menu>
 						<MenuItem Header="{x:Static p:Resources.Menu_File}">
 							<MenuItem Header="{x:Static p:Resources.SubMenu_NewFunction}" Command="{Binding NewFunctionCommand}" HotKey="ctrl+n"/>
+							<Separator/>
+							<MenuItem Header="{x:Static p:Resources.AllPlugins_Header_OrderModeEnter}" Command="{Binding ToggleOrderModeCommand}" CommandParameter="{StaticResource TrueValue}" IsVisible="{Binding !InOrderMode}" ToolTip.Tip="{x:Static p:Resources.AllPlugins_Header_OrderModeEnter_Tooltip}"/>
+							<MenuItem Header="{x:Static p:Resources.AllPlugins_Header_OrderModeLeave}"  Command="{Binding ToggleOrderModeCommand}" CommandParameter="{StaticResource FalseValue}" IsVisible="{Binding InOrderMode}" ToolTip.Tip="{x:Static p:Resources.AllPlugins_Header_OrderModeLeave_Tooltip}"/>
+							<MenuItem Header="{x:Static p:Resources.AllPlugins_Header_OrderModeSave}" Command="{Binding SaveOrderModeCommand}" IsVisible="{Binding InOrderMode}" ToolTip.Tip="{x:Static p:Resources.AllPlugins_Header_OrderModeSave_Tooltip}"/>
 							<Separator/>
 							<MenuItem Header="{x:Static p:Resources.SubMenu_Language}" Command="{Binding SelectLanguageCommand}" HotKey="ctrl+l"/>
 							<MenuItem Header="{x:Static p:Resources.SubMenu_Settings}" Command="{Binding OpenSettingsCommand}"/>
@@ -56,6 +65,15 @@
 					</Button>
 				</Grid>
 				<ContentControl Grid.Row="1" Content="{Binding MainContentModel}"/>
+				<Panel Grid.Row="2" IsVisible="{Binding InOrderMode}">
+				<StackPanel Orientation="Vertical">
+					<Separator Margin="0,5,0,5"/>
+					<DockPanel>
+						<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" DockPanel.Dock="Top" Content="{x:Static p:Resources.AllPlugins_Header_OrderModeLeave}"  Command="{Binding ToggleOrderModeCommand}" CommandParameter="{StaticResource FalseValue}"  ToolTip.Tip="{x:Static p:Resources.AllPlugins_Header_OrderModeLeave_Tooltip}"/>
+						<Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Content="{x:Static p:Resources.AllPlugins_Header_OrderModeSave}" Command="{Binding SaveOrderModeCommand}" ToolTip.Tip="{x:Static p:Resources.AllPlugins_Header_OrderModeSave_Tooltip}"/>
+					</DockPanel>
+				</StackPanel>
+				</Panel>
 			</Grid>
 		</Panel>
 	</Panel>

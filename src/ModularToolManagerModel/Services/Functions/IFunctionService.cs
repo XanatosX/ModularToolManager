@@ -1,6 +1,4 @@
 ﻿using ModularToolManager.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ModularToolManagerModel.Services.Functions
 {
@@ -53,5 +51,21 @@ namespace ModularToolManagerModel.Services.Functions
         /// </summary>
         /// <param name="identifier">The function Identifier to use</param>
         void DeleteFunction(string identifier);
+
+        /// <summary>
+        /// Update a given function model and save it 
+        /// </summary>
+        /// <param name="identifier">The identifier </param>
+        /// <param name="updateMethod">The update method</param>
+        /// <returns>True if update was successful</returns>
+        bool UpdateFunction(string identifier, Action<FunctionModel> updateMethod);
+
+        /// <summary>
+        /// Update a large number of function models and save it
+        /// </summary>
+        /// <param name="identifiers">The identifiers to use</param>
+        /// <param name="updateMethod">The update method</param>
+        /// <returns>True if update was successful</returns>
+        IEnumerable<bool> UpdateFunction(IEnumerable<string> identifiers, Action<FunctionModel> updateMethod);
     }
 }

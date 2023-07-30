@@ -9,6 +9,7 @@ using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
 using ModularToolManagerModel.Services.IO;
+using System.Dynamic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -104,11 +105,6 @@ public partial class MainWindowViewModel : ObservableObject
     public ICommand HideApplicationCommand { get; }
 
     /// <summary>
-    /// Toggle the application into the order mode
-    /// </summary>
-    private ICommand ToggleOrderModeCommand { get; }
-
-    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     public MainWindowViewModel(
@@ -133,11 +129,6 @@ public partial class MainWindowViewModel : ObservableObject
         ExitApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseApplicationMessage()));
         SelectLanguageCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Language, Properties.Properties.Icon_language, nameof(ChangeLanguageViewModel)));
         HideApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true)));
-        ToggleOrderModeCommand = new RelayCommand(() =>
-        {
-            InOrderMode = !InOrderMode;
-            WeakReferenceMessenger.Default.Send(new ToggleOrderModeMessage(InOrderMode));
-        });
 
         WeakReferenceMessenger.Default.Register<ValueChangedMessage<ApplicationSettings>>(this, (_, e) =>
         {
@@ -244,6 +235,39 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task OpenHotkey()
     {
         await OpenModalWindow(Properties.Resources.SubMenu_Hotkeys, Properties.Properties.Icon_Keyboard, nameof(HotkeysViewModel));
+    }
+
+    /// <summary>
+    /// Toggle the order mode
+    /// </summary>
+    /// <param name="newState">The state to set the order mode to</param>
+    [RelayCommand]
+    private void ToggleOrderMode(bool newState)
+    {
+        InOrderMode = newState;
+        WeakReferenceMessenger.Default.Send(new ToggleOrderModeMessage(InOrderMode));
+    }
+
+    /// <summary>
+    /// Save the new order for the functions
+    /// </summary>
+    [RelayCommand]
+    private void SaveOrderMode()
+    {
+        try
+        {
+            bool result = WeakReferenceMessenger.Default.Send(new SaveFunctionsOrderMessage());
+            if (result)
+            {
+                WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
+            }
+        }
+        catch (System.Exception)
+        {
+            //No response from save order message
+        }
+
+        ToggleOrderMode(false);
     }
 
     /// <summary>
