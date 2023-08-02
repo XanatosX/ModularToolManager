@@ -3,11 +3,13 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using ModularToolManager.Enums;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
 using System;
+using System.Linq;
 
 namespace ModularToolManager.Views;
 
@@ -27,9 +29,9 @@ public partial class MainWindow : Window, IDisposable
     private readonly IWindowManagementService? modalService;
 
     /// <summary>
-    /// Is this the first render of the application
+    /// Is this the first time the window was shown
     /// </summary>
-    private bool firstRender;
+    private bool firstTimeShown;
 
     /// <summary>
     /// The settings service to use
@@ -37,9 +39,14 @@ public partial class MainWindow : Window, IDisposable
     private readonly ISettingsService? settingsService;
 
     /// <summary>
+    /// The factory to get the window position strategy to use
+    /// </summary>
+    private readonly IWindowPositionFactory? windowPositionFactory;
+
+    /// <summary>
     /// Create a new empty instance of this class
     /// </summary>
-    public MainWindow() : this(null, null)
+    public MainWindow() : this(null, null, null)
     {
 
     }
@@ -49,13 +56,13 @@ public partial class MainWindow : Window, IDisposable
     /// </summary>
     /// <param name="modalService">The modal service to use</param>
     /// <param name="settingsService">The settings service to use</param>
-    public MainWindow(IWindowManagementService? modalService, ISettingsService? settingsService)
+    public MainWindow(IWindowManagementService? modalService, ISettingsService? settingsService, IWindowPositionFactory? windowPositionFactory)
     {
 
         this.modalService = modalService;
         this.settingsService = settingsService;
-
-        firstRender = true;
+        this.windowPositionFactory = windowPositionFactory;
+        firstTimeShown = true;
         InitializeComponent();
 
         WeakReferenceMessenger.Default.Register<CloseApplicationMessage>(this, (_, _) =>
@@ -99,7 +106,14 @@ public partial class MainWindow : Window, IDisposable
     public override void Render(DrawingContext context)
     {
         base.Render(context);
-        if (firstRender)
+        PositionWindow();
+    }
+
+    /// <inheritdoc/>
+    public override void Show()
+    {
+        base.Show();
+        if (firstTimeShown)
         {
             if (settingsService?.GetApplicationSettings().StartMinimized ?? false)
             {
@@ -107,9 +121,7 @@ public partial class MainWindow : Window, IDisposable
                 mainWindow?.Hide();
             }
         }
-
-        PositionWindow();
-        firstRender = false;
+        firstTimeShown = false;
     }
 
     /// <summary>
@@ -117,10 +129,7 @@ public partial class MainWindow : Window, IDisposable
     /// </summary>
     private void PositionWindow()
     {
-        PixelRect workingArea = Screens.Primary.WorkingArea;
-        double newXPos = workingArea.X + workingArea.Width - Width;
-        double newYPos = workingArea.Y + workingArea.Height - Height;
-        Position = new PixelPoint((int)newXPos, (int)newYPos);
+        windowPositionFactory?.GetWindowPositionStrategy(WindowPositionEnum.BottomRight)?.PositionWindow(this, Screens.Primary);
     }
 
     /// <inheritdoc/>
