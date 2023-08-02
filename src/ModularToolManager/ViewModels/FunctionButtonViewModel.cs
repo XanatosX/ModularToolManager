@@ -207,35 +207,46 @@ public partial class FunctionButtonViewModel : ObservableObject
 
         List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(plugin).ToList() ?? new();
         var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == FunctionModel?.Plugin?.GetType());
-        //@TODO: If no settings where saved somewhere in the past, this code will not get into the foreach.
-        //This results in the error related to https://github.com/XanatosX/ModularToolManager/issues/98
-        foreach (var loadedPluginSetting in settings?.Settings ?? Enumerable.Empty<SettingModel>())
+
+        List<SettingModel> settingsToApply = settings?.Settings.Select(item => new SettingModel(item.Value)
         {
-            var specificSettings = FunctionModel?.Settings.FirstOrDefault(setting => setting.Key == loadedPluginSetting.Key);
-            if (specificSettings is not null)
+            Key = item.Key,
+            DisplayName = item.DisplayName,
+            Type = item.Type
+        }).ToList() ?? new();
+
+        if (FunctionModel?.Settings is not null)
+        {
+            foreach (var settingsModel in FunctionModel?.Settings ?? Enumerable.Empty<SettingModel>())
             {
-                loadedPluginSetting.SetValue(specificSettings.Value);
+                if (settingsToApply.Any(entry => entry.Key == settingsModel.Key))
+                {
+                    settingsToApply.FirstOrDefault(entry => entry.Key == settingsModel.Key)?.SetValue(settingsModel.Value);
+                    continue;
+                }
+                settingsToApply.Add(settingsModel);
             }
-            var matchingAttribute = pluginSettings.FirstOrDefault(setting => setting.Key == loadedPluginSetting.Key);
-            if (matchingAttribute is null)
-            {
-                continue;
-            }
-            switch (loadedPluginSetting.Type)
-            {
-                case ModularToolManagerPlugin.Enums.SettingType.Boolean:
-                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<bool>());
-                    break;
-                case ModularToolManagerPlugin.Enums.SettingType.String:
-                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<string>());
-                    break;
-                case ModularToolManagerPlugin.Enums.SettingType.Int:
-                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<int>());
-                    break;
-                case ModularToolManagerPlugin.Enums.SettingType.Float:
-                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<float>());
-                    break;
-            }
+        }
+
+        //@TODO: Readd code to update the plugin settings
+    }
+
+    private void UpdatePluginSetting(IFunctionPlugin? plugin, SettingModel loadedPluginSetting, SettingAttribute? matchingAttribute)
+    {
+        switch (loadedPluginSetting.Type)
+        {
+            case ModularToolManagerPlugin.Enums.SettingType.Boolean:
+                functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<bool>());
+                break;
+            case ModularToolManagerPlugin.Enums.SettingType.String:
+                functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<string>());
+                break;
+            case ModularToolManagerPlugin.Enums.SettingType.Int:
+                functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<int>());
+                break;
+            case ModularToolManagerPlugin.Enums.SettingType.Float:
+                functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<float>());
+                break;
         }
     }
 
