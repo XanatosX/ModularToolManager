@@ -155,9 +155,12 @@ internal partial class AddFunctionViewModel : ObservableValidator
                                                    .Select(plugin => new FunctionPluginViewModel(plugin)));
         }
 
-        int maxSortNumber = functionService.GetAvailableFunctions().Select(function => function.SortOrder).Max();
+        int maxSortNumber = functionService.GetAvailableFunctions()
+                                           .Select(function => function.SortOrder)
+                                           .DefaultIfEmpty(0)
+                                           .Max();
         maxSortNumber = (int)(Math.Round(maxSortNumber / 10f)) * 10;
-        sortOrder = maxSortNumber + 10;
+        sortOrder = maxSortNumber == 0 ? maxSortNumber : maxSortNumber + 10;
 
 
         PropertyChanged += (_, e) =>
