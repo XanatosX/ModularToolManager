@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using ModularToolManager.Enums;
 using ModularToolManager.Models;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ public interface IWindowManagementService
     /// <summary>
     /// Get the main window of the application
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The main window or nothing if no main window was found</returns>
     Window? GetMainWindow();
 
     /// <summary>

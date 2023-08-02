@@ -68,7 +68,10 @@ internal static class DependencyInjectionExtension
     /// <returns>The extended collection</returns>
     public static IServiceCollection AddViews(this IServiceCollection collection)
     {
-        return collection.AddTransient(resolver => new MainWindow(resolver.GetRequiredService<IWindowManagementService>(), resolver.GetRequiredService<ISettingsService>())
+        return collection.AddTransient(resolver => new MainWindow(
+            resolver.GetRequiredService<IWindowManagementService>(),
+            resolver.GetRequiredService<ISettingsService>(),
+            resolver.GetRequiredService<IWindowPositionFactory>())
         {
             DataContext = resolver?.GetService<MainWindowViewModel>(),
         })
@@ -95,6 +98,7 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<ISettingsService, SerializedSettingsService>()
                          .AddSingleton<PluginSettingViewModelService>()
                          .AddSingleton<IThemeService, AvaloniaThemeService>()
+                         .AddSingleton<IWindowPositionFactory, DefaultWindowPositionStrategyFactory>()
                          .AddTransient<IImageService, ImageService>()
                          .AddTransient<ResourceReaderService>()
                          .AddTransient<GetApplicationInformationService>()
