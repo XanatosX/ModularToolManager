@@ -131,6 +131,10 @@ public partial class MainWindow : Window, IDisposable
             return;
         }
         WeakReferenceMessenger.Default.UnregisterAll(this);
+        if (DataContext is IDisposable disposable)
+        {
+            disposable.Dispose();
+        }
         isDisposed = true;
     }
 
