@@ -330,6 +330,9 @@
   <data name="RunningWith" xml:space="preserve">
     <value>Running with Avalonia UI</value>
   </data>
+  <data name="Settings_AllowAutocompleteForFunctionSearch" xml:space="preserve">
+    <value>Enable Autocomplete for function search</value>
+  </data>
   <data name="Settings_ClearSearchAfterFunctionExecute" xml:space="preserve">
     <value>Clear function search if function was executed</value>
   </data>

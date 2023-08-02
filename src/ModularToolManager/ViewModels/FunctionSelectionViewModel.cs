@@ -29,12 +29,26 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     private readonly IFunctionService? functionService;
 
     /// <summary>
+    /// The settings service to use
+    /// </summary>
+    private readonly ISettingsService settingsService;
+
+    /// <summary>
     /// Private all the possible functions currently available
     /// </summary>
     private readonly IList<FunctionButtonViewModel> functions;
 
+    /// <summary>
+    /// A list with all the filtered functions
+    /// </summary>
     [ObservableProperty]
     private ObservableCollection<FunctionButtonViewModel> filteredFunctions;
+
+    /// <summary>
+    /// A list with all the function names
+    /// </summary>
+    [ObservableProperty]
+    private ObservableCollection<string> functionNames;
 
     /// <summary>
     /// The search text used for the filtering of the plugins
@@ -60,8 +74,10 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     {
         this.functionService = functionService;
         this.dependencyResolverService = dependencyResolverService;
+        this.settingsService = settingsService;
         functions = new List<FunctionButtonViewModel>();
         filteredFunctions = new ObservableCollection<FunctionButtonViewModel>();
+        functionNames = new ObservableCollection<string>();
 
         ReloadFunctions();
 
@@ -137,6 +153,7 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     public void ReloadFunctions()
     {
         functions.Clear();
+        FunctionNames.Clear();
         foreach (FunctionButtonViewModel? functionViewModel in functionService?.GetAvailableFunctions()
                                                                                .Select(function => dependencyResolverService.GetDependency<FunctionButtonViewModel>(createdObject => createdObject?.SetFunctionModel(function))) ?? Enumerable.Empty<FunctionButtonViewModel?>())
         {
@@ -149,6 +166,10 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
                 continue;
             }
             functions.Add(functionViewModel);
+            if (settingsService.GetApplicationSettings().EnableAutocompleteForFunctionSearch && functionViewModel.DisplayName is not null)
+            {
+                FunctionNames.Add(functionViewModel.DisplayName);
+            }
         }
         FilterFunctionList();
     }

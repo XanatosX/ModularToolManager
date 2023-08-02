@@ -9,6 +9,7 @@ using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
 using ModularToolManagerModel.Services.IO;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -18,8 +19,12 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// Main view model
 /// </summary>
-public partial class MainWindowViewModel : ObservableObject
+public partial class MainWindowViewModel : ObservableObject, IDisposable
 {
+    /// <summary>
+    /// Is the view already disposed
+    /// </summary>
+    private bool isDisposed;
 
     /// <summary>
     /// Service to use for locating view models
@@ -211,6 +216,7 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task OpenSettings()
     {
         await OpenModalWindow(Properties.Resources.SubMenu_Settings, Properties.Properties.Icon_settings, nameof(SettingsViewModel));
+        WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
         SwitchTheme();
     }
 
@@ -307,5 +313,28 @@ public partial class MainWindowViewModel : ObservableObject
         {
             await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
         }
+    }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        if (isDisposed)
+        {
+            return;
+        }
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+        if (MainContentModel is IDisposable disposable)
+        {
+            disposable.Dispose();
+        }
+        isDisposed = true;
+    }
+
+    /// <summary>
+    /// Deconstructor to ensure dispose
+    /// </summary>
+    ~MainWindowViewModel()
+    {
+        Dispose();
     }
 }
