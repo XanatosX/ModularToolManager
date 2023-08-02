@@ -90,7 +90,6 @@ internal static class DependencyInjectionExtension
                          .AddSingleton<ILanguageService, ResourceCultureService>()
                          .AddSingleton<IWindowManagementService, WindowManagementService>()
                          .AddSingleton<ISerializationOptionFactory<JsonSerializerOptions>, JsonSerializationOptionFactory>()
-                         .AddSingleton<IFunctionService, SerializedFunctionService>()
                          .AddSingleton<IViewModelLocatorService, ViewModelLocator>()
                          .AddSingleton<IDependencyResolverService, MicrosoftDepdencyResolverService>()
                          .AddSingleton<ISettingsService, SerializedSettingsService>()
