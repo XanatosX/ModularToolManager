@@ -207,6 +207,8 @@ public partial class FunctionButtonViewModel : ObservableObject
 
         List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(plugin).ToList() ?? new();
         var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == FunctionModel?.Plugin?.GetType());
+        //@TODO: If no settings where saved somewhere in the past, this code will not get into the foreach.
+        //This results in the error related to https://github.com/XanatosX/ModularToolManager/issues/98
         foreach (var loadedPluginSetting in settings?.Settings ?? Enumerable.Empty<SettingModel>())
         {
             var specificSettings = FunctionModel?.Settings.FirstOrDefault(setting => setting.Key == loadedPluginSetting.Key);
