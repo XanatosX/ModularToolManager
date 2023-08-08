@@ -208,7 +208,7 @@ public partial class FunctionButtonViewModel : ObservableObject
         List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(plugin).ToList() ?? new();
         var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == FunctionModel?.Plugin?.GetType());
 
-        List<SettingModel> settingsToApply = settings?.Settings.Select(item => new SettingModel(item.Value)
+        List<SettingModel> settingsToApply = settings?.Settings?.Select(item => new SettingModel(item.Value)
         {
             Key = item.Key,
             DisplayName = item.DisplayName,
@@ -228,11 +228,24 @@ public partial class FunctionButtonViewModel : ObservableObject
             }
         }
 
-        //@TODO: Readd code to update the plugin settings
+        foreach (var setting in settingsToApply)
+        {
+            UpdatePluginSetting(plugin, setting, pluginSettings.FirstOrDefault(pluginSetting => pluginSetting.Key == setting.Key));
+        }
     }
 
+    /// <summary>
+    /// Method to update the plugin settings
+    /// </summary>
+    /// <param name="plugin">The plugin to update the settings</param>
+    /// <param name="loadedPluginSetting">The plugin settings loaded from the application</param>
+    /// <param name="matchingAttribute">The attribute of the plugin matching the settings</param>
     private void UpdatePluginSetting(IFunctionPlugin? plugin, SettingModel loadedPluginSetting, SettingAttribute? matchingAttribute)
     {
+        if (matchingAttribute is null || plugin is null)
+        {
+            return;
+        }
         switch (loadedPluginSetting.Type)
         {
             case ModularToolManagerPlugin.Enums.SettingType.Boolean:
