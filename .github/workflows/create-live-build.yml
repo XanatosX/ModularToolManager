@@ -108,7 +108,6 @@ jobs:
         shell: pwsh
         run: |
            mkdir ./result
-           dir artifacts/${{ env.WINDOWS_ARTIFACT_NAME }}
            ./setup/windows/windowsSetup.ps1 -version ${{ needs.build-version.outputs.build-version }} -buildfolder "../../artifacts/${{ env.WINDOWS_ARTIFACT_NAME }}" -output ./result
   create-linux-build:
     name: Create Linux build
