@@ -7,7 +7,7 @@
 #endif
 #define MyAppPublisher "Xanatos"
 #define MyAppURL "https://github.com/XanatosX/ModularToolManager/"
-#define MyAppExeName "ModularToolManager.exe"
+#define MyAppExeName "ModularToolManager_" + MyAppVersion + ".exe"
 
 #define InstalltionDocumentFolder ".\documents"
 #define ApplicationMainFolder "..\.."
