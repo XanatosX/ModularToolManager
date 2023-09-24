@@ -39,7 +39,9 @@ If you found a bug or need any help with the application please head over to the
 
 ## Installation
 
-Right now there is only a zip file you can extract somewhere to your disc. Just follow the instructions for the nighty build.
+You got two options to install the tool, either you use the installation as descripted in the `Latest nightly build` section by unzipping the zip file or use the installer if you are on a Windows machine.
+
+To use the installer just download the `ModularToolManager_Installer_{version}.exe` file and run it on your machine.
 
 I will try to add a windows installer later on.
 
