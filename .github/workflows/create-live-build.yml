@@ -104,6 +104,7 @@ jobs:
         with: 
           path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
       - name: Create installer
+        shell: pwsh
         run: |
            mkdir ./result
            ./setup/windows/windowsSetup.ps1 -version ${{ needs.build-version.outputs.build-version }} -buildfolder "" -output ./result
