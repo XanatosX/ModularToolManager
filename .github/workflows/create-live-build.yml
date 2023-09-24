@@ -2,14 +2,12 @@ name: Live build
 
 # Based on https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release
 on:
-  #release:
-  #  types: [released]
-  push
+  release:
+    types: [released]
 
 env:
-  DEBUG: true
-  REF_CHECKOUT_BRANCH: feature/58_add-windows-installer
-  #REF_CHECKOUT_BRANCH: main
+  DEBUG: false
+  REF_CHECKOUT_BRANCH: main
   #RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
