@@ -109,9 +109,9 @@ jobs:
         shell: pwsh
         run: |
            mkdir ./result
-           ./setup/windows/windowsSetup.ps1 -version ${{ needs.build-version.outputs.build-version }} -buildfolder "../../artifacts/${{ env.WINDOWS_ARTIFACT_NAME }}" -output ./result
+           ./setup/windows/windowsSetup.ps1 -version ${{ needs.build-version.outputs.build-version }} -buildfolder "../../artifacts/${{ env.WINDOWS_ARTIFACT_NAME }}" -output ../../result
            mkdir ${{ env.APPLICATION_PUBLISH_FOLDER }}
-           mv ./result/*exe ${{ env.APPLICATION_PUBLISH_FOLDER }}
+           mv ./result/*.exe ${{ env.APPLICATION_PUBLISH_FOLDER }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
