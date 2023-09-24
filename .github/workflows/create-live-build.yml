@@ -92,7 +92,7 @@ jobs:
        if-no-files-found: error
   create-windows-installer:
     name: Create Windows installer
-    needs: ["create-windows-build"]
+    needs: ["create-windows-build", "build-version"]
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
