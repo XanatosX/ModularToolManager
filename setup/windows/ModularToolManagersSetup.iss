@@ -34,7 +34,7 @@ InfoAfterFile={#InstalltionDocumentFolder}\afterInstall.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=Modular Tool Manager
+OutputBaseFilename=ModularToolManager_{#MyAppVersion}
 SetupIconFile={#InstalltionDocumentFolder}\installer-logo.ico
 Compression=lzma
 SolidCompression=yes
