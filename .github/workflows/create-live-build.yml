@@ -2,11 +2,12 @@ name: Live build
 
 # Based on https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release
 on:
-  release:
-    types: [released]
+  #release:
+  #  types: [released]
+  push
 
 env:
-  DEBUG: false
+  DEBUG: true
   REF_CHECKOUT_BRANCH: main
   #RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
