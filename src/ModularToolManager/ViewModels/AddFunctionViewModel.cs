@@ -38,7 +38,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// <summary>
     /// The service used to get plugins
     /// </summary>
-    private readonly IPluginService? pluginService;
+    private readonly IPluginService pluginService;
 
     /// <summary>
     /// The service used to get the function settings
@@ -48,13 +48,21 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// <summary>
     /// The function service to use
     /// </summary>
-    private readonly IFunctionService? functionService;
+    private readonly IFunctionService functionService;
 
     /// <summary>
     /// Service to use for opening windows or modals
     /// </summary>
     private readonly IWindowManagementService windowManagmentService;
+
+    /// <summary>
+    /// The settings service to use
+    /// </summary>
     private readonly ISettingsService settingsService;
+
+    /// <summary>
+    /// THe plugin setting view to use
+    /// </summary>
     private readonly PluginSettingViewModelService pluginSettingView;
 
     /// <summary>
@@ -117,12 +125,17 @@ internal partial class AddFunctionViewModel : ObservableValidator
     private string? identifier;
 
     /// <summary>
+    /// The sort id to use
+    /// </summary>
+    private int sortOrder;
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="pluginService">The plugin service to use</param>
     /// <param name="functionService">The function service to use</param>
-    public AddFunctionViewModel(IPluginService? pluginService,
-                                IFunctionService? functionService,
+    public AddFunctionViewModel(IPluginService pluginService,
+                                IFunctionService functionService,
                                 IFunctionSettingsService functionSettingsService,
                                 IWindowManagementService windowManagmentService,
                                 ISettingsService settingsService,
@@ -135,11 +148,20 @@ internal partial class AddFunctionViewModel : ObservableValidator
         this.windowManagmentService = windowManagmentService;
         this.settingsService = settingsService;
         this.pluginSettingView = pluginSettingView;
+
         if (pluginService is not null)
         {
             functionPlugins.AddRange(pluginService!.GetAvailablePlugins()
                                                    .Select(plugin => new FunctionPluginViewModel(plugin)));
         }
+
+        int maxSortNumber = functionService.GetAvailableFunctions()
+                                           .Select(function => function.SortOrder)
+                                           .DefaultIfEmpty(0)
+                                           .Max();
+        maxSortNumber = (int)(Math.Round(maxSortNumber / 10f)) * 10;
+        sortOrder = maxSortNumber == 0 ? maxSortNumber : maxSortNumber + 10;
+
 
         PropertyChanged += (_, e) =>
         {
@@ -195,6 +217,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
         this.identifier = identifier;
         DisplayName = function.DisplayName;
         Description = function.Description;
+        sortOrder = function.SortOrder;
         SelectedFunctionPlugin = FunctionPlugins.FirstOrDefault(plugin => plugin.Plugin == function.Plugin);
         foreach (var setting in PluginSettings ?? Enumerable.Empty<IPluginSettingModel>())
         {
@@ -259,7 +282,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
             Parameters = FunctionParameters!,
             Settings = GetPluginSettings(),
             Path = SelectedPath!,
-            SortOrder = 0
+            SortOrder = sortOrder,
         };
     }
 
@@ -276,14 +299,14 @@ internal partial class AddFunctionViewModel : ObservableValidator
     {
         return new FunctionModel
         {
-            UniqueIdentifier = identifier!,
+            Id = identifier!,
             DisplayName = DisplayName!,
             Description = Description,
             Plugin = SelectedFunctionPlugin!.Plugin,
             Parameters = FunctionParameters!,
             Settings = GetPluginSettings(),
             Path = SelectedPath!,
-            SortOrder = 0
+            SortOrder = sortOrder,
         };
     }
 

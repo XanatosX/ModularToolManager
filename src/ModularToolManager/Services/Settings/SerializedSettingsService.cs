@@ -69,6 +69,7 @@ internal class SerializedSettingsService : ISettingsService
         ApplicationSettings returnData = new ApplicationSettings()
         {
             ShowInTaskbar = true,
+            EnableAutocompleteForFunctionSearch = true,
             CurrentLanguage = CultureInfo.CurrentCulture
         };
         var settingsFile = pathService.GetSettingsFilePathString();

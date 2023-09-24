@@ -7,7 +7,7 @@
 		<Grid ColumnDefinitions="350, 500, Auto" ToolTip.Tip="{Binding WorkingOnComplete}" ToolTip.ShowDelay="{Binding ToolTipShowDelay}">
 			<TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
 			<TextBlock Grid.Column="1" Text="{Binding Description}" VerticalAlignment="Center"/>
-			<ItemsControl Grid.Column="2" Items="{Binding Keys}">
+			<ItemsControl Grid.Column="2" ItemsSource="{Binding Keys}">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
 						<StackPanel Orientation="Horizontal"/>

@@ -1,6 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using ModularToolManager.Models;
+using ModularToolManager.Services.Data;
 using ModularToolManager.Services.Serialization;
 using ModularToolManagerModel.Data.Serialization;
+using ModularToolManagerModel.Services.Functions;
 using ModularToolManagerModel.Services.IO;
 using ModularToolManagerModel.Services.Logging;
 using ModularToolManagerModel.Services.Plugin;
@@ -24,10 +28,23 @@ public static class ModelDependencyInjection
     public static IServiceCollection AddModelDependencies(this IServiceCollection collection)
     {
         return collection.AddSingleton<IFunctionSettingsService, FunctionSettingService>()
+                         .AddSingleton(typeof(IRepository<,>), typeof(GenericJsonRepository<,>))
+                         .AddSingleton(typeof(IRepository<FunctionModel, string>), provider =>
+                         {
+                             var pathService = provider.GetRequiredService<IPathService>();
+                             var fileService = provider.GetRequiredService<IFileSystemService>();
+                             var serializeService = provider.GetRequiredService<ISerializeService>();
+                             string path = Path.Combine(pathService.GetSettingsFolderPathString(), "functions.con");
+                             return new GenericJsonRepository<FunctionModel, string>(
+                                 path,
+                                 fileService,
+                                 serializeService);
+                         })
                          .AddSingleton<IFileSystemService, FileSystemService>()
                          .AddTransient(typeof(IPluginLoggerService<>), typeof(LoggingPluginAdapter<>))
                          .AddSingleton<IPluginService, PluginService>()
                          .AddTransient<ISerializeService, JsonSerializationService>()
+                         .AddSingleton<IFunctionService, DefaultFunctionService>()
                          .AddJsonConverters();
     }
 

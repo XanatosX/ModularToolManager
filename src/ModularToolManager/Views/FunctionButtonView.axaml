@@ -6,7 +6,8 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.FunctionButtonView">
 
-
+	<DockPanel>
+		<TextBox DockPanel.Dock="Right" Text="{Binding SortId}" Watermark="{x:Static p:Resources.FunctionButton_Sort_Watermark}" MinWidth="120" IsVisible="{Binding IsOrderMode}" />
 		<Button DockPanel.Dock="Left" x:Name="btn_function" HorizontalAlignment="Stretch" ToolTip.Tip="{Binding Description}" ToolTip.ShowDelay="{Binding ToolTipDelay}" HorizontalContentAlignment="Stretch" Command="{Binding ExecuteFunctionCommand}">
 			<Button.ContextMenu>
 				<ContextMenu>
@@ -31,9 +32,10 @@
 			<DockPanel HorizontalAlignment="Stretch">
 				<PathIcon DockPanel.Dock="Right" Data="{StaticResource warning_regular}" IsVisible="{Binding !CanExecute}"/>
 				<PathIcon DockPanel.Dock="Left" Data="{StaticResource warning_regular}" IsVisible="{Binding !CanExecute}"/>
-				<TextBlock DockPanel.Dock="Left" Text="{Binding DisplayName}" HorizontalAlignment="Center"/>
+				<TextBlock DockPanel.Dock="Left" Text="{Binding DisplayName}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 			</DockPanel>
 		</Button>
+	</DockPanel>
 	
 	
 </UserControl>

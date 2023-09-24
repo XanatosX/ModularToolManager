@@ -135,6 +135,24 @@
   <data name="AllPlugins_Header_Information" xml:space="preserve">
     <value>Informationen</value>
   </data>
+  <data name="AllPlugins_Header_OrderModeEnter" xml:space="preserve">
+    <value>Funktionen Sortiermodus aktivieren</value>
+  </data>
+  <data name="AllPlugins_Header_OrderModeEnter_Tooltip" xml:space="preserve">
+    <value>Den Funktionen Sortiermodus aktivieren, dieser Modus erlaubt es eine Sortiernummer an den Funktionen zu hinterlegen. Diese Nummer wird für die Sortierung genutzt</value>
+  </data>
+  <data name="AllPlugins_Header_OrderModeLeave" xml:space="preserve">
+    <value>Neue Funktions Sortierung verwerfen</value>
+  </data>
+  <data name="AllPlugins_Header_OrderModeLeave_Tooltip" xml:space="preserve">
+    <value>Den Funktionen Sortiermodus verlassen ohne die Änderungen zu speichern</value>
+  </data>
+  <data name="AllPlugins_Header_OrderModeSave" xml:space="preserve">
+    <value>Neue Sortierung speichern</value>
+  </data>
+  <data name="AllPlugins_Header_OrderModeSave_Tooltip" xml:space="preserve">
+    <value>Speichern der neuen Funktionen sortierung</value>
+  </data>
   <data name="AllPlugins_Header_Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
@@ -275,6 +293,12 @@
   </data>
   <data name="RunningWith" xml:space="preserve">
     <value>Läuft mit Avalonia UI</value>
+  </data>
+  <data name="Settings_AllowAutocompleteForFunctionSearch" xml:space="preserve">
+    <value>Automatische vervollständigung für Funktionsfilter aktivieren</value>
+  </data>
+  <data name="Settings_ClearSearchAfterFunctionExecute" xml:space="preserve">
+    <value>Suche löschen nachdem eine Funktion ausgeführt wurde</value>
   </data>
   <data name="Settings_CloseOnFunctionExecute" xml:space="preserve">
     <value>Applikation schließen nachdem Funktion ausgeführt wurde</value>

@@ -9,8 +9,8 @@ using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
 using ModularToolManagerModel.Services.IO;
+using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -19,8 +19,12 @@ namespace ModularToolManager.ViewModels;
 /// <summary>
 /// Main view model
 /// </summary>
-public partial class MainWindowViewModel : ObservableObject
+public partial class MainWindowViewModel : ObservableObject, IDisposable
 {
+    /// <summary>
+    /// Is the view already disposed
+    /// </summary>
+    private bool isDisposed;
 
     /// <summary>
     /// Service to use for locating view models
@@ -78,6 +82,12 @@ public partial class MainWindowViewModel : ObservableObject
     private bool showInTaskbar;
 
     /// <summary>
+    /// Is the application in order mode
+    /// </summary>
+    [ObservableProperty]
+    private bool inOrderMode;
+
+    /// <summary>
     /// Command to select a new language
     /// </summary>
     public ICommand SelectLanguageCommand { get; }
@@ -96,11 +106,6 @@ public partial class MainWindowViewModel : ObservableObject
     /// Command to hide the application
     /// </summary>
     public ICommand HideApplicationCommand { get; }
-
-    /// <summary>
-    /// Command to show the application
-    /// </summary>
-    private ICommand ShowApplicationCommand { get; }
 
     /// <summary>
     /// Create a new instance of this class
@@ -127,7 +132,6 @@ public partial class MainWindowViewModel : ObservableObject
         ExitApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new CloseApplicationMessage()));
         SelectLanguageCommand = new AsyncRelayCommand(async () => await OpenModalWindow(Properties.Resources.SubMenu_Language, Properties.Properties.Icon_language, nameof(ChangeLanguageViewModel)));
         HideApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true)));
-        ShowApplicationCommand = new RelayCommand(() => WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(false)));
 
         WeakReferenceMessenger.Default.Register<ValueChangedMessage<ApplicationSettings>>(this, (_, e) =>
         {
@@ -164,7 +168,6 @@ public partial class MainWindowViewModel : ObservableObject
         ApplicationTintColor = theme.TintColor ?? Colors.Pink;
         MaterialOpacity = theme.MaterialOpacity;
         TintOpacity = theme.TintOpacity;
-        themeService.ChangeApplicationTheme(theme);
     }
 
     /// <summary>
@@ -213,6 +216,7 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task OpenSettings()
     {
         await OpenModalWindow(Properties.Resources.SubMenu_Settings, Properties.Properties.Icon_settings, nameof(SettingsViewModel));
+        WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
         SwitchTheme();
     }
 
@@ -235,6 +239,39 @@ public partial class MainWindowViewModel : ObservableObject
     private async Task OpenHotkey()
     {
         await OpenModalWindow(Properties.Resources.SubMenu_Hotkeys, Properties.Properties.Icon_Keyboard, nameof(HotkeysViewModel));
+    }
+
+    /// <summary>
+    /// Toggle the order mode
+    /// </summary>
+    /// <param name="newState">The state to set the order mode to</param>
+    [RelayCommand]
+    private void ToggleOrderMode(bool newState)
+    {
+        InOrderMode = newState;
+        WeakReferenceMessenger.Default.Send(new ToggleOrderModeMessage(InOrderMode));
+    }
+
+    /// <summary>
+    /// Save the new order for the functions
+    /// </summary>
+    [RelayCommand]
+    private void SaveOrderMode()
+    {
+        try
+        {
+            bool result = WeakReferenceMessenger.Default.Send(new SaveFunctionsOrderMessage());
+            if (result)
+            {
+                WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
+            }
+        }
+        catch (System.Exception)
+        {
+            //No response from save order message
+        }
+
+        ToggleOrderMode(false);
     }
 
     /// <summary>
@@ -276,5 +313,28 @@ public partial class MainWindowViewModel : ObservableObject
         {
             await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
         }
+    }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        if (isDisposed)
+        {
+            return;
+        }
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+        if (MainContentModel is IDisposable disposable)
+        {
+            disposable.Dispose();
+        }
+        isDisposed = true;
+    }
+
+    /// <summary>
+    /// Deconstructor to ensure dispose
+    /// </summary>
+    ~MainWindowViewModel()
+    {
+        Dispose();
     }
 }

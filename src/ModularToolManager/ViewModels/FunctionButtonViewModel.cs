@@ -41,26 +41,34 @@ public partial class FunctionButtonViewModel : ObservableObject
     private bool canExecute;
 
     /// <summary>
+    /// Is the button in order mode
+    /// </summary>
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(ExecuteFunctionCommand))]
+    private bool isOrderMode;
+
+    /// <summary>
     /// The identifier for this function button
     /// </summary>
-    public string Identifier => functionModel?.UniqueIdentifier ?? string.Empty;
+    public string Identifier => FunctionModel?.UniqueIdentifier ?? string.Empty;
 
     /// <summary>
     /// The display name of the function
     /// </summary>
-    public string? DisplayName => functionModel?.DisplayName;
+    public string? DisplayName => FunctionModel?.DisplayName;
 
     /// <summary>
     /// The sort id to use for this function button
     /// </summary>
-    public int SortId => functionModel?.SortOrder ?? 0;
+    [ObservableProperty]
+    private int sortId;
 
     /// <summary>
     /// The description of the function
     /// </summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ToolTipDelay))]
-    private string description;
+    private string? description;
 
     /// <summary>
     /// The logger to use
@@ -101,6 +109,9 @@ public partial class FunctionButtonViewModel : ObservableObject
         this.logger = logger;
         this.settingsService = settingsService;
         this.functionSettingsService = functionSettingsService;
+        SortId = 0;
+
+        WeakReferenceMessenger.Default.Register<ToggleOrderModeMessage>(this, (_, e) => IsOrderMode = e.Value);
     }
 
     /// <summary>
@@ -109,8 +120,9 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// <param name="functionModel">The function model to use</param>
     public void SetFunctionModel(FunctionModel functionModel)
     {
-        this.functionModel = functionModel;
+        FunctionModel = functionModel;
         Description = functionModel?.Description ?? string.Empty;
+        SortId = functionModel?.SortOrder ?? 0;
 
         CheckIfCanExecute();
     }
@@ -119,24 +131,26 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// Command to exetute the current function
     /// </summary>
     /// <returns>A empty task to await until execution is complete</returns>
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanExecuteFunction))]
     private async Task ExecuteFunction()
     {
         try
         {
-            bool shouldMinimizeAfter = settingsService.GetApplicationSettings().CloseOnFunctionExecute;
-            var plugin = functionModel?.Plugin;
+            bool shouldMinimizeAfter = settingsService.GetApplicationSettings().MinimizeOnFunctionExecute;
+            var plugin = FunctionModel?.Plugin;
             if (plugin is null)
             {
                 return;
             }
             ApplyPluginSettings(plugin);
-            await Task.Run(() => functionModel?.Plugin?.Execute(functionModel.Parameters, functionModel.Path));
+            bool status = await Task.Run(() => FunctionModel?.Plugin?.Execute(FunctionModel.Parameters, FunctionModel.Path)) ?? false;
 
             if (shouldMinimizeAfter)
             {
                 WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(true));
             }
+            WeakReferenceMessenger.Default.Send(new FunctionExecutedMessage(status));
+
         }
         catch (System.Exception e)
         {
@@ -147,15 +161,25 @@ public partial class FunctionButtonViewModel : ObservableObject
     }
 
     /// <summary>
+    /// Check if a function can be executed
+    /// </summary>
+    /// <returns></returns>
+    private bool CanExecuteFunction()
+    {
+        return !IsOrderMode;
+    }
+
+    /// <summary>
     /// Check if this function can be executed and mark it correctly
     /// </summary>
     private void CheckIfCanExecute()
     {
-        if (FunctionModel is null)
+        if (FunctionModel is null || FunctionModel.Plugin is null || FunctionModel.Path is null)
         {
             CanExecute = false;
+            return;
         }
-        bool pathIsAvailable = File.Exists(FunctionModel.Path);
+        bool pathIsAvailable = File.Exists(FunctionModel?.Path);
         bool pluginAvailable = FunctionModel?.Plugin is not null;
         bool extensionMatching = false;
         if (pathIsAvailable)
@@ -182,34 +206,60 @@ public partial class FunctionButtonViewModel : ObservableObject
         plugin.ResetSettings();
 
         List<SettingAttribute> pluginSettings = functionSettingsService.GetPluginSettings(plugin).ToList() ?? new();
-        var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == functionModel?.Plugin?.GetType());
-        foreach (var loadedPluginSetting in settings?.Settings ?? Enumerable.Empty<SettingModel>())
+        var settings = settingsService.GetApplicationSettings().PluginSettings.FirstOrDefault(setting => setting?.Plugin?.GetType() == FunctionModel?.Plugin?.GetType());
+
+        List<SettingModel> settingsToApply = settings?.Settings?.Select(item => new SettingModel(item.Value)
         {
-            var specificSettings = functionModel?.Settings.FirstOrDefault(setting => setting.Key == loadedPluginSetting.Key);
-            if (specificSettings is not null)
+            Key = item.Key,
+            DisplayName = item.DisplayName,
+            Type = item.Type
+        }).ToList() ?? new();
+
+        if (FunctionModel?.Settings is not null)
+        {
+            foreach (var settingsModel in FunctionModel?.Settings ?? Enumerable.Empty<SettingModel>())
             {
-                loadedPluginSetting.SetValue(specificSettings.Value);
+                if (settingsToApply.Any(entry => entry.Key == settingsModel.Key))
+                {
+                    settingsToApply.FirstOrDefault(entry => entry.Key == settingsModel.Key)?.SetValue(settingsModel.Value);
+                    continue;
+                }
+                settingsToApply.Add(settingsModel);
             }
-            var matchingAttribute = pluginSettings.FirstOrDefault(setting => setting.Key == loadedPluginSetting.Key);
-            if (matchingAttribute is null)
-            {
-                continue;
-            }
-            switch (loadedPluginSetting.Type)
-            {
-                case ModularToolManagerPlugin.Enums.SettingType.Boolean:
-                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<bool>());
-                    break;
-                case ModularToolManagerPlugin.Enums.SettingType.String:
-                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<string>());
-                    break;
-                case ModularToolManagerPlugin.Enums.SettingType.Int:
-                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<int>());
-                    break;
-                case ModularToolManagerPlugin.Enums.SettingType.Float:
-                    functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<float>());
-                    break;
-            }
+        }
+
+        foreach (var setting in settingsToApply)
+        {
+            UpdatePluginSetting(plugin, setting, pluginSettings.FirstOrDefault(pluginSetting => pluginSetting.Key == setting.Key));
+        }
+    }
+
+    /// <summary>
+    /// Method to update the plugin settings
+    /// </summary>
+    /// <param name="plugin">The plugin to update the settings</param>
+    /// <param name="loadedPluginSetting">The plugin settings loaded from the application</param>
+    /// <param name="matchingAttribute">The attribute of the plugin matching the settings</param>
+    private void UpdatePluginSetting(IFunctionPlugin? plugin, SettingModel loadedPluginSetting, SettingAttribute? matchingAttribute)
+    {
+        if (matchingAttribute is null || plugin is null)
+        {
+            return;
+        }
+        switch (loadedPluginSetting.Type)
+        {
+            case ModularToolManagerPlugin.Enums.SettingType.Boolean:
+                functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<bool>());
+                break;
+            case ModularToolManagerPlugin.Enums.SettingType.String:
+                functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<string>());
+                break;
+            case ModularToolManagerPlugin.Enums.SettingType.Int:
+                functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<int>());
+                break;
+            case ModularToolManagerPlugin.Enums.SettingType.Float:
+                functionSettingsService.SetSettingValue(matchingAttribute, plugin, loadedPluginSetting.GetData<float>());
+                break;
         }
     }
 
@@ -247,6 +297,14 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// <returns>True if model is present</returns>
     private bool CanEditOrDeleteFunction()
     {
-        return functionModel is not null;
+        return FunctionModel is not null;
+    }
+
+    /// <summary>
+    /// Deconstructore to ensure message unsubscribe
+    /// </summary>
+    ~FunctionButtonViewModel()
+    {
+        WeakReferenceMessenger.Default.UnregisterAll(this);
     }
 }

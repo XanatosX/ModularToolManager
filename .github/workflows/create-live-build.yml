@@ -14,6 +14,7 @@ env:
   APPLICATION_PUBLISH_FOLDER: ./publish
   PLUGIN_PUBLISH_FOLDER: ./publish/plugins
   WINDOWS_ARTIFACT_NAME: WindowsBuildArtifact_x64
+  WINDOWS_INSTALLER_ARTIFACT_NAME: WindowsBuildArtifactInstaller_x64
   LINUX_ARTIFACT_NAME: LinuxBuildArtifact_x64
   RELEASE_ARTIFACT_FOLDER: artifacts
 
@@ -67,7 +68,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
     - name: Restore dependencies
       run: dotnet restore
       # Important for using outputs in other steps https://tech.europace.de/post/github-actions-output-variables-how-to/#get-output-values-between-steps
@@ -89,6 +90,32 @@ jobs:
        name: ${{ env.WINDOWS_ARTIFACT_NAME }}
        path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
        if-no-files-found: error
+  create-windows-installer:
+    name: Create Windows installer
+    needs: ["create-windows-build", "build-version"]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.REF_CHECKOUT_BRANCH }}
+          lfs: true
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with: 
+          path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
+      - name: Create installer
+        shell: pwsh
+        run: |
+           mkdir ./result
+           ./setup/windows/windowsSetup.ps1 -version ${{ needs.build-version.outputs.build-version }} -buildfolder "../../artifacts/${{ env.WINDOWS_ARTIFACT_NAME }}" -output ../../result
+           mkdir ${{ env.APPLICATION_PUBLISH_FOLDER }}
+           mv ./result/*.exe ${{ env.APPLICATION_PUBLISH_FOLDER }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.WINDOWS_INSTALLER_ARTIFACT_NAME }}
+          path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
+          if-no-files-found: error
   create-linux-build:
     name: Create Linux build
     needs: ["check-build", "build-version"]
@@ -101,7 +128,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 7.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish Application
@@ -124,7 +151,7 @@ jobs:
        if-no-files-found: error
   upload-release:
     name: Upload Artifacts to release
-    needs: ["create-windows-build", "create-linux-build"]
+    needs: ["create-windows-installer", "create-linux-build"]
     runs-on: ubuntu-latest
     steps:      
       - uses: actions/checkout@v3
@@ -141,6 +168,11 @@ jobs:
           zip -r $WINDOWS_ARTIFACT_NAME.zip ./*
           mv $WINDOWS_ARTIFACT_NAME.zip ../
           rm -rf ./../$WINDOWS_ARTIFACT_NAME
+      - name: Move Windows installer
+        run: |
+          cd ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_INSTALLER_ARTIFACT_NAME
+          mv ./*.exe ../
+          rm -rf ./../$WINDOWS_INSTALLER_ARTIFACT_NAME
       - name: Zip Linux build
         run: |
           cd ./$RELEASE_ARTIFACT_FOLDER/$LINUX_ARTIFACT_NAME
@@ -156,4 +188,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release upload ${{ GITHUB.REF_NAME }} ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.zip
+          gh release upload ${{ GITHUB.REF_NAME }} ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.exe
           #gh release upload ${{ GITHUB.REF_NAME }} ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.nupkg

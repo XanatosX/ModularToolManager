@@ -35,6 +35,12 @@ internal partial class SettingsViewModel : ObservableObject
     private bool closeOnFunctionExecute;
 
     /// <summary>
+    /// Baking field if the search should be cleard if a function was executed
+    /// </summary>
+    [ObservableProperty]
+    private bool clearSearchAfterFunctionExecute;
+
+    /// <summary>
     /// Baking field if should be started minimitzed
     /// </summary>
     [ObservableProperty]
@@ -59,6 +65,12 @@ internal partial class SettingsViewModel : ObservableObject
     private ApplicationStyleViewModel? selectedTheme;
 
     /// <summary>
+    /// Enable autocomplete for the function search
+    /// </summary>
+    [ObservableProperty]
+    private bool enableAutocompleteForFunctionSearch;
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="settingsService">The settings service to use</param>
@@ -67,8 +79,9 @@ internal partial class SettingsViewModel : ObservableObject
         this.settingsService = settingsService;
         ApplicationSettings appSettings = settingsService.GetApplicationSettings();
         TopMost = appSettings.AlwaysOnTop;
-        CloseOnFunctionExecute = appSettings.CloseOnFunctionExecute;
+        CloseOnFunctionExecute = appSettings.MinimizeOnFunctionExecute;
         StartMinimized = appSettings.StartMinimized;
+        ClearSearchAfterFunctionExecute = appSettings.ClearSearchAfterFunctionExecute;
         ShowInTaskbar = appSettings.ShowInTaskbar;
         AvailableThemes = themeService.GetAllStyles()
                                 .OrderBy(style => style.Name)
@@ -76,6 +89,7 @@ internal partial class SettingsViewModel : ObservableObject
                                 .Select(style => new ApplicationStyleViewModel(style))
                                 .ToList();
         SelectedTheme = AvailableThemes.Where(theme => theme.Id == appSettings.SelectedThemeId).FirstOrDefault() ?? AvailableThemes.FirstOrDefault();
+        EnableAutocompleteForFunctionSearch = appSettings.EnableAutocompleteForFunctionSearch;
 
         PropertyChanged += (_, e) =>
         {
@@ -97,8 +111,10 @@ internal partial class SettingsViewModel : ObservableObject
             settings.StartMinimized = StartMinimized;
             settings.ShowInTaskbar = ShowInTaskbar;
             settings.AlwaysOnTop = TopMost;
-            settings.CloseOnFunctionExecute = CloseOnFunctionExecute;
+            settings.MinimizeOnFunctionExecute = CloseOnFunctionExecute;
+            settings.ClearSearchAfterFunctionExecute = ClearSearchAfterFunctionExecute;
             settings.SelectedThemeId = SelectedTheme?.Id ?? 0;
+            settings.EnableAutocompleteForFunctionSearch = EnableAutocompleteForFunctionSearch;
         });
         if (changeResult)
         {

@@ -1,11 +1,8 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.ViewModels;
 using System;
-using System.ComponentModel;
 
 namespace ModularToolManager.Views;
 
@@ -14,9 +11,6 @@ public partial class ModalWindow : Window
     public ModalWindow()
     {
         InitializeComponent();
-#if DEBUG
-        this.AttachDevTools();
-#endif
         WeakReferenceMessenger.Default.Register<CloseModalMessage>(this, (_, data) =>
         {
             ModalWindowViewModel? viewModel = DataContext as ModalWindowViewModel;
@@ -30,18 +24,13 @@ public partial class ModalWindow : Window
         });
     }
 
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
-
     protected override void OnOpened(EventArgs e)
     {
         WeakReferenceMessenger.Default.Send<ModalWindowOpened>(new ModalWindowOpened(true));
         base.OnOpened(e);
     }
 
-    protected override void OnClosing(CancelEventArgs e)
+    protected override void OnClosing(WindowClosingEventArgs e)
     {
         WeakReferenceMessenger.Default.Send<ModalWindowOpened>(new ModalWindowOpened(false));
         base.OnClosing(e);

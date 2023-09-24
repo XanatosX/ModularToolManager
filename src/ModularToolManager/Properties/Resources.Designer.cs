@@ -115,6 +115,60 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter function order mode.
+        /// </summary>
+        public static string AllPlugins_Header_OrderModeEnter {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_OrderModeEnter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Does enter the order mode, this allows you to sort the functions as you like based on a number value.
+        /// </summary>
+        public static string AllPlugins_Header_OrderModeEnter_Tooltip {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_OrderModeEnter_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave function order mode.
+        /// </summary>
+        public static string AllPlugins_Header_OrderModeLeave {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_OrderModeLeave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Does leave the order mode, without saving it.
+        /// </summary>
+        public static string AllPlugins_Header_OrderModeLeave_Tooltip {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_OrderModeLeave_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save new function order.
+        /// </summary>
+        public static string AllPlugins_Header_OrderModeSave {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_OrderModeSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Does leave the order mode and does save the changes.
+        /// </summary>
+        public static string AllPlugins_Header_OrderModeSave_Tooltip {
+            get {
+                return ResourceManager.GetString("AllPlugins_Header_OrderModeSave_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string AllPlugins_Header_Settings {
@@ -327,6 +381,15 @@ namespace ModularToolManager.Properties {
         public static string FunctionButton_Method_Error {
             get {
                 return ResourceManager.GetString("FunctionButton_Method_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorting Order.
+        /// </summary>
+        public static string FunctionButton_Sort_Watermark {
+            get {
+                return ResourceManager.GetString("FunctionButton_Sort_Watermark", resourceCulture);
             }
         }
         
@@ -633,6 +696,24 @@ namespace ModularToolManager.Properties {
         public static string RunningWith {
             get {
                 return ResourceManager.GetString("RunningWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Autocomplete for function search.
+        /// </summary>
+        public static string Settings_AllowAutocompleteForFunctionSearch {
+            get {
+                return ResourceManager.GetString("Settings_AllowAutocompleteForFunctionSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear function search if function was executed.
+        /// </summary>
+        public static string Settings_ClearSearchAfterFunctionExecute {
+            get {
+                return ResourceManager.GetString("Settings_ClearSearchAfterFunctionExecute", resourceCulture);
             }
         }
         

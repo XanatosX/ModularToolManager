@@ -34,7 +34,7 @@ public interface IStyleService
     /// <typeparam name="T">The type of styles to get</typeparam>
     /// <param name="name">The name to search for</param>
     /// <returns>A single style or null if nothing found</returns>
-    T? GetStyleByName<T>(string name) where T : IAvaloniaObject;
+    T? GetStyleByName<T>(string name) where T : AvaloniaObject;
 
     /// <summary>
     /// Get a style of type T by name
@@ -43,5 +43,5 @@ public interface IStyleService
     /// <param name="style">The style to search in</param>
     /// <param name="name">The name of the style to get</param>
     /// <returns>A single style or null if nothing found</returns>
-    T? GetStyleByName<T>(IStyle? style, string name) where T : IAvaloniaObject;
+    T? GetStyleByName<T>(IStyle? style, string name) where T : AvaloniaObject;
 }

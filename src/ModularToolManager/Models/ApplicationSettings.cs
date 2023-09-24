@@ -20,10 +20,16 @@ public class ApplicationSettings
     public bool AlwaysOnTop { get; set; }
 
     /// <summary>
-    /// Should the application be closed if a function is getting pressed
+    /// Should the application be minimized if a function is getting pressed
     /// </summary>
     [JsonPropertyName("close_on_function_execute")]
-    public bool CloseOnFunctionExecute { get; set; }
+    public bool MinimizeOnFunctionExecute { get; set; }
+
+    /// <summary>
+    /// Should the search for a function be cleared if a function was executed successfully
+    /// </summary>
+    [JsonPropertyName("clear_search_after_function_execute")]
+    public bool ClearSearchAfterFunctionExecute { get; set; }
 
     /// <summary>
     /// Should the application be started minimized
@@ -48,6 +54,12 @@ public class ApplicationSettings
     /// </summary>
     [JsonPropertyName("plugin_settings")]
     public List<PluginSettings> PluginSettings { get; set; }
+
+    /// <summary>
+    /// Setting for allowing to use autocomplete on the search
+    /// </summary>
+    [JsonPropertyName("search_autocomplete")]
+    public bool EnableAutocompleteForFunctionSearch { get; set; }
 
     /// <summary>
     /// Create a new instance of this class

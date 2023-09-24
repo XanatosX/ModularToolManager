@@ -11,7 +11,7 @@
 				<TextBlock Text="{x:Static p:Resources.SubMenu_Language}"/>
 				<TextBlock Text=":"/>
 			</StackPanel>
-			<ComboBox HorizontalAlignment="Stretch" Items="{Binding Cultures}" SelectedItem="{Binding SelectedCulture}"/>
+			<ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Cultures}" SelectedItem="{Binding SelectedCulture}"/>
 		</DockPanel>
 		<StackPanel Margin="0,5,0,0" HorizontalAlignment="Center" Orientation="Horizontal" Spacing="5" Grid.Row="1">
 			<Button Content="{x:Static p:Resources.DefaultButton_Ok}" Command="{Binding ChangeLanguageCommand}"/>

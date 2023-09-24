@@ -1,4 +1,5 @@
 ﻿using Avalonia.Media;
+using Avalonia.Styling;
 using Avalonia.Themes.Fluent;
 using System.Text.Json.Serialization;
 
@@ -16,10 +17,10 @@ public class ApplicationStyle
     public int Id { get; init; }
 
     /// <summary>
-    /// IS this a dark or light style variant
+    /// Is this a dark or light style variant
     /// </summary>
     [JsonPropertyName("mode")]
-    public FluentThemeMode Mode { get; init; }
+    public ThemeVariant Variant { get; init; }
 
     /// <summary>
     /// The name of the translation key which is getting used for the name
