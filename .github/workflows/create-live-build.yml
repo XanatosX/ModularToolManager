@@ -172,7 +172,8 @@ jobs:
           rm -rf ./../$WINDOWS_ARTIFACT_NAME
       - name: Move Windows installer
         run: |
-          mv ./$WINDOWS_INSTALLER_ARTIFACT_NAME/*.exe ./
+          cd ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_INSTALLER_ARTIFACT_NAME
+          mv ./*.exe ../
           rm -rf ./$WINDOWS_INSTALLER_ARTIFACT_NAME
       - name: Zip Linux build
         run: |
