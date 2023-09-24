@@ -9,7 +9,7 @@ on:
 env:
   DEBUG: true
   #REF_CHECKOUT_BRANCH: main
-  REF_CHECKOUT_BRANCH: feature/58_add-windows-installer 
+  REF_CHECKOUT_BRANCH: main
   #RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
@@ -108,7 +108,7 @@ jobs:
         shell: pwsh
         run: |
            mkdir ./result
-           dir
+           dir artifacts
            ./setup/windows/windowsSetup.ps1 -version ${{ needs.build-version.outputs.build-version }} -buildfolder "" -output ./result
   create-linux-build:
     name: Create Linux build
