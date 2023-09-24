@@ -107,6 +107,7 @@ jobs:
         shell: pwsh
         run: |
            mkdir ./result
+           dir
            ./setup/windows/windowsSetup.ps1 -version ${{ needs.build-version.outputs.build-version }} -buildfolder "" -output ./result
   create-linux-build:
     name: Create Linux build
