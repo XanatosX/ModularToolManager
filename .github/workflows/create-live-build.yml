@@ -89,6 +89,23 @@ jobs:
        name: ${{ env.WINDOWS_ARTIFACT_NAME }}
        path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
        if-no-files-found: error
+  create-windows-installer:
+    name: Create Windows installer
+    needs: ["create-windows-build"]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.REF_CHECKOUT_BRANCH }}
+          lfs: true
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with: 
+          path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
+      - name: Create installer
+        run: |
+           mkdir ./result
+           ./setup/windows/windowsSetup.ps1 -version ${{ needs.build-version.outputs.build-version }} -buildfolder "" -output ./result
   create-linux-build:
     name: Create Linux build
     needs: ["check-build", "build-version"]
@@ -156,4 +173,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release upload ${{ GITHUB.REF_NAME }} ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.zip
+          gh release upload ${{ GITHUB.REF_NAME }} ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.exe
           #gh release upload ${{ GITHUB.REF_NAME }} ${{ env.RELEASE_ARTIFACT_FOLDER }}/*.nupkg
