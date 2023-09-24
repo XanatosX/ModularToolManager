@@ -174,7 +174,7 @@ jobs:
         run: |
           cd ./$RELEASE_ARTIFACT_FOLDER/$WINDOWS_INSTALLER_ARTIFACT_NAME
           mv ./*.exe ../
-          rm -rf ./$WINDOWS_INSTALLER_ARTIFACT_NAME
+          rm -rf ./../$WINDOWS_INSTALLER_ARTIFACT_NAME
       - name: Zip Linux build
         run: |
           cd ./$RELEASE_ARTIFACT_FOLDER/$LINUX_ARTIFACT_NAME
