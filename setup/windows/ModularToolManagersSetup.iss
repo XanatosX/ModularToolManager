@@ -29,8 +29,9 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile={#ApplicationMainFolder}\LICENSE
-InfoBeforeFile={#InstalltionDocumentFolder}\beforeInstall.txt
-InfoAfterFile={#InstalltionDocumentFolder}\afterInstall.txt
+; Enable the following lines if there is some information on the before or after install file
+; InfoBeforeFile={#InstalltionDocumentFolder}\beforeInstall.txt
+; InfoAfterFile={#InstalltionDocumentFolder}\afterInstall.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
