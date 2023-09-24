@@ -8,7 +8,8 @@ on:
 
 env:
   DEBUG: true
-  REF_CHECKOUT_BRANCH: main
+  #REF_CHECKOUT_BRANCH: main
+  REF_CHECKOUT_BRANCH: feature/58_add-windows-installer 
   #RELEASE_NAME: Recent nightly build
   APPLICATION_PROJECT_PATH: .\src\ModularToolManager\ModularToolManager.csproj
   APPLICATION_PLUGIN_PROJECT_PATH: .\src\DefaultPlugins\DefaultPlugins.csproj
