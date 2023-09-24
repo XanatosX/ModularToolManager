@@ -37,7 +37,7 @@ LicenseFile={#ApplicationMainFolder}\LICENSE
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=ModularToolManager_Installer_{#MyAppVersion}
+OutputBaseFilename=ModularToolManager_WindowsInstaller_{#MyAppVersion}_x64
 SetupIconFile={#InstalltionDocumentFolder}\installer-logo.ico
 Compression=lzma
 SolidCompression=yes
