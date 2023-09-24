@@ -7,6 +7,8 @@
 #endif
 #define MyAppPublisher "Xanatos"
 #define MyAppURL "https://github.com/XanatosX/ModularToolManager/"
+#define MyAppSupportUrl MyAppURL + "issues"
+#define MyAppUpdateUrl MyAppURL + "releases"
 #define MyAppExeName "ModularToolManager.exe"
 
 #define InstalltionDocumentFolder ".\documents"
@@ -24,8 +26,8 @@ AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
-AppSupportURL={#MyAppURL}
-AppUpdatesURL={#MyAppURL}
+AppSupportURL={#MyAppSupportUrl}
+AppUpdatesURL={#MyAppUpdateUrl}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile={#ApplicationMainFolder}\LICENSE
