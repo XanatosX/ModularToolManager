@@ -8,6 +8,7 @@ on:
 
 env:
   DEBUG: true
+  REF_CHECKOUT_BRANCH: feature/58_add-windows-installer
   #REF_CHECKOUT_BRANCH: main
   REF_CHECKOUT_BRANCH: main
   #RELEASE_NAME: Recent nightly build
