@@ -170,7 +170,7 @@ jobs:
           zip -r $WINDOWS_ARTIFACT_NAME.zip ./*
           mv $WINDOWS_ARTIFACT_NAME.zip ../
           rm -rf ./../$WINDOWS_ARTIFACT_NAME
-      - name: Zip Windows build
+      - name: Move Windows installer
         run: |
           mv ./$WINDOWS_INSTALLER_ARTIFACT_NAME/*.exe ./
           rm -rf ./$WINDOWS_INSTALLER_ARTIFACT_NAME
