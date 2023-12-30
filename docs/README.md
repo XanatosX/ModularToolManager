@@ -8,10 +8,10 @@ The applications or scripts which can be started are limited by plugins, see the
 
 ## Plugins
 
-| Name                  | Platforms | Application Types | Dll Name      | Delivered as Standard |
-| --------------------- | --------- | ----------------- | ------------- | --------------------- |
-| [Binary Execution Plugin][binary-execution-plugin] | Windows   | `exe`             | [Default Plugin][default-plugin] | :heavy_check_mark:    |
-| [Script Execution Plugin][script-execution-plugin] | Windows, Linux | `bat`, `cmd`, `ps`, `sh` | [Default Plugin][default-plugin] | :heavy_check_mark:
+| Name                                               | Platforms      | Application Types        | Dll Name                         | Delivered as Standard |
+| -------------------------------------------------- | -------------- | ------------------------ | -------------------------------- | --------------------- |
+| [Binary Execution Plugin][binary-execution-plugin] | Windows        | `exe`                    | [Default Plugin][default-plugin] | :heavy_check_mark:    |
+| [Script Execution Plugin][script-execution-plugin] | Windows, Linux | `bat`, `cmd`, `ps`, `sh` | [Default Plugin][default-plugin] | :heavy_check_mark:    |
 
 
 ## Getting Started
