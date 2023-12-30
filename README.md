@@ -37,13 +37,12 @@ Either use the latest develop build which is unstable or the latest tagged build
 
 If you found a bug or need any help with the application please head over to the [issue][issuePage] area. As an alternative there is a menu entry in the application which will open the issue page as well.
 
-## Installation
+## Installation (Windows)
 
-You got two options to install the tool, either you use the installation as descripted in the `Latest nightly build` section by unzipping the zip file or use the installer if you are on a Windows machine.
+You got two options to install the tool, either you use the installation as described in the `Latest nightly build` section by unzipping the zip file or use the installer if you are on a Windows machine.
 
 To use the installer just download the `ModularToolManager_Installer_{version}.exe` file and run it on your machine.
 
-I will try to add a windows installer later on.
 
 ### Latest nightly build
 
