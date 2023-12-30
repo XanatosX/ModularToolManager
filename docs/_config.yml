@@ -1,0 +1,4 @@
+title: Modular Tool Manager
+theme: jekyll-theme-slate
+plugins:
+  - jemoji
