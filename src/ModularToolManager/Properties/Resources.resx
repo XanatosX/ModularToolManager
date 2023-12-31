@@ -120,7 +120,7 @@
   <data name="About_Dependency" xml:space="preserve">
     <value>Dependencies</value>
   </data>
-  <data name="About_GitHubUserManual_Colon" xml:space="preserve">
+  <data name="About_GitHubUserManual" xml:space="preserve">
     <value>User Manual</value>
   </data>
   <data name="About_License" xml:space="preserve">

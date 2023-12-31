@@ -72,9 +72,9 @@ namespace ModularToolManager.Properties {
         /// <summary>
         ///   Looks up a localized string similar to User Manual.
         /// </summary>
-        public static string About_GitHubUserManual_Colon {
+        public static string About_GitHubUserManual {
             get {
-                return ResourceManager.GetString("About_GitHubUserManual_Colon", resourceCulture);
+                return ResourceManager.GetString("About_GitHubUserManual", resourceCulture);
             }
         }
         
