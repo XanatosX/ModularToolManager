@@ -39,6 +39,12 @@ internal partial class AboutViewModel : ObservableObject
     private string? gitHubUrl;
 
     /// <summary>
+    /// The github project user manual url
+    /// </summary>
+    [ObservableProperty]
+    private string? gitHubUserManualUrl;
+
+    /// <summary>
     /// Service used to open url
     /// </summary>
     private readonly IUrlOpenerService urlOpenerService;
@@ -46,18 +52,19 @@ internal partial class AboutViewModel : ObservableObject
     /// <summary>
     /// Create a new instance of this view model
     /// </summary>
-    /// <param name="getApplicationInformationService">The service used to get application information</param>
+    /// <param name="applicationInformationService">The service used to get application information</param>
     /// <param name="dependencyResolverService">The service used to resolve dependencies</param>
     /// <param name="urlOpenerService">The service used to open an url</param>
-    public AboutViewModel(GetApplicationInformationService getApplicationInformationService,
+    public AboutViewModel(GetApplicationInformationService applicationInformationService,
                           IDependencyResolverService dependencyResolverService,
                           IUrlOpenerService urlOpenerService)
     {
         this.urlOpenerService = urlOpenerService;
-        License = getApplicationInformationService.GetLicense();
-        Version = getApplicationInformationService.GetVersion()?.ToString();
-        GitHubUrl = getApplicationInformationService.GetGithubUrl();
-        Dependencies = getApplicationInformationService.GetDependencies()
+        License = applicationInformationService.GetLicense();
+        Version = applicationInformationService.GetVersion()?.ToString();
+        GitHubUrl = applicationInformationService.GetGithubUrl();
+        GitHubUserManualUrl = applicationInformationService.GetGithubUserManualUrl();
+        Dependencies = applicationInformationService.GetDependencies()
                                                        .OrderBy(d => d.Name)
                                                        .Select(dep => dependencyResolverService.GetDependency(provider =>
                                                        {
