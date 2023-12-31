@@ -112,6 +112,12 @@ internal class GetApplicationInformationService
     public string GetGithubUrl() => Properties.Properties.GitHubUrl;
 
     /// <summary>
+    /// Get the url for the github user manual
+    /// </summary>
+    /// <returns>The Github User Manual</returns>
+    public string GetGithubUserManualUrl() => Properties.Properties.GitHubUserManual;
+
+    /// <summary>
     /// Get all the hotkeys for the application
     /// </summary>
     /// <returns>A list with all the hotkeys</returns>

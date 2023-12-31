@@ -8,11 +8,7 @@ The applications or scripts which can be started are limited by plugins, see the
 
 ## Plugins
 
-| Name                                               | Platforms      | Application Types        | Dll Name                         | Delivered as Standard |
-| -------------------------------------------------- | -------------- | ------------------------ | -------------------------------- | --------------------- |
-| [Binary Execution Plugin][binary-execution-plugin] | Windows        | `exe`                    | [Default Plugin][default-plugin] | :heavy_check_mark:    |
-| [Script Execution Plugin][script-execution-plugin] | Windows, Linux | `bat`, `cmd`, `ps`, `sh` | [Default Plugin][default-plugin] | :heavy_check_mark:    |
-
+To get a list of all the plugins available for the application right now, go to the [plugin overview][plugin-overview].
 
 ## Getting Started
 
@@ -20,8 +16,6 @@ The applications or scripts which can be started are limited by plugins, see the
 - [Developer Manual][developer-manual]
 
 
-[default-plugin]: ./dlls/default-plugin.md
-[binary-execution-plugin]: ./plugins/binary-execution-plugin.md
-[script-execution-plugin]: ./plugins/script-execution-plugin.md
+[plugin-overview]: ./user/plugin-overview.md
 [user-manual]: ./user/user-manual.md
 [developer-manual]: ./developer/developer-manual.md

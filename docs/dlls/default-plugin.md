@@ -11,4 +11,4 @@ Go back to the [plugin overview][plugin-overview]
 
 [binary-execution-plugin]: ../plugins/binary-execution-plugin.md
 [script-execution-plugin]: ../plugins/script-execution-plugin.md
-[plugin-overview]: ../README.md#plugins 
+[plugin-overview]: ../user/plugin-overview.md 
