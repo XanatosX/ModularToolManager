@@ -3,7 +3,7 @@
 namespace ModularToolManagerModel.Services.Functions
 {
     /// <summary>
-    /// Service to load, save and manage functionhs
+    /// Service to load, save and manage functions
     /// </summary>
     public interface IFunctionService
     {
@@ -44,7 +44,7 @@ namespace ModularToolManagerModel.Services.Functions
         /// Delete a function from the pool
         /// </summary>
         /// <param name="function">The function to delete</param>
-        void DeleteFunction(FunctionModel function) => DeleteFunction(function.UniqueIdentifier);
+        void DeleteFunction(FunctionModel function) => DeleteFunction(function.Id);
 
         /// <summary>
         /// Delete a function from the pool

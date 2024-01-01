@@ -70,6 +70,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User Manual.
+        /// </summary>
+        public static string About_GitHubUserManual {
+            get {
+                return ResourceManager.GetString("About_GitHubUserManual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to License.
         /// </summary>
         public static string About_License {

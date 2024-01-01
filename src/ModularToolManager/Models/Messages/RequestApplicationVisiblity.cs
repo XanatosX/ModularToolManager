@@ -3,6 +3,6 @@
 namespace ModularToolManager.Models.Messages;
 
 /// <summary>
-/// Get the current visiblilty for the application
+/// Get the current visibility for the application
 /// </summary>
-internal class RequestApplicationVisiblity : RequestMessage<bool> { }
+internal class RequestApplicationVisibility : RequestMessage<bool> { }

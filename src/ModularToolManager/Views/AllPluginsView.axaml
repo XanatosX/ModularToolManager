@@ -25,7 +25,7 @@
 			</Grid>
 		<Grid Grid.Row="1" Margin="0,5,0,0">
 			<StackPanel Orientation="Horizontal">
-				<Button Content="{x:Static p:Resources.DefaultButton_Abort}" Command="{Binding AbortCommand}"/>
+				<Button Content="{x:Static p:Resources.DefaultButton_Abort}" Command="{Binding AbortCommand}" HotKey="Escape"/>
 			</StackPanel>
 		</Grid>
 	</Grid>

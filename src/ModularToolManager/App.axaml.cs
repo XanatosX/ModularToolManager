@@ -81,12 +81,16 @@ public class App : Application
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                if (desktop is null || desktop.MainWindow is null)
+                {
+                    return;
+                }
                 desktop.ShutdownMode = Avalonia.Controls.ShutdownMode.OnExplicitShutdown;
                 if (desktop.MainWindow is IDisposable disposable)
                 {
                     disposable.Dispose();
                 }
-                desktop.MainWindow.Close();
+                desktop!.MainWindow!.Close();
                 SetupMainWindow(provider);
                 desktop.MainWindow.Show();
                 desktop.ShutdownMode = Avalonia.Controls.ShutdownMode.OnLastWindowClose;

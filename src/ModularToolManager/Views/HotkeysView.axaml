@@ -4,5 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ModularToolManager.Views.HotkeysView">
-	<ItemsControl ItemsSource="{Binding Hotkeys}"/>
+    <StackPanel>
+	    <ItemsControl ItemsSource="{Binding Hotkeys}"/>
+        <Button Command="{Binding AbortCommand}" HotKey="Escape"/>
+    </StackPanel>
 </UserControl>
