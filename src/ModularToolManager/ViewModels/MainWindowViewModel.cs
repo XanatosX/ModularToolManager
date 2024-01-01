@@ -194,7 +194,7 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task OpenPlugins()
     {
-        await OpenModalWindow(Properties.Resources.SubMenu_Plugins, Properties.Properties.Icon_new_function, nameof(AllPluginsViewModel));
+        await OpenModalWindow(Properties.Resources.SubMenu_Plugins, Properties.Properties.Icon_new_function, nameof(AllPluginsViewModel), false);
     }
 
     /// <summary>
@@ -204,7 +204,7 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task NewFunction()
     {
-        await OpenModalWindow(Properties.Resources.SubMenu_NewFunction, Properties.Properties.Icon_new_function, nameof(AddFunctionViewModel));
+        await OpenModalWindow(Properties.Resources.SubMenu_NewFunction, Properties.Properties.Icon_new_function, nameof(AddFunctionViewModel), false);
         WeakReferenceMessenger.Default.Send(new ReloadFunctionsMessage());
     }
 
@@ -228,7 +228,7 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task OpenAbout()
     {
-        await OpenModalWindow(Properties.Resources.SubMenu_About, Properties.Properties.Icon_About, nameof(AboutViewModel));
+        await OpenModalWindow(Properties.Resources.SubMenu_About, Properties.Properties.Icon_About, nameof(AboutViewModel), false);
     }
 
     /// <summary>
@@ -238,7 +238,7 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     [RelayCommand]
     private async Task OpenHotkey()
     {
-        await OpenModalWindow(Properties.Resources.SubMenu_Hotkeys, Properties.Properties.Icon_Keyboard, nameof(HotkeysViewModel));
+        await OpenModalWindow(Properties.Resources.SubMenu_Hotkeys, Properties.Properties.Icon_Keyboard, nameof(HotkeysViewModel), false);
     }
 
     /// <summary>
@@ -274,6 +274,7 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
         ToggleOrderMode(false);
     }
 
+    
     /// <summary>
     /// Method to open a modal window
     /// </summary>
@@ -281,19 +282,28 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     /// <param name="imagePath">The image path to show</param>
     /// <param name="modalName">The name of the modal to show</param>
     /// <returns></returns>
-    private async Task OpenModalWindow(string title, string imagePath, string modalName)
+    private async Task OpenModalWindow(string title, string imagePath, string modalName, bool canResize )
     {
         var modalContent = viewModelLocator.GetViewModel(modalName);
         if (modalContent is null)
         {
             return;
         }
-        ShowWindowModel modalWindowData = new(title, imagePath, modalContent, WindowStartupLocation.CenterScreen);
+        ShowWindowModel modalWindowData = new(title, imagePath, modalContent, WindowStartupLocation.CenterScreen, canResize);
         if (windowManagementService is not null)
         {
             await windowManagementService.ShowModalWindowAsync(modalWindowData, windowManagementService?.GetMainWindow());
         }
     }
+
+    /// <summary>
+    /// Method to open a modal window
+    /// </summary>
+    /// <param name="title">The title to use</param>
+    /// <param name="imagePath">The image path to show</param>
+    /// <param name="modalName">The name of the modal to show</param>
+    /// <returns></returns>
+    private async Task OpenModalWindow(string title, string imagePath, string modalName) => OpenModalWindow(title, imagePath, modalName, true);
 
     /// <summary>
     /// Method to open a modal window
