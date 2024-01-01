@@ -42,6 +42,12 @@ public partial class ModalWindowViewModel : ObservableObject
     /// </summary>
     [ObservableProperty]
     private float materialOpacity;
+    
+    /// <summary>
+    /// Can the modal be resized
+    /// </summary>
+    [ObservableProperty]
+    public bool canResize;
 
     /// <summary>
     /// The service used to switch the application theme
@@ -74,6 +80,7 @@ public partial class ModalWindowViewModel : ObservableObject
         Title = windowInformation.Title;
         ModalContent = windowInformation.modalContent;
         this.themeService = themeService;
+        CanResize = windowInformation.CanResize;
         PathIcon = styleService.GetStyleByName<StreamGeometry>(windowInformation.IconName ?? string.Empty) ?? null;
         if (PathIcon is not null)
         {

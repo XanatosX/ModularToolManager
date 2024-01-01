@@ -39,6 +39,10 @@ internal class DefaultStyleService : IStyleService
     /// <inheritdoc/>
     public IEnumerable<IStyle> GetCurrentAppIncludeStyles()
     {
+        if (App.Current is null)
+        {
+            return Enumerable.Empty<IStyle>();
+        }
         var styles = App.Current.Styles.Where(style => style.GetType() == typeof(Styles)).ToList(); ;
         var types = styles.Select(style => style.GetType());
         return App.Current?.Styles.Where(style => style.GetType() == typeof(Styles)) ?? Enumerable.Empty<IStyle>();

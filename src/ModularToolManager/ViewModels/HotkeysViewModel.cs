@@ -1,4 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,4 +30,14 @@ internal partial class HotkeysViewModel : ObservableObject
 										 .Select(hotkey => new SingleHotkeyViewModel(hotkey))
 										 .ToList();
 	}
+
+	
+    /// <summary>
+    /// Command to use to close the modal
+    /// </summary>
+    [RelayCommand]
+    private void Abort()
+    {
+        WeakReferenceMessenger.Default.Send(new CloseModalMessage(this));
+    }
 }

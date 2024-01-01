@@ -31,17 +31,17 @@ internal partial class DependencyViewModel : ObservableObject
 	/// <summary>
 	/// The name of the dependency
 	/// </summary>
-	public string? Name => dependency?.Name;
+	public string? Name => Dependency?.Name;
 
 	/// <summary>
 	/// The version of the dependency
 	/// </summary>
-	public string? Version => dependency?.Version;
+	public string? Version => Dependency?.Version;
 
 	/// <summary>
 	/// The url to the project of the dependency
 	/// </summary>
-	public string? ProjectUrl => dependency?.ProjectUrl;
+	public string? ProjectUrl => Dependency?.ProjectUrl;
 
 	/// <summary>
 	/// Is the project url set
@@ -51,7 +51,7 @@ internal partial class DependencyViewModel : ObservableObject
 	/// <summary>
 	/// The url to the license of the dependency
 	/// </summary>
-	public string? LicenseUrl => dependency?.LicenseUrl;
+	public string? LicenseUrl => Dependency?.LicenseUrl;
 
 	/// <summary>
 	/// is the license for the dependency set
@@ -62,7 +62,7 @@ internal partial class DependencyViewModel : ObservableObject
 	/// <summary>
 	/// Create a new instance of this class
 	/// </summary>
-	/// <param name="dependency">The depencency to show</param>
+	/// <param name="dependency">The dependency to show</param>
 	/// <param name="urlOpenerService">The service used to open the url</param>
 	public DependencyViewModel(DependencyModel dependency, IUrlOpenerService urlOpenerService)
 	{

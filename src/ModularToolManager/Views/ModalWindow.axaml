@@ -10,6 +10,7 @@
         ExtendClientAreaToDecorationsHint="True"
 		WindowStartupLocation="CenterOwner"
 		SizeToContent="WidthAndHeight"		
+		CanResize="{Binding CanResize}"
 		MinWidth="300">
 	<Panel>
 		<ExperimentalAcrylicBorder IsHitTestVisible="False">

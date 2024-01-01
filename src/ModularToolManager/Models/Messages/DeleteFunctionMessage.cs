@@ -18,6 +18,6 @@ internal class DeleteFunctionMessage : RequestMessage<bool>
 	/// <param name="functionModel">The function to delete</param>
 	public DeleteFunctionMessage(FunctionModel functionModel)
 	{
-		Identifier = functionModel.UniqueIdentifier;
+		Identifier = functionModel.Id;
 	}
 }

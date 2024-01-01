@@ -6,8 +6,6 @@ using Microsoft.Extensions.Logging;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
-using Serilog;
-using System;
 using System.Windows.Input;
 
 namespace ModularToolManager.ViewModels;
@@ -38,7 +36,7 @@ public partial class AppViewModel : ObservableObject
     private readonly ILogger<AppViewModel> logger;
 
     /// <summary>
-    /// The service to use for loading and swichting a theme
+    /// The service to use for loading and switching a theme
     /// </summary>
     private readonly IThemeService themeService;
 
@@ -69,10 +67,10 @@ public partial class AppViewModel : ObservableObject
         {
             if (numberOfOpenModalWindows > 0)
             {
-                logger.LogWarning($"Tried to minimize app while {numberOfOpenModalWindows} where opend");
+                logger.LogWarning($"Tried to minimize app while {numberOfOpenModalWindows} where opened");
                 return;
             }
-            var response = WeakReferenceMessenger.Default.Send(new RequestApplicationVisiblity());
+            var response = WeakReferenceMessenger.Default.Send(new RequestApplicationVisibility());
             bool toggleMode = response.HasReceivedResponse ? response.Response : false;
             WeakReferenceMessenger.Default.Send(new ToggleApplicationVisibilityMessage(toggleMode));
         });
@@ -82,7 +80,7 @@ public partial class AppViewModel : ObservableObject
     private void SwitchTheme(int themeId)
     {
         var theme = themeService.GetStyleById(themeId);
-        if (theme is null)
+        if (theme is null || theme.Variant is null)
         {
             return;
         }

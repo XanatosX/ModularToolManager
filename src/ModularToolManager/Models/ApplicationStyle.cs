@@ -20,7 +20,7 @@ public class ApplicationStyle
     /// Is this a dark or light style variant
     /// </summary>
     [JsonPropertyName("mode")]
-    public ThemeVariant Variant { get; init; }
+    public ThemeVariant? Variant { get; init; }
 
     /// <summary>
     /// The name of the translation key which is getting used for the name
