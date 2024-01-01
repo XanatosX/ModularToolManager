@@ -4,6 +4,26 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <AssemblyName>ModularToolManagerPlugin</AssemblyName>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Title>XanatosX.ModularToolManager.PluginFramework</Title>
+    <Authors>XanatosX</Authors>
+    <Description>The official toolset for the modular tool manager. This can be used to develop plugins for the manager.</Description>
+    <PackageProjectUrl>https://xanatosx.github.io/ModularToolManager/developer/developer-manual.html</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/XanatosX/ModularToolManager</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>dotnet, c#, net7.0, modular-tool-manager</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageOutputPath>$(SolutionDir)/nupkg</PackageOutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include=".\docs\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
