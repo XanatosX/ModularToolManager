@@ -28,7 +28,7 @@ internal sealed class PluginInformationFactory
     /// Create new plugin information
     /// </summary>
     /// <param name="description">The description of the plugin</param>
-    /// <returns>Ne wplugin informations</returns>
+    /// <returns>New plugin information</returns>
     public PluginInformation GetPluginInformation(string description)
     {
         return new PluginInformation
@@ -38,7 +38,6 @@ internal sealed class PluginInformationFactory
             License = "MIT",
             ProjectUrl = "https://github.com/XanatosX/ModularToolManager",
             Version = new Version("1.0.1.0")
-
         };
     }
 }
