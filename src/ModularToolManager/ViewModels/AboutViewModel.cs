@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
+using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.IO;
 using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.IO;
@@ -82,5 +84,14 @@ internal partial class AboutViewModel : ObservableObject
     private void OpenUrl(string url)
     {
         urlOpenerService.OpenUrl(url);
+    }
+
+    /// <summary>
+    /// Command to use to close the modal
+    /// </summary>
+    [RelayCommand]
+    private void Abort()
+    {
+        WeakReferenceMessenger.Default.Send(new CloseModalMessage(this));
     }
 }

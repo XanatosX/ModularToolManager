@@ -24,5 +24,6 @@
 			<TextBlock VerticalAlignment="Center" Text="{x:Static p:Resources.RunningWith}"/>
 			<Image Source="/Assets/avalonia-logo.ico"/>
 		</StackPanel>
+		<Button IsVisible="false" Command="{Binding AbortCommand}" HotKey="Escape"/>
 	</StackPanel>
 </UserControl>
