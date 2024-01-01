@@ -32,7 +32,7 @@ internal partial class StringPluginSettingViewModel : PluginSettingBaseViewModel
     {
         if (newData is string)
         {
-            settingText = (string)newData;
+            SettingText = (string)newData;
         }
     }
 }

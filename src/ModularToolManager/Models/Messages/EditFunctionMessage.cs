@@ -18,6 +18,6 @@ internal class EditFunctionMessage : AsyncRequestMessage<bool>
 	/// <param name="functionModel">The function model to edit</param>
 	public EditFunctionMessage(FunctionModel functionModel)
 	{
-		Identifier = functionModel.UniqueIdentifier;
+		Identifier = functionModel.Id;
 	}
 }

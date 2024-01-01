@@ -41,7 +41,7 @@ namespace ModularToolManager.Models
         public string Path { get; set; }
 
         /// <summary>
-        /// The parameters of the function to use for the excecution
+        /// The parameters of the function to use for the execution
         /// </summary>
         public string Parameters { get; set; }
 
@@ -60,6 +60,7 @@ namespace ModularToolManager.Models
         /// </summary>
         public FunctionModel() : this(string.Empty, null, string.Empty, string.Empty, int.MaxValue)
         {
+            Settings = new List<SettingModel>();
         }
 
         /// <summary>
@@ -79,6 +80,7 @@ namespace ModularToolManager.Models
             Path = path;
             Parameters = parameters;
             SortOrder = sortOrder;
+            Settings = new List<SettingModel>();
         }
 
         /// <summary>

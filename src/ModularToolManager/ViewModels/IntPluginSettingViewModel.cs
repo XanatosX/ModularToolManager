@@ -14,7 +14,7 @@ internal partial class IntPluginSettingViewModel : PluginSettingBaseViewModel
     /// </summary>
     [ObservableProperty]
     [Range(int.MinValue, int.MaxValue)]
-    private int? intergerNumber;
+    private int? integerNumber;
 
     /// <summary>
     /// Create a new instance of this class
@@ -22,13 +22,13 @@ internal partial class IntPluginSettingViewModel : PluginSettingBaseViewModel
     /// <param name="settingModel">The setting model to get the data from</param>
     public IntPluginSettingViewModel(SettingModel settingModel) : base(settingModel)
     {
-        IntergerNumber = settingModel.GetData<int>();
+        IntegerNumber = settingModel.GetData<int>();
     }
 
     /// <inheritdoc/>
     public override SettingModel GetSettingsModel()
     {
-        storedModel.SetValue(IntergerNumber);
+        storedModel.SetValue(IntegerNumber);
         return storedModel;
     }
 
@@ -37,7 +37,7 @@ internal partial class IntPluginSettingViewModel : PluginSettingBaseViewModel
     {
         if (newData is int)
         {
-            intergerNumber = (int)newData;
+            IntegerNumber = (int)newData;
         }
     }
 }

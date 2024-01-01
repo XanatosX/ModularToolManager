@@ -26,8 +26,12 @@ namespace ModularToolManager
         }
 
         /// <inheritdoc/>
-        public Control Build(object data)
+        public Control Build(object? data)
         {
+            if (data is null)
+            {
+                return new TextBlock { Text = "Request data was null" };
+            }
             var name = data.GetType().FullName!.Replace("ViewModel", "View");
             var type = Type.GetType(name);
 
@@ -43,7 +47,7 @@ namespace ModularToolManager
         }
 
         /// <inheritdoc/>
-        public bool Match(object data)
+        public bool Match(object? data)
         {
             return data is ObservableObject;
         }

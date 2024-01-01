@@ -84,11 +84,11 @@ internal class ResourceCultureService : ILanguageService
         }
         logger.LogTrace("Load available cultures from resources");
         string applicationLocation = pathService.GetApplicationExecutableString();
-        string resoureFileName = Path.GetFileNameWithoutExtension(applicationLocation) + ".resources.dll";
+        string resourceFileName = Path.GetFileNameWithoutExtension(applicationLocation) + ".resources.dll";
         DirectoryInfo? rootDirectory = pathService.GetApplicationPath();
         availableCultures = rootDirectory?.GetDirectories()
                                          .Where(dir => CultureInfo.GetCultures(CultureTypes.AllCultures).Any(culture => culture.Name == dir.Name))
-                                         .Where(dir => File.Exists(Path.Combine(dir.FullName, resoureFileName)))
+                                         .Where(dir => File.Exists(Path.Combine(dir.FullName, resourceFileName)))
                                          .Select(dir => CultureInfo.GetCultureInfo(dir.Name))
                                          .ToList() ?? new();
         if (!availableCultures.Contains(CultureInfo.GetCultureInfo(Properties.Properties.FallbackLanguage)))

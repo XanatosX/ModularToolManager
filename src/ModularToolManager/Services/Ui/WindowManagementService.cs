@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Platform.Storage;
 using Microsoft.Extensions.Logging;
 using ModularToolManager.Models;
 using ModularToolManager.Services.Settings;
@@ -50,7 +51,7 @@ internal class WindowManagementService : IWindowManagementService
     private readonly IDependencyResolverService dependencyResolverService;
 
     /// <summary>
-    /// Create a new isntance of this class
+    /// Create a new instance of this class
     /// </summary>
     /// <param name="loggingService">The logging service to use</param>
     public WindowManagementService(
@@ -143,17 +144,13 @@ internal class WindowManagementService : IWindowManagementService
     /// <inheritdoc/>
     public async Task<string[]> ShowOpenFileDialogAsync(ShowOpenFileDialogModel fileDialogModel, Window parent)
     {
-        OpenFileDialog openFileDialog = new OpenFileDialog
-        {
+        IStorageFolder? initialDirectory = await parent.StorageProvider.TryGetFolderFromPathAsync(fileDialogModel.InitialDirectory ?? string.Empty);
+        var files = await parent.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions() {
             AllowMultiple = fileDialogModel.AllowMultipleSelection,
-            Filters = fileDialogModel.FileDialogFilters.ToList(),
-        };
-        if (!string.IsNullOrEmpty(fileDialogModel.InialDirectory))
-        {
-            openFileDialog.Directory = fileDialogModel.InialDirectory;
-        }
-        string[] files = await openFileDialog.ShowAsync(parent) ?? Array.Empty<string>();
-        return files;
+            FileTypeFilter = fileDialogModel.FileDialogFilters.ToList(),
+            SuggestedStartLocation = initialDirectory
+        });
+        return files.Select(file => file.Path.LocalPath).ToArray();
     }
 
     /// <inheritdoc/>

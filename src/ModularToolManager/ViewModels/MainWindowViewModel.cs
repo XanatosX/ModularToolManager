@@ -93,7 +93,7 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     public ICommand SelectLanguageCommand { get; }
 
     /// <summary>
-    /// Command to execture for bug reporting
+    /// Command to execute for bug reporting
     /// </summary>
     public ICommand ReportBugCommand { get; }
 
@@ -303,7 +303,7 @@ public partial class MainWindowViewModel : ObservableObject, IDisposable
     /// <param name="imagePath">The image path to show</param>
     /// <param name="modalName">The name of the modal to show</param>
     /// <returns></returns>
-    private async Task OpenModalWindow(string title, string imagePath, string modalName) => OpenModalWindow(title, imagePath, modalName, true);
+    private async Task OpenModalWindow(string title, string imagePath, string modalName) => await OpenModalWindow(title, imagePath, modalName, true);
 
     /// <summary>
     /// Method to open a modal window

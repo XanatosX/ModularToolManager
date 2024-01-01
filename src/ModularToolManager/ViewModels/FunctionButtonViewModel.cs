@@ -50,7 +50,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// <summary>
     /// The identifier for this function button
     /// </summary>
-    public string Identifier => FunctionModel?.UniqueIdentifier ?? string.Empty;
+    public string Identifier => FunctionModel?.Id ?? string.Empty;
 
     /// <summary>
     /// The display name of the function
@@ -128,7 +128,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     }
 
     /// <summary>
-    /// Command to exetute the current function
+    /// Command to execute the current function
     /// </summary>
     /// <returns>A empty task to await until execution is complete</returns>
     [RelayCommand(CanExecute = nameof(CanExecuteFunction))]
@@ -184,13 +184,13 @@ public partial class FunctionButtonViewModel : ObservableObject
         bool extensionMatching = false;
         if (pathIsAvailable)
         {
-            var info = new FileInfo(FunctionModel.Path);
+            var info = new FileInfo(FunctionModel!.Path);
             extensionMatching = FunctionModel.Plugin.GetAllowedFileEndings().Any(ending => ending.Extension == info.Extension.Replace(".", string.Empty));
         }
 
 
         CanExecute = pathIsAvailable && extensionMatching && pluginAvailable;
-        Description = CanExecute ? FunctionModel.Description : Properties.Resources.FunctionButton_Method_Error;
+        Description = CanExecute ? FunctionModel!.Description : Properties.Resources.FunctionButton_Method_Error;
     }
 
     /// <summary>
@@ -266,14 +266,14 @@ public partial class FunctionButtonViewModel : ObservableObject
     /// <summary>
     /// Command to edit the current function
     /// </summary>
-    /// <returns>A waitable task</returns>
+    /// <returns>A awaitable task</returns>
     [RelayCommand(CanExecute = nameof(CanEditOrDeleteFunction))]
     private async Task EditFunction()
     {
         bool result = false;
         try
         {
-            result = await WeakReferenceMessenger.Default.Send(new EditFunctionMessage(functionModel!));
+            result = await WeakReferenceMessenger.Default.Send(new EditFunctionMessage(FunctionModel!));
         }
         catch (System.Exception e)
         {
@@ -288,7 +288,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     private void DeleteFunction()
     {
         IsActive = false;
-        WeakReferenceMessenger.Default.Send(new DeleteFunctionMessage(functionModel!));
+        WeakReferenceMessenger.Default.Send(new DeleteFunctionMessage(FunctionModel!));
     }
 
     /// <summary>
@@ -301,7 +301,7 @@ public partial class FunctionButtonViewModel : ObservableObject
     }
 
     /// <summary>
-    /// Deconstructore to ensure message unsubscribe
+    /// Deconstructor to ensure message unsubscribe
     /// </summary>
     ~FunctionButtonViewModel()
     {

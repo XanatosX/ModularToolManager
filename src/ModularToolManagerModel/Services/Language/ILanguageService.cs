@@ -30,14 +30,14 @@ public interface ILanguageService
     /// <summary>
     /// Check if the provided culture is a valid one
     /// </summary>
-    /// <param name="culture">The culutre to check if it is valid</param>
+    /// <param name="culture">The culture to check if it is valid</param>
     /// <returns>True if the provided culture is valid</returns>
     bool ValidLanguage(CultureInfo culture);
 
     /// <summary>
     /// Check if the provided culture is a valid one
     /// </summary>
-    /// <param name="culture">The culutre to check if it is valid</param>
+    /// <param name="culture">The culture to check if it is valid</param>
     /// <returns>True if the provided culture is valid</returns>
     void ValidLanguage(CultureInfoModel newCulture) => ValidLanguage(newCulture.Culture);
 

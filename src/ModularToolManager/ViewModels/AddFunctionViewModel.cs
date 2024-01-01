@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -53,7 +54,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
     /// <summary>
     /// Service to use for opening windows or modals
     /// </summary>
-    private readonly IWindowManagementService windowManagmentService;
+    private readonly IWindowManagementService windowManagementService;
 
     /// <summary>
     /// The settings service to use
@@ -145,7 +146,7 @@ internal partial class AddFunctionViewModel : ObservableValidator
         this.pluginService = pluginService;
         this.functionService = functionService;
         this.functionSettingsService = functionSettingsService;
-        this.windowManagmentService = windowManagmentService;
+        this.windowManagementService = windowManagmentService;
         this.settingsService = settingsService;
         this.pluginSettingView = pluginSettingView;
 
@@ -334,17 +335,16 @@ internal partial class AddFunctionViewModel : ObservableValidator
     [RelayCommand(CanExecute = nameof(CanOpenFunctionPath))]
     private async Task OpenFunctionPath()
     {
-        var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FileDialogFilter
+        var fileDialogs = SelectedFunctionPlugin?.Plugin?.GetAllowedFileEndings().Select(fileEnding => new FilePickerFileType(fileEnding.Name)
         {
-            Extensions = new List<string> { fileEnding.Extension },
-            Name = fileEnding.Name
+            Patterns = new List<string> { $"*.{fileEnding.Extension}" },
         }).ToList();
         if (fileDialogs is null)
         {
             return;
         }
         ShowOpenFileDialogModel openConfig = new ShowOpenFileDialogModel(fileDialogs, null, false);
-        var files = await windowManagmentService.ShowOpenFileDialogAsync(openConfig);
+        var files = await windowManagementService.ShowOpenFileDialogAsync(openConfig);
         string file = files.FirstOrDefault(string.Empty);
         if (string.IsNullOrEmpty(file))
         {

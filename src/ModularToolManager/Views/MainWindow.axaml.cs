@@ -84,7 +84,7 @@ public partial class MainWindow : Window, IDisposable
                 Topmost = false;
             }
         });
-        WeakReferenceMessenger.Default.Register<RequestApplicationVisiblity>(this, (_, e) =>
+        WeakReferenceMessenger.Default.Register<RequestApplicationVisibility>(this, (_, e) =>
         {
             if (!e.HasReceivedResponse)
             {
