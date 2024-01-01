@@ -17,12 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <ProjectReference Include="..\ModularToolManagerPlugin\ModularToolManagerPlugin.csproj">
-		  <Private>false</Private>
-	  </ProjectReference>
+    <PackageReference Include="ModularToolManagerPlugin" Version="1.0.0" />
   </ItemGroup>
-
-
 
 	<Target Condition="'$(Configuration)' == 'Debug'" Name="CopyAfterBuild" AfterTargets="Build">
 		<Copy SourceFiles="$(OutDir)DefaultPlugins.dll" DestinationFolder="$(ProjectDir)../ModularToolManager/bin/$(Configuration)/$(TargetFramework)/$(PlatformShortName)/plugins" SkipUnchangedFiles="false" />

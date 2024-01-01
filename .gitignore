@@ -454,3 +454,8 @@ $RECYCLE.BIN/
 .vscode/extensions.json
 
 **/result/*.exe
+
+
+## Custom
+### Packages
+nupkg/*
