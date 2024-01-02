@@ -30,9 +30,9 @@ internal partial class StringPluginSettingViewModel : PluginSettingBaseViewModel
     /// <inheritdoc/>
     public override void UpdateValue(object? newData)
     {
-        if (newData is string)
+        if (newData is string stringData)
         {
-            SettingText = (string)newData;
+            SettingText = stringData;
         }
     }
 }

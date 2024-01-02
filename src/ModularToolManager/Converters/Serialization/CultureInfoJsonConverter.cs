@@ -21,10 +21,11 @@ internal class CultureInfoJsonConverter : JsonConverter<CultureInfo>
         CultureInfo? culture = null;
         try
         {
-            culture = CultureInfo.GetCultureInfo(isoThreeCode ?? String.Empty);
+            culture = CultureInfo.GetCultureInfo(isoThreeCode ?? string.Empty);
         }
         catch (Exception)
         {
+            // Culture not detected, returning null!
         }
         return culture;
     }
