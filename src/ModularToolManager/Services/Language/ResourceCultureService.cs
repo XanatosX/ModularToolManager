@@ -113,8 +113,9 @@ internal class ResourceCultureService : ILanguageService
         {
             returnCulture = CultureInfo.GetCultureInfo(Properties.Properties.FallbackLanguage);
         }
-        catch (System.Exception)
+        catch (System.Exception e)
         {
+            logger.LogWarning($"Could not get culture fallback with error {e.Message}");
         }
         return returnCulture;
     }

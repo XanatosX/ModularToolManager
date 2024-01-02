@@ -26,7 +26,7 @@ public class UrlOpenerService : IUrlOpenerService
     {
         try
         {
-            ProcessStartInfo processStartInfo = new ProcessStartInfo()
+            ProcessStartInfo processStartInfo = new ProcessStartInfo
             {
                 UseShellExecute = true,
                 FileName = url.OriginalString

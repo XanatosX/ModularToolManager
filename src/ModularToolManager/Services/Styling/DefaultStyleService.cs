@@ -43,8 +43,6 @@ internal class DefaultStyleService : IStyleService
         {
             return Enumerable.Empty<IStyle>();
         }
-        var styles = App.Current.Styles.Where(style => style.GetType() == typeof(Styles)).ToList(); ;
-        var types = styles.Select(style => style.GetType());
         return App.Current?.Styles.Where(style => style.GetType() == typeof(Styles)) ?? Enumerable.Empty<IStyle>();
     }
 
@@ -54,7 +52,6 @@ internal class DefaultStyleService : IStyleService
     /// <inheritdoc/>
     public T? GetStyleByName<T>(IStyle? style, string name) where T : AvaloniaObject
     {
-        var test = GetCurrentAppIncludeStyles();
         return GetAllStylesWithinResource(style)
                .Where(style => style.Resources.Count > 0)
                .Where(style => style.Resources.ContainsKey(name))

@@ -30,7 +30,7 @@ internal abstract partial class PluginSettingBaseViewModel : ObservableValidator
     /// Create a new instance of this class
     /// </summary>
     /// <param name="settingModel">The setting model to create the data set from</param>
-    public PluginSettingBaseViewModel(SettingModel settingModel)
+    protected PluginSettingBaseViewModel(SettingModel settingModel)
     {
         storedModel = settingModel;
         TranslationKey = settingModel.DisplayName ?? string.Empty;

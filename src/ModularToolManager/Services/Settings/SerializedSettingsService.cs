@@ -48,14 +48,14 @@ internal class SerializedSettingsService : ISettingsService
     }
 
     /// <inheritdoc/>
-    public bool ChangeSettings(Action<ApplicationSettings> changeSettings)
+    public bool ChangeSettings(Action<ApplicationSettings> changeSettingsAction)
     {
-        if (changeSettings is null)
+        if (changeSettingsAction is null)
         {
             return false;
         }
         ApplicationSettings settings = GetApplicationSettings();
-        changeSettings(settings);
+        changeSettingsAction(settings);
         return settings is not null ? SaveApplicationSettings(settings) : false;
     }
 
@@ -66,7 +66,7 @@ internal class SerializedSettingsService : ISettingsService
         {
             return cachedApplicationSettings;
         }
-        ApplicationSettings returnData = new ApplicationSettings()
+        ApplicationSettings returnData = new ApplicationSettings
         {
             ShowInTaskbar = true,
             EnableAutocompleteForFunctionSearch = true,

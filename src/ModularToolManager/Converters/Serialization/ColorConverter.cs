@@ -69,7 +69,6 @@ internal class ColorConverter : JsonConverter<Color>
                     case CurrentColorMode.Blue:
                         blue = number;
                         break;
-                    default: break;
                 }
             }
         }
