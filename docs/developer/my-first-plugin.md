@@ -6,6 +6,8 @@ How to write your first plugin for the modular tool manager? This guide will pro
 
 First of all let's create a new project to do so use the following commands. The plugin will be called `MyFirstPlugin` but you can name it as you want.
 
+>:information_source: Does require the [unlisted nuget package][nuget-package] `ModularToolManagerPlugin` which is also part of this repository.
+
 ```
 mkdir MyFirstPlugin
 cd MyFirstPlugin
@@ -195,6 +197,7 @@ Use the [injectable services][injectable-services] to get some translation start
 Define settings for your plugin to allow the user some customization. There is no manual for this right now!
 
 [vscode]: https://code.visualstudio.com/
+[nuget-package]: https://www.nuget.org/packages/ModularToolManagerPlugin/
 [injectable-services]: ./injectable-services.md
 [complete-class]: https://gist.github.com/XanatosX/34ac6a3e60c96250396f5565e7bab1d0
 [custom-plugin]: https://i.imgur.com/9duZk1O.png
