@@ -127,7 +127,7 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     /// <inheritdoc/>
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
-        Action action = e.PropertyName == nameof(SearchText) ? () => FilterFunctionList() : () => { return; };
+        Action action = e.PropertyName == nameof(SearchText) ? () => FilterFunctionList() : () => { };
         action();
         base.OnPropertyChanged(e);
     }

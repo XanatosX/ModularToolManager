@@ -1,7 +1,6 @@
 ﻿using DefaultPlugins.Information;
 using DefaultPlugins.ProcessStartStrategies;
 using ModularToolManagerPlugin.Attributes;
-using ModularToolManagerPlugin.Enums;
 using ModularToolManagerPlugin.Models;
 using ModularToolManagerPlugin.Plugin;
 using ModularToolManagerPlugin.Services;
@@ -10,7 +9,7 @@ using System.Diagnostics;
 namespace DefaultPlugins;
 
 /// <summary>
-/// Plugin to run scripts on windows maschines
+/// Plugin to run scripts on windows machines
 /// </summary>
 public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
 {
@@ -22,7 +21,7 @@ public sealed class ScriptExecutionPlugin : AbstractFunctionPlugin
     /// <summary>
     /// The factory to use for creating starter objects
     /// </summary>
-    private DefaultScriptStarterFactory starterFactory;
+    private readonly DefaultScriptStarterFactory starterFactory;
 
     /// <summary>
     /// Fallback text if a translation is missing

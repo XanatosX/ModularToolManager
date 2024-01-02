@@ -77,7 +77,7 @@ public class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         var provider = BuildServiceCollection().BuildServiceProvider();
-        WeakReferenceMessenger.Default.Register<RefreshMainWindow>(this, (_, e) =>
+        WeakReferenceMessenger.Default.Register<RefreshMainWindow>(this, (_, _) =>
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
