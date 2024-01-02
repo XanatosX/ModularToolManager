@@ -43,7 +43,6 @@ internal class DefaultStyleService : IStyleService
         {
             return Enumerable.Empty<IStyle>();
         }
-        var styles = App.Current.Styles.Where(style => style.GetType() == typeof(Styles)).ToList();
         return App.Current?.Styles.Where(style => style.GetType() == typeof(Styles)) ?? Enumerable.Empty<IStyle>();
     }
 
