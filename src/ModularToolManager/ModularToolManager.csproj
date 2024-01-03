@@ -9,6 +9,7 @@
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\application-logo.ico" />
+    <None Remove="Assets\built-with-avalonia.png" />
     <None Remove="Resources\buildInStyles.json" />
     <None Remove="Resources\dependencies.json" />
     <None Remove="Resources\hotkeys.json" />
@@ -16,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\application-logo.ico" />
+    <Content Include="Assets\built-with-avalonia.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\buildInStyles.json" />
