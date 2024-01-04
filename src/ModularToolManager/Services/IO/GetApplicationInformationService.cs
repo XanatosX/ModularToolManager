@@ -149,4 +149,11 @@ internal class GetApplicationInformationService
 
         return returnHotkeys;
     }
+
+    /// <summary>
+    /// Get the url for the avalonia UI project
+    /// </summary>
+    /// <returns>The avalonia ui project url</returns>
+    public string GetAvaloniaProjectUrl() => Properties.Properties.AvaloniaProjectUrl;
+
 }

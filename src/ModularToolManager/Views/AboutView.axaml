@@ -21,7 +21,9 @@
 			<TextBlock TextWrapping="Wrap" Text="{Binding License}"/>
 		</Expander>
 		<StackPanel Spacing="10" HorizontalAlignment="Center" Orientation="Horizontal" MaxHeight="75" Margin="0,20,0,10">
-			<Image Source="/Assets/built-with-avalonia.png"/>
+			<Button Classes="image" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding AvaloniaProjectUrl}">
+				<Image Source="/Assets/built-with-avalonia.png"/>
+			</Button>
 		</StackPanel>
 		<Button IsVisible="false" Command="{Binding AbortCommand}" HotKey="Escape"/>
 	</StackPanel>

@@ -70,6 +70,15 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://avaloniaui.net/.
+        /// </summary>
+        internal static string AvaloniaProjectUrl {
+            get {
+                return ResourceManager.GetString("AvaloniaProjectUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to eng.
         /// </summary>
         internal static string FallbackLanguage {

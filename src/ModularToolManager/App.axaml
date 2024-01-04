@@ -9,6 +9,7 @@
 		<FluentTheme/>
 		<StyleInclude Source="avares://ModularToolManager/Resources/Icons.axaml"/>
 		<StyleInclude Source="avares://ModularToolManager/Resources/LinkButtonStyle.axaml"/>
+		<StyleInclude Source="avares://ModularToolManager/Resources/ImageButtonStyle.axaml"/>
 	</Application.Styles>
 
 	<!-- Custom control styles -->

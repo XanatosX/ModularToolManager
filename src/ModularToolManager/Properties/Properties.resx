@@ -120,6 +120,9 @@
   <data name="ApplicationName" xml:space="preserve">
     <value>Modular Tool Manager</value>
   </data>
+  <data name="AvaloniaProjectUrl" xml:space="preserve">
+    <value>https://avaloniaui.net/</value>
+  </data>
   <data name="FallbackLanguage" xml:space="preserve">
     <value>eng</value>
   </data>
