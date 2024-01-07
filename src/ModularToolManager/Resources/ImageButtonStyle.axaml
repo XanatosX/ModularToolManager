@@ -1,0 +1,30 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="50">
+			<Button Classes="image">
+				<Image Source="/Assets/built-with-avalonia.png"/>
+			</Button>
+        </Border>
+    </Design.PreviewWith>
+
+	<Style Selector="Button.image">
+		<!-- @Note: Look at https://github.com/AvaloniaUI/Avalonia/blob/master/src/Avalonia.Themes.Fluent/Accents/FluentControlResources.xaml -->
+		<Setter Property="Foreground" Value="Transparent"/>
+		<Setter Property="Padding" Value="0" />
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Cursor" Value="Hand" />
+	</Style>
+
+	<Style Selector="Button.image:pointerover /template/ ContentPresenter">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Foreground" Value="Transparent"/>
+	</Style>
+
+
+	<Style Selector="Button.image:pressed /template/ ContentPresenter">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Foreground" Value="Transparent"/>
+	</Style>
+</Styles>

@@ -27,4 +27,8 @@
 			</ControlTemplate>
 		</Setter>
 	</Style>
+
+	<Style Selector="Button.link:pointerover /template/ ContentPresenter">
+		<Setter Property="Foreground" Value="{DynamicResource SystemControlHighlightAccentBrush2}"/>
+	</Style>
 </Styles>
