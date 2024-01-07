@@ -6,6 +6,6 @@
              x:Class="ModularToolManager.Views.HotkeysView">
     <StackPanel>
 	    <ItemsControl ItemsSource="{Binding Hotkeys}"/>
-        <Button Command="{Binding AbortCommand}" HotKey="Escape"/>
+        <Button IsVisible="false" Command="{Binding AbortCommand}" HotKey="Escape"/>
     </StackPanel>
 </UserControl>
