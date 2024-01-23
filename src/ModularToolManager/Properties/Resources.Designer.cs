@@ -763,6 +763,42 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bottom Left.
+        /// </summary>
+        public static string Settings_WindowPosition_Bottom_Left {
+            get {
+                return ResourceManager.GetString("Settings_WindowPosition_Bottom_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom Right.
+        /// </summary>
+        public static string Settings_WindowPosition_Bottom_Right {
+            get {
+                return ResourceManager.GetString("Settings_WindowPosition_Bottom_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Left.
+        /// </summary>
+        public static string Settings_WindowPosition_Top_Left {
+            get {
+                return ResourceManager.GetString("Settings_WindowPosition_Top_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top Right.
+        /// </summary>
+        public static string Settings_WindowPosition_Top_Right {
+            get {
+                return ResourceManager.GetString("Settings_WindowPosition_Top_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         public static string SubMenu_About {

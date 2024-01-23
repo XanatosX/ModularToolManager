@@ -315,6 +315,18 @@
   <data name="Settings_StartMinimized" xml:space="preserve">
     <value>Minimiert starten</value>
   </data>
+  <data name="Settings_WindowPosition_Bottom_Left" xml:space="preserve">
+    <value>Unten links</value>
+  </data>
+  <data name="Settings_WindowPosition_Bottom_Right" xml:space="preserve">
+    <value>Unten rechts</value>
+  </data>
+  <data name="Settings_WindowPosition_Top_Left" xml:space="preserve">
+    <value>Oben links</value>
+  </data>
+  <data name="Settings_WindowPosition_Top_Right" xml:space="preserve">
+    <value>Oben rechts</value>
+  </data>
   <data name="SubMenu_About" xml:space="preserve">
     <value>Über</value>
   </data>
