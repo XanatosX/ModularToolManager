@@ -72,9 +72,15 @@ internal partial class SettingsViewModel : ObservableObject
     [ObservableProperty]
     private bool enableAutocompleteForFunctionSearch;
 
+    /// <summary>
+    /// All the available window positions for the application
+    /// </summary>
 	[ObservableProperty]
 	private ObservableCollection<WindowPositionStrategyViewModel> availableWindowPositions;
 
+    /// <summary>
+    /// The currently selected window position
+    /// </summary>
 	[ObservableProperty]
 	private WindowPositionStrategyViewModel? selectedWindowPosition;
 

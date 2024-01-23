@@ -62,6 +62,9 @@ public class ApplicationSettings
     [JsonPropertyName("search_autocomplete")]
     public bool EnableAutocompleteForFunctionSearch { get; set; }
 
+    /// <summary>
+    /// The window position to use by the application. Set to bottom right by default
+    /// </summary>
     [JsonPropertyName("window_position")]
     public WindowPositionEnum WindowPosition { get; set; } = WindowPositionEnum.BottomRight;
 

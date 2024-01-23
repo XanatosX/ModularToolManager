@@ -1,16 +1,28 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using ModularToolManager.Enums;
 
 namespace ModularToolManager.ViewModels;
 
+/// <summary>
+/// View model for the window position strategy
+/// </summary>
 public partial class WindowPositionStrategyViewModel : ObservableObject
 {
+    /// <summary>
+    /// The display name of the window position strategy
+    /// </summary>
     [ObservableProperty]
     private string displayName;
 
+    /// <summary>
+    /// The stored window position enum
+    /// </summary>
     public WindowPositionEnum WindowPosition {get; init;}
 
+    /// <summary>
+    /// Create a new instance of this class
+    /// </summary>
+    /// <param name="windowPositionEnum">The window position enum to create a view model for</param>
     public WindowPositionStrategyViewModel(WindowPositionEnum windowPositionEnum)
     {
         WindowPosition = windowPositionEnum;
