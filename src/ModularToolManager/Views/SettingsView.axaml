@@ -11,6 +11,7 @@
 				Content="{x:Static p:Resources.Settings_KeepOnTop}"
 				IsChecked="{Binding TopMost}"
 				/>
+			<ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding AvailableWindowPositions}" SelectedItem="{Binding SelectedWindowPosition}"/>
 			<CheckBox
 				Content="{x:Static p:Resources.Settings_CloseOnFunctionExecute}"
 				IsChecked="{Binding CloseOnFunctionExecute}"

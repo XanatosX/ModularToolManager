@@ -1,4 +1,3 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 using CommunityToolkit.Mvvm.Messaging;
@@ -9,7 +8,6 @@ using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
 using System;
-using System.Linq;
 
 namespace ModularToolManager.Views;
 
@@ -94,6 +92,7 @@ public partial class MainWindow : Window, IDisposable
         WeakReferenceMessenger.Default.Register<ValueChangedMessage<ApplicationSettings>>(this, (_, settings) =>
         {
             Topmost = settings.Value.AlwaysOnTop;
+            PositionWindow();
         });
         if (settingsService?.GetApplicationSettings().AlwaysOnTop ?? false)
         {
@@ -129,7 +128,8 @@ public partial class MainWindow : Window, IDisposable
     /// </summary>
     private void PositionWindow()
     {
-        windowPositionFactory?.GetWindowPositionStrategy(WindowPositionEnum.BottomRight)?.PositionWindow(this, Screens.Primary);
+        var windowPosition = settingsService?.GetApplicationSettings()?.WindowPosition ?? WindowPositionEnum.BottomRight;
+        windowPositionFactory?.GetWindowPositionStrategy(windowPosition)?.PositionWindow(this, Screens.Primary);
     }
 
     /// <inheritdoc/>

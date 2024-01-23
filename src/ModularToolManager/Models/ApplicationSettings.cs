@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Text.Json.Serialization;
+using ModularToolManager.Enums;
 
 namespace ModularToolManager.Models;
 
@@ -60,6 +61,12 @@ public class ApplicationSettings
     /// </summary>
     [JsonPropertyName("search_autocomplete")]
     public bool EnableAutocompleteForFunctionSearch { get; set; }
+
+    /// <summary>
+    /// The window position to use by the application. Set to bottom right by default
+    /// </summary>
+    [JsonPropertyName("window_position")]
+    public WindowPositionEnum WindowPosition { get; set; } = WindowPositionEnum.BottomRight;
 
     /// <summary>
     /// Create a new instance of this class

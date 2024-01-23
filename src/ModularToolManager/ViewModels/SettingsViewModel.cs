@@ -2,12 +2,14 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using ModularToolManager.Enums;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
 using ModularToolManager.Services.Ui;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ModularToolManager.ViewModels;
@@ -71,6 +73,18 @@ internal partial class SettingsViewModel : ObservableObject
     private bool enableAutocompleteForFunctionSearch;
 
     /// <summary>
+    /// All the available window positions for the application
+    /// </summary>
+	[ObservableProperty]
+	private ObservableCollection<WindowPositionStrategyViewModel> availableWindowPositions;
+
+    /// <summary>
+    /// The currently selected window position
+    /// </summary>
+	[ObservableProperty]
+	private WindowPositionStrategyViewModel? selectedWindowPosition;
+
+    /// <summary>
     /// Create a new instance of this class
     /// </summary>
     /// <param name="settingsService">The settings service to use</param>
@@ -88,6 +102,17 @@ internal partial class SettingsViewModel : ObservableObject
                                 .Where(style => !string.IsNullOrEmpty(style.Name))
                                 .Select(style => new ApplicationStyleViewModel(style))
                                 .ToList();
+                                
+
+		AvailableWindowPositions = new ObservableCollection<WindowPositionStrategyViewModel>();
+		foreach(var windowPosition in Enum.GetValues(typeof(WindowPositionEnum))
+                                    .Cast<WindowPositionEnum>()
+                                    .Select(positionEntry => new WindowPositionStrategyViewModel(positionEntry))
+                                    .ToList())
+		{
+			AvailableWindowPositions.Add(windowPosition);
+		}
+        SelectedWindowPosition = AvailableWindowPositions.FirstOrDefault(position => position.WindowPosition == appSettings.WindowPosition) ?? AvailableWindowPositions.FirstOrDefault(entry => entry.WindowPosition == WindowPositionEnum.BottomRight);
         SelectedTheme = AvailableThemes.Where(theme => theme.Id == appSettings.SelectedThemeId).FirstOrDefault() ?? AvailableThemes.FirstOrDefault();
         EnableAutocompleteForFunctionSearch = appSettings.EnableAutocompleteForFunctionSearch;
 
@@ -115,6 +140,7 @@ internal partial class SettingsViewModel : ObservableObject
             settings.ClearSearchAfterFunctionExecute = ClearSearchAfterFunctionExecute;
             settings.SelectedThemeId = SelectedTheme?.Id ?? 0;
             settings.EnableAutocompleteForFunctionSearch = EnableAutocompleteForFunctionSearch;
+            settings.WindowPosition = SelectedWindowPosition?.WindowPosition ?? WindowPositionEnum.BottomRight; 
         });
         if (changeResult)
         {
