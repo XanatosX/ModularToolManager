@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ModularToolManager.ViewModels;
 
-
 namespace ModularToolManager.Strategies.Filters;
 
 /// <summary>
@@ -10,6 +9,7 @@ namespace ModularToolManager.Strategies.Filters;
 /// </summary>
 internal class FunctionButtonContainsNeedleFilter : IFunctionFilter
 {
+    /// <inheritdoc/>
     public IEnumerable<FunctionButtonViewModel> GetFiltered(IEnumerable<FunctionButtonViewModel> items, string? needle)
     {
         if (string.IsNullOrEmpty(needle))
@@ -19,6 +19,7 @@ internal class FunctionButtonContainsNeedleFilter : IFunctionFilter
         return items.Where(function => (function.DisplayName ?? string.Empty).ToLower().Contains(needle.ToLower()));
     }
 
+    /// <inheritdoc/>
     public IEnumerable<FunctionButtonViewModel> GetFiltered(IEnumerable<FunctionButtonViewModel> items, params string[] needles)
     {
         if (!needles.Any())
