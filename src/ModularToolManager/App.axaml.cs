@@ -4,9 +4,10 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
-using ModularToolManager.DependencyInjection;
 using ModularToolManager.Models.Messages;
+using ModularToolManager.Services;
 using ModularToolManager.Services.Settings;
+using ModularToolManager.Strategies;
 using ModularToolManager.ViewModels;
 using ModularToolManager.Views;
 using ModularToolManagerModel.Services.IO;
@@ -37,12 +38,13 @@ public class App : Application
     {
         IServiceCollection collection = new ServiceCollection();
         return collection.AddServices()
-                                      .AddViewModels()
-                                      .AddViews()
-                                      .AddLogging(config =>
-                                      {
-                                          config.AddSerilog(CreateLoggerConfig(collection));
-                                      });
+                         .AddViewModels()
+                         .AddViews()
+                         .AddStrategies()
+                         .AddLogging(config =>
+                         {
+                            config.AddSerilog(CreateLoggerConfig(collection));
+                         });
     }
 
     /// <summary>

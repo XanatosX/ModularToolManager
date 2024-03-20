@@ -403,6 +403,42 @@ namespace ModularToolManager.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A filter checking if the item does contain the search string as a whole.
+        /// </summary>
+        public static string FunctionButtonContainsNeedleFilter_description {
+            get {
+                return ResourceManager.GetString("FunctionButtonContainsNeedleFilter_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contains Filter.
+        /// </summary>
+        public static string FunctionButtonContainsNeedleFilter_name {
+            get {
+                return ResourceManager.GetString("FunctionButtonContainsNeedleFilter_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A filter using fuzzy search to check if an item is valid.
+        /// </summary>
+        public static string FunctionButtonFuzzyFilter_description {
+            get {
+                return ResourceManager.GetString("FunctionButtonFuzzyFilter_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fuzzy Filter.
+        /// </summary>
+        public static string FunctionButtonFuzzyFilter_name {
+            get {
+                return ResourceManager.GetString("FunctionButtonFuzzyFilter_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search for function.
         /// </summary>
         public static string FunctionSelection_SearchForFunction {

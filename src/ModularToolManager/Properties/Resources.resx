@@ -225,6 +225,18 @@
   <data name="Dependency_Project" xml:space="preserve">
     <value>Project</value>
   </data>
+  <data name="FunctionButtonContainsNeedleFilter_description" xml:space="preserve">
+    <value>A filter checking if the item does contain the search string as a whole</value>
+  </data>
+  <data name="FunctionButtonContainsNeedleFilter_name" xml:space="preserve">
+    <value>Contains Filter</value>
+  </data>
+  <data name="FunctionButtonFuzzyFilter_description" xml:space="preserve">
+    <value>A filter using fuzzy search to check if an item is valid</value>
+  </data>
+  <data name="FunctionButtonFuzzyFilter_name" xml:space="preserve">
+    <value>Fuzzy Filter</value>
+  </data>
   <data name="FunctionButton_Method_Error" xml:space="preserve">
     <value>Either the path saved on this function is missing, the extension is wrong or the plugin for execution was removed. Please edit the function to fix the error.</value>
   </data>

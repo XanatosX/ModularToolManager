@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using ModularToolManager.Enums;
+using ModularToolManager.Strategies.Filters;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json.Serialization;
-using ModularToolManager.Enums;
 
 namespace ModularToolManager.Models;
 
@@ -61,6 +62,12 @@ public class ApplicationSettings
     /// </summary>
     [JsonPropertyName("search_autocomplete")]
     public bool EnableAutocompleteForFunctionSearch { get; set; }
+
+    /// <summary>
+    /// Setting to get the search filter name to use as a default
+    /// </summary>
+    [JsonPropertyName("search_filter")]
+    public string SearchFilterTypeName { get; set; } = nameof(FunctionButtonFuzzyFilter);
 
     /// <summary>
     /// The window position to use by the application. Set to bottom right by default

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using ModularToolManager.Models;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.Settings;
+using ModularToolManager.Strategies.Filters;
 using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.Functions;
 using System;
@@ -32,6 +33,11 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     /// The settings service to use
     /// </summary>
     private readonly ISettingsService settingsService;
+
+    /// <summary>
+    /// All the filters available for this application
+    /// </summary>
+    private readonly IEnumerable<IFunctionFilter> filters;
 
     /// <summary>
     /// Private all the possible functions currently available
@@ -70,11 +76,15 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     /// <summary>
     /// Create a new instance of this class
     /// </summary>
-    public FunctionSelectionViewModel(IFunctionService? functionService, IDependencyResolverService dependencyResolverService, ISettingsService settingsService)
+    public FunctionSelectionViewModel(IFunctionService? functionService,
+                                      IDependencyResolverService dependencyResolverService,
+                                      ISettingsService settingsService,
+                                      IEnumerable<IFunctionFilter> filters)
     {
         this.functionService = functionService;
         this.dependencyResolverService = dependencyResolverService;
         this.settingsService = settingsService;
+        this.filters = filters;
         functions = new List<FunctionButtonViewModel>();
         filteredFunctions = new ObservableCollection<FunctionButtonViewModel>();
         functionNames = new ObservableCollection<string>();
@@ -137,7 +147,8 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
     /// </summary>
     private void FilterFunctionList()
     {
-        IEnumerable<FunctionButtonViewModel> tempFiltered = functions.Where(function => string.IsNullOrEmpty(SearchText) || (function.DisplayName ?? string.Empty).ToLower().Contains(SearchText.ToLower()))
+        IFunctionFilter filter = GetFunctionFilter();
+        IEnumerable<FunctionButtonViewModel> tempFiltered = filter.GetFiltered(functions, SearchText)
                                                                      .OrderBy(function => function.SortId)
                                                                      .ThenBy(function => function.DisplayName);
         FilteredFunctions.Clear();
@@ -145,6 +156,12 @@ public partial class FunctionSelectionViewModel : ObservableObject, IDisposable
         {
             FilteredFunctions.Add(function);
         }
+    }
+
+    private IFunctionFilter GetFunctionFilter()
+    {
+        var applicationSettings = settingsService.GetApplicationSettings();
+        return filters.Where(filter => filter.GetType().Name == applicationSettings.SearchFilterTypeName).FirstOrDefault() ?? filters.First();
     }
 
     /// <summary>
