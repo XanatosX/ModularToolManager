@@ -1,0 +1,3 @@
+files:
+  - source: src/ModularToolManager/Properties/Resources.resx
+    translation: /src/ModularToolManager/Properties/%file_name%.%two_letters_code%.%file_extension%
