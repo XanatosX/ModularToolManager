@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -120,8 +120,8 @@
   <data name="About_Dependency" xml:space="preserve">
     <value>Abhängigkeiten</value>
   </data>
-  <data name="About_GitHubUserManual_Colon" xml:space="preserve">
-    <value>Benutzerhandbuch</value>
+  <data name="About_GitHubUserManual" xml:space="preserve">
+    <value>User Manual</value>
   </data>
   <data name="About_License" xml:space="preserve">
     <value>Lizenz</value>
@@ -158,6 +158,9 @@
   </data>
   <data name="AllPlugins_Header_Settings" xml:space="preserve">
     <value>Einstellungen</value>
+  </data>
+  <data name="Application_Name" xml:space="preserve">
+    <value>Modular Tool Manager</value>
   </data>
   <data name="App_Blue_Theme" xml:space="preserve">
     <value>Blaues Thema</value>
@@ -204,6 +207,9 @@
   <data name="DefaultButton_Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="DefaultButton_OpenFile" xml:space="preserve">
+    <value>...</value>
+  </data>
   <data name="DefaultButton_Save" xml:space="preserve">
     <value>Speichern</value>
   </data>
@@ -212,6 +218,12 @@
   </data>
   <data name="Default_Edit" xml:space="preserve">
     <value>Editieren</value>
+  </data>
+  <data name="Dependency_License" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="Dependency_Project" xml:space="preserve">
+    <value>Project</value>
   </data>
   <data name="FunctionButtonContainsNeedleFilter_description" xml:space="preserve">
     <value>Ein Filter welcher prüft ob das komplette Wort innerhalb des Namens vorkommt</value>
@@ -227,6 +239,9 @@
   </data>
   <data name="FunctionButton_Method_Error" xml:space="preserve">
     <value>Entweder der Dateipfad ist falsch, die Dateiendung entspricht nicht der erwarteten oder das entsprechend Plugin wurde entfernt. Bitte editieren Sie die Funktion um den Fehler zu beheben.</value>
+  </data>
+  <data name="FunctionButton_Sort_Watermark" xml:space="preserve">
+    <value>Sorting Order</value>
   </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Nach Funktion suchen</value>
@@ -275,6 +290,27 @@
   </data>
   <data name="Hotkey_Report_Bug_Name" xml:space="preserve">
     <value>Fehler melden</value>
+  </data>
+  <data name="Key_Ctrl" xml:space="preserve">
+    <value>ctrl</value>
+  </data>
+  <data name="Key_Esc" xml:space="preserve">
+    <value>Esc</value>
+  </data>
+  <data name="Key_F1" xml:space="preserve">
+    <value>F1</value>
+  </data>
+  <data name="Key_F12" xml:space="preserve">
+    <value>F12</value>
+  </data>
+  <data name="Key_H" xml:space="preserve">
+    <value>h</value>
+  </data>
+  <data name="Key_L" xml:space="preserve">
+    <value>l</value>
+  </data>
+  <data name="Key_N" xml:space="preserve">
+    <value>n</value>
   </data>
   <data name="Menu_File" xml:space="preserve">
     <value>Datei</value>
@@ -356,6 +392,9 @@
   </data>
   <data name="SubMenu_NewFunction" xml:space="preserve">
     <value>Neue Funktion</value>
+  </data>
+  <data name="SubMenu_Plugins" xml:space="preserve">
+    <value>Plugins</value>
   </data>
   <data name="SubMenu_ReportBug" xml:space="preserve">
     <value>Fehler Melden</value>
