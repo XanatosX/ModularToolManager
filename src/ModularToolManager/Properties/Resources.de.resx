@@ -121,7 +121,7 @@
     <value>Abhängigkeiten</value>
   </data>
   <data name="About_GitHubUserManual" xml:space="preserve">
-    <value>User Manual</value>
+    <value>Benutzerhandbuch</value>
   </data>
   <data name="About_License" xml:space="preserve">
     <value>Lizenz</value>
@@ -145,16 +145,16 @@
     <value>Den Funktionen Sortiermodus aktivieren, dieser Modus erlaubt es eine Sortiernummer an den Funktionen zu hinterlegen. Diese Nummer wird für die Sortierung genutzt</value>
   </data>
   <data name="AllPlugins_Header_OrderModeLeave" xml:space="preserve">
-    <value>Neue Funktions Sortierung verwerfen</value>
+    <value>Neue Funktionssortierung verwerfen</value>
   </data>
   <data name="AllPlugins_Header_OrderModeLeave_Tooltip" xml:space="preserve">
-    <value>Den Funktionen Sortiermodus verlassen ohne die Änderungen zu speichern</value>
+    <value>Den Funktionen Sortiermodus verlassen, ohne die Änderungen zu speichern</value>
   </data>
   <data name="AllPlugins_Header_OrderModeSave" xml:space="preserve">
     <value>Neue Sortierung speichern</value>
   </data>
   <data name="AllPlugins_Header_OrderModeSave_Tooltip" xml:space="preserve">
-    <value>Speichern der neuen Funktionen sortierung</value>
+    <value>Speichern der neuen Sortierung</value>
   </data>
   <data name="AllPlugins_Header_Settings" xml:space="preserve">
     <value>Einstellungen</value>
@@ -166,7 +166,7 @@
     <value>Blaues Thema</value>
   </data>
   <data name="App_Blue_Theme_Description" xml:space="preserve">
-    <value>Ein Theme welches um die Farbe Blau aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
+    <value>Ein Theme welches um die Farbe Blau aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus</value>
   </data>
   <data name="App_Dark_Theme" xml:space="preserve">
     <value>Dunkler Modus</value>
@@ -178,7 +178,7 @@
     <value>Grünes Thema</value>
   </data>
   <data name="App_Green_Theme_Description" xml:space="preserve">
-    <value>Ein Theme welches um die Farbe Grün aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
+    <value>Ein Theme welches um die Farbe Grün aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus</value>
   </data>
   <data name="App_Light_Theme" xml:space="preserve">
     <value>Heller Modus</value>
@@ -190,13 +190,13 @@
     <value>Orangenes Thema</value>
   </data>
   <data name="App_Orange_Theme_Description" xml:space="preserve">
-    <value>Ein Theme welches um die Farbe Orange aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
+    <value>Ein Theme welches um die Farbe Orange aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus</value>
   </data>
   <data name="App_Red_Theme" xml:space="preserve">
     <value>Rotes Thema</value>
   </data>
   <data name="App_Red_Theme_Description" xml:space="preserve">
-    <value>Ein Theme welches um die Farbe Rot aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus.</value>
+    <value>Ein Theme welches um die Farbe Rot aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus</value>
   </data>
   <data name="Button_Open_Project" xml:space="preserve">
     <value>Projekt Website im Browser öffnen</value>
@@ -220,10 +220,10 @@
     <value>Editieren</value>
   </data>
   <data name="Dependency_License" xml:space="preserve">
-    <value>License</value>
+    <value>Lizenz</value>
   </data>
   <data name="Dependency_Project" xml:space="preserve">
-    <value>Project</value>
+    <value>Projekt</value>
   </data>
   <data name="FunctionButtonContainsNeedleFilter_description" xml:space="preserve">
     <value>Ein Filter welcher prüft ob das komplette Wort innerhalb des Namens vorkommt</value>
@@ -232,7 +232,7 @@
     <value>Beinhaltet Filter</value>
   </data>
   <data name="FunctionButtonFuzzyFilter_description" xml:space="preserve">
-    <value>Ein FIlter welcher eine Fuzzy search auf die Einträge durchführt</value>
+    <value>Ein Filter welcher eine "Fuzzy search" auf die Einträge durchführt</value>
   </data>
   <data name="FunctionButtonFuzzyFilter_name" xml:space="preserve">
     <value>Fuzzy Filter</value>
@@ -241,19 +241,19 @@
     <value>Entweder der Dateipfad ist falsch, die Dateiendung entspricht nicht der erwarteten oder das entsprechend Plugin wurde entfernt. Bitte editieren Sie die Funktion um den Fehler zu beheben.</value>
   </data>
   <data name="FunctionButton_Sort_Watermark" xml:space="preserve">
-    <value>Sorting Order</value>
+    <value>Sortieranordnung</value>
   </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Nach Funktion suchen</value>
   </data>
   <data name="Hotkey_Abort_Description" xml:space="preserve">
-    <value>Aktuelle aktion abbrechen</value>
+    <value>Aktuelle Aktion abbrechen</value>
   </data>
   <data name="Hotkey_Abort_Name" xml:space="preserve">
-    <value>Abbrechen des aktuellen vorgangs</value>
+    <value>Abbrechen des aktuellen Vorgangs</value>
   </data>
   <data name="Hotkey_Abort_WorkingOn" xml:space="preserve">
-    <value>Sprache ändern, Funktion hinzufügen/Ändern, Einstellungs Fenster</value>
+    <value>Sprache ändern, Funktion hinzufügen/Ändern, Einstellungsfenster</value>
   </data>
   <data name="Hotkey_Abort_WorkingOn_Prefix_Colon" xml:space="preserve">
     <value>Funktioniert an folgenden Stellen:</value>
@@ -286,13 +286,13 @@
     <value>Neuer Funktion</value>
   </data>
   <data name="Hotkey_Report_Bug_Description" xml:space="preserve">
-    <value>Report a bug found within the application</value>
+    <value>Fehler innerhalb der Anwendung melden</value>
   </data>
   <data name="Hotkey_Report_Bug_Name" xml:space="preserve">
     <value>Fehler melden</value>
   </data>
   <data name="Key_Ctrl" xml:space="preserve">
-    <value>ctrl</value>
+    <value>strg</value>
   </data>
   <data name="Key_Esc" xml:space="preserve">
     <value>Esc</value>
@@ -325,7 +325,7 @@
     <value>Funktionsanzeigename</value>
   </data>
   <data name="NewFunction_Parameters" xml:space="preserve">
-    <value>Funktions Parameter</value>
+    <value>Funktionsparameter</value>
   </data>
   <data name="Plugin_Authors_Colon" xml:space="preserve">
     <value>Autoren:</value>
@@ -346,13 +346,13 @@
     <value>Läuft mit Avalonia UI</value>
   </data>
   <data name="Settings_AllowAutocompleteForFunctionSearch" xml:space="preserve">
-    <value>Automatische vervollständigung für Funktionsfilter aktivieren</value>
+    <value>Automatische Vervollständigung für Funktionsfilter aktivieren</value>
   </data>
   <data name="Settings_ClearSearchAfterFunctionExecute" xml:space="preserve">
-    <value>Suche löschen nachdem eine Funktion ausgeführt wurde</value>
+    <value>Suche löschen, nachdem eine Funktion ausgeführt wurde</value>
   </data>
   <data name="Settings_CloseOnFunctionExecute" xml:space="preserve">
-    <value>Applikation schließen nachdem Funktion ausgeführt wurde</value>
+    <value>Applikation schließen, nachdem Funktion ausgeführt wurde</value>
   </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>
@@ -403,10 +403,10 @@
     <value>Einstellungen</value>
   </data>
   <data name="Tooltip_Hide" xml:space="preserve">
-    <value>Application minimieren</value>
+    <value>Applikation minimieren</value>
   </data>
   <data name="Tooltip_Show" xml:space="preserve">
-    <value>Application anzeigen</value>
+    <value>Applikation anzeigen</value>
   </data>
   <data name="Window_EditFunction" xml:space="preserve">
     <value>Funktion anpassen</value>
