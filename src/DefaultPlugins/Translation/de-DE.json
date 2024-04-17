@@ -1,0 +1,14 @@
+﻿{
+  "script-displayname": "Script execution",
+  "script-description": "This plugin will allow you to run scrip files with the modular tool manager",
+  "binary-displayname": "Start executable binary file",
+  "binary-description": "This plugin will allow you to run binary executable with the modular tool manager",
+  "batch": "Batch-Script",
+  "cmd": "CMD-Script",
+  "powershell": "PowerShell-Script",
+  "executable": "Executable-File",
+  "error_cant_find_script_file": "Could not find script '{0}' to execute",
+  "error_cant_find_binary_file": "Could not find binary file '{0}' to run",
+  "hide": "Hide command line",
+  "adminRequired": "Run as Administrator"
+}
