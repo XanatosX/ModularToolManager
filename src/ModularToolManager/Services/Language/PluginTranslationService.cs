@@ -167,7 +167,20 @@ public sealed class PluginTranslationService : IPluginTranslationService
     /// <returns>A list with all possible translations</returns>
     private List<TranslationModel> GetTranslationsFromFile(Assembly assembly, string cultureFile)
     {
-        return JsonSerializer.Deserialize<List<TranslationModel>>(LoadResourceData(assembly, cultureFile)) ?? new();
+        List<TranslationModel> translations = new();
+        try
+        {
+            var data = JsonSerializer.Deserialize<Dictionary<string, string>>(LoadResourceData(assembly, cultureFile));
+            foreach (var item in data)
+            {
+                translations.Add(new TranslationModel { Key = item.Key, Value = item.Value });
+            }
+        }
+        catch (System.Exception e)
+        {
+            logger.LogError(e, "Error trying to parse translation file");
+        }
+        return translations;
     }
 
     /// <summary>
