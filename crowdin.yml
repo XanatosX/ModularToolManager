@@ -1,3 +1,5 @@
 files:
   - source: src/ModularToolManager/Properties/Resources.resx
     translation: /src/ModularToolManager/Properties/%file_name%.%two_letters_code%.%file_extension%
+  - source: src/DefaultPlugins/Translations/en-EN.json
+    translation: /src/DefaultPlugins/Translation/%locale%.%file_extension%
