@@ -59,7 +59,11 @@ Click [here][downloadPage] to get to the download section of this project on Git
 
 ## Found a bug or got a question?
 
-Please head over to the  [issue page][issuePage].
+Please head over to the [issue page][issuePage].
+
+## Want to contribute?
+
+Either search for Tickets marked with help wanted or improve the translation on [crowdin]
 
 ## Plugins
 
@@ -98,6 +102,7 @@ Technically the plugin will run with the user rights you did start the applicati
 [image-main-view-light]: https://i.imgur.com/lqmlo5U.png
 [downloadPage]: https://bitbucket.org/XanatosX/modulartoolmanager/downloads/
 [issuePage]: https://bitbucket.org/XanatosX/modulartoolmanager/issues
+[crowdin]: https://crowdin.com/project/modular-tool-manager
 [screenshot-1-dark]: https://imgur.com/mr3Folx.png
 [screenshot-1-light]: https://i.imgur.com/Fxgu18M.png
 [screenshot-2-dark]: https://i.imgur.com/LhMGcEx.png

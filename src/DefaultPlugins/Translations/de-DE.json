@@ -1,14 +1,14 @@
 ﻿{
-  "script-displayname": "Skript ausführung",
-  "script-description": "Diese Plugin erlaubt Ihnen Skript-Dateien mit dem Modular Tool Manager auszuführen",
+  "script-displayname": "Skriptausführung",
+  "script-description": "Dieses Plugin erlaubt es Ihnen Skript-Dateien mit dem Modular Tool Manager auszuführen",
   "binary-displayname": "Ausführbare Datei starten",
-  "binary-description": "Diese Plugin erlaubt es Ihnen Binäre Dateien mit dem Modular Tool Manager auszuführen",
+  "binary-description": "Dieses Plugin erlaubt es Ihnen binäre Dateien mit dem Modular Tool Manager auszuführen",
   "batch": "Batch-Skript",
   "cmd": "CMD-Skript",
   "powershell": "PowerShell-Skript",
   "executable": "Ausführbare-Datei",
   "error_cant_find_script_file": "Konnte das auszuführende Skript '{0}' nicht finden",
-  "error_cant_find_binary_file": "Konnte ausführbare datei '{0}' nicht finden",
+  "error_cant_find_binary_file": "Konnte ausführbare Datei '{0}' nicht finden",
   "hide": "Terminal verstecken",
   "adminRequired": "Als Administrator ausführen"
 }
