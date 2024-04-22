@@ -20,6 +20,7 @@
   <ItemGroup>
       <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>MSBuild:Compile</Generator>
+      <PublicClass>true</PublicClass>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <StronglyTypedFileName>$(IntermediateOutputPath)\Resources.Designer.cs</StronglyTypedFileName>
       <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
