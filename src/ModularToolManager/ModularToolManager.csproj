@@ -29,6 +29,18 @@
     </EmbeddedResource>
   </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Properties.resx">
+      <Generator>MSBuild:Compile</Generator>
+      <PublicClass>true</PublicClass>
+      <LastGenOutput>Properties.Designer.cs</LastGenOutput>
+      <StronglyTypedFileName>$(IntermediateOutputPath)\Properties.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>ModularToolManager.Properties</StronglyTypedNamespace>
+      <StronglyTypedClassName>Resources</StronglyTypedClassName>
+    </EmbeddedResource>
+  </ItemGroup>
+
   <ItemGroup>
     <Content Include="Assets\application-logo.ico" />
     <Content Include="Assets\built-with-avalonia.png" />
