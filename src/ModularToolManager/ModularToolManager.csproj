@@ -37,7 +37,7 @@
       <StronglyTypedFileName>$(IntermediateOutputPath)\Properties.Designer.cs</StronglyTypedFileName>
       <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
       <StronglyTypedNamespace>ModularToolManager.Properties</StronglyTypedNamespace>
-      <StronglyTypedClassName>Resources</StronglyTypedClassName>
+      <StronglyTypedClassName>Properties</StronglyTypedClassName>
     </EmbeddedResource>
   </ItemGroup>
 
