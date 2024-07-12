@@ -4,18 +4,46 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ApplicationIcon>Assets\application-logo.ico</ApplicationIcon>
+    <CoreCompileDependsOn>PrepareResources;$(CompileDependsOn)</CoreCompileDependsOn>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\application-logo.ico" />
+    <None Remove="Assets\built-with-avalonia.png" />
     <None Remove="Resources\buildInStyles.json" />
     <None Remove="Resources\dependencies.json" />
     <None Remove="Resources\hotkeys.json" />
     <None Remove="Resources\LICENSE" />
   </ItemGroup>
+
+  <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>MSBuild:Compile</Generator>
+      <PublicClass>true</PublicClass>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <StronglyTypedFileName>$(IntermediateOutputPath)\Resources.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>ModularToolManager.Properties</StronglyTypedNamespace>
+      <StronglyTypedClassName>Resources</StronglyTypedClassName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Properties.resx">
+      <Generator>MSBuild:Compile</Generator>
+      <PublicClass>true</PublicClass>
+      <LastGenOutput>Properties.Designer.cs</LastGenOutput>
+      <StronglyTypedFileName>$(IntermediateOutputPath)\Properties.Designer.cs</StronglyTypedFileName>
+      <StronglyTypedLanguage>CSharp</StronglyTypedLanguage>
+      <StronglyTypedNamespace>ModularToolManager.Properties</StronglyTypedNamespace>
+      <StronglyTypedClassName>Properties</StronglyTypedClassName>
+    </EmbeddedResource>
+  </ItemGroup>
+
   <ItemGroup>
     <Content Include="Assets\application-logo.ico" />
+    <Content Include="Assets\built-with-avalonia.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\buildInStyles.json" />
@@ -30,6 +58,7 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.1" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="FuzzySharp" Version="2.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Serilog" Version="3.0.1" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="7.0.0" />
@@ -52,6 +81,9 @@
     </Compile>
     <Compile Update="Views\AllPluginsView.axaml.cs">
       <DependentUpon>AllPluginsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FunctionSearchFilterView.axaml.cs">
+      <DependentUpon>FunctionSearchFilterView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\HotkeysView.axaml.cs">
       <DependentUpon>HotkeysView.axaml</DependentUpon>

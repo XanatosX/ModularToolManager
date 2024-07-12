@@ -14,6 +14,9 @@ public class DefaultWindowPositionStrategyFactory : IWindowPositionFactory
         return positionEnum switch
         {
             WindowPositionEnum.BottomRight => new BottomRightStrategy(),
+            WindowPositionEnum.BottomLeft => new BottomLeftStrategy(),
+            WindowPositionEnum.TopLeft => new TopLeftStrategy(),
+            WindowPositionEnum.TopRight => new TopRightStrategy(),
             _ => new BottomRightStrategy()
         };
     }

@@ -145,7 +145,7 @@ internal class WindowManagementService : IWindowManagementService
     public async Task<string[]> ShowOpenFileDialogAsync(ShowOpenFileDialogModel fileDialogModel, Window parent)
     {
         IStorageFolder? initialDirectory = await parent.StorageProvider.TryGetFolderFromPathAsync(fileDialogModel.InitialDirectory ?? string.Empty);
-        var files = await parent.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions() {
+        var files = await parent.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions {
             AllowMultiple = fileDialogModel.AllowMultipleSelection,
             FileTypeFilter = fileDialogModel.FileDialogFilters.ToList(),
             SuggestedStartLocation = initialDirectory

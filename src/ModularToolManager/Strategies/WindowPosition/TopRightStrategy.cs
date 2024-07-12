@@ -1,13 +1,13 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Platform;
 
 namespace ModularToolManager.Strategies.WindowPosition;
 
 /// <summary>
-/// Position a Window in the bottom right of a given screen
+/// Position a Window in the top left of a given screen
 /// </summary>
-public class BottomRightStrategy : IWindowPositionStrategy
+public class TopRightStrategy : IWindowPositionStrategy
 {
     /// <inheritdoc/>
     public void PositionWindow(Window window, Screen? screen)
@@ -16,9 +16,10 @@ public class BottomRightStrategy : IWindowPositionStrategy
         {
             return;
         }
+
         PixelRect workingArea = screen.WorkingArea;
         double newXPos = workingArea.Right - window.Width;
-        double newYPos = workingArea.Bottom - window.Height;
+        double newYPos = workingArea.Y;
         window.Position = new PixelPoint((int)newXPos, (int)newYPos);
     }
 }

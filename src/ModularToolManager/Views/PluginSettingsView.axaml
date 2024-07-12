@@ -8,7 +8,7 @@
 	<Grid RowDefinitions="*, Auto">
 		<ItemsControl ItemsSource="{Binding PluginSettings}"/>
 		<StackPanel Grid.Row="1">
-			<Button Content="{x:Static p:Resources.DefaultButton_Save}" Command="{Binding SaveSettingsCommand}"/>
+			<Button IsVisible="false" Content="{x:Static p:Resources.DefaultButton_Save}" Command="{Binding SaveSettingsCommand}"/>
 		</StackPanel>
 	</Grid>
 </UserControl>

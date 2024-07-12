@@ -11,6 +11,7 @@
 				Content="{x:Static p:Resources.Settings_KeepOnTop}"
 				IsChecked="{Binding TopMost}"
 				/>
+			<ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding AvailableWindowPositions}" SelectedItem="{Binding SelectedWindowPosition}"/>
 			<CheckBox
 				Content="{x:Static p:Resources.Settings_CloseOnFunctionExecute}"
 				IsChecked="{Binding CloseOnFunctionExecute}"
@@ -29,6 +30,7 @@
 				/>
 			<ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding AvailableThemes}" SelectedItem="{Binding SelectedTheme}"/>
 			<Separator Margin="0,5,0,5"/>
+			<ComboBox  HorizontalAlignment="Stretch"  ItemsSource="{Binding AvailableSearchFilters}" SelectedItem="{Binding SelectedSearchFilter}"/>
 			<CheckBox Content="{x:Static p:Resources.Settings_AllowAutocompleteForFunctionSearch}" IsChecked="{Binding EnableAutocompleteForFunctionSearch}"/>
 		</StackPanel>
 		<DockPanel Grid.Row="1" Margin="5">

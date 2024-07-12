@@ -47,7 +47,7 @@ public partial class ModalWindowViewModel : ObservableObject
     /// Can the modal be resized
     /// </summary>
     [ObservableProperty]
-    public bool canResize;
+    private bool canResize;
 
     /// <summary>
     /// The service used to switch the application theme
@@ -95,7 +95,7 @@ public partial class ModalWindowViewModel : ObservableObject
     private void SwitchTheme(int themeId)
     {
         var theme = themeService.GetStyleById(themeId);
-        theme ??= theme ??= themeService.GetAllStyles().FirstOrDefault() ?? new ApplicationStyle { MaterialOpacity = 1, TintOpacity = 0.65f, TintColor = Colors.Pink };
+        theme ??= themeService.GetAllStyles().FirstOrDefault() ?? new ApplicationStyle { MaterialOpacity = 1, TintOpacity = 0.65f, TintColor = Colors.Pink };
         if (theme is null)
         {
             return;

@@ -459,3 +459,5 @@ $RECYCLE.BIN/
 ## Custom
 ### Packages
 nupkg/*
+
+**/*.Designer.cs

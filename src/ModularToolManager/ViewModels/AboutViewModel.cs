@@ -47,6 +47,12 @@ internal partial class AboutViewModel : ObservableObject
     private string? gitHubUserManualUrl;
 
     /// <summary>
+    /// The url to open for the avalonia project
+    /// </summary>
+    [ObservableProperty]
+    private string? avaloniaProjectUrl;
+
+    /// <summary>
     /// Service used to open url
     /// </summary>
     private readonly IUrlOpenerService urlOpenerService;
@@ -66,6 +72,7 @@ internal partial class AboutViewModel : ObservableObject
         Version = applicationInformationService.GetVersion()?.ToString();
         GitHubUrl = applicationInformationService.GetGithubUrl();
         GitHubUserManualUrl = applicationInformationService.GetGithubUserManualUrl();
+        AvaloniaProjectUrl = applicationInformationService.GetAvaloniaProjectUrl();
         Dependencies = applicationInformationService.GetDependencies()
                                                        .OrderBy(d => d.Name)
                                                        .Select(dep => dependencyResolverService.GetDependency(provider =>

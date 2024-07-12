@@ -17,9 +17,9 @@ public interface ISettingsService
     /// <summary>
     /// Change the application settings
     /// </summary>
-    /// <param name="changeSettings">The current settings to change</param>
+    /// <param name="changeSettingsAction">The current settings to change</param>
     /// <returns>True if changing was successful</returns>
-    bool ChangeSettings(Action<ApplicationSettings> changeSettings);
+    bool ChangeSettings(Action<ApplicationSettings> changeSettingsAction);
 
     /// <summary>
     /// Save the application settings
