@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 
@@ -57,6 +58,20 @@ internal class ResourceReaderService
             returnString = reader.ReadToEnd();
         }
         return returnString;
+    }
+
+    /// <summary>
+    ///  Method to get resource data as string using localization
+    /// </summary>
+    /// <param name="fileName">The filename ot load</param>
+    /// <param name="fileExtension">The file extension to use without the dot</param>
+    /// <param name="cultureInfo">The culture information to use</param>
+    /// <returns>The requested data</returns>
+    public string? GetResourceData(string fileName, string fileExtension, CultureInfo cultureInfo)
+    {
+        string localizedText = $"{fileName}.{cultureInfo.TwoLetterISOLanguageName}.{fileExtension}";
+        string? returnString = GetResourceData(localizedText);
+        return string.IsNullOrEmpty(returnString) ? GetResourceData($"{fileName}.{fileExtension}") : returnString;
     }
 
     /// <summary>
