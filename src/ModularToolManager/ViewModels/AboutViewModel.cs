@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using ModularToolManager.Models.Messages;
 using ModularToolManager.Services.IO;
+using ModularToolManager.Services.Settings;
 using ModularToolManagerModel.Services.Dependency;
 using ModularToolManagerModel.Services.IO;
 using System.Collections.Generic;
@@ -60,7 +61,7 @@ internal partial class AboutViewModel : ObservableObject
     /// <summary>
     /// String to save the app description
     /// </summary>
-    private readonly string appDescription;
+    private readonly string? appDescription;
 
     /// <summary>
     /// Create a new instance of this view model
@@ -71,7 +72,8 @@ internal partial class AboutViewModel : ObservableObject
     public AboutViewModel(GetApplicationInformationService applicationInformationService,
                           IDependencyResolverService dependencyResolverService,
                           IUrlOpenerService urlOpenerService,
-                          ResourceReaderService resourceReader)
+                          ResourceReaderService resourceReader,
+                          ISettingsService settingsService)
     {
         this.urlOpenerService = urlOpenerService;
         License = applicationInformationService.GetLicense();
@@ -79,7 +81,8 @@ internal partial class AboutViewModel : ObservableObject
         GitHubUrl = applicationInformationService.GetGithubUrl();
         GitHubUserManualUrl = applicationInformationService.GetGithubUserManualUrl();
         AvaloniaProjectUrl = applicationInformationService.GetAvaloniaProjectUrl();
-        appDescription = resourceReader.GetResourceData("description");
+        var appSettings = settingsService.GetApplicationSettings();
+        appDescription = resourceReader.GetResourceData("description", "md", appSettings.CurrentLanguage);
         Dependencies = applicationInformationService.GetDependencies()
                                                        .OrderBy(d => d.Name)
                                                        .Select(dep => dependencyResolverService.GetDependency(provider =>

@@ -49,6 +49,7 @@
     <EmbeddedResource Include="Resources\buildInStyles.json" />
     <EmbeddedResource Include="Resources\dependencies.json" />
     <EmbeddedResource Include="Resources\hotkeys.json" />
+    <EmbeddedResource Include="Resources\description*.md"/>
     <EmbeddedResource Include="Resources\LICENSE" />
   </ItemGroup>
   <ItemGroup>
