@@ -58,6 +58,11 @@ internal partial class AboutViewModel : ObservableObject
     private readonly IUrlOpenerService urlOpenerService;
 
     /// <summary>
+    /// String to save the app description
+    /// </summary>
+    private readonly string appDescription;
+
+    /// <summary>
     /// Create a new instance of this view model
     /// </summary>
     /// <param name="applicationInformationService">The service used to get application information</param>
@@ -65,7 +70,8 @@ internal partial class AboutViewModel : ObservableObject
     /// <param name="urlOpenerService">The service used to open an url</param>
     public AboutViewModel(GetApplicationInformationService applicationInformationService,
                           IDependencyResolverService dependencyResolverService,
-                          IUrlOpenerService urlOpenerService)
+                          IUrlOpenerService urlOpenerService,
+                          ResourceReaderService resourceReader)
     {
         this.urlOpenerService = urlOpenerService;
         License = applicationInformationService.GetLicense();
@@ -73,6 +79,7 @@ internal partial class AboutViewModel : ObservableObject
         GitHubUrl = applicationInformationService.GetGithubUrl();
         GitHubUserManualUrl = applicationInformationService.GetGithubUserManualUrl();
         AvaloniaProjectUrl = applicationInformationService.GetAvaloniaProjectUrl();
+        appDescription = resourceReader.GetResourceData("description");
         Dependencies = applicationInformationService.GetDependencies()
                                                        .OrderBy(d => d.Name)
                                                        .Select(dep => dependencyResolverService.GetDependency(provider =>
