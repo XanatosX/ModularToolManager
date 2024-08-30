@@ -1,8 +1,3 @@
-Das Programm ist unter der [MIT](https://github.com/XanatosX/ModularToolManager/blob/main/LICENSE) Lizenz lizenziert.\
-Das Program wirde von mir [XanatosX](https://github.com/XanatosX) als ein Hobby projekt entwickelt. Das Programm ist für Windows sowie Linux gedacht.
+This application is based on the [MIT](https://github.com/XanatosX/ModularToolManager/blob/main/LICENSE) license. The plugin is developed by [XanatosX](https://github.com/XanatosX) as a hobby project. It does target Windows and Linux as a platform of operation. 
 
-Das Programm stellt ein einfache Benutzeroberfläche bereit um Skrite und Programme zu starten.\
-Diese Plugins werden pro Funktion ausgewählt und bestimmen die Logik zum Ausführen des bereitgestellten Pfades.\
-Diese Plugins werden pro Funktion ausgewählt und bestimmen die Logik zum Ausführen des bereitgestellten Pfades.
-
-Weitere Informationen können über den obigen Link zum Benutzerhandbuch entnommen werden.
+The application provides a simple interface to launch scripts and programs in combination with function plugins. Those plugins allow you to define "Function buttons" which will trigger a user selected plugin. This plugin will run the path provided via the internal plugin logic. (DE!!!!)

@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,79 +26,79 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -119,296 +119,398 @@
   </resheader>
   <data name="About_Dependency" xml:space="preserve">
     <value>Dependencies</value>
+    <comment/>
   </data>
   <data name="About_GitHubUserManual" xml:space="preserve">
     <value>User Manual</value>
+    <comment/>
   </data>
   <data name="About_License" xml:space="preserve">
     <value>License</value>
+    <comment/>
   </data>
   <data name="About_Repository_Colon" xml:space="preserve">
     <value>Repository:</value>
+    <comment/>
   </data>
   <data name="About_Version_Colon" xml:space="preserve">
     <value>Version:</value>
+    <comment/>
   </data>
   <data name="AddFunction_FunctionPathWatermark" xml:space="preserve">
     <value>Path to function</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_Information" xml:space="preserve">
     <value>Information</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeEnter" xml:space="preserve">
     <value>Enter function order mode</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeEnter_Tooltip" xml:space="preserve">
     <value>Does enter the order mode, this allows you to sort the functions as you like based on a number value</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeLeave" xml:space="preserve">
     <value>Leave function order mode</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeLeave_Tooltip" xml:space="preserve">
     <value>Does leave the order mode, without saving it</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeSave" xml:space="preserve">
     <value>Save new function order</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeSave_Tooltip" xml:space="preserve">
     <value>Does leave the order mode and does save the changes</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_Settings" xml:space="preserve">
     <value>Settings</value>
+    <comment/>
   </data>
   <data name="Application_Name" xml:space="preserve">
     <value>Modular Tool Manager</value>
+    <comment/>
   </data>
   <data name="App_Blue_Theme" xml:space="preserve">
     <value>Blue Theme</value>
+    <comment/>
   </data>
   <data name="App_Blue_Theme_Description" xml:space="preserve">
     <value>A Theme which mainly uses the color blue as a background</value>
+    <comment/>
   </data>
   <data name="App_Dark_Theme" xml:space="preserve">
     <value>Dark mode</value>
+    <comment/>
   </data>
   <data name="App_Dark_Theme_Description" xml:space="preserve">
     <value>Dark theme for the application</value>
+    <comment/>
   </data>
   <data name="App_Green_Theme" xml:space="preserve">
     <value>Green Theme</value>
+    <comment/>
   </data>
   <data name="App_Green_Theme_Description" xml:space="preserve">
     <value>A Theme which mainly uses the color green as a background</value>
+    <comment/>
   </data>
   <data name="App_Light_Theme" xml:space="preserve">
     <value>Light mode</value>
+    <comment/>
   </data>
   <data name="App_Light_Theme_Description" xml:space="preserve">
     <value>Light theme for the application</value>
+    <comment/>
   </data>
   <data name="App_Orange_Theme" xml:space="preserve">
     <value>Orange Theme</value>
+    <comment/>
   </data>
   <data name="App_Orange_Theme_Description" xml:space="preserve">
     <value>A Theme which mainly uses the color orange as a background</value>
+    <comment/>
   </data>
   <data name="App_Red_Theme" xml:space="preserve">
     <value>Red Theme</value>
+    <comment/>
   </data>
   <data name="App_Red_Theme_Description" xml:space="preserve">
     <value>A Theme which mainly uses the color red as a background</value>
+    <comment/>
   </data>
   <data name="Button_Open_Project" xml:space="preserve">
     <value>Open project website</value>
+    <comment/>
   </data>
   <data name="DefaultButton_Abort" xml:space="preserve">
     <value>Abort</value>
+    <comment/>
   </data>
   <data name="DefaultButton_Ok" xml:space="preserve">
     <value>Ok</value>
+    <comment/>
   </data>
   <data name="DefaultButton_OpenFile" xml:space="preserve">
     <value>...</value>
+    <comment/>
   </data>
   <data name="DefaultButton_Save" xml:space="preserve">
     <value>Save</value>
+    <comment/>
   </data>
   <data name="Default_Delete" xml:space="preserve">
     <value>Delete</value>
+    <comment/>
   </data>
   <data name="Default_Edit" xml:space="preserve">
     <value>Edit</value>
+    <comment/>
   </data>
   <data name="Dependency_License" xml:space="preserve">
     <value>License</value>
+    <comment/>
   </data>
   <data name="Dependency_Project" xml:space="preserve">
     <value>Project</value>
+    <comment/>
   </data>
   <data name="FunctionButtonContainsNeedleFilter_description" xml:space="preserve">
     <value>A filter checking if the item does contain the search string as a whole</value>
+    <comment/>
   </data>
   <data name="FunctionButtonContainsNeedleFilter_name" xml:space="preserve">
     <value>Contains Filter</value>
+    <comment/>
   </data>
   <data name="FunctionButtonFuzzyFilter_description" xml:space="preserve">
     <value>A filter using fuzzy search to check if an item is valid</value>
+    <comment/>
   </data>
   <data name="FunctionButtonFuzzyFilter_name" xml:space="preserve">
     <value>Fuzzy Filter</value>
+    <comment/>
   </data>
   <data name="FunctionButton_Method_Error" xml:space="preserve">
     <value>Either the path saved on this function is missing, the extension is wrong or the plugin for execution was removed. Please edit the function to fix the error.</value>
+    <comment/>
   </data>
   <data name="FunctionButton_Sort_Watermark" xml:space="preserve">
     <value>Sorting Order</value>
+    <comment/>
   </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Search for function</value>
+    <comment/>
   </data>
   <data name="Hotkey_Abort_Description" xml:space="preserve">
     <value>Abort the current action or close the current modal</value>
+    <comment/>
   </data>
   <data name="Hotkey_Abort_Name" xml:space="preserve">
     <value>Abort</value>
+    <comment/>
   </data>
   <data name="Hotkey_Abort_WorkingOn" xml:space="preserve">
     <value>Change Language, Add/Edit Function, Settings</value>
+    <comment/>
   </data>
   <data name="Hotkey_Abort_WorkingOn_Prefix_Colon" xml:space="preserve">
     <value>Working at the following places:</value>
+    <comment/>
   </data>
   <data name="Hotkey_About_Description" xml:space="preserve">
     <value>Open the about page of the application</value>
+    <comment/>
   </data>
   <data name="Hotkey_About_Name" xml:space="preserve">
     <value>About page</value>
+    <comment/>
   </data>
   <data name="Hotkey_Hide_Description" xml:space="preserve">
     <value>Hide the application into the system tray</value>
+    <comment/>
   </data>
   <data name="Hotkey_Hide_Name" xml:space="preserve">
     <value>Hide Application</value>
+    <comment/>
   </data>
   <data name="Hotkey_Language_Description" xml:space="preserve">
     <value>Open the change language dialog</value>
+    <comment/>
   </data>
   <data name="Hotkey_Language_Name" xml:space="preserve">
     <value>Change Application language</value>
+    <comment/>
   </data>
   <data name="Hotkey_Main_Window_WorkinOn" xml:space="preserve">
     <value>Main Window</value>
+    <comment/>
   </data>
   <data name="Hotkey_New_Description" xml:space="preserve">
     <value>Create a new function</value>
+    <comment/>
   </data>
   <data name="Hotkey_New_Name" xml:space="preserve">
     <value>New Function</value>
+    <comment/>
   </data>
   <data name="Hotkey_Report_Bug_Description" xml:space="preserve">
     <value>Report a bug found within the application</value>
+    <comment/>
   </data>
   <data name="Hotkey_Report_Bug_Name" xml:space="preserve">
     <value>Report bug</value>
+    <comment/>
   </data>
   <data name="Key_Ctrl" xml:space="preserve">
     <value>ctrl</value>
+    <comment/>
   </data>
   <data name="Key_Esc" xml:space="preserve">
     <value>Esc</value>
+    <comment/>
   </data>
   <data name="Key_F1" xml:space="preserve">
     <value>F1</value>
+    <comment/>
   </data>
   <data name="Key_F12" xml:space="preserve">
     <value>F12</value>
+    <comment/>
   </data>
   <data name="Key_H" xml:space="preserve">
     <value>h</value>
+    <comment/>
   </data>
   <data name="Key_L" xml:space="preserve">
     <value>l</value>
+    <comment/>
   </data>
   <data name="Key_N" xml:space="preserve">
     <value>n</value>
+    <comment/>
   </data>
   <data name="Menu_File" xml:space="preserve">
     <value>File</value>
+    <comment/>
   </data>
   <data name="Menu_Help" xml:space="preserve">
     <value>Help</value>
+    <comment/>
   </data>
   <data name="NewFunction_Description" xml:space="preserve">
     <value>Function Description</value>
+    <comment/>
   </data>
   <data name="NewFunction_Name" xml:space="preserve">
     <value>Function Display Name</value>
+    <comment/>
   </data>
   <data name="NewFunction_Parameters" xml:space="preserve">
     <value>Function Parameters</value>
+    <comment/>
   </data>
   <data name="Plugin_Authors_Colon" xml:space="preserve">
     <value>Authors:</value>
+    <comment/>
   </data>
   <data name="Plugin_Description_Colon" xml:space="preserve">
     <value>Description:</value>
+    <comment/>
   </data>
   <data name="Plugin_DisplayName_Colon" xml:space="preserve">
     <value>Name:</value>
+    <comment/>
   </data>
   <data name="Plugin_License_Colon" xml:space="preserve">
     <value>License:</value>
+    <comment/>
   </data>
   <data name="Plugin_Url_Colon" xml:space="preserve">
     <value>Project url:</value>
+    <comment/>
   </data>
   <data name="RunningWith" xml:space="preserve">
     <value>Running with Avalonia UI</value>
+    <comment/>
   </data>
   <data name="Settings_AllowAutocompleteForFunctionSearch" xml:space="preserve">
     <value>Enable Autocomplete for function search</value>
+    <comment/>
   </data>
   <data name="Settings_ClearSearchAfterFunctionExecute" xml:space="preserve">
     <value>Clear function search if function was executed</value>
+    <comment/>
   </data>
   <data name="Settings_CloseOnFunctionExecute" xml:space="preserve">
     <value>Close if a function was executed</value>
+    <comment/>
   </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Keep on Top</value>
+    <comment/>
   </data>
   <data name="Settings_ShowInTaskbar" xml:space="preserve">
     <value>Show in Taskbar</value>
+    <comment/>
   </data>
   <data name="Settings_StartMinimized" xml:space="preserve">
     <value>Start minimized</value>
+    <comment/>
   </data>
   <data name="Settings_WindowPosition_Bottom_Left" xml:space="preserve">
     <value>Bottom Left</value>
+    <comment/>
   </data>
   <data name="Settings_WindowPosition_Bottom_Right" xml:space="preserve">
     <value>Bottom Right</value>
+    <comment/>
   </data>
   <data name="Settings_WindowPosition_Top_Left" xml:space="preserve">
     <value>Top Left</value>
+    <comment/>
   </data>
   <data name="Settings_WindowPosition_Top_Right" xml:space="preserve">
     <value>Top Right</value>
+    <comment/>
   </data>
   <data name="SubMenu_About" xml:space="preserve">
     <value>About</value>
+    <comment/>
   </data>
   <data name="SubMenu_Exit" xml:space="preserve">
     <value>Exit</value>
+    <comment/>
   </data>
   <data name="SubMenu_Hide" xml:space="preserve">
     <value>Hide</value>
+    <comment/>
   </data>
   <data name="SubMenu_Hotkeys" xml:space="preserve">
     <value>Hotkeys</value>
+    <comment/>
   </data>
   <data name="SubMenu_Language" xml:space="preserve">
     <value>Language</value>
+    <comment/>
   </data>
   <data name="SubMenu_NewFunction" xml:space="preserve">
     <value>New Function</value>
+    <comment/>
   </data>
   <data name="SubMenu_Plugins" xml:space="preserve">
     <value>Plugins</value>
+    <comment/>
   </data>
   <data name="SubMenu_ReportBug" xml:space="preserve">
     <value>Report Bug</value>
+    <comment/>
   </data>
   <data name="SubMenu_Settings" xml:space="preserve">
     <value>Settings</value>
+    <comment/>
   </data>
   <data name="Tooltip_Hide" xml:space="preserve">
     <value>Hide the application</value>
+    <comment/>
   </data>
   <data name="Tooltip_Show" xml:space="preserve">
     <value>Show the application</value>
+    <comment/>
   </data>
   <data name="Window_EditFunction" xml:space="preserve">
     <value>Edit function</value>
+    <comment/>
+  </data>
+  <data name="About_Description" xml:space="preserve">
+    <value>About</value>
+    <comment/>
   </data>
 </root>

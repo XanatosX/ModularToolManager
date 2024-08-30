@@ -54,14 +54,15 @@ internal partial class AboutViewModel : ObservableObject
     private string? avaloniaProjectUrl;
 
     /// <summary>
+    /// String to save the app description
+    /// </summary>
+    [ObservableProperty]
+    private string? description;
+
+    /// <summary>
     /// Service used to open url
     /// </summary>
     private readonly IUrlOpenerService urlOpenerService;
-
-    /// <summary>
-    /// String to save the app description
-    /// </summary>
-    private readonly string? appDescription;
 
     /// <summary>
     /// Create a new instance of this view model
@@ -82,7 +83,7 @@ internal partial class AboutViewModel : ObservableObject
         GitHubUserManualUrl = applicationInformationService.GetGithubUserManualUrl();
         AvaloniaProjectUrl = applicationInformationService.GetAvaloniaProjectUrl();
         var appSettings = settingsService.GetApplicationSettings();
-        appDescription = resourceReader.GetResourceData("description", "md", appSettings.CurrentLanguage);
+        description = resourceReader.GetResourceData("description", "md", appSettings.CurrentLanguage);
         Dependencies = applicationInformationService.GetDependencies()
                                                        .OrderBy(d => d.Name)
                                                        .Select(dep => dependencyResolverService.GetDependency(provider =>
