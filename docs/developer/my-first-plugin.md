@@ -105,7 +105,7 @@ The next step will be to define the plugin information via the `GetPluginInforma
     }
 ```
 
-You can change the information to match your situation.
+You can change the information to match your situation. Keep in mind that the description can use Markdown to format it to your desire.
 
 Next let's change the display name, this is used to show the plugin in the plugins selection of the tool.
 
