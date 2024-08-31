@@ -3,3 +3,7 @@ files:
     translation: /src/ModularToolManager/Properties/%file_name%.%two_letters_code%.%file_extension%
   - source: src/DefaultPlugins/Translations/en-EN.json
     translation: /src/DefaultPlugins/Translations/%locale%.%file_extension%
+  - source: /src/ModularToolManager/Resources/*.md
+    ignore:
+      - /src/ModularToolManager/Resources/*.*.md
+    translation: '%original_path%\%file_name%.%two_letters_code%.%file_extension%'
