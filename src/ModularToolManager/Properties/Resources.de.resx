@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
+  <!--
+    Microsoft ResX Schema
+
     Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
     associated with the data types.
-    
+
     Example:
-    
+
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,36 +26,36 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-                
-    There are any number of "resheader" rows that contain simple 
+
+    There are any number of "resheader" rows that contain simple
     name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
     mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
     extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
     read any of the formats listed below.
-    
+
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-    
+
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value   : The object must be serialized with
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value   : The object must be serialized into a byte array
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -119,296 +119,398 @@
   </resheader>
   <data name="About_Dependency" xml:space="preserve">
     <value>Abhängigkeiten</value>
+    <comment/>
   </data>
   <data name="About_GitHubUserManual" xml:space="preserve">
     <value>Benutzerhandbuch</value>
+    <comment/>
   </data>
   <data name="About_License" xml:space="preserve">
     <value>Lizenz</value>
+    <comment/>
   </data>
   <data name="About_Repository_Colon" xml:space="preserve">
     <value>Repository:</value>
+    <comment/>
   </data>
   <data name="About_Version_Colon" xml:space="preserve">
     <value>Version:</value>
+    <comment/>
   </data>
   <data name="AddFunction_FunctionPathWatermark" xml:space="preserve">
     <value>Pfad zur Funktion</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_Information" xml:space="preserve">
     <value>Informationen</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeEnter" xml:space="preserve">
     <value>Funktionen Sortiermodus aktivieren</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeEnter_Tooltip" xml:space="preserve">
     <value>Den Funktionen Sortiermodus aktivieren, dieser Modus erlaubt es eine Sortiernummer an den Funktionen zu hinterlegen. Diese Nummer wird für die Sortierung genutzt</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeLeave" xml:space="preserve">
     <value>Neue Funktionssortierung verwerfen</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeLeave_Tooltip" xml:space="preserve">
     <value>Den Funktionen Sortiermodus verlassen, ohne die Änderungen zu speichern</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeSave" xml:space="preserve">
     <value>Neue Sortierung speichern</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_OrderModeSave_Tooltip" xml:space="preserve">
     <value>Speichern der neuen Sortierung</value>
+    <comment/>
   </data>
   <data name="AllPlugins_Header_Settings" xml:space="preserve">
     <value>Einstellungen</value>
+    <comment/>
   </data>
   <data name="Application_Name" xml:space="preserve">
     <value>Modular Tool Manager</value>
+    <comment/>
   </data>
   <data name="App_Blue_Theme" xml:space="preserve">
     <value>Blaues Thema</value>
+    <comment/>
   </data>
   <data name="App_Blue_Theme_Description" xml:space="preserve">
     <value>Ein Theme welches um die Farbe Blau aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus</value>
+    <comment/>
   </data>
   <data name="App_Dark_Theme" xml:space="preserve">
     <value>Dunkler Modus</value>
+    <comment/>
   </data>
   <data name="App_Dark_Theme_Description" xml:space="preserve">
     <value>Dunkler Modus für die Applikation</value>
+    <comment/>
   </data>
   <data name="App_Green_Theme" xml:space="preserve">
     <value>Grünes Thema</value>
+    <comment/>
   </data>
   <data name="App_Green_Theme_Description" xml:space="preserve">
     <value>Ein Theme welches um die Farbe Grün aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus</value>
+    <comment/>
   </data>
   <data name="App_Light_Theme" xml:space="preserve">
     <value>Heller Modus</value>
+    <comment/>
   </data>
   <data name="App_Light_Theme_Description" xml:space="preserve">
     <value>Heller Modus für die Applikation</value>
+    <comment/>
   </data>
   <data name="App_Orange_Theme" xml:space="preserve">
     <value>Orangenes Thema</value>
+    <comment/>
   </data>
   <data name="App_Orange_Theme_Description" xml:space="preserve">
     <value>Ein Theme welches um die Farbe Orange aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus</value>
+    <comment/>
   </data>
   <data name="App_Red_Theme" xml:space="preserve">
     <value>Rotes Thema</value>
+    <comment/>
   </data>
   <data name="App_Red_Theme_Description" xml:space="preserve">
     <value>Ein Theme welches um die Farbe Rot aufgebaut ist. Diese wirkt sich hauptsächlich auf den Hintergrund aus</value>
+    <comment/>
   </data>
   <data name="Button_Open_Project" xml:space="preserve">
     <value>Projekt Website im Browser öffnen</value>
+    <comment/>
   </data>
   <data name="DefaultButton_Abort" xml:space="preserve">
     <value>Abbrechen</value>
+    <comment/>
   </data>
   <data name="DefaultButton_Ok" xml:space="preserve">
     <value>Ok</value>
+    <comment/>
   </data>
   <data name="DefaultButton_OpenFile" xml:space="preserve">
     <value>...</value>
+    <comment/>
   </data>
   <data name="DefaultButton_Save" xml:space="preserve">
     <value>Speichern</value>
+    <comment/>
   </data>
   <data name="Default_Delete" xml:space="preserve">
     <value>Löschen</value>
+    <comment/>
   </data>
   <data name="Default_Edit" xml:space="preserve">
     <value>Editieren</value>
+    <comment/>
   </data>
   <data name="Dependency_License" xml:space="preserve">
     <value>Lizenz</value>
+    <comment/>
   </data>
   <data name="Dependency_Project" xml:space="preserve">
     <value>Projekt</value>
+    <comment/>
   </data>
   <data name="FunctionButtonContainsNeedleFilter_description" xml:space="preserve">
     <value>Ein Filter welcher prüft ob das komplette Wort innerhalb des Namens vorkommt</value>
+    <comment/>
   </data>
   <data name="FunctionButtonContainsNeedleFilter_name" xml:space="preserve">
     <value>Beinhaltet Filter</value>
+    <comment/>
   </data>
   <data name="FunctionButtonFuzzyFilter_description" xml:space="preserve">
     <value>Ein Filter welcher eine "Fuzzy search" auf die Einträge durchführt</value>
+    <comment/>
   </data>
   <data name="FunctionButtonFuzzyFilter_name" xml:space="preserve">
     <value>Fuzzy Filter</value>
+    <comment/>
   </data>
   <data name="FunctionButton_Method_Error" xml:space="preserve">
     <value>Entweder der Dateipfad ist falsch, die Dateiendung entspricht nicht der erwarteten oder das entsprechend Plugin wurde entfernt. Bitte editieren Sie die Funktion um den Fehler zu beheben.</value>
+    <comment/>
   </data>
   <data name="FunctionButton_Sort_Watermark" xml:space="preserve">
     <value>Sortieranordnung</value>
+    <comment/>
   </data>
   <data name="FunctionSelection_SearchForFunction" xml:space="preserve">
     <value>Nach Funktion suchen</value>
+    <comment/>
   </data>
   <data name="Hotkey_Abort_Description" xml:space="preserve">
     <value>Aktuelle Aktion abbrechen</value>
+    <comment/>
   </data>
   <data name="Hotkey_Abort_Name" xml:space="preserve">
     <value>Abbrechen des aktuellen Vorgangs</value>
+    <comment/>
   </data>
   <data name="Hotkey_Abort_WorkingOn" xml:space="preserve">
     <value>Sprache ändern, Funktion hinzufügen/Ändern, Einstellungsfenster</value>
+    <comment/>
   </data>
   <data name="Hotkey_Abort_WorkingOn_Prefix_Colon" xml:space="preserve">
     <value>Funktioniert an folgenden Stellen:</value>
+    <comment/>
   </data>
   <data name="Hotkey_About_Description" xml:space="preserve">
     <value>Öffnen des "Über die Applikation" Fensters</value>
+    <comment/>
   </data>
   <data name="Hotkey_About_Name" xml:space="preserve">
     <value>Über die Applikation</value>
+    <comment/>
   </data>
   <data name="Hotkey_Hide_Description" xml:space="preserve">
     <value>Versteckt die Applikation im Infobereich</value>
+    <comment/>
   </data>
   <data name="Hotkey_Hide_Name" xml:space="preserve">
     <value>Applikation verstecken</value>
+    <comment/>
   </data>
   <data name="Hotkey_Language_Description" xml:space="preserve">
     <value>Öffnen der Spracheinstellungen der Applikation</value>
+    <comment/>
   </data>
   <data name="Hotkey_Language_Name" xml:space="preserve">
     <value>Sprache der Anwendung ändern</value>
+    <comment/>
   </data>
   <data name="Hotkey_Main_Window_WorkinOn" xml:space="preserve">
     <value>Hauptfenster</value>
+    <comment/>
   </data>
   <data name="Hotkey_New_Description" xml:space="preserve">
     <value>Erstelle eine neue Funktion</value>
+    <comment/>
   </data>
   <data name="Hotkey_New_Name" xml:space="preserve">
     <value>Neuer Funktion</value>
+    <comment/>
   </data>
   <data name="Hotkey_Report_Bug_Description" xml:space="preserve">
     <value>Fehler innerhalb der Anwendung melden</value>
+    <comment/>
   </data>
   <data name="Hotkey_Report_Bug_Name" xml:space="preserve">
     <value>Fehler melden</value>
+    <comment/>
   </data>
   <data name="Key_Ctrl" xml:space="preserve">
     <value>strg</value>
+    <comment/>
   </data>
   <data name="Key_Esc" xml:space="preserve">
     <value>Esc</value>
+    <comment/>
   </data>
   <data name="Key_F1" xml:space="preserve">
     <value>F1</value>
+    <comment/>
   </data>
   <data name="Key_F12" xml:space="preserve">
     <value>F12</value>
+    <comment/>
   </data>
   <data name="Key_H" xml:space="preserve">
     <value>h</value>
+    <comment/>
   </data>
   <data name="Key_L" xml:space="preserve">
     <value>l</value>
+    <comment/>
   </data>
   <data name="Key_N" xml:space="preserve">
     <value>n</value>
+    <comment/>
   </data>
   <data name="Menu_File" xml:space="preserve">
     <value>Datei</value>
+    <comment/>
   </data>
   <data name="Menu_Help" xml:space="preserve">
     <value>Hilfe</value>
+    <comment/>
   </data>
   <data name="NewFunction_Description" xml:space="preserve">
     <value>Funktionsbeschreibung</value>
+    <comment/>
   </data>
   <data name="NewFunction_Name" xml:space="preserve">
     <value>Funktionsanzeigename</value>
+    <comment/>
   </data>
   <data name="NewFunction_Parameters" xml:space="preserve">
     <value>Funktionsparameter</value>
+    <comment/>
   </data>
   <data name="Plugin_Authors_Colon" xml:space="preserve">
     <value>Autoren:</value>
+    <comment/>
   </data>
   <data name="Plugin_Description_Colon" xml:space="preserve">
     <value>Beschreibung:</value>
+    <comment/>
   </data>
   <data name="Plugin_DisplayName_Colon" xml:space="preserve">
     <value>Name:</value>
+    <comment/>
   </data>
   <data name="Plugin_License_Colon" xml:space="preserve">
     <value>Lizenz:</value>
+    <comment/>
   </data>
   <data name="Plugin_Url_Colon" xml:space="preserve">
     <value>Projekt Link:</value>
+    <comment/>
   </data>
   <data name="RunningWith" xml:space="preserve">
     <value>Läuft mit Avalonia UI</value>
+    <comment/>
   </data>
   <data name="Settings_AllowAutocompleteForFunctionSearch" xml:space="preserve">
     <value>Automatische Vervollständigung für Funktionsfilter aktivieren</value>
+    <comment/>
   </data>
   <data name="Settings_ClearSearchAfterFunctionExecute" xml:space="preserve">
     <value>Suche löschen, nachdem eine Funktion ausgeführt wurde</value>
+    <comment/>
   </data>
   <data name="Settings_CloseOnFunctionExecute" xml:space="preserve">
     <value>Applikation schließen, nachdem Funktion ausgeführt wurde</value>
+    <comment/>
   </data>
   <data name="Settings_KeepOnTop" xml:space="preserve">
     <value>Immer über anderen Fenstern</value>
+    <comment/>
   </data>
   <data name="Settings_ShowInTaskbar" xml:space="preserve">
     <value>In Taskbar anzeigen</value>
+    <comment/>
   </data>
   <data name="Settings_StartMinimized" xml:space="preserve">
     <value>Minimiert starten</value>
+    <comment/>
   </data>
   <data name="Settings_WindowPosition_Bottom_Left" xml:space="preserve">
     <value>Unten links</value>
+    <comment/>
   </data>
   <data name="Settings_WindowPosition_Bottom_Right" xml:space="preserve">
     <value>Unten rechts</value>
+    <comment/>
   </data>
   <data name="Settings_WindowPosition_Top_Left" xml:space="preserve">
     <value>Oben links</value>
+    <comment/>
   </data>
   <data name="Settings_WindowPosition_Top_Right" xml:space="preserve">
     <value>Oben rechts</value>
+    <comment/>
   </data>
   <data name="SubMenu_About" xml:space="preserve">
     <value>Über</value>
+    <comment/>
   </data>
   <data name="SubMenu_Exit" xml:space="preserve">
     <value>Beenden</value>
+    <comment/>
   </data>
   <data name="SubMenu_Hide" xml:space="preserve">
     <value>Verstecken</value>
+    <comment/>
   </data>
   <data name="SubMenu_Hotkeys" xml:space="preserve">
     <value>Hotkeys</value>
+    <comment/>
   </data>
   <data name="SubMenu_Language" xml:space="preserve">
     <value>Sprache</value>
+    <comment/>
   </data>
   <data name="SubMenu_NewFunction" xml:space="preserve">
     <value>Neue Funktion</value>
+    <comment/>
   </data>
   <data name="SubMenu_Plugins" xml:space="preserve">
     <value>Plugins</value>
+    <comment/>
   </data>
   <data name="SubMenu_ReportBug" xml:space="preserve">
     <value>Fehler Melden</value>
+    <comment/>
   </data>
   <data name="SubMenu_Settings" xml:space="preserve">
     <value>Einstellungen</value>
+    <comment/>
   </data>
   <data name="Tooltip_Hide" xml:space="preserve">
     <value>Applikation minimieren</value>
+    <comment/>
   </data>
   <data name="Tooltip_Show" xml:space="preserve">
     <value>Applikation anzeigen</value>
+    <comment/>
   </data>
   <data name="Window_EditFunction" xml:space="preserve">
     <value>Funktion anpassen</value>
+    <comment/>
+  </data>
+  <data name="About_Description" xml:space="preserve">
+    <value>Über</value>
+    <comment/>
   </data>
 </root>
