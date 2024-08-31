@@ -1,5 +1,5 @@
 Das Programm ist unter der [MIT](https://github.com/XanatosX/ModularToolManager/blob/main/LICENSE) Lizenz lizenziert.\
-Das Program wirde von mir [XanatosX](https://github.com/XanatosX) als ein Hobby projekt entwickelt. Das Programm ist für Windows sowie Linux gedacht.
+Das Programm wird von mir [XanatosX](https://github.com/XanatosX) als ein Hobby Projekt entwickelt.   Das Programm ist für Windows sowie Linux gedacht.
 
 Das Programm stellt ein einfache Benutzeroberfläche bereit um Skrite und Programme zu starten.\
 Diese Plugins werden pro Funktion ausgewählt und bestimmen die Logik zum Ausführen des bereitgestellten Pfades.\
