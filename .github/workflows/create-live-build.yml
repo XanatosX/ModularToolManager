@@ -85,7 +85,7 @@ jobs:
         cd ./publish
         ls
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
        name: ${{ env.WINDOWS_ARTIFACT_NAME }}
        path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
@@ -111,7 +111,7 @@ jobs:
            mkdir ${{ env.APPLICATION_PUBLISH_FOLDER }}
            mv ./result/*.exe ${{ env.APPLICATION_PUBLISH_FOLDER }}
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.WINDOWS_INSTALLER_ARTIFACT_NAME }}
           path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
@@ -144,7 +144,7 @@ jobs:
         cd ./publish
         ls -la
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
        name: ${{ env.LINUX_ARTIFACT_NAME }}
        path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
