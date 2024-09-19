@@ -30,7 +30,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -68,7 +68,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
       # Important for using outputs in other steps https://tech.europace.de/post/github-actions-output-variables-how-to/#get-output-values-between-steps
@@ -85,7 +85,7 @@ jobs:
         cd ./publish
         ls
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
        name: ${{ env.WINDOWS_ARTIFACT_NAME }}
        path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
@@ -111,7 +111,7 @@ jobs:
            mkdir ${{ env.APPLICATION_PUBLISH_FOLDER }}
            mv ./result/*.exe ${{ env.APPLICATION_PUBLISH_FOLDER }}
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.WINDOWS_INSTALLER_ARTIFACT_NAME }}
           path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
@@ -128,7 +128,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish Application
@@ -144,7 +144,7 @@ jobs:
         cd ./publish
         ls -la
     - name: Upload artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
        name: ${{ env.LINUX_ARTIFACT_NAME }}
        path: ${{ env.APPLICATION_PUBLISH_FOLDER }}
