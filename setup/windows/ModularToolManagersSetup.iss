@@ -14,7 +14,7 @@
 #define InstalltionDocumentFolder ".\documents"
 #define ApplicationMainFolder "..\.."
 #ifndef BuildFolder
-  #define BuildFolder ApplicationMainFolder + "\src\ModularToolManager\bin\Release\net7.0\win-x64\publish"
+  #define BuildFolder ApplicationMainFolder + "\src\ModularToolManager\bin\Release\net8.0\win-x64\publish"
 #endif
 
 [Setup]
