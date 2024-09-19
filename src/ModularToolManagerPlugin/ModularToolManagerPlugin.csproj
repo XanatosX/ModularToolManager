@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://xanatosx.github.io/ModularToolManager/developer/developer-manual.html</PackageProjectUrl>
     <RepositoryUrl>https://github.com/XanatosX/ModularToolManager</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>dotnet, c#, net7.0, modular-tool-manager</PackageTags>
+    <PackageTags>dotnet, c#, net8.0, modular-tool-manager</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageOutputPath>$(SolutionDir)/nupkg</PackageOutputPath>

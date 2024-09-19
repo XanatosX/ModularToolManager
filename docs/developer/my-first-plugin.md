@@ -21,7 +21,7 @@ dotnet restore
 dotnet build
 ```
 
->:warning: Make sure that your plugin does target `.net7.0`
+>:warning: Make sure that your plugin does target `.net8.0`
 
 Open the plugin with a code editor like [vscode][vscode].
 
@@ -172,7 +172,7 @@ First of all make sure the path does exist, and the ending is indeed supported. 
 
 To see the complete code of the tutorial class take a look at my [this gist][complete-class].
 
-Build your plugin for testing purpose via `dotnet build`. Go into the `bin/Debug/net7.0` directory and search for the `MyFirstPlugin.dll`. Copy the file and to the directory described in the next part.
+Build your plugin for testing purpose via `dotnet build`. Go into the `bin/Debug/net8.0` directory and search for the `MyFirstPlugin.dll`. Copy the file and to the directory described in the next part.
 
 ## Add the plugin to the manager
 
