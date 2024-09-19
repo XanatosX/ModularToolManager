@@ -7,7 +7,7 @@ The installation does vary between the operation system. Choose the option which
 
 ## Requirements
 
-Make sure you do have the [dotnet 7 runtime][dotnet-7-runtime] installed on your system.
+Make sure you do have the [dotnet 8 runtime][dotnet-8-runtime] installed on your system.
 
 ## Downloading
 
@@ -39,6 +39,6 @@ If you want to get the files as a zip download the `LinuxBuildArtifact_x64.zip`.
 
 Go back to the [user manual][back]
 
-[dotnet-7-runtime]: https://dotnet.microsoft.com/en-us/download/dotnet/7.0
+[dotnet-8-runtime]: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
 [latest-release]: https://github.com/XanatosX/ModularToolManager/releases/latest
 [back]: user-manual.md
