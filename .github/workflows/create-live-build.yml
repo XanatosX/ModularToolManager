@@ -100,7 +100,7 @@ jobs:
           ref: ${{ env.REF_CHECKOUT_BRANCH }}
           lfs: true
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
       - name: Create installer
@@ -159,7 +159,7 @@ jobs:
           ref: ${{ env.REF_CHECKOUT_BRANCH }}
           lfs: true
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
       - name: Zip Windows build
