@@ -145,7 +145,7 @@ jobs:
         with:
           ref: ${{ env.REF_CHECKOUT_BRANCH }}
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with: 
           path: ${{ env.RELEASE_ARTIFACT_FOLDER }}
       - name: Zip Windows build
