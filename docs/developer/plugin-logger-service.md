@@ -18,7 +18,7 @@ public interface IPluginLoggerService<T>
 
 ## How to use it
 
-This can be used like every other logging framework. To log a debug message [inject the service][how-to-inject-a-service] and use the following snippet to use it.
+This can be used like every other logging framework. To log a debug message [inject the service][how-to-inject-a-service] and use the following snippet to log something.
 
 >:information_source: Service was injected as `loggingService`
 

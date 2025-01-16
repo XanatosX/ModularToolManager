@@ -2,15 +2,16 @@
 
 This documentation will tell you on how to add a new function to the application. If you are unsure what a function is check out the [what is a function][what-is-a-function] documentation.
 
-To add a new function click on `File->New Function` while being in the main window. This will open up the add function screen
+To add a new function click on `File->New Function` while being in the main window. This will open up the add function window.
 
 ![add-a-function]
 
-Provide display name for the function, this will be shown on the button. The name needs to be 5 - 25 chars. If you want add an description, this will be shown as a tooltip if you hover over the button later on.
+Provide display name for the function, this will be shown on the button. The name needs to be between 5 and 25 chars.
+If you want add an description, this will be shown as a tooltip if you hover over the button later on.
 
 ![select-plugin]
 
-Select the plugin to start the application or binary. Checkout the [plugin overview][available-plugins] for more information.
+Select the plugin which should be used to run the path you want to provide. Checkout the [plugin overview][available-plugins] for more information.
 
 ![additional-settings]
 
@@ -18,7 +19,8 @@ Select the setting specific for this function. For more information about the [s
 
 If required enter any function parameters, those are arguments which are getting parsed to the script or application.
 
-Select the path to the script or application to start. To do so press the `...` next to the text field
+Select the path to the script or application to start. To do so press the `...` next to the text field.
+You could also copy in the path you want to run, make sure that this is a type of application the plugin can run.
 
 ![final-function]
 

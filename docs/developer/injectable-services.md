@@ -4,7 +4,8 @@ There are multiple service you can inject inside of your plugin. Those are liste
 
 ## How to inject a service
 
-To inject the services inside of your plugin just add the interfaces as arguments to your constructor. 
+To inject the services inside of your plugin just add the interfaces as arguments to your constructor.
+This behavior is identical to normal dependency injection, keep in mind only the available services down bellow will work.
 
 `public MyPluginClass(IPluginTranslationService translationService, IPluginLoggerService<MyPluginClass> loggingService)`
 

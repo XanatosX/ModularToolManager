@@ -2,9 +2,11 @@
 
 > :warning: This page is still WIP and will be updated slowly.
 
-The Modular Tool Manager is a UI Tool for Linux and Windows allowing you to launch applications or scripts via an ui docked on your screen. It allows you to define buttons which do start those scripts or applications.
+The Modular Tool Manager is a UI Tool for Linux and Windows allowing you to launch applications or scripts via an ui docked on your screen.
+It allows you to define buttons which do start those scripts or applications.
 
 The applications or scripts which can be started are limited by plugins, see the list below which can be used on which platform.
+If you do delete all the plugins this application won't work, it should still start but non of your buttons will be shown.
 
 ## Plugins
 

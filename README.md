@@ -39,19 +39,15 @@ If you found a bug or need any help with the application please head over to the
 
 ## Installation
 
-You got two options to install the tool, either you use the installation as described in the `Latest nightly build` section by unzipping the zip file or use the installer if you are on a Windows machine.
-
-
-### Windows only 
-
-To use the installer just download the `ModularToolManager_Installer_{version}.exe` file and run it on your machine.
-
+Please checkout the [installation guide][wiki-install]
 
 ### Latest nightly build
 
 The latest nightly build are self contained application builds which are getting packed into a zip folder.
 To install the application get the build for your operation system and extract the files to a folder on your disc.
 Start the `ModularToolManager.exe` or if you on a linux machine the "ModularToolManager" binary.
+
+This process is also explained inside of the [installation guide][wiki-install]
 
 ## Downloads
 
@@ -63,7 +59,24 @@ Please head over to the [issue page][issuePage].
 
 ## Want to contribute?
 
-Either search for Tickets marked with help wanted or improve the translation on [crowdin]
+Either search for Tickets marked with help wanted or improve the translation on [crowdin].
+
+### How to builde the application?
+
+If you want to build this application on your own you will need the Dotnet 7 SDK for your operation system.
+Simple download the source code as a zip or clone the repository.
+
+`git clone https://github.com/XanatosX/ModularToolManager.git`
+
+as soon as you cloned the project run
+
+`dotnet build` for a debug build or `dotnet build --c release` to build a release version.
+
+This should build the executable and the plugin. It might be necessary to copy the plugin dll into the `plugins` folder.
+This gould should be on the same level as the `ModularToolManager` binary. If this folder is missing create it.
+Now go to the `DefaultPlugins` project and copy the dll files into the newly created `plugins` folder.
+
+After that simply run the `ModularToolManager` executable, if you want to use your build copy all the files in the folder somewhere on your machine.
 
 ## Plugins
 
@@ -95,6 +108,7 @@ Technically the plugin will run with the user rights you did start the applicati
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FXanatosX%2FModularToolManager?ref=badge_large)
 
 [wiki]: https://github.com/XanatosX/ModularToolManager/wiki
+[wiki-install]: https://xanatosx.github.io/ModularToolManager/user/installation.html
 [dotnet6]: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 [dotnet7]: https://dotnet.microsoft.com/en-us/download/dotnet/7.0
 [avaloniaui]: https://avaloniaui.net/

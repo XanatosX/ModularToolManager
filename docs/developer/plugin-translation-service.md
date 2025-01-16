@@ -18,6 +18,8 @@ public interface IPluginLoggerService
 
 ## How to use it
 
+This service does need some preparation and a special sturcture of your plugin to work.
+Check this documentation to learn how to make use of the translation service.
 
 ### Preparation  
 
